@@ -19,7 +19,9 @@ jobs:
         with:
           node-version: 18
           cache: 'pnpm'
-      - name: Install dependencies
+      - name: Install project dependencies
         run: pnpm install
+      - name: Install playwright dependencies 
+        run: pnpm exec playwright install --with-deps 
       - name: Run your tests
-        run: npx playwright test
+        run: pnpm exec playwright test
