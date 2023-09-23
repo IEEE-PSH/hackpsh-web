@@ -1,0 +1,28 @@
+name: Playwright Tests (Push/Pull)
+on:
+  push:
+    branches: [ main, master ] 
+  pull_request:
+    branches: [ main, master ]
+jobs:
+  playwright:
+    timeout-minutes: 60
+    name: 'Playwright Tests'
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.38.0-jammy
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install project dependencies
+        run: pnpm install
+      - name: Install msedge - playwright dependency
+        run: pnpm exec playwright install msedge
+      - name: Run end-to-end tests
+        run: HOME=/root pnpm exec playwright test

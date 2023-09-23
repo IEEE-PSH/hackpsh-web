@@ -1,13 +1,11 @@
-name: Playwright Tests
+name: Playwright Tests (Deploy)
 on:
-  push:
-    branches: [ main, master, e2e-tests-setup ]
-  pull_request:
-    branches: [ main, master ]
+  deployment_status:
 jobs:
-  playwright:
-    name: 'Playwright Tests'
+  test:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
+    if: github.event.deployment_status.state == 'success'
     container:
       image: mcr.microsoft.com/playwright:v1.38.0-jammy
     steps:
@@ -25,3 +23,5 @@ jobs:
         run: pnpm exec playwright install msedge
       - name: Run end-to-end tests
         run: HOME=/root pnpm exec playwright test
+        env:
+          PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
