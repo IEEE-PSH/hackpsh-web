@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [ main, master ]
 jobs:
-  playwright:
+  playwright_pushpull:
     timeout-minutes: 60
     name: 'Playwright Tests'
     runs-on: ubuntu-latest
