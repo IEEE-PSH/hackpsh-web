@@ -1,14 +1,21 @@
 import { defineConfig, devices } from '@playwright/test'
+import path from 'path'
 
 export default defineConfig({
-    // Runs your local dev server before starting the tests
-    webServer: {
-        command: 'pnpm run dev',
-        url: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://127.0.0.1:3000',
-        reuseExistingServer: !process.env.CI,
-        stdout: 'ignore',
-        stderr: 'pipe',
-        timeout: 120 * 1000, // Waiting two minutes (maximum) until web server spins online
+    // Timeout per test
+    timeout: 60 * 1000,
+    // Test Directory
+    testDir: path.join(__dirname, 'e2e'),
+    // If a test fails, retry it additional 2 times
+    retries: 2,
+    // Artifacts folder where screenshots, videos, and traces are stored.
+    outputDir: 'test-results/',
+
+    use: {
+        // Retry a test if its failing with enabled tracing.
+        // Allows for us to analyze DOM, console logs, network traffic, etc.
+        trace: 'retry-with-trace',
+        baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3000'
     },
     projects: [
         {
