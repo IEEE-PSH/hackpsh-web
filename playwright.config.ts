@@ -42,5 +42,6 @@ export default defineConfig({
                 channel: 'msedge'
             },
         },
-    ]
+    ],
+    reporter: process.env.CI ? 'github' : 'list'
 })
