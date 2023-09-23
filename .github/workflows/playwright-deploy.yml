@@ -17,6 +17,11 @@ jobs:
         with:
           node-version: 18
           cache: 'pnpm'
+      - name: Install project dependencies
+        run: pnpm install
+      - name: Install msedge - playwright dependency
+        run: pnpm exec playwright install msedge
+        run:
       - name: Run end-to-end tests
         run: HOME=/root pnpm exec playwright test
         env:
