@@ -3,6 +3,7 @@
         "eamodio.gitlens",
         "bradlc.vscode-tailwindcss",
         "dbaeumer.vscode-eslint",
-        "rvest.vs-code-prettier-eslint"
+        "rvest.vs-code-prettier-eslint",
+        "ms-playwright.playwright"
     ]
 }
