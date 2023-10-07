@@ -1,37 +1,35 @@
 {
-  "name": "hackathon-web",
+  "name": "hackpsh",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "test:e2e": "playwright test"
+    "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.25.1",
     "@radix-ui/react-slot": "^1.0.2",
-    "autoprefixer": "10.4.15",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "eslint": "8.48.0",
-    "eslint-config-next": "^13.5.2",
-    "lucide-react": "^0.274.0",
-    "next": "^13.5.2",
-    "postcss": "8.4.29",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "lucide-react": "^0.279.0",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
     "tailwind-merge": "^1.14.0",
-    "tailwindcss": "^3.3.3",
-    "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.2.2"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@types/node": "^20.6.3",
-    "@types/react": "^18.2.22",
-    "@types/react-dom": "^18.2.7",
-    "@playwright/test": "^1.38.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-tailwindcss": "^3.13.0"
+    "@playwright/test": "^1.38.1",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "autoprefixer": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "postcss": "latest",
+    "tailwindcss": "latest",
+    "typescript": "latest"
   }
 }
