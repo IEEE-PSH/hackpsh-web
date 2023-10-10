@@ -24,7 +24,6 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@playwright/test": "^1.38.1",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
