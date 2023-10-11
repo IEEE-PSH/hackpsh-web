@@ -1,4 +1,4 @@
-This documentation is meant for VS Code users. This is a basic guide on how to run this project locally and use GitHub.
+This documentation is meant for VS Code users and those unfamiliar with using GitHub.
 # Getting Started
 ### Prerequisites
 1. Install NodeJS
@@ -8,16 +8,18 @@ This documentation is meant for VS Code users. This is a basic guide on how to r
 ```
 node
 ```
+You should get an output similar to _Welcome to Node.js v18.14.0._ but on your version.
 
-2. Install [pnpm](https://pnpm.io/installation) by running this command in the terminal:
+2. Install pnpm
+* Visit [pnpm](https://pnpm.io/installation) for installation instructions or run this command in the terminal:
 ```sh
-# windows
+# for windows
 iwr https://get.pnpm.io/install.ps1 -useb | iex
 
-# linux
+# for linux
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 
-# npm
+# for anything
 npm install pnpm --g
 ```
 
@@ -29,13 +31,13 @@ npm install pnpm --g
 3. Select a folder to save the repository on your machine.
 
 
-### Installing Dependencies
-Run the following command to install all dependencies:
+### Installing Default Dependencies
+Run the following command to install all dependencies required by the project:
 ```
 pnpm install
 ```
 ### Running the Development Server
-Run the following command to start up the development server
+Run the following command to start up the development server:
 ```
 pnpm dev
 ```
@@ -45,13 +47,20 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
    
 (Reach out to Denish for the environment variables and paste them in a new file called `.env.local` in the root directory)
 
+### Adding Packages
+If you want to add packages to your current project, you can run the following command:
+```
+pnpm add package-name
+```
+You can find packages on [NPM](https://www.npmjs.com).
+
 <br>
 
 # Contributing
 
 ### Creating a Branch
 
-Separate branches will be made to differentiate implementations for the application. New changes will **NOT** be made in the master branch.
+Separate branches will be made to differentiate implementations for the application. New changes will **NOT** be made directly in the master branch.
 
 1. Click on the current branch on the bottom-left labeled `master`.
 2. Click on `Create a new branch`
@@ -74,8 +83,8 @@ You must commit changes to visit other branches.
 <br>
 
 ### Submitting Pull Requests
-Submit pull requests to pull your changes to the master branch.
-1. Go to specific branch on GitHub
+Submit pull requests to potentially merge your changes to the master branch.
+1. Go to the specific branch on GitHub
 2. At the top, click on `Compare and pull Request`
 3. Fill out the form with information about the request
 4. Wait for feedback or approval.
