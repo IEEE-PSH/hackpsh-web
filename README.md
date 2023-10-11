@@ -76,6 +76,6 @@ You must commit changes to visit other branches.
 ### Submitting Pull Requests
 Submit pull requests to pull your changes to the master branch.
 1. Go to specific branch on GitHub
-2. At the top, click on `Compare and Pull Request`
-3. Fill out the form with information about the branch
+2. At the top, click on `Compare and pull Request`
+3. Fill out the form with information about the request
 4. Wait for feedback or approval.
