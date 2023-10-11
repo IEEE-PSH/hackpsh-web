@@ -9,6 +9,7 @@ import * as z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Icons } from "./icons";
 import { toast } from "@/components/ui/use-toast";
+import { useRouter } from "next/router";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
@@ -27,6 +28,16 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   // Form Submit Handler
   async function onSubmit(values: z.infer<typeof UserAuthFormSchema>) {
     // Process form values
+    const formData = new FormData();
+    formData.append("email", values.email);
+
+    form.reset();
+
+    const res = await fetch(`${window.origin}/api/auth/login`, {
+      method: "POST",
+      body: formData
+    })
+    
     toast({
       variant: "success",
       title: "Login Magic Link Sent!",
@@ -45,7 +56,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="yourname@example.com" {...field} />
+                  <Input placeholder="yourname@example.com" {...field} value={field.value ?? ''} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
