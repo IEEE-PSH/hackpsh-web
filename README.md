@@ -1,4 +1,4 @@
-This documentation is meant for VSCode users.
+This documentation is meant for VS Code users. This is a basic guide on how to run this project locally and use GitHub.
 # Getting Started
 ### Prerequisites
 1. Install NodeJS
