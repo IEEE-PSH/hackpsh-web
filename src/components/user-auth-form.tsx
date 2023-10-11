@@ -18,15 +18,17 @@ const UserAuthFormSchema = z.object({
   email: z.string().email("Please provide a valid email")
 })
 
+export type TUserAuthForm = z.infer<typeof UserAuthFormSchema>
+
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   // Form Definition
-  const form = useForm<z.infer<typeof UserAuthFormSchema>>({
+  const form = useForm<TUserAuthForm>({
     resolver: zodResolver(UserAuthFormSchema)
   })
 
   // Form Submit Handler
-  async function onSubmit(values: z.infer<typeof UserAuthFormSchema>) {
+  async function onSubmit(values: TUserAuthForm) {
     // Process form values
     const formData = new FormData();
     formData.append("email", values.email);
@@ -48,7 +50,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <Form {...form}>
-        <form id="userAuthForm" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form id="userAuthForm" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="email"
@@ -56,7 +58,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="yourname@example.com" {...field} value={field.value ?? ''} />
+                  <Input id="email" placeholder="yourname@example.com" {...field} value={field.value ?? ''} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
