@@ -26,7 +26,7 @@ npm install pnpm --g
 <br>
 
 ### Cloning the Repository
-1. Navigate to `View > Command Palette` or `Ctrl + Shift + P` and enter `Clone`.
+1. In VS Code, navigate to `View > Command Palette` or `Ctrl + Shift + P` and enter `Clone`.
 2. Enter in the url: `https://github.com/IEEE-PSH/hackathon-web.git`.
 3. Select a folder to save the repository on your machine.
 
@@ -85,6 +85,6 @@ You must commit changes to visit other branches.
 ### Submitting Pull Requests
 Submit pull requests to potentially merge your changes to the master branch.
 1. Go to the specific branch on GitHub
-2. At the top, click on `Compare and pull Request`
+2. At the top, click on `Compare and pull request`
 3. Fill out the form with information about the request
 4. Wait for feedback or approval.
