@@ -2,7 +2,8 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import Link from "next/link";
 
-export default function Home() {
+
+export default function Page() {
   return (
     <>
       <p>This is a sample change to see if they are propogated through CloudFlare dns and Vercel</p>
