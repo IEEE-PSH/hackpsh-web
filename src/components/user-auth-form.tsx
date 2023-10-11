@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Icons } from "./icons";
+import { toast } from "@/components/ui/use-toast";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
@@ -26,8 +27,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   // Form Submit Handler
   async function onSubmit(values: z.infer<typeof UserAuthFormSchema>) {
     // Process form values
-    await new Promise((resolve) => setTimeout(resolve, 1300));
-    console.log(values);
+    toast({
+      variant: "success",
+      title: "Login Magic Link Sent!",
+      description: "Check your email for a secure link to effortlessly log in. Time-sensitive for your security."
+    });
   }
 
   return (
