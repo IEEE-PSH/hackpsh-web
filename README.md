@@ -1,4 +1,4 @@
-This documentation is meant for VS Code users and those unfamiliar with using GitHub.
+This documentation is meant for VS Code users and those unfamiliar with GitHub.
 # Getting Started
 ### Prerequisites
 1. Install NodeJS
@@ -8,7 +8,7 @@ This documentation is meant for VS Code users and those unfamiliar with using Gi
 ```
 node
 ```
-You should get an output similar to _Welcome to Node.js v18.14.0._ but on your version.
+You should get an output similar to _Welcome to Node.js v18.14.0._ but for your version.
 
 2. Install pnpm
 * Visit [pnpm](https://pnpm.io/installation) for installation instructions or run this command in the terminal:
@@ -22,7 +22,7 @@ curl -fsSL https://get.pnpm.io/install.sh | sh -
 # for anything
 npm install pnpm --g
 ```
-
+If you are contributing to this project, use pnpm. Yarn and npm will **NOT** be used for consistency reasons.
 <br>
 
 ### Cloning the Repository
@@ -45,14 +45,14 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
    
-(Reach out to Denish for the environment variables and paste them in a new file called `.env.local` in the root directory)
+(This project will require environment variables. Reach out to the Project Lead for the environment variables and paste them in a new file called `.env.local` in the root directory.)
 
 ### Adding Packages
 If you want to add packages to your current project, you can run the following command:
 ```
 pnpm add package-name
 ```
-You can find packages on [npm](https://www.npmjs.com).
+Replace `package-name` with the name of the package. You can find packages on [npm](https://www.npmjs.com).
 
 <br>
 
@@ -83,7 +83,7 @@ You must commit changes to visit other branches.
 <br>
 
 ### Submitting Pull Requests
-Submit pull requests to potentially merge your changes to the master branch.
+Submit pull requests to potentially have your changes merge with the master branch.
 1. Go to the specific branch on GitHub
 2. At the top, click on `Compare and pull request`
 3. Fill out the form with information about the request
