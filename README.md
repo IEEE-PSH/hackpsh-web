@@ -28,10 +28,10 @@ npm install pnpm --g
 ### Cloning the Repository
 1. In VS Code, navigate to `View > Command Palette` or `Ctrl + Shift + P` and enter `Clone`.
 2. Enter in the url: `https://github.com/IEEE-PSH/hackathon-web.git`.
-3. Select a folder to save the repository on your machine.
+3. Select a folder on your machine to save the repository.
 
 
-### Installing Default Dependencies
+### Installing Dependencies
 Run the following command to install all dependencies required by the project:
 ```
 pnpm install
@@ -52,7 +52,7 @@ If you want to add packages to your current project, you can run the following c
 ```
 pnpm add package-name
 ```
-You can find packages on [NPM](https://www.npmjs.com).
+You can find packages on [npm](https://www.npmjs.com).
 
 <br>
 
