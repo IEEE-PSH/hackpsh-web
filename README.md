@@ -26,8 +26,8 @@ npm install pnpm --g
 <br>
 
 ### Cloning the Repository
-1. Navigate to `View > Command Palette` or `Ctrl + Shift + P` and enter `Clone`
-2. Enter in the url: `https://github.com/IEEE-PSH/hackathon-web.git`
+1. Navigate to `View > Command Palette` or `Ctrl + Shift + P` and enter `Clone`.
+2. Enter in the url: `https://github.com/IEEE-PSH/hackathon-web.git`.
 3. Select a folder to save the repository on your machine.
 
 
@@ -63,8 +63,8 @@ You can find packages on [NPM](https://www.npmjs.com).
 Separate branches will be made to differentiate implementations for the application. New changes will **NOT** be made directly in the master branch.
 
 1. Click on the current branch on the bottom-left labeled `master`.
-2. Click on `Create a new branch`
-3. Name the branch with something descriptive (ex: `navbar-testing`)
+2. Click on `Create a new branch`.
+3. Name the branch with something descriptive (ex: `navbar-testing`).
    
 You can switch branches by clicking on the branch name and clicking on the refresh symbol to sync with its changes. If your files do not sync properly, navigate to `View > Command Palette` or `Ctrl + Shift + P` and enter `Fetch`
 
@@ -74,9 +74,9 @@ You can switch branches by clicking on the branch name and clicking on the refre
 
 All changes in the current branch will be tracked, indicated by the Source Control tab located on the left. To commit changes:
 
-1. Stage changes to prepare for commit
-2. Add a descriptive message to your commit (ex: `changed colors of navbar`)
-3. Click `Commit` to commit locally or `Commit & Sync` to commit to GitHub
+1. Stage changes to prepare for commit.
+2. Add a descriptive message to your commit (ex: `changed colors of navbar`).
+3. Click `Commit` to commit locally or `Commit & Sync` to commit to GitHub.
 
 You must commit changes to visit other branches.
 
