@@ -24,7 +24,7 @@ npm install pnpm --g
 <br>
 
 ### Cloning the Repository
-1. Navigate to `View > Command Palette > Git: Clone` or `Ctrl + Shift + P`
+1. Navigate to `View > Command Palette` or `Ctrl + Shift + P` and enter `Clone`
 2. Enter in the url: `https://github.com/IEEE-PSH/hackathon-web.git`
 3. Select a folder to save the repository on your machine.
 
@@ -57,7 +57,7 @@ Separate branches will be made to differentiate implementations for the applicat
 2. Click on `Create a new branch`
 3. Name the branch with something descriptive (ex: `navbar-testing`)
    
-You can switch branches by clicking on the branch name and clicking on the refresh symbol to sync with its changes.
+You can switch branches by clicking on the branch name and clicking on the refresh symbol to sync with its changes. If your files do not sync properly, navigate to `View > Command Palette` or `Ctrl + Shift + P` and enter `Fetch`
 
 <br>
 
