@@ -5,20 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Icons } from "./icons";
 import { toast } from "@/components/ui/use-toast";
-import { useRouter } from "next/router";
+import { TUserAuthForm, UserAuthFormSchema } from "@/lib/zod-schemas/user-auth";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
-
-// Form Schema
-const UserAuthFormSchema = z.object({
-  email: z.string().email("Please provide a valid email")
-})
-
-export type TUserAuthForm = z.infer<typeof UserAuthFormSchema>
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
@@ -39,7 +31,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       method: "POST",
       body: formData
     })
-    
+
     toast({
       variant: "success",
       title: "Login Magic Link Sent!",

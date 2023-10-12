@@ -8,55 +8,55 @@
     "key_status": {
       "name": "key_status",
       "values": {
-        "default": "default",
-        "valid": "valid",
+        "expired": "expired",
         "invalid": "invalid",
-        "expired": "expired"
+        "valid": "valid",
+        "default": "default"
       }
     },
     "key_type": {
       "name": "key_type",
       "values": {
-        "aead-ietf": "aead-ietf",
-        "aead-det": "aead-det",
-        "hmacsha512": "hmacsha512",
-        "hmacsha256": "hmacsha256",
-        "auth": "auth",
-        "shorthash": "shorthash",
-        "generichash": "generichash",
-        "kdf": "kdf",
-        "secretbox": "secretbox",
+        "stream_xchacha20": "stream_xchacha20",
         "secretstream": "secretstream",
-        "stream_xchacha20": "stream_xchacha20"
-      }
-    },
-    "aal_level": {
-      "name": "aal_level",
-      "values": {
-        "aal1": "aal1",
-        "aal2": "aal2",
-        "aal3": "aal3"
-      }
-    },
-    "code_challenge_method": {
-      "name": "code_challenge_method",
-      "values": {
-        "s256": "s256",
-        "plain": "plain"
+        "secretbox": "secretbox",
+        "kdf": "kdf",
+        "generichash": "generichash",
+        "shorthash": "shorthash",
+        "auth": "auth",
+        "hmacsha256": "hmacsha256",
+        "hmacsha512": "hmacsha512",
+        "aead-det": "aead-det",
+        "aead-ietf": "aead-ietf"
       }
     },
     "factor_status": {
       "name": "factor_status",
       "values": {
-        "unverified": "unverified",
-        "verified": "verified"
+        "verified": "verified",
+        "unverified": "unverified"
       }
     },
     "factor_type": {
       "name": "factor_type",
       "values": {
-        "totp": "totp",
-        "webauthn": "webauthn"
+        "webauthn": "webauthn",
+        "totp": "totp"
+      }
+    },
+    "aal_level": {
+      "name": "aal_level",
+      "values": {
+        "aal3": "aal3",
+        "aal2": "aal2",
+        "aal1": "aal1"
+      }
+    },
+    "code_challenge_method": {
+      "name": "code_challenge_method",
+      "values": {
+        "plain": "plain",
+        "s256": "s256"
       }
     }
   },

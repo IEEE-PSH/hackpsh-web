@@ -2,37 +2,37 @@
 -- If you want to run this migration please uncomment this code before executing migrations
 /*
 DO $$ BEGIN
- CREATE TYPE "key_status" AS ENUM('default', 'valid', 'invalid', 'expired');
+ CREATE TYPE "key_status" AS ENUM('expired', 'invalid', 'valid', 'default');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- CREATE TYPE "key_type" AS ENUM('aead-ietf', 'aead-det', 'hmacsha512', 'hmacsha256', 'auth', 'shorthash', 'generichash', 'kdf', 'secretbox', 'secretstream', 'stream_xchacha20');
+ CREATE TYPE "key_type" AS ENUM('stream_xchacha20', 'secretstream', 'secretbox', 'kdf', 'generichash', 'shorthash', 'auth', 'hmacsha256', 'hmacsha512', 'aead-det', 'aead-ietf');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- CREATE TYPE "aal_level" AS ENUM('aal1', 'aal2', 'aal3');
+ CREATE TYPE "factor_status" AS ENUM('verified', 'unverified');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- CREATE TYPE "code_challenge_method" AS ENUM('s256', 'plain');
+ CREATE TYPE "factor_type" AS ENUM('webauthn', 'totp');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- CREATE TYPE "factor_status" AS ENUM('unverified', 'verified');
+ CREATE TYPE "aal_level" AS ENUM('aal3', 'aal2', 'aal1');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- CREATE TYPE "factor_type" AS ENUM('totp', 'webauthn');
+ CREATE TYPE "code_challenge_method" AS ENUM('plain', 's256');
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
