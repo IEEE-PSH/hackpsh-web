@@ -9,6 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Icons } from "./icons";
 import { toast } from "@/components/ui/use-toast";
 import { TUserAuthForm, UserAuthFormSchema } from "@/lib/zod-schemas/user-auth";
+import { trpc } from "@/app/_trpc/client";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
@@ -19,24 +20,32 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     resolver: zodResolver(UserAuthFormSchema)
   })
 
-  // Form Submit Handler
+  const emailLoginMutation = trpc.auth.email_login.useMutation({
+    onSuccess: async () => {
+      toast({
+        variant: "success",
+        title: "Login Magic Link Sent!",
+        description: "Check your email for a secure link to effortlessly log in. Time-sensitive for your security.",
+        duration: 2000
+      });
+    },
+    onError: () => {
+      toast({
+        variant: "destructive",
+        title: "Oops, Something Went Wrong!",
+        description: "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly",
+        duration: 2000
+      })
+    }
+  });
+
   async function onSubmit(values: TUserAuthForm) {
-    // Process form values
-    const formData = new FormData();
-    formData.append("email", values.email);
-
-    form.reset();
-
-    const res = await fetch(`${window.origin}/api/auth/login`, {
-      method: "POST",
-      body: formData
-    })
-
-    toast({
-      variant: "success",
-      title: "Login Magic Link Sent!",
-      description: "Check your email for a secure link to effortlessly log in. Time-sensitive for your security."
-    });
+    try {
+      await emailLoginMutation.mutateAsync({ email: values.email })
+      form.reset();
+    } catch (err: any) {
+      console.log(err);
+    }
   }
 
   return (
