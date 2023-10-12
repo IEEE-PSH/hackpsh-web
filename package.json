@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "introspect": "drizzle-kit introspect:pg",
-    "drop_migrations": "drizzle-kit drop"
+    "generate": "drizzle-kit generate:pg",
+    "drop_migrations": "drizzle-kit drop",
+    "db_push": "drizzle-kit push:pg"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
