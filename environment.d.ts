@@ -25,7 +25,15 @@ namespace NodeJS {
      * The value **does not** include the protocol scheme `https://`.
      * 
      * Set this to `localhost:3000` in development.
+     * @type {string}
      */
     VERCEL_URL: string
+
+    /**
+     * Sign In URL
+     * Specifies where the sign-in page / route exists
+     * @type {string}
+     */
+    NEXT_PUBLIC_SIGN_IN_PATH: string
   }
 }
