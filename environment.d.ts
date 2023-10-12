@@ -1,17 +1,23 @@
 namespace NodeJS {
   interface ProcessEnv {
-
+    
     /**
-     * Sign In URL
-     * Specifies where the sign-in page / route exists
+     * Make sure to run `pnpm run introspect` to pull table schema and all types.
+     * 
+     * We utilize Drizzle ORM for this project for type-safety and SQL Migrations
+     * and to access the DB.
+     * 
+     * See More Info Here:
+     * https://orm.drizzle.team/docs/overview
+     * 
+     * Connection string to Supabase's Postgres SQL DB
+     * Connection Pool Mode (Transaction) | pgBouncer
+     * 
+     * See Docs for more about accessing the DB: 
+     * https://supabase.com/docs/guides/database/connecting-to-postgres#serverless-apis
+     * 
      * @type {string}
      */
-    NEXT_PUBLIC_SIGN_IN_PATH: string
-    
-    NEXT_PUBLIC_SUPABASE_URL: string
-
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: string
-
     DATABASE_URL: string
   }
 }
