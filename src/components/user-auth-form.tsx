@@ -15,13 +15,14 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const baseURL = window.location.origin;
 
   async function handleSignInWithGoogle() {
     const supabase = createClientComponentClient();
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${getBaseURL()}/api/auth/callback`
+        redirectTo: `${baseURL}/api/auth/callback`
       }
     })
   }
