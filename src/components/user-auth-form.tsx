@@ -95,7 +95,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             </div>
           </div>
 
-          <Button variant="outline" onClick={handleSignInWithGoogle} className="w-full" type="button" disabled={form.formState.isSubmitting}>
+          <Button variant="outline" onClick={handleSignInWithGoogle} className="w-full border-muted-foreground" type="button" disabled={form.formState.isSubmitting}>
             {form.formState.isSubmitting ? (
               <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
             ) : (

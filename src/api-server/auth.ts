@@ -3,7 +3,7 @@ import { publicProcedure, router } from "./trpc";
 import { cookies } from "next/headers";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 
-async function handleEmailLogin(email: string) {
+async function handleEmailLogin(email: string, baseURL: string) {
   const cookieStore = cookies();
 
   const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
@@ -11,16 +11,15 @@ async function handleEmailLogin(email: string) {
   await supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:3000`}/api/auth/callback`
+      emailRedirectTo: `/api/auth/callback`
     }
   })
 }
 
 export const authRouter = router({
-  email_login: publicProcedure
-    .input(UserAuthFormSchema)
+  email_login: publicProcedure    .input(UserAuthFormSchema)
     .mutation(async (opts) => {
-      await handleEmailLogin(opts.input.email);
+      await handleEmailLogin(opts.input.email, "baseURL");
       
       return {
         message: "Success"
