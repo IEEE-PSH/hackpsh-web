@@ -12,7 +12,7 @@ async function handleEmailLogin(email: string) {
   await supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `${getBaseURL()}/api/auth/callback`
+      emailRedirectTo: `${process.env.CI ? `https://${process.env.VERCEL_URL}` : `http://localhost:3000`}/api/auth/callback`
     }
   })
 }
