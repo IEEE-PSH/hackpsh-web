@@ -24,7 +24,7 @@ namespace NodeJS {
      * The domain name of the generated deployment URL. Example: `*.vercel.app`. 
      * The value **does not** include the protocol scheme `https://`.
      * 
-     * Set this to `localhost:3000` in development.
+     * Do not set this variable in local development.
      * @type {string}
      */
     VERCEL_URL: string

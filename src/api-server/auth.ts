@@ -11,7 +11,7 @@ async function handleEmailLogin(email: string) {
   await supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `${process.env.CI ? `https://${process.env.VERCEL_URL}` : `http://localhost:3000`}/api/auth/callback`
+      emailRedirectTo: `${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : `http://localhost:3000`}/api/auth/callback`
     }
   })
 }
