@@ -11,15 +11,16 @@ async function handleEmailLogin(email: string, baseURL: string) {
   await supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `/api/auth/callback`
+      emailRedirectTo: `${baseURL}/api/auth/callback`
     }
   })
 }
 
 export const authRouter = router({
-  email_login: publicProcedure    .input(UserAuthFormSchema)
+  email_login: publicProcedure
+    .input(UserAuthFormSchema)
     .mutation(async (opts) => {
-      await handleEmailLogin(opts.input.email, "baseURL");
+      await handleEmailLogin(opts.input.email, opts.ctx.req.url as string);
       
       return {
         message: "Success"

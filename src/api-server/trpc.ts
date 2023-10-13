@@ -5,14 +5,7 @@ const t = initTRPC.context<typeof createContext>().create();
 
 export const router = t.router;
 
-// // Middleware to overwrite the context with truthy `req` & `res`, which will also overwrite the types used in your procedure
-// const hasReqRes = t.middleware({ next, ctx }) = {
-
-// }
-
-export const publicProcedure = t.procedure;
-
-export const apiProcedure = publicProcedure.use((opts) => {
+export const publicProcedure = t.procedure.use((opts) => {
   if (!opts.ctx.req || !opts.ctx.res) {
     throw new Error('You are missing `req` or `res` in your call.');
   }
