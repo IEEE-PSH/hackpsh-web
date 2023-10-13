@@ -1,27 +1,37 @@
-import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
-import { RedirectType, redirect } from "next/navigation";
-import { NextResponse } from "next/server";
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
+import { NextResponse } from 'next/server'
 
+import type { NextRequest } from 'next/server'
 
-// Please edit this to allow other routes to be public as needed.
-// See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your middleware
-export default authMiddleware({
-  afterAuth(auth, req, evt) {
-    // handle users who aren't authenticated
-    if (!auth.userId && !auth.isPublicRoute) {
-      return redirectToSignIn({ returnBackUrl: req.url });
-    }
+export async function middleware(req: NextRequest) {
+  const res = NextResponse.next();
+  const supabase = createMiddlewareClient({ req, res });
+  
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-    // redirect authenticated users who have not completed onboarding to /onboarding
-    if (auth.userId && !auth.sessionClaims?.onboardingComplete && !req.nextUrl.pathname.startsWith('/onboarding')) {
-      const onboarding = new URL('/onboarding', req.url);
-      return NextResponse.redirect(onboarding);
-    }
-  },
-  publicRoutes: ["/"],
-  debug: false
-});
+  const isSignInPage = req.nextUrl.pathname.startsWith(process.env.NEXT_PUBLIC_SIGN_IN_PATH);
+  const isSignUpPage = req.nextUrl.pathname.startsWith(process.env.NEXT_PUBLIC_SIGN_UP_PATH);
+
+  // If a user is not signed-in, redirect to sign-in page.
+  if (!session && !isSignInPage && !isSignUpPage) {
+    const redirectUrl = req.nextUrl.clone();
+    redirectUrl.pathname = process.env.NEXT_PUBLIC_SIGN_IN_PATH;
+
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  // If the user is already signed-in / has a valid session, redirect them automatically to dashboard
+  if (session && (isSignInPage || isSignUpPage)) {
+    const redirectUrl = req.nextUrl.clone();
+    redirectUrl.pathname = process.env.NEXT_PUBLIC_DASHBOARD_PATH;
+
+    return NextResponse.redirect(redirectUrl);
+  }
+
+}
 
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
-};
+  matcher: ['/dashboard', '/onboarding', '/sign-in', '/sign-up'],
+}
