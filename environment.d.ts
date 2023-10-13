@@ -30,17 +30,24 @@ namespace NodeJS {
     VERCEL_URL: string
 
     /**
-     * Sign In URL
+     * Sign In Route Path
      * Specifies where the sign-in page / route exists
      * @type {string}
      */
     NEXT_PUBLIC_SIGN_IN_PATH: string
 
    /**
-     * Sign Up URL
+     * Sign Up Route Path
      * Specifies where the sign-up page / route exists
      * @type {string}
      */
     NEXT_PUBLIC_SIGN_UP_PATH: string
+
+   /**
+     * Dashboard Route Path
+     * Specifies where the dashboard page / route exists
+     * @type {string}
+     */
+    NEXT_PUBLIC_DASHBOARD_PATH: string
   }
 }

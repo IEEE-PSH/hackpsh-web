@@ -21,7 +21,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: 'http://localhost:3000/api/auth/callback'
+        redirectTo: `${getBaseURL()}/api/auth/callback`
       }
     })
   }
