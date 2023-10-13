@@ -1,6 +1,6 @@
 "use client"
 
-import { cn } from "@/lib/utils";
+import { cn, getBaseURL } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
@@ -10,10 +10,21 @@ import { Icons } from "./icons";
 import { toast } from "@/components/ui/use-toast";
 import { TUserAuthForm, UserAuthFormSchema } from "@/lib/zod-schemas/user-auth";
 import { trpc } from "@/app/_trpc/client";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+
+  async function handleSignInWithGoogle() {
+    const supabase = createClientComponentClient();
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: 'http://localhost:3000/api/auth/callback'
+      }
+    })
+  }
 
   // Form Definition
   const form = useForm<TUserAuthForm>({
@@ -59,7 +70,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input id="email" placeholder="yourname@example.com" {...field} value={field.value ?? ''} />
+                  <Input className="border-muted-foreground" id="email" placeholder="yourname@example.com" {...field} value={field.value ?? ''} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -83,7 +94,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             </div>
           </div>
 
-          <Button variant="outline" className="w-full" type="button" disabled={form.formState.isSubmitting}>
+          <Button variant="outline" onClick={handleSignInWithGoogle} className="w-full" type="button" disabled={form.formState.isSubmitting}>
             {form.formState.isSubmitting ? (
               <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
             ) : (

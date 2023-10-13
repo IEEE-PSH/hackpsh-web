@@ -35,5 +35,12 @@ namespace NodeJS {
      * @type {string}
      */
     NEXT_PUBLIC_SIGN_IN_PATH: string
+
+   /**
+     * Sign Up URL
+     * Specifies where the sign-up page / route exists
+     * @type {string}
+     */
+    NEXT_PUBLIC_SIGN_UP_PATH: string
   }
 }

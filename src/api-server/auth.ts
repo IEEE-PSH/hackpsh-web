@@ -2,6 +2,7 @@ import { UserAuthFormSchema } from "@/lib/zod-schemas/user-auth";
 import { publicProcedure, router } from "./trpc";
 import { cookies } from "next/headers";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { getBaseURL } from "@/lib/utils";
 
 async function handleEmailLogin(email: string) {
   const cookieStore = cookies();
@@ -11,7 +12,7 @@ async function handleEmailLogin(email: string) {
   await supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `https://${process.env.VERCEL_URL}/api/auth/callback`
+      emailRedirectTo: `${getBaseURL()}/api/auth/callback`
     }
   })
 }
