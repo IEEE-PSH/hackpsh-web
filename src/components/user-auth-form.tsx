@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -15,7 +15,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const baseURL = window.location.origin;
+  const baseURL = (typeof window !== "undefined") ? window.location.origin : '';
 
   async function handleSignInWithGoogle() {
     const supabase = createClientComponentClient();
