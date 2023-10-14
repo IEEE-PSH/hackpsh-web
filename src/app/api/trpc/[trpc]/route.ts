@@ -1,12 +1,12 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { appRouter } from "@/api-server";
 
-function handler (req: Request) {
+export async function handler(req: Request) {
   return fetchRequestHandler({
     endpoint: "/api/trpc",
-    req,
     router: appRouter,
-    createContext: () => ({}),
+    req: req,
+    createContext: () => ({req}),
   })
 }
 
