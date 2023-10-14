@@ -12,11 +12,7 @@ export const metadata: Metadata = {
   description: 'Built with love by PSH IEEE',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head />

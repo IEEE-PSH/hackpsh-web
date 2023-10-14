@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, toastErrorParams } from "@/lib/client-utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
@@ -12,12 +12,18 @@ import { TUserAuthForm, UserAuthFormSchema } from "@/lib/zod-schemas/user-auth";
 import { trpc } from "@/app/_trpc/client";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
+
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const baseURL = (typeof window !== "undefined") ? window.location.origin : '';
+
+  // Handle stale magic link error from /api/auth/callback redirect
+  // by displaying an error toast if there is an `?error=` as part of the url
+  toastErrorParams();
 
   async function handleSignInWithGoogle() {
+    const baseURL = (typeof window !== "undefined") ? window.location.origin : '';
+
     const supabase = createClientComponentClient();
     await supabase.auth.signInWithOAuth({
       provider: 'google',
@@ -45,7 +51,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       toast({
         variant: "destructive",
         title: "Oops, Something Went Wrong!",
-        description: "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly",
+        description: "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
         duration: 2000
       })
     }

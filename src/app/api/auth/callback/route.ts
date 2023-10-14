@@ -16,13 +16,33 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get('code');
+  
+  const error_reason = requestUrl.searchParams.get('error');
+  const error_description = requestUrl.searchParams.get('error_description');
 
   if (code) {
     const cookieStore = cookies();
     const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    const { data } = await supabase.auth.exchangeCodeForSession(code);
+
+    if (data.session == null) {
+      const redirectURLErrorParams = new URL(`${process.env.NEXT_PUBLIC_SIGN_IN_PATH}`, request.url)
+      redirectURLErrorParams.searchParams.append("error", "invalid_session");
+      redirectURLErrorParams.searchParams.append("error_description", "Session was not able to be acquired")
+  
+      return NextResponse.redirect(redirectURLErrorParams)
+    }
+
+    return NextResponse.redirect(new URL(process.env.NEXT_PUBLIC_DASHBOARD_PATH, request.url))
   }
 
-  // URL to redirect to after sign in process completes
-  return NextResponse.redirect(new URL(process.env.NEXT_PUBLIC_DASHBOARD_PATH, request.url))
+  // If the exchange for a valid session generates an error, supabase hits our callback route with
+  // the following: `?error=unauthorized_client&error_code=401&error_description=Email+link+is+invalid+or+has+expired`
+  if (error_reason) {
+    const redirectURLErrorParams = new URL(`${process.env.NEXT_PUBLIC_SIGN_IN_PATH}`, request.url)
+    redirectURLErrorParams.searchParams.append("error", error_reason);
+    redirectURLErrorParams.searchParams.append("error_description", error_description as string)
+
+    return NextResponse.redirect(redirectURLErrorParams)
+  }
 }
