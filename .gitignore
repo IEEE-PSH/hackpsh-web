@@ -37,3 +37,7 @@ next-env.d.ts
 
 # playwright e2e test-results
 /test-results/
+
+# Supabase
+supabase/.branches/
+supabase/.temp/
