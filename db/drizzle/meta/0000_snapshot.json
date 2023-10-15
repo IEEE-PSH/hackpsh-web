@@ -1,0 +1,98 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "id": "5cf5785e-1618-4a7b-9238-47afae0f24bf",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "app_user_profile": {
+      "name": "app_user_profile",
+      "schema": "",
+      "columns": {
+        "user_uuid": {
+          "name": "user_uuid",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_email_address": {
+          "name": "user_email_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_avatar_url": {
+          "name": "user_avatar_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_onboarding_complete": {
+          "name": "user_onboarding_complete",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_display_name": {
+          "name": "user_display_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_class_year": {
+          "name": "user_class_year",
+          "type": "class_year",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "user_uuid_index": {
+          "name": "user_uuid_index",
+          "columns": [
+            "user_uuid"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "app_user_profile_user_email_address_unique": {
+          "name": "app_user_profile_user_email_address_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "user_email_address"
+          ]
+        },
+        "app_user_profile_user_display_name_unique": {
+          "name": "app_user_profile_user_display_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "user_display_name"
+          ]
+        }
+      }
+    }
+  },
+  "enums": {
+    "class_year": {
+      "name": "class_year",
+      "values": {
+        "middle_school": "middle_school",
+        "high_school": "high_school",
+        "freshman": "freshman",
+        "sophmore": "sophmore",
+        "junior": "junior",
+        "senior": "senior",
+        "graduate": "graduate",
+        "post_graduate": "post_graduate"
+      }
+    }
+  },
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1697333704825,
+      "tag": "0000_clammy_agent_zero",
+      "breakpoints": true
+    }
+  ]
+}

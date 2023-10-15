@@ -1,12 +1,13 @@
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 import { NextResponse } from 'next/server'
-
 import type { NextRequest } from 'next/server'
+import { Database } from '@/lib/supabase/types';
+import { redirectToPath } from '@/lib/server-utils';
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
-  const supabase = createMiddlewareClient({ req, res });
-  
+  const supabase = createMiddlewareClient<Database>({ req, res });
+
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -16,20 +17,17 @@ export async function middleware(req: NextRequest) {
 
   // If a user is not signed-in, redirect to sign-in page.
   if (!session && !isSignInPage && !isSignUpPage) {
-    const redirectUrl = req.nextUrl.clone();
-    redirectUrl.pathname = process.env.NEXT_PUBLIC_SIGN_IN_PATH;
+    return redirectToPath(req, process.env.NEXT_PUBLIC_SIGN_IN_PATH);
+  }  
 
-    return NextResponse.redirect(redirectUrl);
-  }
-
-  // If the user is already signed-in / has a valid session, redirect them automatically to dashboard
+  // If the user is already signed-in / has a valid session and completed onboarding and navigates to sign-in / sign-up
+  // then redirect them automatically to dashboard
   if (session && (isSignInPage || isSignUpPage)) {
-    const redirectUrl = req.nextUrl.clone();
-    redirectUrl.pathname = process.env.NEXT_PUBLIC_DASHBOARD_PATH;
-
-    return NextResponse.redirect(redirectUrl);
+    return redirectToPath(req, process.env.NEXT_PUBLIC_DASHBOARD_PATH)
   }
 
+  // TODO: Add Check above for onboarding complete
+  // TODO: If Valid Session, but no onboarding complete -> redirectToPath(req, /onboarding)
 }
 
 export const config = {
