@@ -1,5 +1,11 @@
+import { drizzle } from 'drizzle-orm/postgres-js'
 import { initTRPC } from "@trpc/server";
 import { createContext } from "./context";
+import postgres from "postgres";
+
+const connectionString = process.env.DATABASE_URL
+const client = postgres(connectionString);
+export const db = drizzle(client);
 
 const t = initTRPC.context<typeof createContext>().create();
 

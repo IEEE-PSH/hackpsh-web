@@ -24,5 +24,5 @@ export const authRouter = router({
       return {
         message: "Success"
       }
-    })
+    }),
 })
