@@ -1,12 +1,12 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "5cf5785e-1618-4a7b-9238-47afae0f24bf",
+  "id": "fdf54a3c-1c7e-403f-afb6-8462ad9073da",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "app_user_profile": {
       "name": "app_user_profile",
-      "schema": "",
+      "schema": "app_schema",
       "columns": {
         "user_uuid": {
           "name": "user_uuid",
@@ -40,7 +40,7 @@
         },
         "user_class_year": {
           "name": "user_class_year",
-          "type": "class_year",
+          "type": "app_schema\".\"class_year",
           "primaryKey": false,
           "notNull": true
         }
@@ -75,8 +75,8 @@
     }
   },
   "enums": {
-    "class_year": {
-      "name": "class_year",
+    "app_schema\".\"class_year": {
+      "name": "app_schema\".\"class_year",
       "values": {
         "middle_school": "middle_school",
         "high_school": "high_school",
@@ -89,7 +89,9 @@
       }
     }
   },
-  "schemas": {},
+  "schemas": {
+    "app_schema": "app_schema"
+  },
   "_meta": {
     "schemas": {},
     "tables": {},

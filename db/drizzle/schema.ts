@@ -1,22 +1,14 @@
 import { boolean, index, pgEnum, pgSchema, pgTable, text, uuid } from "drizzle-orm/pg-core"
 
-export const class_year = pgEnum('class_year', ['middle_school', 'high_school', 'freshman', 'sophmore', 'junior', 'senior', 'graduate', 'post_graduate']);
+export const app_schema = pgSchema("app_schema")
+
+export const class_year = pgEnum('app_schema"."class_year', ['middle_school', 'high_school', 'freshman', 'sophmore', 'junior', 'senior', 'graduate', 'post_graduate']);
 
 /**
  * 1:1 Relationship between Supabase `auth.users.id` table.
- * Responsible for holding a user's profile viewable by authenticated users
- * 
- * RLS Policy: (SELECT) for authenticated users whose `uid` match `users.user_uuid`
- * ```sql
- * alter table app_user_profile enable row level security;
- * 
- * create policy "User Profile is viewable only by authenticated users"
- * on app_user_profile for select
- * to authenticated
- * using ( true );
- * ```
+ * Responsible for holding a user's profile
  */
-export const app_user_profile = pgTable("app_user_profile", {
+export const app_user_profile = app_schema.table("app_user_profile", {
   // Cannot introspect private schema in supabase
   user_uuid: uuid("user_uuid").primaryKey(), //.references(auth.users.id) (can't access as it's a private schema in supabase that was not able to)
   user_email_address: text("user_email_address").notNull().unique(),

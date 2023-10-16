@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Icons } from "./icons";
+import { Icons } from "@/components/ui/icons";
 import { toast } from "@/components/ui/use-toast";
 import { TUserAuthForm, UserAuthFormSchema } from "@/lib/zod-schemas/user-auth";
 import { trpc } from "@/app/_trpc/client";
