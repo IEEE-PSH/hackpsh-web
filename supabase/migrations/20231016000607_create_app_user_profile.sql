@@ -63,6 +63,9 @@ ALTER TABLE ONLY "public"."app_user_profile"
 
 CREATE INDEX "user_uuid_index" ON "public"."app_user_profile" USING "btree" ("user_uuid");
 
+ALTER TABLE ONLY "public"."app_user_profile"
+    ADD CONSTRAINT "app_user_profile_user_uuid_fkey" FOREIGN KEY ("user_uuid") REFERENCES "auth"."users"("id") ON UPDATE CASCADE ON DELETE CASCADE;
+
 CREATE POLICY "User Profile is viewable only by authenticated users" ON "public"."app_user_profile" FOR SELECT TO "authenticated" USING (true);
 
 ALTER TABLE "public"."app_user_profile" ENABLE ROW LEVEL SECURITY;

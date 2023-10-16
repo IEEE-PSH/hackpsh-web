@@ -16,10 +16,13 @@ CREATE TABLE IF NOT EXISTS "app_user_profile" (
 );
 CREATE INDEX IF NOT EXISTS "user_uuid_index" ON "app_user_profile" ("user_uuid");
 --> statement-breakpoint
-ALTER TABLE app_user_profile ENABLE ROW LEVEL SECURITY;
+ALTER TABLE ONLY "public"."app_user_profile"
+    ADD CONSTRAINT "app_user_profile_user_uuid_fkey" FOREIGN KEY ("user_uuid") REFERENCES "auth"."users"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 --> statement-breakpoint
-CREATE POLICY "User Profile is viewable only by authenticated users"
-ON app_user_profile FOR SELECT
-TO authenticated
-USING ( TRUE );
+ALTER TABLE "public"."app_user_profile" ENABLE ROW LEVEL SECURITY;
+--> statement-breakpoint
+CREATE POLICY "User Profile is viewable only by authenticated users" 
+ON "public"."app_user_profile" FOR SELECT 
+TO "authenticated" 
+USING (true);
 --> statement-breakpoint
