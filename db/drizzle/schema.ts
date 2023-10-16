@@ -17,8 +17,8 @@ export const class_year = pgEnum('class_year', ['middle_school', 'high_school', 
  * ```
  */
 export const app_user_profile = pgTable("app_user_profile", {
-  // In Supabase, enable FK Relations on `user_uuid` to `auth.users.id` and CASCADE DELETE and CASCADE UPDATE
-  user_uuid: uuid("user_uuid").primaryKey(), //.references(auth.users.id)
+  // Cannot introspect private schema in supabase
+  user_uuid: uuid("user_uuid").primaryKey(), //.references(auth.users.id) (can't access as it's a private schema in supabase that was not able to)
   user_email_address: text("user_email_address").notNull().unique(),
   user_avatar_url: text("user_avatar_url"),
   user_onboarding_complete: boolean("user_onboarding_complete"),
