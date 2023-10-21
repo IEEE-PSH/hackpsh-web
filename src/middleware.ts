@@ -11,22 +11,9 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  const isSignInPage = req.nextUrl.pathname.startsWith(
-    process.env.NEXT_PUBLIC_SIGN_IN_PATH,
-  );
-  const isSignUpPage = req.nextUrl.pathname.startsWith(
-    process.env.NEXT_PUBLIC_SIGN_UP_PATH,
-  );
-
   // If a user is not signed-in, redirect to sign-in page.
-  if (!session && !isSignInPage && !isSignUpPage) {
+  if (!session) {
     return redirectToPath(req, process.env.NEXT_PUBLIC_SIGN_IN_PATH);
-  }
-
-  // If the user is already signed-in / has a valid session and completed onboarding and navigates to sign-in / sign-up
-  // then redirect them automatically to dashboard
-  if (session && (isSignInPage || isSignUpPage)) {
-    return redirectToPath(req, process.env.NEXT_PUBLIC_DASHBOARD_PATH);
   }
 
   // TODO: Add Check above for onboarding complete
@@ -34,5 +21,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard", "/onboarding", "/sign-in", "/sign-up"],
+  matcher: ["/dashboard", "/onboarding"],
 };

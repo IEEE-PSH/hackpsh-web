@@ -9,14 +9,16 @@ import { headers } from 'next/headers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'HackPSH Fall 2023',
+  title: 'HackPSH',
   description: 'Built with love by PSH IEEE',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <link rel="icon" type="image/svg+xml" href="/brand.svg" />
+      </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
