@@ -1,7 +1,7 @@
 "use client";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/_components/ui/button";
 import { useRouter } from "next/navigation";
 
 // Since we utilize JWTs for session management, we have to process the sign-out on

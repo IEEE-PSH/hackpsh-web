@@ -41,16 +41,20 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/node": "latest",
-    "@types/pg": "^8.10.5",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
-    "autoprefixer": "latest",
-    "dotenv": "^16.3.1",
+    "@types/eslint": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest",
+    "prettier": "latest",
+    "prettier-plugin-tailwindcss": "latest",
+    "autoprefixer": "latest",
+    "dotenv": "latest",
     "postcss": "latest",
-    "supabase": "^1.100.1",
+    "@types/node": "latest",
+    "@types/pg": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
     "tailwindcss": "latest",
     "typescript": "latest"
   }

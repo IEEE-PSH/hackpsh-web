@@ -1,13 +1,13 @@
 "use client";
 
-import { cn } from "@/lib/client-utils";
-import { OnboardingFormSchema, TOnboardingForm } from "@/lib/zod-schemas/onboarding";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { cn } from "@/app/_lib/client-utils";
+import { OnboardingFormSchema, TOnboardingForm } from "@/app/_lib/zod-schemas/onboarding";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/app/_components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Icons } from "@/components/ui/icons";
+import { Input } from "@/app/_components/ui/input";
+import { Button } from "@/app/_components/ui/button";
+import { Icons } from "@/app/_components/ui/icons";
 
 interface OnboardingFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 

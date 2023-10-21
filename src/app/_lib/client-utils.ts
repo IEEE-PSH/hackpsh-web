@@ -1,4 +1,4 @@
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/app/_components/ui/use-toast";
 import { type ClassValue, clsx } from "clsx"
 import { useSearchParams } from "next/navigation";
 import { twMerge } from "tailwind-merge"

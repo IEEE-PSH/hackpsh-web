@@ -1,9 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { ThemeProvider } from '@/components/theme-provider'
-import { Toaster } from '@/components/ui/toaster'
-import ReactQueryProvider from '@/components/react-query-provider'
+import { ThemeProvider } from '@/app/_components/theme-provider'
+import { Toaster } from '@/app/_components/ui/toaster'
+import ReactQueryProvider from '@/app/_trpc/react'
+import { headers } from 'next/headers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem={true}
           storageKey="hackpsh-theme"
         >
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <ReactQueryProvider headers={headers()}>{children}</ReactQueryProvider>
           <Toaster />
         </ThemeProvider>
       </body>

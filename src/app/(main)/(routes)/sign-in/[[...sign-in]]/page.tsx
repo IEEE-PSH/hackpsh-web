@@ -1,9 +1,9 @@
 import { Metadata } from "next"
 import Link from "next/link"
-import { cn } from "@/lib/client-utils"
-import { buttonVariants } from "@/components/ui/button"
-import { UserAuthForm } from "@/components/user-auth-form"
-import { ModeToggle } from "@/components/ui/mode-toggle"
+import { cn } from "@/app/_lib/client-utils"
+import { buttonVariants } from "@/app/_components/ui/button"
+import { UserAuthForm } from "@/app/_components/user-auth-form"
+import { ModeToggle } from "@/app/_components/ui/mode-toggle"
 
 export const metadata: Metadata = {
   title: "HackPSH - Sign In",

@@ -1,5 +1,5 @@
-import { Button, buttonVariants } from "@/components/ui/button";
-import { ModeToggle } from "@/components/ui/mode-toggle";
+import { Button, buttonVariants } from "@/app/_components/ui/button";
+import { ModeToggle } from "@/app/_components/ui/mode-toggle";
 import Link from "next/link";
 
 

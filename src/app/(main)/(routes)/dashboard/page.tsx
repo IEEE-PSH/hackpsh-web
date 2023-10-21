@@ -1,5 +1,5 @@
-import { ModeToggle } from "@/components/ui/mode-toggle";
-import SignOutButton from "@/components/ui/sign-out-button";
+import { ModeToggle } from "@/app/_components/ui/mode-toggle";
+import SignOutButton from "@/app/_components/ui/sign-out-button";
 
 export default function Page() {
   return (

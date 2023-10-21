@@ -1,15 +1,15 @@
 "use client";
 
-import { cn, toastErrorParams } from "@/lib/client-utils";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { cn, toastErrorParams } from "@/app/_lib/client-utils";
+import { Input } from "@/app/_components/ui/input";
+import { Button } from "@/app/_components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Icons } from "@/components/ui/icons";
-import { toast } from "@/components/ui/use-toast";
-import { TUserAuthForm, UserAuthFormSchema } from "@/lib/zod-schemas/user-auth";
-import { trpc } from "@/app/_trpc/client";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/app/_components/ui/form";
+import { Icons } from "@/app/_components/ui/icons";
+import { toast } from "@/app/_components/ui/use-toast";
+import { TUserAuthForm, UserAuthFormSchema } from "@/app/_lib/zod-schemas/user-auth";
+import { trpc } from "@/app/_trpc/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 
