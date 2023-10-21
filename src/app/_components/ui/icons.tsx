@@ -44,7 +44,7 @@ export const Icons = {
                     x2="62.5"
                     y1="-26.73681"
                     x1="62.5"
-                    stroke-width="10"
+                    strokeWidth="10"
                     fill="none"
                 />
                 <line
@@ -55,7 +55,7 @@ export const Icons = {
                     x2="62.41667"
                     y1="27.00001"
                     x1="62.58332"
-                    stroke-width="10"
+                    strokeWidth="10"
                     fill="none"
                 />
                 <line
@@ -66,7 +66,7 @@ export const Icons = {
                     x2="62.5"
                     y1="0.00003"
                     x1="62.5"
-                    stroke-width="10"
+                    strokeWidth="10"
                     fill="none"
                 />
                 <line
@@ -76,7 +76,7 @@ export const Icons = {
                     x2="35.63158"
                     y1="0.41669"
                     x1="35.63158"
-                    stroke-width="10"
+                    strokeWidth="10"
                     fill="none"
                 />
                 <line
@@ -86,7 +86,7 @@ export const Icons = {
                     x2="88.74561"
                     y1="0.41669"
                     x1="89.10526"
-                    stroke-width="10"
+                    strokeWidth="10"
                     fill="none"
                 />
                 <line
@@ -96,13 +96,13 @@ export const Icons = {
                     x2="62.5"
                     y1="0.41669"
                     x1="62.5"
-                    stroke-width="10"
+                    strokeWidth="10"
                     fill="none"
                 />
                 <rect
                     stroke="rgb(220,212,97)"
                     rx="3"
-                    stroke-width="12"
+                    strokeWidth="12"
                     id="svg_5"
                     height="76"
                     width="76"
