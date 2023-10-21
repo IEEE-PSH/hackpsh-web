@@ -2,6 +2,7 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { redirectToPath } from "@/app/_lib/server-utils";
+import { serverTRPC } from "@/app/_trpc/server";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
