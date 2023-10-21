@@ -15,6 +15,11 @@ export default function SignIn() {
   return (
     <>
       <div className="container relative grid flex-col items-center justify-center h-screen lg:max-w-none lg:grid-cols-2 lg:px-0">
+        <div className="absolute flex items-center text-lg font-medium left-4 top-4 md:right-8 md:top-8 lg:hidden">
+          <Icons.brand className="h-[2.4rem] w-[2.0rem] mr-2" />
+          <span>HackPSH Fall 2023</span>
+        </div>
+
         <Link
           href={process.env.NEXT_PUBLIC_SIGN_UP_PATH}
           className={cn(
