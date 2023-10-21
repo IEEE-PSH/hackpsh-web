@@ -12,6 +12,7 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
+  console.log(session?.user.id);
   // If a user is not signed-in, redirect to sign-in page.
   if (!session) {
     return redirectToPath(req, process.env.NEXT_PUBLIC_SIGN_IN_PATH);
