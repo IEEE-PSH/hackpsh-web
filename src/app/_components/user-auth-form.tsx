@@ -8,12 +8,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/app/_components/ui/form";
 import { Icons } from "@/app/_components/ui/icons";
 import { toast } from "@/app/_components/ui/use-toast";
-import { TUserAuthForm, UserAuthFormSchema } from "@/app/_lib/zod-schemas/user-auth";
+import { type TUserAuthForm, UserAuthFormSchema } from "@/app/_lib/zod-schemas/user-auth";
 import { trpc } from "@/app/_trpc/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
+type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
@@ -39,7 +39,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   })
 
   const emailLoginMutation = trpc.auth.email_login.useMutation({
-    onSuccess: async () => {
+    onSuccess: () => {
       toast({
         variant: "success",
         title: "Login Magic Link Sent!",
@@ -61,7 +61,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     try {
       await emailLoginMutation.mutateAsync({ email: values.email })
       form.reset();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.log(err);
     }
   }
