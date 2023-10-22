@@ -60,9 +60,7 @@ export default function Navbar() {
         <nav className={cn("mx-auto flex w-[1000px] flex-row items-center")}>
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className={cn(`sm:hidden`)}>
-                <Menu />
-              </Button>
+              <Menu className={cn(`sm:hidden`)} />
             </SheetTrigger>
             <SheetContent side="left">
               <MenuNavLinks />
@@ -76,9 +74,7 @@ export default function Navbar() {
           {logged ? (
             <DropdownMenu>
               <DropdownMenuTrigger className="ml-2 outline-none">
-                <Button variant="ghost" size="icon">
-                  <User />
-                </Button>
+                <User className="" />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <SignOutButton className="w-full" />
