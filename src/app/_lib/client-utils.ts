@@ -18,7 +18,7 @@ export function toastErrorParams() {
     toast({
       variant: "destructive",
       title: error_reason,
-      description: error_description as string,
+      description: error_description!,
       duration: 5000,
     });
   }

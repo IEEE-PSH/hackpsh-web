@@ -47,8 +47,8 @@ export default function Navbar() {
 
   //temporary conditional rendering
   useEffect(() => {
-    (async () => {
-      let res = await supabase.auth.getUser();
+    void (async () => {
+      const res = await supabase.auth.getUser();
       if (res.data.user === null) setLogged(false);
       else setLogged(true);
     })();
@@ -60,7 +60,9 @@ export default function Navbar() {
         <nav className={cn("mx-auto flex w-[1000px] flex-row items-center")}>
           <Sheet>
             <SheetTrigger asChild>
-              <Menu className={cn(`sm:hidden`)} />
+              <Button variant="ghost" size="icon" className={cn(`sm:hidden`)}>
+                <Menu />
+              </Button>
             </SheetTrigger>
             <SheetContent side="left">
               <MenuNavLinks />
@@ -74,7 +76,9 @@ export default function Navbar() {
           {logged ? (
             <DropdownMenu>
               <DropdownMenuTrigger className="ml-2 outline-none">
-                <User className="" />
+                <Button variant="ghost" size="icon">
+                  <User />
+                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <SignOutButton className="w-full" />
