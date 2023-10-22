@@ -1,10 +1,13 @@
-import { z } from "zod"
+import { z } from "zod";
 
 // Form Schema
 export const OnboardingFormSchema = z.object({
-  user_display_name: z.string()
-                .min(5, { message: "Display Name must be 5 or more characters long." })
-                .max(30, { message: "Display Name must be fewer than 30 characters long."}),
+  user_display_name: z
+    .string()
+    .min(5, { message: "Display Name must be 5 or more characters long." })
+    .max(30, {
+      message: "Display Name must be fewer than 30 characters long.",
+    }),
   user_class_year: z.union([
     z.literal("middle_school"),
     z.literal("high_school"),
@@ -14,7 +17,11 @@ export const OnboardingFormSchema = z.object({
     z.literal("senior"),
     z.literal("graduate"),
     z.literal("post_graduate"),
-  ])
+  ]),
+});
+
+export const OnboardingCompleteLookupSchema = z.object({
+  user_uuid: z.string().uuid("Please provide a valid UUID."),
 });
 
 export type TOnboardingForm = z.infer<typeof OnboardingFormSchema>;
