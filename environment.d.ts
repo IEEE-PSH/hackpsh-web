@@ -49,5 +49,12 @@ namespace NodeJS {
      * @type {string}
      */
     NEXT_PUBLIC_DASHBOARD_PATH: string
+
+   /**
+     * Onboarding Route Path
+     * Specifies where the onboarding page / route exists
+     * @type {string}
+     */
+   NEXT_PUBLIC_ONBOARDING_PATH: string
   }
 }

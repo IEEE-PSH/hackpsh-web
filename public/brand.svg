@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 126 126">
+  <g>
+    <line
+      transform="rotate(90 62.5 35.3464)"
+      stroke="rgb(220,212,97)"
+      id="svg_1"
+      y2="97.42981"
+      x2="62.5"
+      y1="-26.73681"
+      x1="62.5"
+      stroke-width="10"
+      fill="none"
+    />
+    <line
+      transform="rotate(90 62.5 89.0833)"
+      stroke="rgb(220,212,97)"
+      id="svg_85"
+      y2="151.16663"
+      x2="62.41667"
+      y1="27.00001"
+      x1="62.58332"
+      stroke-width="10"
+      fill="none"
+    />
+    <line
+      transform="rotate(90 62.5 62.0833)"
+      stroke="rgb(220,212,97)"
+      id="svg_86"
+      y2="124.16665"
+      x2="62.5"
+      y1="0.00003"
+      x1="62.5"
+      stroke-width="10"
+      fill="none"
+    />
+    <line
+      stroke="rgb(220,212,97)"
+      id="svg_74"
+      y2="124.58331"
+      x2="35.63158"
+      y1="0.41669"
+      x1="35.63158"
+      stroke-width="10"
+      fill="none"
+    />
+    <line
+      stroke="rgb(220,212,97)"
+      id="svg_79"
+      y2="124.58331"
+      x2="88.74561"
+      y1="0.41669"
+      x1="89.10526"
+      stroke-width="10"
+      fill="none"
+    />
+    <line
+      stroke="rgb(220,212,97)"
+      id="svg_80"
+      y2="124.58331"
+      x2="62.5"
+      y1="0.41669"
+      x1="62.5"
+      stroke-width="10"
+      fill="none"
+    />
+    <rect
+      stroke="rgb(220,212,97)"
+      rx="3"
+      stroke-width="12"
+      id="svg_5"
+      height="76"
+      width="76"
+      y="24.5"
+      x="24.5"
+      fill="#000000"
+    >
+    
+    </rect>
+    <polygon fill="rgb(220,212,97)" points="65 42 45 66 63 66 61 82 81 58 63 58 65 42" id="svg_3" />
+  </g>
+</svg>
