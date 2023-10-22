@@ -6,18 +6,18 @@ import { useRouter } from "next/navigation";
 
 // Since we utilize JWTs for session management, we have to process the sign-out on
 // client-side in order to clear out the cookies and invalidate the JWT.
-export default function SignOutButton() {
+export default function SignOutButton({ className }: { className?: string }) {
   const supabase = createClientComponentClient();
   const router = useRouter();
 
   async function handleOnClick() {
     await supabase.auth.signOut();
-    router.push('/sign-in')
+    router.push("/sign-in");
   }
 
   return (
-    <Button onClick={handleOnClick}>
+    <Button onClick={handleOnClick} className={className}>
       Sign Out
     </Button>
-  )
+  );
 }
