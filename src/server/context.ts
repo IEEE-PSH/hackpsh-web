@@ -1,5 +1,7 @@
 import { db } from "@/db/drizzle";
-import { NextRequest } from "next/server";
+import { type NextRequest } from "next/server";
+import { getSessionFromContext } from "./supabase";
+import { Session } from "@supabase/auth-helpers-nextjs";
 
 /**
  * 1. CONTEXT
@@ -10,8 +12,9 @@ import { NextRequest } from "next/server";
  */
 
 interface CreateContextOptions {
-  req: NextRequest,
+  req: NextRequest;
   headers: Headers;
+  session: Session | null;
 }
 
 /**
@@ -29,6 +32,7 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
     req: opts.req,
     headers: opts.headers,
     db,
+    session: opts.session,
   };
 };
 
@@ -38,11 +42,13 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
  *
  * @see https://trpc.io/docs/context
  */
-export const createTRPCContext = (opts: { req: NextRequest }) => {
+export const createTRPCContext = async (opts: { req: NextRequest }) => {
   // Fetch stuff that depends on the request
+  const session = await getSessionFromContext();
 
   return createInnerTRPCContext({
     req: opts.req,
     headers: opts.req.headers,
+    session: session,
   });
 };
