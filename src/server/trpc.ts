@@ -1,5 +1,5 @@
 import { TRPCError, initTRPC } from "@trpc/server";
-import { createTRPCContext } from "./context";
+import { type createTRPCContext } from "./context";
 import { ZodError } from "zod";
 
 /**
