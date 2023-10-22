@@ -1,4 +1,3 @@
-"use client";
 import { buttonVariants } from "@/app/_components/ui/button";
 import Link from "next/link";
 export default function LoginButton() {
