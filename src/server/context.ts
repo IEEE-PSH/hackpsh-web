@@ -1,7 +1,7 @@
 import { db } from "@/db/drizzle";
 import { type NextRequest } from "next/server";
 import { getSessionFromContext } from "./supabase";
-import { Session } from "@supabase/auth-helpers-nextjs";
+import { type Session } from "@supabase/auth-helpers-nextjs";
 
 /**
  * 1. CONTEXT
