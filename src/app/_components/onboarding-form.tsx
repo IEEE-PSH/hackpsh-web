@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/app/_lib/client-utils";
-import { OnboardingFormSchema, TOnboardingForm } from "@/app/_lib/zod-schemas/onboarding";
+import { OnboardingFormSchema, type TOnboardingForm } from "@/app/_lib/zod-schemas/onboarding";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/app/_components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,7 @@ import { Input } from "@/app/_components/ui/input";
 import { Button } from "@/app/_components/ui/button";
 import { Icons } from "@/app/_components/ui/icons";
 
-interface OnboardingFormProps extends React.HTMLAttributes<HTMLDivElement> { }
+type OnboardingFormProps = React.HTMLAttributes<HTMLDivElement>
 
 export function OnboardingForm({ className, ...props }: OnboardingFormProps) {
   // Form Definition
@@ -17,6 +17,7 @@ export function OnboardingForm({ className, ...props }: OnboardingFormProps) {
     resolver: zodResolver(OnboardingFormSchema)
   });
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async function onSubmit(values: TOnboardingForm) {
     console.log(values.user_display_name);
   }

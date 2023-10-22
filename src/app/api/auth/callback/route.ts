@@ -39,7 +39,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(redirectURLErrorParams);
     }
 
-    const sessionUserUUID = data.user.id;
     // TODO: Create Logic from session to query against db in order to redirect to onboarding or dashboard appropriately
     // This is the only entry point to our application
     return NextResponse.redirect(
