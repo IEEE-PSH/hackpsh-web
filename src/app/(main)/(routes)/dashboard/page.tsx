@@ -14,10 +14,10 @@ export default async function Page() {
 
   if (session) {
     const res = await serverTRPC.user.is_onboarding_complete.query({ user_uuid: session.user.id });
-
+    console.log(res);
     return (
       <div>
-        <p>{res.is_onboarding_complete}</p>
+        <p>{JSON.stringify(res)}</p>
         <h1 className="text-xl">Dashboard</h1>
         <ModeToggle />
         <SignOutButton />
