@@ -13,7 +13,7 @@ export function SiteHeader() {
       <div className="container flex items-center h-14">
         <MainNav />
         <MobileNav />
-        <div className="flex items-center justify-between flex-1 space-x-2 md:justify-start">
+        <div className="flex items-center justify-end flex-1 space-x-2">
           <nav className="flex items-center">
             <Link
               href={siteConfig.links.instagram}
