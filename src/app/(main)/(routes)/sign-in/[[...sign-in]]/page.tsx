@@ -21,19 +21,15 @@ export default function SignIn() {
           <span>HackPSH</span>
         </div>
 
-        <Link
-          href={siteConfig.paths.sign_up}
-          className={cn(
-            buttonVariants({ variant: "ghost" }),
-            "absolute right-4 top-4 md:right-8 md:top-8",
-          )}
-        >
-          Sign Up
-        </Link>
-
-        <div className="absolute right-28 top-4 md:right-32 md:top-8">
+        <nav className="absolute flex flex-row items-center space-x-2 right-4 top-4 md:right-8 md:top-8">
+          <Link
+            href={siteConfig.paths.sign_up}
+            className={cn(buttonVariants({ variant: "ghost" }))}
+          >
+            Sign Up
+          </Link>
           <ModeToggle />
-        </div>
+        </nav>
 
         <div className="relative flex-col hidden h-full p-10 text-white bg-muted dark:border-r lg:flex">
           <div className="absolute inset-0 bg-zinc-900" />
@@ -58,14 +54,14 @@ export default function SignIn() {
               By clicking continue, you agree to our{" "}
               <Link
                 href="/info/terms-of-service"
-                className="underline underline-offset-4 hover:text-primary"
+                className="underline underline-offset-4 hover:text-primary-foreground hover:dark:text-primary"
               >
                 Terms of Service
               </Link>{" "}
               and{" "}
               <Link
                 href="/info/privacy-policy"
-                className="underline underline-offset-4 hover:text-primary"
+                className="underline underline-offset-4 hover:text-primary-foreground hover:dark:text-primary"
               >
                 Privacy Policy
               </Link>
