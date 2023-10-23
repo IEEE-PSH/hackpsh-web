@@ -110,7 +110,7 @@ devDependencies:
     specifier: latest
     version: 10.4.16(postcss@8.4.31)
   dotenv:
-    specifier: latest
+    specifier: ^16.3.1
     version: 16.3.1
   eslint:
     specifier: latest
