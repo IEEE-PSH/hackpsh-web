@@ -5,7 +5,6 @@ import { ThemeProvider } from '@/app/_components/theme-provider'
 import { Toaster } from '@/app/_components/ui/toaster'
 import ReactQueryProvider from '@/app/_trpc/react'
 import { headers } from 'next/headers'
-import { SiteHeader } from './_components/nav/site-header'
 
 const inter = Inter({ subsets: ['latin'] })
 
