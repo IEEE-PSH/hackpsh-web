@@ -16,26 +16,35 @@ export default function SignIn() {
   return (
     <>
       <div className="container relative grid flex-col items-center justify-center h-screen lg:max-w-none lg:grid-cols-2 lg:px-0">
-        <div className="absolute flex items-center text-lg font-medium left-4 top-4 md:right-8 md:top-8 lg:hidden">
-          <Icons.brand className="h-[2.4rem] w-[2.0rem] mr-2" />
-          <span>HackPSH</span>
-        </div>
-
-        <nav className="absolute flex flex-row items-center space-x-2 right-4 top-4 md:right-8 md:top-8">
+        <div className="absolute flex items-center flex-1 w-full text-lg font-medium top-4 md:top-8">
           <Link
-            href={siteConfig.paths.sign_up}
-            className={cn(buttonVariants({ variant: "ghost" }))}
+            href={siteConfig.paths.home}
+            className="flex flex-row items-center justify-start ml-4 space-x-2 lg:hidden"
           >
-            Sign Up
+            <Icons.brand className="h-[2.4rem] w-[2.0rem] mr-2" />
+            <span className="hidden font-bold sm:inline-block">{siteConfig.name}</span>
           </Link>
-          <ModeToggle />
-        </nav>
+          <nav className="flex items-center justify-end flex-1 mr-4 space-x-2">
+            <Link
+              href={siteConfig.paths.sign_up}
+              className={cn(buttonVariants({ variant: "ghost" }))}
+            >
+              Sign Up
+            </Link>
+            <ModeToggle />
+          </nav>
+        </div>
 
         <div className="relative flex-col hidden h-full p-10 text-white bg-muted dark:border-r lg:flex">
           <div className="absolute inset-0 bg-zinc-900" />
-          <div className="relative z-20 flex items-center text-lg font-medium">
-            <Icons.brand className="h-[2.4rem] w-[2.0rem] mr-2" />
-            <span>HackPSH</span>
+          <div className="relative z-20 flex items-center text-lg">
+            <Link
+              href={siteConfig.paths.home}
+              className="flex flex-row items-center justify-start space-x-2"
+            >
+              <Icons.brand className="h-[2.4rem] w-[2.0rem] mr-2" />
+              <span className="hidden font-bold sm:inline-block">{siteConfig.name}</span>
+            </Link>
           </div>
         </div>
 
