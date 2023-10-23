@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MainNav } from "./main-nav";
+import { MobileNav } from "./mobile-nav";
 import { cn } from "@/app/_lib/client-utils";
 import { ModeToggle } from "@/app/_components/ui/mode-toggle";
 import { buttonVariants } from "@/app/_components/ui/button";
@@ -10,7 +11,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95">
       <div className="container flex items-center h-14">
         <MainNav />
-
+        <MobileNav />
         <div className="flex items-center justify-between flex-1 space-x-2 md:justify-end">
           <nav className="flex items-center">
             <Link
