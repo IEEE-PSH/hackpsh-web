@@ -3,7 +3,7 @@
 import { cn } from "@/app/_lib/client-utils";
 import {
   OnboardingFormSchema,
-  TOnboardingForm,
+  type TOnboardingForm,
 } from "@/app/_lib/zod-schemas/onboarding";
 import {
   Form,
