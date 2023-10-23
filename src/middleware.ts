@@ -2,6 +2,7 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { redirectToPath } from "@/app/_lib/server-utils";
+import { siteConfig } from "./app/_config/site";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
@@ -13,7 +14,7 @@ export async function middleware(req: NextRequest) {
 
   // If a user is not signed-in, redirect to sign-in page.
   if (!session) {
-    return redirectToPath(req, process.env.NEXT_PUBLIC_SIGN_IN_PATH);
+    return redirectToPath(req, siteConfig.paths.sign_in);
   }
 
   // TODO: Add Check above for onboarding complete

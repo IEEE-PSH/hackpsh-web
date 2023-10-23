@@ -1,3 +1,4 @@
+import { siteConfig } from "@/app/_config/site";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
@@ -27,7 +28,7 @@ export async function GET(request: NextRequest) {
 
     if (data.session == null) {
       const redirectURLErrorParams = new URL(
-        `${process.env.NEXT_PUBLIC_SIGN_IN_PATH}`,
+        siteConfig.paths.sign_in,
         request.url,
       );
       redirectURLErrorParams.searchParams.append("error", "invalid_session");
@@ -42,7 +43,7 @@ export async function GET(request: NextRequest) {
     // TODO: Create Logic from session to query against db in order to redirect to onboarding or dashboard appropriately
     // This is the only entry point to our application
     return NextResponse.redirect(
-      new URL(process.env.NEXT_PUBLIC_DASHBOARD_PATH, request.url),
+      new URL(siteConfig.paths.dashboard, request.url),
     );
   }
 
@@ -50,7 +51,7 @@ export async function GET(request: NextRequest) {
   // the following: `?error=unauthorized_client&error_code=401&error_description=Email+link+is+invalid+or+has+expired`
   if (error_reason) {
     const redirectURLErrorParams = new URL(
-      `${process.env.NEXT_PUBLIC_SIGN_IN_PATH}`,
+      siteConfig.paths.sign_in,
       request.url,
     );
     redirectURLErrorParams.searchParams.append("error", error_reason);

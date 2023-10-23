@@ -73,7 +73,7 @@ export default function Navbar() {
 
           <MainNavLinks />
 
-          <ModeToggle className="ml-auto" />
+          <ModeToggle />
           {logged ? (
             <DropdownMenu>
               <DropdownMenuTrigger className="ml-2 outline-none">

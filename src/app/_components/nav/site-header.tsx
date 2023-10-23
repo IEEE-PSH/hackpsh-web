@@ -5,6 +5,7 @@ import { cn } from "@/app/_lib/client-utils";
 import { ModeToggle } from "@/app/_components/ui/mode-toggle";
 import { buttonVariants } from "@/app/_components/ui/button";
 import { Instagram } from "lucide-react";
+import { siteConfig } from "@/app/_config/site";
 
 export function SiteHeader() {
   return (
@@ -12,10 +13,10 @@ export function SiteHeader() {
       <div className="container flex items-center h-14">
         <MainNav />
         <MobileNav />
-        <div className="flex items-center justify-between flex-1 space-x-2 md:justify-end">
+        <div className="flex items-center justify-between flex-1 space-x-2 md:justify-start">
           <nav className="flex items-center">
             <Link
-              href={process.env.NEXT_PUBLIC_SOCIAL_INSTAGRAM_LINK}
+              href={siteConfig.links.instagram}
               target="_blank"
               rel="noreferrer"
             >

@@ -5,6 +5,7 @@ import { buttonVariants } from "@/app/_components/ui/button";
 import { UserAuthForm } from "@/app/_components/user-auth-form";
 import { ModeToggle } from "@/app/_components/ui/mode-toggle";
 import { Icons } from "@/app/_components/ui/icons";
+import { siteConfig } from "@/app/_config/site";
 
 export const metadata: Metadata = {
   title: "HackPSH | Sign In",
@@ -21,7 +22,7 @@ export default function SignIn() {
         </div>
 
         <Link
-          href={process.env.NEXT_PUBLIC_SIGN_UP_PATH}
+          href={siteConfig.paths.sign_up}
           className={cn(
             buttonVariants({ variant: "ghost" }),
             "absolute right-4 top-4 md:right-8 md:top-8",

@@ -3,8 +3,11 @@ import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/app/_components/ui/sheet";
 import { Button } from "@/app/_components/ui/button";
 import { Menu } from "lucide-react";
-import Link from "next/link";
+import Link, { type LinkProps } from "next/link";
 import { cn } from "@/app/_lib/client-utils";
+import { useRouter } from "next/navigation";
+import { Icons } from "../ui/icons";
+import { siteConfig } from "@/app/_config/site";
 
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,15 +24,45 @@ export function MobileNav() {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="pr-0">
-        <Link
-          href={process.env.NEXT_PUBLIC_HOME_PATH}
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-          )}
+        <MobileLink
+          href={siteConfig.paths.home}
+          className="flex items-center"
+          onOpenChange={setIsOpen}
         >
-          Home
-        </Link>
+          <Icons.brand className="w-4 h-4 mr-2" />
+          <span className="font-bold">{siteConfig.name}</span>
+        </MobileLink>
       </SheetContent>
     </Sheet>
+  )
+}
+
+interface MobileLinkProps extends LinkProps {
+  onOpenChange?: (open: boolean) => void
+  children: React.ReactNode
+  className?: string
+}
+
+function MobileLink({
+  href,
+  onOpenChange,
+  className,
+  children,
+  ...props
+}: MobileLinkProps) {
+  const router = useRouter()
+  return (
+    <Link
+      href={href}
+      onClick={() => {
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
+        router.push(href.toString())
+        onOpenChange?.(false)
+      }}
+      className={cn(className)}
+      {...props}
+    >
+      {children}
+    </Link>
   )
 }
