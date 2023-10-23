@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/app/_lib/client-utils";
@@ -100,10 +101,9 @@ export default function Navbar() {
             key={"main" + link.href}
             href={link.href}
             className={cn(
-              `hover:text-foreground/[85] ${
-                pathname === link.href
-                  ? "text-foreground/100"
-                  : "text-foreground/70"
+              `hover:text-foreground/[85] ${pathname === link.href
+                ? "text-foreground/100"
+                : "text-foreground/70"
               } ${buttonVariants({ variant: null })}`,
             )}
           >
@@ -123,10 +123,9 @@ export default function Navbar() {
             key={"menu" + link.href}
             href={link.href}
             className={cn(
-              `ml-4 text-xl hover:text-foreground/[85]  ${
-                pathname === link.href
-                  ? "text-foreground/100"
-                  : "text-foreground/70"
+              `ml-4 text-xl hover:text-foreground/[85]  ${pathname === link.href
+                ? "text-foreground/100"
+                : "text-foreground/70"
               }`,
             )}
           >

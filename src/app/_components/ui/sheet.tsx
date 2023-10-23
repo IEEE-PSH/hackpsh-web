@@ -53,7 +53,7 @@ interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
   VariantProps<typeof sheetVariants> {
   children: React.ReactNode,
-  className: string | undefined
+  className?: string | undefined
 }
 
 
