@@ -5,6 +5,8 @@ export const siteConfig = {
   },
   paths: {
     home: "/",
+    about: "/about",
+    partners: "/partners",
     sign_in: "/sign-in",
     sign_up: "/sign-up",
     onboarding: "/onboarding",

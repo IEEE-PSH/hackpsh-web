@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { Icons } from "../ui/icons";
 import { siteConfig } from "@/app/_config/site";
 
-export function MobileNav() {
+export function ProtectedMobileNav() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -43,7 +43,7 @@ interface MobileLinkProps extends LinkProps {
   className?: string
 }
 
-function MobileLink({
+export function MobileLink({
   href,
   onOpenChange,
   className,

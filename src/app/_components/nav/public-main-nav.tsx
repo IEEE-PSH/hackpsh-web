@@ -6,13 +6,13 @@ import { Icons } from "../ui/icons";
 import { cn } from "@/app/_lib/client-utils";
 import { siteConfig } from "@/app/_config/site";
 
-export function MainNav() {
+export function PublicMainNav() {
   const pathname = usePathname();
 
   return (
     <div className="hidden mr-4 md:flex">
       <Link
-        href={siteConfig.paths.sign_in}
+        href={siteConfig.paths.home}
         className="flex items-center mr-6 space-x-2"
       >
         <Icons.brand className="h-[2.4rem] w-[2.0rem] mr-2" />
@@ -29,40 +29,22 @@ export function MainNav() {
           Home
         </Link>
         <Link
-          href={siteConfig.paths.challenges}
+          href={siteConfig.paths.about}
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname.startsWith(siteConfig.paths.challenges) ? "text-foreground" : "text-foreground/60"
+            pathname.startsWith(siteConfig.paths.about) ? "text-foreground" : "text-foreground/60"
           )}
         >
-          Challenges
+          About
         </Link>
         <Link
-          href={siteConfig.paths.leaderboard}
+          href={siteConfig.paths.partners}
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname.startsWith(siteConfig.paths.leaderboard) ? "text-foreground" : "text-foreground/60"
+            pathname.startsWith(siteConfig.paths.partners) ? "text-foreground" : "text-foreground/60"
           )}
         >
-          Leaderboard
-        </Link>
-        <Link
-          href={siteConfig.paths.announcements}
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname.startsWith(siteConfig.paths.announcements) ? "text-foreground" : "text-foreground/60"
-          )}
-        >
-          Announcements
-        </Link>
-        <Link
-          href={siteConfig.paths.dashboard}
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname.startsWith(siteConfig.paths.dashboard) ? "text-foreground" : "text-foreground/60"
-          )}
-        >
-          Dashboard
+          Partners
         </Link>
       </nav>
     </div>

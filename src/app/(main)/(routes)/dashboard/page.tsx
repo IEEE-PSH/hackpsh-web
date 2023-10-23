@@ -1,16 +1,14 @@
-import { ModeToggle } from "@/app/_components/ui/mode-toggle";
-import SignOutButton from "@/app/_components/ui/sign-out-button";
-import Navbar from "@/app/_components/nav/navbar";
 import { SiteHeader } from "@/app/_components/nav/site-header";
+import { ProtectedMainNav } from "@/app/_components/nav/protected-main-nav";
+import { ProtectedMobileNav } from "@/app/_components/nav/protected-mobile-nav";
 
 export default function Page() {
   return (
     <div>
-      <SiteHeader />
-      <Navbar />
-      <h1 className="text-xl">Dashboard</h1>
-      <ModeToggle />
-      <SignOutButton />
+      <SiteHeader>
+        <ProtectedMainNav />
+        <ProtectedMobileNav />
+      </SiteHeader>
     </div>
   );
 }
