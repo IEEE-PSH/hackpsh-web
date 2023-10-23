@@ -18,7 +18,7 @@ export default function SignUpPage() {
 
         <div className="absolute flex items-center text-lg font-medium left-4 top-4 md:right-8 md:top-8 lg:hidden">
           <Icons.brand className="h-[2.4rem] w-[2.0rem] mr-2" />
-          <span>HackPSH Fall 2023</span>
+          <span>HackPSH</span>
         </div>
 
         <Link
@@ -39,7 +39,7 @@ export default function SignUpPage() {
           <div className="absolute inset-0 bg-zinc-900" />
           <div className="relative z-20 flex items-center text-lg font-medium">
             <Icons.brand className="h-[2.4rem] w-[2.0rem] mr-2" />
-            <span>HackPSH Fall 2023</span>
+            <span>HackPSH</span>
           </div>
         </div>
 

@@ -5,14 +5,14 @@ import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 
 async function handleEmailLogin(email: string, baseURL: string) {
   const cookieStore = cookies();
-  const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
+  const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
 
   await supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: `${baseURL}/api/auth/callback`
-    }
-  })
+      emailRedirectTo: `${baseURL}/api/auth/callback`,
+    },
+  });
 }
 
 export const authRouter = createTRPCRouter({
@@ -20,9 +20,9 @@ export const authRouter = createTRPCRouter({
     .input(UserAuthFormSchema)
     .mutation(async ({ ctx, input }) => {
       await handleEmailLogin(input.email, new URL(ctx.req.url).origin);
-      
+
       return {
-        message: "Success"
-      }
-    })
-})
+        message: "Success",
+      };
+    }),
+});

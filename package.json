@@ -42,20 +42,19 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/eslint": "latest",
     "@types/node": "latest",
     "@types/pg": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
-    "autoprefixer": "latest",
-    "dotenv": "latest",
     "eslint": "latest",
     "eslint-config-next": "latest",
-    "postcss": "latest",
     "prettier": "latest",
     "prettier-plugin-tailwindcss": "latest",
+    "autoprefixer": "latest",
+    "dotenv": "latest",
+    "postcss": "latest",
     "tailwindcss": "latest",
     "typescript": "latest"
   }

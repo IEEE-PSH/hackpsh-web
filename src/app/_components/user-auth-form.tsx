@@ -16,7 +16,7 @@ import {
 import { Icons } from "@/app/_components/ui/icons";
 import { toast } from "@/app/_components/ui/use-toast";
 import {
-  TUserAuthForm,
+  type TUserAuthForm,
   UserAuthFormSchema,
 } from "@/app/_lib/zod-schemas/user-auth";
 import { trpc } from "@/app/_trpc/react";
@@ -30,42 +30,39 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   toastErrorParams();
 
   async function handleSignInWithGoogle() {
-    const baseURL = typeof window !== "undefined" ? window.location.origin : "";
+    const baseURL = (typeof window !== "undefined") ? window.location.origin : '';
 
     const supabase = createClientComponentClient();
     await supabase.auth.signInWithOAuth({
-      provider: "google",
+      provider: 'google',
       options: {
-        redirectTo: `${baseURL}/api/auth/callback`,
-      },
-    });
+        redirectTo: `${baseURL}/api/auth/callback`
+      }
+    })
   }
 
   // Form Definition
   const form = useForm<TUserAuthForm>({
-    resolver: zodResolver(UserAuthFormSchema),
-  });
+    resolver: zodResolver(UserAuthFormSchema)
+  })
 
   const emailLoginMutation = trpc.auth.email_login.useMutation({
-    // eslint-disable-next-line @typescript-eslint/require-await
-    onSuccess: async () => {
+    onSuccess: () => {
       toast({
         variant: "success",
         title: "Login Magic Link Sent!",
-        description:
-          "Check your email for a secure link to effortlessly log in. Time-sensitive for your security.",
-        duration: 2000,
+        description: "Check your email for a secure link to effortlessly log in. Time-sensitive for your security.",
+        duration: 2000
       });
     },
     onError: () => {
       toast({
         variant: "destructive",
         title: "Oops, Something Went Wrong!",
-        description:
-          "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
-        duration: 2000,
-      });
-    },
+        description: "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
+        duration: 2000
+      })
+    }
   });
 
   async function onSubmit(values: TUserAuthForm) {
@@ -104,13 +101,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={form.formState.isSubmitting}
-          >
+          <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
             {form.formState.isSubmitting && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
             )}
             Sign In with Email
           </Button>
@@ -120,28 +113,22 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
+              <span className="px-2 bg-background text-muted-foreground">
                 Or continue with
               </span>
             </div>
           </div>
 
-          <Button
-            variant="outline"
-            onClick={handleSignInWithGoogle}
-            className="w-full border-muted-foreground"
-            type="button"
-            disabled={form.formState.isSubmitting}
-          >
+          <Button variant="outline" onClick={handleSignInWithGoogle} className="w-full border-muted-foreground" type="button" disabled={form.formState.isSubmitting}>
             {form.formState.isSubmitting ? (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
             ) : (
-              <Icons.google className="mr-2 h-4 w-4" />
+              <Icons.google className="w-4 h-4 mr-2" />
             )}{" "}
             Google
           </Button>
         </form>
       </Form>
-    </div>
-  );
+    </div >
+  )
 }

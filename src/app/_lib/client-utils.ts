@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function toastErrorParams() {
-  //eslint-disable-next-line react-hooks/rules-of-hooks
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const searchParams = useSearchParams();
   const error_reason = searchParams.get("error");
 

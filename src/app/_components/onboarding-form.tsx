@@ -25,7 +25,7 @@ type OnboardingFormProps = React.HTMLAttributes<HTMLDivElement>;
 export function OnboardingForm({ className, ...props }: OnboardingFormProps) {
   // Form Definition
   const form = useForm<TOnboardingForm>({
-    resolver: zodResolver(OnboardingFormSchema),
+    resolver: zodResolver(OnboardingFormSchema)
   });
 
   // eslint-disable-next-line @typescript-eslint/require-await
@@ -36,11 +36,7 @@ export function OnboardingForm({ className, ...props }: OnboardingFormProps) {
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <Form {...form}>
-        <form
-          id="onboardingForm"
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4"
-        >
+        <form id="onboardingForm" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="user_display_name"
@@ -85,13 +81,9 @@ export function OnboardingForm({ className, ...props }: OnboardingFormProps) {
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={form.formState.isSubmitting}
-          >
+          <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
             {form.formState.isSubmitting && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
             )}
             Next
           </Button>

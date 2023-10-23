@@ -89,7 +89,7 @@ dependencies:
 
 devDependencies:
   '@types/eslint':
-    specifier: latest
+    specifier: ^8.44.6
     version: 8.44.6
   '@types/node':
     specifier: latest

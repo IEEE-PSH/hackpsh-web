@@ -1,5 +1,5 @@
-import { initTRPC } from "@trpc/server";
-import { createTRPCContext } from "./context";
+import { TRPCError, initTRPC } from "@trpc/server";
+import { type createTRPCContext } from "./context";
 import { ZodError } from "zod";
 
 /**
@@ -44,3 +44,25 @@ export const createTRPCRouter = t.router;
  * are logged in.
  */
 export const publicProcedure = t.procedure;
+
+const isAuthed = t.middleware(({ ctx, next }) => {
+  if (!ctx.session) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  return next({
+    ctx: {
+      ...ctx,
+      // infers that `user` is non-nullable to downstream resolvers
+      session: ctx.session,
+    },
+  });
+});
+
+/**
+ * Authenticated Procedure
+ *
+ * This is the piece you use to build new queries and mutations on your tRPC API for authenticated
+ * users. It gurantees that a user querying is authorized, and you can access user session data.
+ */
+export const protectedProcedure = t.procedure.use(isAuthed);
