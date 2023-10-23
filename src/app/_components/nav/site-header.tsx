@@ -5,6 +5,7 @@ import { buttonVariants } from "@/app/_components/ui/button";
 import { Instagram } from "lucide-react";
 import { siteConfig } from "@/app/_config/site";
 import { type ReactNode } from "react";
+import { UserAuthStatus } from "./user-auth-status";
 
 export function SiteHeader({ children }: { children: ReactNode }) {
   return (
@@ -13,6 +14,7 @@ export function SiteHeader({ children }: { children: ReactNode }) {
         {children}
         <div className="flex items-center justify-end flex-1 space-x-2">
           <nav className="flex items-center">
+            <UserAuthStatus />
             <Link
               href={siteConfig.links.instagram}
               target="_blank"
@@ -30,6 +32,7 @@ export function SiteHeader({ children }: { children: ReactNode }) {
                 <span className="sr-only">Instagram</span>
               </div>
             </Link>
+
             <ModeToggle />
           </nav>
         </div>
