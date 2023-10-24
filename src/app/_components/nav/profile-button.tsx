@@ -19,14 +19,14 @@ export default function ProfileDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>John Smith</DropdownMenuLabel>
+        <DropdownMenuLabel className="text-foreground/60">
+          johnsmith@gmail.com
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Button variant="secondary">Settings</Button>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Button variant="secondary">Sign out</Button>
-        </DropdownMenuItem>
+        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>Sign Out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
