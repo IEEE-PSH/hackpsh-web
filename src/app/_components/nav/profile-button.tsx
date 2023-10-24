@@ -19,14 +19,18 @@ export default function ProfileDropdown() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>John Smith</DropdownMenuLabel>
-        <DropdownMenuLabel className="text-foreground/60">
-          johnsmith@gmail.com
-        </DropdownMenuLabel>
+        <div className="flex items-center justify-start gap-2 p-2">
+          <div className="flex flex-col space-y-1 leading-none">
+            <p className="font-medium">John Smith</p>
+            <p className="w-[200px] truncate text-sm text-muted-foreground">
+              johnsmith@gmail.com
+            </p>
+          </div>
+        </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer">Settings</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Sign Out</DropdownMenuItem>
+        <DropdownMenuItem className="cursor-pointer">Sign Out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
