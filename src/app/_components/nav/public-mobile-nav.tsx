@@ -30,6 +30,37 @@ export function PublicMobileNav() {
           <Icons.brand className="w-4 h-4 mr-2" />
           <span className="font-bold">{siteConfig.name}</span>
         </MobileLink>
+        <div className="flex flex-col h-full pb-10 pl-6 my-4 space-y-3 text-base">
+          <MobileLink
+            href={siteConfig.paths.home}
+            onOpenChange={setIsOpen}
+          >
+            Home
+          </MobileLink>
+          <MobileLink
+            href={siteConfig.paths.about}
+            onOpenChange={setIsOpen}
+          >
+            About
+          </MobileLink>
+          <MobileLink
+            href={siteConfig.paths.partners}
+            onOpenChange={setIsOpen}
+          >
+            Partners
+          </MobileLink>
+
+
+          <div className="flex flex-col pt-6 space-y-3">
+            <h4 className="font-medium">Social Media</h4>
+            <MobileLink
+              href={siteConfig.links.instagram}
+              onOpenChange={setIsOpen}
+            >
+              Instagram
+            </MobileLink>
+          </div>
+        </div>
       </SheetContent>
     </Sheet>
   )
