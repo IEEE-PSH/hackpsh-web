@@ -26,7 +26,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem={true}
           storageKey="hackpsh-theme"
         >
-          <ReactQueryProvider headers={headers()}>{children}</ReactQueryProvider>
+          <ReactQueryProvider headers={headers()}>
+            {children}
+          </ReactQueryProvider>
           <Toaster />
         </ThemeProvider>
       </body>

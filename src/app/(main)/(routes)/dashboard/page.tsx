@@ -1,35 +1,18 @@
-import { ModeToggle } from "@/app/_components/ui/mode-toggle";
+import { SiteHeader } from "@/app/_components/nav/site-header";
+import { ProtectedMainNav } from "@/app/_components/nav/protected-main-nav";
+import { ProtectedMobileNav } from "@/app/_components/nav/protected-mobile-nav";
+import { SiteHeaderActions } from "@/app/_components/nav/site-header-actions";
 import SignOutButton from "@/app/_components/ui/sign-out-button";
-import { serverTRPC } from "@/app/_trpc/server";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 
-export default async function Page() {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (session) {
-    const res = await serverTRPC.user.is_onboarding_complete.query({ user_uuid: session.user.id });
-    console.log(res);
-    return (
-      <div>
-        <p>{JSON.stringify(res)}</p>
-        <h1 className="text-xl">Dashboard</h1>
-        <ModeToggle />
-        <SignOutButton />
-      </div>
-    )
-  }
-
+export default function Page() {
   return (
     <div>
-      <h1 className="text-xl">Dashboard</h1>
-      <ModeToggle />
+      <SiteHeader>
+        <ProtectedMainNav />
+        <ProtectedMobileNav />
+        <SiteHeaderActions />
+      </SiteHeader>
       <SignOutButton />
     </div>
-  )
+  );
 }
