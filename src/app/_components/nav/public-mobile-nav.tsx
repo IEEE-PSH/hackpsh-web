@@ -6,6 +6,7 @@ import { Menu } from "lucide-react";
 import { Icons } from "../ui/icons";
 import { siteConfig } from "@/app/_config/site";
 import { MobileLink } from "./protected-mobile-nav";
+import { SocialMediaMobileNav } from "./social-media-mobile-nav";
 
 export function PublicMobileNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,15 +52,7 @@ export function PublicMobileNav() {
           </MobileLink>
 
 
-          <div className="flex flex-col pt-6 space-y-3">
-            <h4 className="font-medium">Social Media</h4>
-            <MobileLink
-              href={siteConfig.links.instagram}
-              onOpenChange={setIsOpen}
-            >
-              Instagram
-            </MobileLink>
-          </div>
+          <SocialMediaMobileNav setIsOpen={setIsOpen} />
         </div>
       </SheetContent>
     </Sheet>

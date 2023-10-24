@@ -5,9 +5,9 @@ import { Button } from "@/app/_components/ui/button";
 import { Menu } from "lucide-react";
 import Link, { type LinkProps } from "next/link";
 import { cn } from "@/app/_lib/client-utils";
-import { useRouter } from "next/navigation";
 import { Icons } from "../ui/icons";
 import { siteConfig } from "@/app/_config/site";
+import { SocialMediaMobileNav } from "./social-media-mobile-nav";
 
 export function ProtectedMobileNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,16 +32,50 @@ export function ProtectedMobileNav() {
           <Icons.brand className="w-4 h-4 mr-2" />
           <span className="font-bold">{siteConfig.name}</span>
         </MobileLink>
+
+        <div className="flex flex-col h-full pb-10 pl-6 my-4 space-y-3 text-base">
+          <MobileLink
+            href={siteConfig.paths.home}
+            onOpenChange={setIsOpen}
+          >
+            Home
+          </MobileLink>
+          <MobileLink
+            href={siteConfig.paths.challenges}
+            onOpenChange={setIsOpen}
+          >
+            Challenges
+          </MobileLink>
+          <MobileLink
+            href={siteConfig.paths.leaderboard}
+            onOpenChange={setIsOpen}
+          >
+            Leaderboard
+          </MobileLink>
+          <MobileLink
+            href={siteConfig.paths.announcements}
+            onOpenChange={setIsOpen}
+          >
+            Announcements
+          </MobileLink>
+          <MobileLink
+            href={siteConfig.paths.dashboard}
+            onOpenChange={setIsOpen}
+          >
+            Dashboard
+          </MobileLink>
+
+          <SocialMediaMobileNav setIsOpen={setIsOpen} />
+        </div>
       </SheetContent>
     </Sheet>
   )
 }
 
-interface MobileLinkProps extends LinkProps {
-  onOpenChange?: (open: boolean) => void
-  children: React.ReactNode
-  className?: string
-}
+type MobileLinkProps = Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> & LinkProps & {
+  children?: React.ReactNode,
+  onOpenChange?: (open: boolean) => void,
+} & React.RefAttributes<HTMLAnchorElement>
 
 export function MobileLink({
   href,
@@ -50,13 +84,10 @@ export function MobileLink({
   children,
   ...props
 }: MobileLinkProps) {
-  const router = useRouter()
   return (
     <Link
       href={href}
       onClick={() => {
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        router.push(href.toString())
         onOpenChange?.(false)
       }}
       className={cn(className)}
