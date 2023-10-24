@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { siteConfig } from "../_config/site";
 
 export function redirectToPath(req: NextRequest, path: string) {
-  const redirectUrl = req.nextUrl.clone();
+  const redirectUrl = new URL(req.nextUrl.origin);
   redirectUrl.pathname = path;
   return NextResponse.redirect(redirectUrl);
 }
