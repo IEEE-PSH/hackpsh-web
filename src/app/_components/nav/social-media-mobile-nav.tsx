@@ -11,6 +11,7 @@ export function SocialMediaMobileNav({ setIsOpen }: { setIsOpen: Dispatch<SetSta
         onOpenChange={setIsOpen}
         target="_blank"
         rel="noreferrer"
+        scroll={false}
       >
         Instagram
       </MobileLink>

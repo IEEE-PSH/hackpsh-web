@@ -28,6 +28,7 @@ export function ProtectedMobileNav() {
           href={siteConfig.paths.home}
           className="flex items-center"
           onOpenChange={setIsOpen}
+          scroll={false}
         >
           <Icons.brand className="w-4 h-4 mr-2" />
           <span className="font-bold">{siteConfig.name}</span>
@@ -37,18 +38,21 @@ export function ProtectedMobileNav() {
           <MobileLink
             href={siteConfig.paths.home}
             onOpenChange={setIsOpen}
+            scroll={false}
           >
             Home
           </MobileLink>
           <MobileLink
             href={siteConfig.paths.challenges}
             onOpenChange={setIsOpen}
+            scroll={false}
           >
             Challenges
           </MobileLink>
           <MobileLink
             href={siteConfig.paths.leaderboard}
             onOpenChange={setIsOpen}
+            scroll={false}
           >
             Leaderboard
           </MobileLink>
@@ -61,6 +65,7 @@ export function ProtectedMobileNav() {
           <MobileLink
             href={siteConfig.paths.dashboard}
             onOpenChange={setIsOpen}
+            scroll={false}
           >
             Dashboard
           </MobileLink>

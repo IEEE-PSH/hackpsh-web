@@ -27,6 +27,7 @@ export function PublicMobileNav() {
           href={siteConfig.paths.home}
           className="flex items-center"
           onOpenChange={setIsOpen}
+          scroll={false}
         >
           <Icons.brand className="w-4 h-4 mr-2" />
           <span className="font-bold">{siteConfig.name}</span>
@@ -35,18 +36,21 @@ export function PublicMobileNav() {
           <MobileLink
             href={siteConfig.paths.home}
             onOpenChange={setIsOpen}
+            scroll={false}
           >
             Home
           </MobileLink>
           <MobileLink
             href={siteConfig.paths.about}
             onOpenChange={setIsOpen}
+            scroll={false}
           >
             About
           </MobileLink>
           <MobileLink
             href={siteConfig.paths.partners}
             onOpenChange={setIsOpen}
+            scroll={false}
           >
             Partners
           </MobileLink>

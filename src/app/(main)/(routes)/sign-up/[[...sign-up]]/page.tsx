@@ -20,6 +20,7 @@ export default function SignUpPage() {
           <Link
             href={siteConfig.paths.home}
             className="flex flex-row items-center justify-start ml-4 space-x-2 lg:hidden"
+            scroll={false}
           >
             <Icons.brand className="h-[2.4rem] w-[2.0rem] mr-2" />
             <span className="inline-block font-bold">{siteConfig.name}</span>
@@ -28,6 +29,7 @@ export default function SignUpPage() {
             <Link
               href={siteConfig.paths.sign_in}
               className={cn(buttonVariants({ variant: "ghost" }))}
+              scroll={false}
             >
               Sign In
             </Link>
@@ -41,6 +43,7 @@ export default function SignUpPage() {
             <Link
               href={siteConfig.paths.home}
               className="flex flex-row items-center justify-start space-x-2"
+              scroll={false}
             >
               <Icons.brand className="h-[2.4rem] w-[2.0rem] mr-2" />
               <span className="hidden font-bold sm:inline-block">{siteConfig.name}</span>
@@ -64,6 +67,7 @@ export default function SignUpPage() {
               <Link
                 href="/info/terms-of-service"
                 className="underline underline-offset-4 hover:text-primary-foreground hover:dark:text-primary"
+                scroll={false}
               >
                 Terms of Service
               </Link>{" "}
@@ -71,6 +75,7 @@ export default function SignUpPage() {
               <Link
                 href="/info/privacy-policy"
                 className="underline underline-offset-4 hover:text-primary-foreground hover:dark:text-primary"
+                scroll={false}
               >
                 Privacy Policy
               </Link>

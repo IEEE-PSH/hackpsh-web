@@ -14,6 +14,7 @@ export function ProtectedMainNav() {
       <Link
         href={siteConfig.paths.home}
         className="flex items-center mr-6 space-x-2"
+        scroll={false}
       >
         <Icons.brand className="h-[2.4rem] w-[2.0rem] mr-2" />
         <span className="hidden font-bold sm:inline-block">{siteConfig.name}</span>
@@ -25,6 +26,7 @@ export function ProtectedMainNav() {
             "transition-colors hover:text-foreground/80",
             pathname === siteConfig.paths.home ? "text-foreground" : "text-foreground/60"
           )}
+          scroll={false}
         >
           Home
         </Link>
@@ -34,6 +36,7 @@ export function ProtectedMainNav() {
             "transition-colors hover:text-foreground/80",
             pathname.startsWith(siteConfig.paths.challenges) ? "text-foreground" : "text-foreground/60"
           )}
+          scroll={false}
         >
           Challenges
         </Link>
@@ -43,6 +46,7 @@ export function ProtectedMainNav() {
             "transition-colors hover:text-foreground/80",
             pathname.startsWith(siteConfig.paths.leaderboard) ? "text-foreground" : "text-foreground/60"
           )}
+          scroll={false}
         >
           Leaderboard
         </Link>
@@ -52,6 +56,7 @@ export function ProtectedMainNav() {
             "transition-colors hover:text-foreground/80",
             pathname.startsWith(siteConfig.paths.announcements) ? "text-foreground" : "text-foreground/60"
           )}
+          scroll={false}
         >
           Announcements
         </Link>
@@ -61,6 +66,7 @@ export function ProtectedMainNav() {
             "transition-colors hover:text-foreground/80",
             pathname.startsWith(siteConfig.paths.dashboard) ? "text-foreground" : "text-foreground/60"
           )}
+          scroll={false}
         >
           Dashboard
         </Link>
