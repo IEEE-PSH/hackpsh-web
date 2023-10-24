@@ -2,16 +2,6 @@ import { db } from "@/db/drizzle";
 import { type NextRequest } from "next/server";
 import { getSessionFromContext } from "./supabase";
 import { type Session } from "@supabase/auth-helpers-nextjs";
-import { migrate } from "drizzle-orm/postgres-js/migrator";
-
-async function runMigration() {
-  await migrate(db, { migrationsFolder: "src/db/drizzle" });
-  console.log("migration is a success");
-}
-
-runMigration().catch((err) => {
-  console.log(err);
-});
 
 /**
  * 1. CONTEXT
