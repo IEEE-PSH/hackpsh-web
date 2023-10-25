@@ -1,7 +1,10 @@
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { redirectToPath } from "@/app/_lib/server-utils";
+import { type NextRequest, NextResponse } from "next/server";
+import {
+  redirectToPath,
+  redirectToSignInWithError,
+} from "@/app/_lib/server-utils";
+import { siteConfig } from "./app/_config/site";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
@@ -9,12 +12,31 @@ export async function middleware(req: NextRequest) {
 
   const {
     data: { session },
+    error,
   } = await supabase.auth.getSession();
 
-  console.log(session?.user.id);
-  // If a user is not signed-in, redirect to sign-in page.
-  if (!session) {
-    return redirectToPath(req, process.env.NEXT_PUBLIC_SIGN_IN_PATH);
+  // If a user does not have a valid session or encounters
+  // an error when retrieving a valid session, redirect to sign in.
+  if (!session && !req.nextUrl.pathname.startsWith(siteConfig.paths.sign_in)) {
+    return redirectToSignInWithError(
+      req,
+      "session_timeout",
+      "Session has timed out. Please login again.",
+    );
+  }
+
+  if (error && !req.nextUrl.pathname.startsWith(siteConfig.paths.sign_in)) {
+    return redirectToSignInWithError(
+      req,
+      "invalid_session",
+      "Session was not able to be acquired.",
+    );
+  }
+
+  // If a user has a valid session and navigates to sign-in page,
+  // then automatically redirect them to dashboard (only if their onboarding is complete).
+  if (session && req.nextUrl.pathname.startsWith(siteConfig.paths.sign_in)) {
+    return redirectToPath(req, siteConfig.paths.dashboard);
   }
 
   // TODO: Add Check above for onboarding complete
@@ -22,5 +44,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard", "/onboarding"],
+  matcher: ["/sign-in", "/dashboard", "/onboarding"],
 };

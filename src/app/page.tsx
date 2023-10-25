@@ -1,15 +1,17 @@
-import { Button, buttonVariants } from "@/app/_components/ui/button";
-import { ModeToggle } from "@/app/_components/ui/mode-toggle";
-import Link from "next/link";
+import { PublicMainNav } from "@/app/_components/nav/public-main-nav";
+import { PublicMobileNav } from "@/app/_components/nav/public-mobile-nav";
+import { SiteHeader } from "./_components/nav/site-header";
+import { SessionButton } from "@/app/_components/ui/session-button";
+import { SiteHeaderActions } from "@/app/_components/nav/site-header-actions";
 
 export default function Page() {
   return (
-    <>
-      <p>This is a sample change to see if they are propogated through CloudFlare dns and Vercel</p>
-      <Button>ShadCN Test</Button>
-      <Link href="/sign-up" className={buttonVariants({ variant: "link" })}>Register</Link>
-      <Link href="/sign-in" className={buttonVariants({ variant: "link" })}>Login</Link>
-      <ModeToggle />
-    </>
-  )
+    <SiteHeader>
+      <PublicMainNav />
+      <PublicMobileNav />
+      <SiteHeaderActions>
+        <SessionButton />
+      </SiteHeaderActions>
+    </SiteHeader>
+  );
 }

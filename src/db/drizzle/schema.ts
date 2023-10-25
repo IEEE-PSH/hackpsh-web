@@ -20,15 +20,11 @@ export const class_year = pgEnum('app_schema"."class_year', [
   "post_graduate",
 ]);
 
-/**
- * 1:1 Relationship between Supabase `auth.users.id` table.
- * Responsible for holding a user's profile
- */
 export const app_user_profile = app_schema.table(
   "app_user_profile",
   {
     // Cannot introspect private schema in supabase
-    user_uuid: uuid("user_uuid").primaryKey(), //.references(auth.users.id) (can't access as it's a private schema in supabase that was not able to)
+    user_uuid: uuid("user_uuid").primaryKey(),
     user_email_address: text("user_email_address").notNull().unique(),
     user_avatar_url: text("user_avatar_url"),
     user_onboarding_complete: boolean("user_onboarding_complete"),

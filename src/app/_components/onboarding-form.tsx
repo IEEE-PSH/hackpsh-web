@@ -1,15 +1,26 @@
 "use client";
 
 import { cn } from "@/app/_lib/client-utils";
-import { OnboardingFormSchema, type TOnboardingForm } from "@/app/_lib/zod-schemas/onboarding";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/app/_components/ui/form";
+import {
+  OnboardingFormSchema,
+  type TOnboardingForm,
+} from "@/app/_lib/zod-schemas/onboarding";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/app/_components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "@/app/_components/ui/input";
 import { Button } from "@/app/_components/ui/button";
 import { Icons } from "@/app/_components/ui/icons";
 
-type OnboardingFormProps = React.HTMLAttributes<HTMLDivElement>
+type OnboardingFormProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function OnboardingForm({ className, ...props }: OnboardingFormProps) {
   // Form Definition
@@ -33,7 +44,13 @@ export function OnboardingForm({ className, ...props }: OnboardingFormProps) {
               <FormItem>
                 <FormLabel>Display Name</FormLabel>
                 <FormControl>
-                  <Input className="border-muted-foreground" id="username" placeholder="CoolHacker123" {...field} value={field.value ?? ''} />
+                  <Input
+                    className="border-muted-foreground"
+                    id="username"
+                    placeholder="CoolHacker123"
+                    {...field}
+                    value={field.value ?? ""}
+                  />
                 </FormControl>
                 <FormDescription>
                   This is your public display name. Please be appropriate.
@@ -49,7 +66,13 @@ export function OnboardingForm({ className, ...props }: OnboardingFormProps) {
               <FormItem>
                 <FormLabel>Display Name</FormLabel>
                 <FormControl>
-                  <Input className="border-muted-foreground" id="username" placeholder="CoolHacker123" {...field} value={field.value ?? ''} />
+                  <Input
+                    className="border-muted-foreground"
+                    id="username"
+                    placeholder="CoolHacker123"
+                    {...field}
+                    value={field.value ?? ""}
+                  />
                 </FormControl>
                 <FormDescription>
                   This is your public display name. Please be appropriate.

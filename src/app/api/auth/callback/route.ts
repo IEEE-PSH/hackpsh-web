@@ -1,6 +1,11 @@
+import { siteConfig } from "@/app/_config/site";
+import {
+  redirectToPath,
+  redirectToSignInWithError,
+} from "@/app/_lib/server-utils";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { type NextRequest, NextResponse } from "next/server";
+import { type NextRequest } from "next/server";
 
 /**
  * This route handles users who use magic link sign-in (email),
@@ -13,8 +18,8 @@ import { type NextRequest, NextResponse } from "next/server";
  * @param request
  * @returns New User Session through Cookies
  */
-export async function GET(request: NextRequest) {
-  const requestUrl = new URL(request.url);
+export async function GET(req: NextRequest) {
+  const requestUrl = new URL(req.url);
   const code = requestUrl.searchParams.get("code");
 
   const error_reason = requestUrl.searchParams.get("error");
@@ -26,39 +31,21 @@ export async function GET(request: NextRequest) {
     const { data } = await supabase.auth.exchangeCodeForSession(code);
 
     if (data.session == null) {
-      const redirectURLErrorParams = new URL(
-        `${process.env.NEXT_PUBLIC_SIGN_IN_PATH}`,
-        request.url,
+      return redirectToSignInWithError(
+        req,
+        "invalid_session",
+        "Session was not able to be acquired.",
       );
-      redirectURLErrorParams.searchParams.append("error", "invalid_session");
-      redirectURLErrorParams.searchParams.append(
-        "error_description",
-        "Session was not able to be acquired",
-      );
-
-      return NextResponse.redirect(redirectURLErrorParams);
     }
 
     // TODO: Create Logic from session to query against db in order to redirect to onboarding or dashboard appropriately
     // This is the only entry point to our application
-    return NextResponse.redirect(
-      new URL(process.env.NEXT_PUBLIC_DASHBOARD_PATH, request.url),
-    );
+    return redirectToPath(req, siteConfig.paths.dashboard);
   }
 
   // If the exchange for a valid session generates an error, supabase hits our callback route with
   // the following: `?error=unauthorized_client&error_code=401&error_description=Email+link+is+invalid+or+has+expired`
   if (error_reason) {
-    const redirectURLErrorParams = new URL(
-      `${process.env.NEXT_PUBLIC_SIGN_IN_PATH}`,
-      request.url,
-    );
-    redirectURLErrorParams.searchParams.append("error", error_reason);
-    redirectURLErrorParams.searchParams.append(
-      "error_description",
-      error_description!,
-    );
-
-    return NextResponse.redirect(redirectURLErrorParams);
+    return redirectToSignInWithError(req, error_reason, error_description!);
   }
 }

@@ -5,18 +5,26 @@ import { Input } from "@/app/_components/ui/input";
 import { Button } from "@/app/_components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/app/_components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/app/_components/ui/form";
 import { Icons } from "@/app/_components/ui/icons";
 import { toast } from "@/app/_components/ui/use-toast";
-import { type TUserAuthForm, UserAuthFormSchema } from "@/app/_lib/zod-schemas/user-auth";
+import {
+  type TUserAuthForm,
+  UserAuthFormSchema,
+} from "@/app/_lib/zod-schemas/user-auth";
 import { trpc } from "@/app/_trpc/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-
-type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>
+type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-
   // Handle stale magic link error from /api/auth/callback redirect
   // by displaying an error toast if there is an `?error=` as part of the url
   toastErrorParams();
@@ -59,7 +67,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   async function onSubmit(values: TUserAuthForm) {
     try {
-      await emailLoginMutation.mutateAsync({ email: values.email })
+      await emailLoginMutation.mutateAsync({ email: values.email });
       form.reset();
     } catch (err: unknown) {
       console.log(err);
@@ -69,7 +77,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <Form {...form}>
-        <form id="userAuthForm" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          id="userAuthForm"
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4"
+        >
           <FormField
             control={form.control}
             name="email"
@@ -77,7 +89,13 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input className="border-muted-foreground" id="email" placeholder="yourname@example.com" {...field} value={field.value ?? ''} />
+                  <Input
+                    className="border-muted-foreground"
+                    id="email"
+                    placeholder="yourname@example.com"
+                    {...field}
+                    value={field.value ?? ""}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
