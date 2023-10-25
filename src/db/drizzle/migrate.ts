@@ -12,7 +12,10 @@ const client = postgres(connectionString);
 const db = drizzle(client, { schema: schema });
 
 migrate(db, { migrationsFolder: "src/db/drizzle" })
-  .then(() => console.log("migration success"))
+  .then(async () => {
+    console.log("migration success");
+    await client.end({ timeout: 5000 });
+  })
   .catch(async (err) => {
     console.log(err);
     await client.end({ timeout: 5000 });
