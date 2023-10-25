@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy": "pnpm dlx esno src/db/drizzle/migrate.ts && next build",
     "start": "next start",
     "lint": "next lint",
     "introspect": "drizzle-kit introspect:pg",
