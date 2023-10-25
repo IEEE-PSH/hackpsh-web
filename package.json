@@ -10,7 +10,8 @@
     "introspect": "drizzle-kit introspect:pg",
     "generate": "drizzle-kit generate:pg",
     "drop_migrations": "drizzle-kit drop",
-    "db_push": "drizzle-kit push:pg"
+    "db_push": "drizzle-kit push:pg",
+    "migrate": "pnpm dlx esno src/db/drizzle/migrate.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
@@ -28,6 +29,7 @@
     "@trpc/server": "^10.40.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "dotenv": "^16.3.1",
     "drizzle-kit": "^0.19.13",
     "drizzle-orm": "^0.28.6",
     "lucide-react": "^0.279.0",
@@ -42,7 +44,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/eslint": "^8.44.6",
+    "@types/eslint": "latest",
     "@types/node": "latest",
     "@types/pg": "latest",
     "@types/react": "latest",
