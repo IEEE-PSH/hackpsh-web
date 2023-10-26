@@ -5,8 +5,7 @@ export function SiteHeaderActions({ children }: { children?: ReactNode }) {
   return (
     <div className="flex flex-1 items-center justify-end space-x-2">
       <nav className="flex items-center">
-        <ModeToggle />
-        {children}
+        {children} <ModeToggle />
       </nav>
     </div>
   );
