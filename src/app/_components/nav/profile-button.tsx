@@ -1,5 +1,8 @@
+"use client"
+
 import React from "react";
 import { User, Settings, LogOut, Palette, Moon, Sun, Tv2 } from "lucide-react";
+import { useTheme } from "next-themes"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +17,8 @@ import {
 import { Button } from "@/app/_components/ui/button";
 
 export default function ProfileDropdown() {
+  const { setTheme } = useTheme()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -42,17 +47,17 @@ export default function ProfileDropdown() {
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
-              <DropdownMenuItem>
-                <Tv2 className="w-4 h-4 mr-2" />
-                <span>System</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("light")}>
                 <Sun className="w-4 h-4 mr-2" />
                 <span>Light</span>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
                 <Moon className="w-4 h-4 mr-2" />
                 <span>Dark</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("system")}>
+                <Tv2 className="w-4 h-4 mr-2" />
+                <span>System</span>
               </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
