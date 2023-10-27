@@ -1,10 +1,8 @@
-import { ModeToggle } from "@/app/_components/ui/mode-toggle";
 import { type ReactNode } from "react";
 
 export function SiteHeaderActions({ children }: { children?: ReactNode }) {
   return (
-    <div className="flex flex-1 items-center justify-end space-x-2">
-      <ModeToggle />
+    <div className="flex items-center justify-end flex-1 space-x-4">
       {children}
     </div>
   );
