@@ -26,7 +26,7 @@ export const columns: ColumnDef<Entry>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="capitalize">{row.getValue("rank")}</div>,
+    cell: ({ row }) => <div className="ml-4">{row.getValue("rank")}</div>,
   },
   {
     accessorKey: "name",
@@ -41,13 +41,19 @@ export const columns: ColumnDef<Entry>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div>{row.getValue("name")}</div>,
+    cell: ({ row }) => (
+      <div className="w-0 min-w-full">
+        <p className="overflow-hidden text-ellipsis whitespace-nowrap">
+          {row.getValue("name")}
+        </p>
+      </div>
+    ),
   },
   {
     accessorKey: "points",
     header: ({ column }) => {
       return (
-        <div className="text-right">
+        <div className="text-right ">
           <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
@@ -59,9 +65,7 @@ export const columns: ColumnDef<Entry>[] = [
       );
     },
     cell: ({ row }) => {
-      return (
-        <div className="text-right font-medium">{row.getValue("points")}</div>
-      );
+      return <div className="ml-4 font-medium">{row.getValue("points")}</div>;
     },
   },
 ];

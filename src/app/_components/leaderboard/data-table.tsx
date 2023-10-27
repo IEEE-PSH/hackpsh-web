@@ -27,21 +27,27 @@ import { cn } from "@/app/_lib/client-utils";
 const data: Entry[] = [
   {
     id: "m5gr84i9",
-    points: 100,
     rank: 1,
-    name: "A",
+    name: "Philadelphia Eagles",
+    points: 800,
   },
   {
     id: "3u1reuv4",
-    points: 300,
     rank: 3,
-    name: "B",
+    name: "Nittany Lions",
+    points: 200,
   },
   {
     id: "derv1ws0",
-    points: 200,
     rank: 2,
-    name: "C",
+    name: "The Avengers",
+    points: 500,
+  },
+  {
+    id: "hf3gfda0",
+    rank: 4,
+    name: "Lorem ipsum dolor sit amet, consectetuer adipiscin",
+    points: 100,
   },
 ];
 
@@ -74,7 +80,7 @@ export default function DataTable({ className }: { className: string }) {
     <div className={cn("w-full", className)}>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter names..."
+          placeholder="Filter team names..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
@@ -87,9 +93,12 @@ export default function DataTable({ className }: { className: string }) {
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
+                {headerGroup.headers.map((header, i) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      className={i == 1 ? "w-full" : ""}
+                      key={header.id}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
