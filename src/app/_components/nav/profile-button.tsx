@@ -15,9 +15,25 @@ import {
   DropdownMenuSubTrigger
 } from "@/app/_components/ui/dropdown-menu";
 import { Button } from "@/app/_components/ui/button";
+import { useRouter } from "next/navigation";
+import { siteConfig } from "@/app/_config/site";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { toast } from "@/app/_components/ui/use-toast";
 
 export default function ProfileDropdown() {
-  const { setTheme } = useTheme()
+  const router = useRouter();
+  const supabase = createClientComponentClient();
+  const { setTheme } = useTheme();
+
+  async function handleSignOut() {
+    await supabase.auth.signOut();
+    router.replace(siteConfig.paths.home);
+    toast({
+      description: "Signing out...",
+      duration: 2000,
+      variant: "default"
+    })
+  }
 
   return (
     <DropdownMenu>
@@ -63,7 +79,7 @@ export default function ProfileDropdown() {
           </DropdownMenuPortal>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer">
+        <DropdownMenuItem className="cursor-pointer" onClick={handleSignOut}>
           <LogOut className="w-4 h-4 mr-2" />
           <span>Sign Out</span>
         </DropdownMenuItem>

@@ -1,7 +1,12 @@
 import { db } from "@/db/drizzle";
 import { type NextRequest } from "next/server";
 import { getSessionFromContext } from "./supabase";
-import { type Session } from "@supabase/auth-helpers-nextjs";
+import {
+  createRouteHandlerClient,
+  type SupabaseClient,
+  type Session,
+} from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
 /**
  * 1. CONTEXT
@@ -15,6 +20,7 @@ interface CreateContextOptions {
   req: NextRequest;
   headers: Headers;
   session: Session | null;
+  supabase: SupabaseClient;
 }
 
 /**
@@ -31,8 +37,9 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     req: opts.req,
     headers: opts.headers,
-    db,
     session: opts.session,
+    supabase: opts.supabase,
+    db,
   };
 };
 
@@ -43,12 +50,16 @@ export const createInnerTRPCContext = (opts: CreateContextOptions) => {
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = async (opts: { req: NextRequest }) => {
+  const cookieStore = cookies();
+  const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+
   // Fetch stuff that depends on the request
-  const session = await getSessionFromContext();
+  const session = await getSessionFromContext(supabase);
 
   return createInnerTRPCContext({
     req: opts.req,
     headers: opts.req.headers,
-    session: session,
+    session,
+    supabase,
   });
 };
