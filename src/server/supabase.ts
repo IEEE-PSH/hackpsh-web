@@ -1,15 +1,8 @@
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { type SupabaseClient } from "@supabase/auth-helpers-nextjs";
 
-export const getSessionFromContext = async () => {
-  const cookieStore = cookies();
-  const supabaseServerClient = createRouteHandlerClient({
-    cookies: () => cookieStore,
-  });
-
+export async function getSessionFromContext(supabase: SupabaseClient) {
   const {
     data: { session },
-  } = await supabaseServerClient.auth.getSession();
-
+  } = await supabase.auth.getSession();
   return session;
-};
+}

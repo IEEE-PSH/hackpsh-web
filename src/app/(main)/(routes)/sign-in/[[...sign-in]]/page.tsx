@@ -6,6 +6,7 @@ import { UserAuthForm } from "@/app/_components/user-auth-form";
 import { ModeToggle } from "@/app/_components/ui/mode-toggle";
 import { Icons } from "@/app/_components/ui/icons";
 import { siteConfig } from "@/app/_config/site";
+import { ToastErrorParams } from "@/app/_components/ui/toast-error-params";
 
 export const metadata: Metadata = {
   title: "HackPSH | Sign In",
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
 export default function SignIn() {
   return (
     <>
+      <ToastErrorParams />
       <div className="container relative grid flex-col items-center justify-center h-screen lg:max-w-none lg:grid-cols-2 lg:px-0">
         <div className="absolute flex items-center flex-1 w-full text-lg font-medium top-4 md:top-8">
           <Link
