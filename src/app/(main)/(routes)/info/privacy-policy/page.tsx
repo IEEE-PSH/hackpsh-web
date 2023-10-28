@@ -1,19 +1,6 @@
-import { PublicMainNav } from "@/app/_components/nav/public-main-nav";
-import { PublicMobileNav } from "@/app/_components/nav/public-mobile-nav";
-import { SiteHeader } from "@/app/_components/nav/site-header";
-import { SessionButton } from "@/app/_components/ui/session-button";
-import { SiteHeaderActions } from "@/app/_components/nav/site-header-actions";
-
 export default function PrivacyPolicyPage() {
   return (
     <>
-      <SiteHeader>
-        <PublicMainNav />
-        <PublicMobileNav />
-        <SiteHeaderActions>
-          <SessionButton />
-        </SiteHeaderActions>
-      </SiteHeader>
       <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           <article className="prose-xl">

@@ -1,23 +1,10 @@
-import { PublicMainNav } from "@/app/_components/nav/public-main-nav";
-import { PublicMobileNav } from "@/app/_components/nav/public-mobile-nav";
-import { SiteHeader } from "@/app/_components/nav/site-header";
-import { SessionButton } from "@/app/_components/ui/session-button";
-import { SiteHeaderActions } from "@/app/_components/nav/site-header-actions";
-
 export default function TermsOfServicePage() {
   return (
     <>
-      <SiteHeader>
-        <PublicMainNav />
-        <PublicMobileNav />
-        <SiteHeaderActions>
-          <SessionButton />
-        </SiteHeaderActions>
-      </SiteHeader>
       <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center p-8">
+        <div className="flex flex-col items-center">
           <article className="prose-xl">
-            <ol className="list-inside">
+            <ol>
               <h2 className="font-bold">Terms Of Service</h2>
               <p className="text-md">Updated 10/27/23</p>
               <li>
@@ -32,7 +19,7 @@ export default function TermsOfServicePage() {
               </li>
               <li>
                 <a className="text-2xl font-bold">2. Definitions</a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">2.1 Platform: </a>
                     All HackPSH-associated websites, applications, services,
@@ -54,7 +41,7 @@ export default function TermsOfServicePage() {
                 <a className="text-2xl font-bold">
                   3. Eligibility & Registration
                 </a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">3.1 Age Requirement: </a>
                     Users must be 18 or older, or have valid parental/guardian
@@ -74,7 +61,7 @@ export default function TermsOfServicePage() {
               </li>
               <li>
                 <a className="text-2xl font-bold">4. User Responsibilities </a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">4.1 Account Security: </a> Users
                     are responsible for all activities under their account.
@@ -96,7 +83,7 @@ export default function TermsOfServicePage() {
               </li>
               <li>
                 <a className="text-2xl font-bold">5. Code of Conduct</a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">5.1 Respectful Interaction: </a> No
                     form of discrimination, harassment, or hate speech will be
@@ -117,7 +104,7 @@ export default function TermsOfServicePage() {
               </li>
               <li>
                 <a className="text-2xl font-bold">6. Intellectual Property</a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">6.1 User Rights: </a>
                     Users maintain intellectual property rights over their
@@ -136,7 +123,7 @@ export default function TermsOfServicePage() {
                 <a className="text-2xl font-bold">
                   7. Disclaimers & Limitations
                 </a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">7.1 As-Is Basis: </a> The platform
                     is provided "as is" without warranties of any kind, either
@@ -154,7 +141,7 @@ export default function TermsOfServicePage() {
                 <a className="text-2xl font-bold">
                   8. Third-Party Interactions
                 </a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">8.1 External Links: </a> HackPSH
                     may link to other websites but assumes no responsibility for
@@ -172,7 +159,7 @@ export default function TermsOfServicePage() {
                 <a className="text-2xl font-bold">
                   9. Termination & Account Cancellation
                 </a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">9.1 User Discretion: </a> Users may
                     deactivate or delete their accounts at any time.
@@ -188,7 +175,7 @@ export default function TermsOfServicePage() {
                 <a className="text-2xl font-bold">
                   10. Governing Law & Disputes{" "}
                 </a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">10.1 Jurisdiction: </a> All terms
                     are governed by Pennsylvania laws. Any disputes shall be
@@ -203,7 +190,7 @@ export default function TermsOfServicePage() {
               </li>
               <li>
                 <a className="text-2xl font-bold">11. Changes to Terms</a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">11.1 Updates: </a> HackPSH may
                     periodically update these terms to reflect platform changes
@@ -218,7 +205,7 @@ export default function TermsOfServicePage() {
               </li>
               <li>
                 <a className="text-2xl font-bold">12. Miscellaneous</a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">12.1 Severability: </a>If any
                     provision is found invalid, the remainder of these terms
