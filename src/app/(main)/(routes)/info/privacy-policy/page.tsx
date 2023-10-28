@@ -15,9 +15,9 @@ export default function PrivacyPolicyPage() {
         </SiteHeaderActions>
       </SiteHeader>
       <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center p-8">
+        <div className="flex flex-col items-center">
           <article className="prose-xl">
-            <ol className="list-inside">
+            <ol>
               <h2 className="font-bold">Privacy Policy</h2>
               <p className="text-md">Updated 10/27/23</p>
               <li>
@@ -32,7 +32,7 @@ export default function PrivacyPolicyPage() {
               </li>
               <li>
                 <a className="text-2xl font-bold">2. Data We Collect</a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">
                       2.1 Personal Identification Data:{" "}
@@ -58,7 +58,7 @@ export default function PrivacyPolicyPage() {
               </li>
               <li>
                 <a className="text-2xl font-bold">3. How We Use Your Data</a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">
                       3.1 Registration & Participation:{" "}
@@ -87,7 +87,7 @@ export default function PrivacyPolicyPage() {
                 <a className="text-2xl font-bold">
                   4. Data Sharing and Disclosure
                 </a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">4.1 Third Parties: </a> We only
                     share data with third parties who provide necessary services
@@ -110,7 +110,7 @@ export default function PrivacyPolicyPage() {
               </li>
               <li>
                 <a className="text-2xl font-bold">5. Data Security</a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">5.1 Protective Measures:</a> Our
                     multi-layered security includes SSL encryption, firewalls,
@@ -126,7 +126,7 @@ export default function PrivacyPolicyPage() {
               </li>
               <li>
                 <a className="text-2xl font-bold">6. Data Retention</a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     We store your data only as long as necessary to fulfill its
                     intended purpose. Certain records may be retained longer due
@@ -136,7 +136,7 @@ export default function PrivacyPolicyPage() {
               </li>
               <li>
                 <a className="text-2xl font-bold">7. Your Legal Rights</a>
-                <ul className="list-inside">
+                <ul>
                   <li>
                     <a className="font-bold">7.1 Access & Correction:</a> You
                     have the right to access your data and request corrections.
@@ -179,13 +179,13 @@ export default function PrivacyPolicyPage() {
                   For any questions or concerns regarding this privacy policy,
                   please contact our designated Data Protection Officer at
                   [DPO's email].
+                </p>{" "}
+                <p>
+                  Under relevant laws, you're empowered to review, amend, or
+                  even erase your personal data from our systems. You can also
+                  object to processing or request data portability.
                 </p>
               </li>
-              <p>
-                Under relevant laws, you're empowered to review, amend, or even
-                erase your personal data from our systems. You can also object
-                to processing or request data portability.
-              </p>
             </ol>
           </article>
         </div>
