@@ -6,6 +6,7 @@ export default function Page() {
     <div>
       <ProtectedSiteHeader />
       <SignOutButton />
+      <p className="m-10 text-center text-3xl font-bold">Dashboard</p>
     </div>
   );
 }
