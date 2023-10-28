@@ -9,7 +9,13 @@ export default function PrivacyPolicyPage() {
               <p className="text-md">Updated 10/27/23</p>
               <li>
                 <a className="text-2xl font-bold">1. Introduction</a>
-                <p className="">{}</p>
+                <p className="">
+                  Welcome to HackPSH. We value your privacy and are committed to
+                  safeguarding your personal information. This privacy policy
+                  provides details on the type of data we collect, and how
+                  {` it's`} processed, stored, and shared, in accordance with
+                  U.S. federal laws and Pennsylvania state regulations.
+                </p>
               </li>
               <li>
                 <a className="text-2xl font-bold">2. Data We Collect</a>
