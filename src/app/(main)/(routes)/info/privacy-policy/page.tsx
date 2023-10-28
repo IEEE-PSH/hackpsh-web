@@ -9,13 +9,7 @@ export default function PrivacyPolicyPage() {
               <p className="text-md">Updated 10/27/23</p>
               <li>
                 <a className="text-2xl font-bold">1. Introduction</a>
-                <p className="">
-                  Welcome to HackPSH. We value your privacy and are committed to
-                  safeguarding your personal information. This privacy policy
-                  provides details on the type of data we collect, and how it's
-                  processed, stored, and shared, in accordance with U.S. federal
-                  laws and Pennsylvania state regulations.
-                </p>
+                <p className="">{}</p>
               </li>
               <li>
                 <a className="text-2xl font-bold">2. Data We Collect</a>
@@ -106,7 +100,7 @@ export default function PrivacyPolicyPage() {
                   <li>
                     <a className="font-bold">5.2 Data Breach Protocol:</a> In
                     the unlikely event of a data breach, affected individuals
-                    will be notified in compliance with Pennsylvania's Data
+                    will be notified in compliance with {`Pennsylvania's`} Data
                     Breach Notification Law.
                   </li>
                 </ul>
@@ -146,8 +140,9 @@ export default function PrivacyPolicyPage() {
               <li>
                 <a className="text-2xl font-bold">8. Third-Party Links</a>
                 <p>
-                  HackPSH might link to external sites. We don't control and
-                  aren't responsible for their content or privacy practices.
+                  HackPSH might link to external sites. {`We don't`} control and
+                  {` aren't`} responsible for their content or privacy
+                  practices.
                 </p>
               </li>
               <li>
@@ -165,10 +160,10 @@ export default function PrivacyPolicyPage() {
                 <p>
                   For any questions or concerns regarding this privacy policy,
                   please contact our designated Data Protection Officer at
-                  [DPO's email].
+                  {` [DPO's email]`}.
                 </p>{" "}
                 <p>
-                  Under relevant laws, you're empowered to review, amend, or
+                  Under relevant laws, you are empowered to review, amend, or
                   even erase your personal data from our systems. You can also
                   object to processing or request data portability.
                 </p>
