@@ -14,6 +14,40 @@ const db = drizzle(client, { schema: schema });
 migrate(db, { migrationsFolder: "src/db/drizzle" })
   .then(async () => {
     console.log("migration success");
+
+    await db
+      .insert(schema.app_school_year)
+      .values({ school_year_name: "middle_school" })
+      .onConflictDoNothing();
+    await db
+      .insert(schema.app_school_year)
+      .values({ school_year_name: "high_school" })
+      .onConflictDoNothing();
+    await db
+      .insert(schema.app_school_year)
+      .values({ school_year_name: "freshman" })
+      .onConflictDoNothing();
+    await db
+      .insert(schema.app_school_year)
+      .values({ school_year_name: "sophmore" })
+      .onConflictDoNothing();
+    await db
+      .insert(schema.app_school_year)
+      .values({ school_year_name: "junior" })
+      .onConflictDoNothing();
+    await db
+      .insert(schema.app_school_year)
+      .values({ school_year_name: "senior" })
+      .onConflictDoNothing();
+    await db
+      .insert(schema.app_school_year)
+      .values({ school_year_name: "graduate" })
+      .onConflictDoNothing();
+    await db
+      .insert(schema.app_school_year)
+      .values({ school_year_name: "post_graduate" })
+      .onConflictDoNothing();
+
     await client.end({ timeout: 5000 });
   })
   .catch(async (err) => {

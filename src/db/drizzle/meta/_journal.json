@@ -8,6 +8,20 @@
       "when": 1697421101191,
       "tag": "0000_easy_maelstrom",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1698530718877,
+      "tag": "0001_freezing_martin_li",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1698552022527,
+      "tag": "0002_lucky_ronan",
+      "breakpoints": true
     }
   ]
 }
