@@ -18,7 +18,7 @@ export const app_user_profile = app_schema.table(
     user_email_address: text("user_email_address").notNull().unique(),
     user_avatar_url: text("user_avatar_url"),
     user_onboarding_complete: boolean("user_onboarding_complete"),
-    user_display_name: text("user_display_name").notNull().unique(),
+    user_display_name: text("user_display_name").unique(),
     user_resume_url: text("user_resume_url"),
     user_team_uuid: uuid("user_team_uuid").references(() => app_team.team_uuid),
     user_school_year: text("user_school_year").references(
