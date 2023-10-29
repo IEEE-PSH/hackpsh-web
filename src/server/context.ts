@@ -1,6 +1,5 @@
 import { db } from "@/db/drizzle";
 import { type NextRequest } from "next/server";
-import { getSessionFromContext } from "./supabase";
 import {
   createRouteHandlerClient,
   type SupabaseClient,
@@ -54,7 +53,9 @@ export const createTRPCContext = async (opts: { req: NextRequest }) => {
   const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
 
   // Fetch stuff that depends on the request
-  const session = await getSessionFromContext(supabase);
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
   return createInnerTRPCContext({
     req: opts.req,

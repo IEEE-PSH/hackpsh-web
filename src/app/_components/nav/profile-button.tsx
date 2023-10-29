@@ -26,12 +26,15 @@ export default function ProfileDropdown() {
   const { setTheme } = useTheme();
 
   async function handleSignOut() {
-    await supabase.auth.signOut();
-    router.replace(siteConfig.paths.home);
     toast({
-      description: "Signing out...",
-      duration: 2000,
-      variant: "default"
+      title: "Signing Out..."
+    })
+    await supabase.auth.signOut();
+    router.push(siteConfig.paths.home);
+    router.refresh();
+    toast({
+      title: "Signed Out Successfully!",
+      variant: "success"
     })
   }
 
