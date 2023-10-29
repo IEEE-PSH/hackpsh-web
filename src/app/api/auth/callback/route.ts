@@ -29,9 +29,11 @@ export async function GET(req: NextRequest) {
   if (code) {
     const cookieStore = cookies();
     const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
-    const { data } = await supabase.auth.exchangeCodeForSession(code);
+    const {
+      data: { session },
+    } = await supabase.auth.exchangeCodeForSession(code);
 
-    if (!data.session) {
+    if (!session) {
       return redirectToSignInWithError(
         req,
         "invalid_session",
@@ -41,7 +43,7 @@ export async function GET(req: NextRequest) {
 
     const { is_onboarding_complete } =
       await serverTRPC.user.is_onboarding_complete.query({
-        user_uuid: data.session.user.id,
+        user_uuid: session.user.id,
       });
 
     if (!is_onboarding_complete) {

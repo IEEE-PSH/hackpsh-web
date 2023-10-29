@@ -24,6 +24,7 @@ export const app_user_profile = app_schema.table(
     user_school_year: text("user_school_year").references(
       () => app_school_year.school_year_name,
     ),
+    user_role: text("user_role").references(() => app_role.role_name),
   },
   (table) => {
     return {
@@ -31,6 +32,11 @@ export const app_user_profile = app_schema.table(
     };
   },
 );
+
+export const app_role = app_schema.table("app_role", {
+  role_id: serial("role_id").primaryKey(),
+  role_name: text("role_name").unique().notNull(),
+});
 
 export const app_school_year = app_schema.table("app_school_year", {
   school_year_id: serial("school_year_id").primaryKey(),

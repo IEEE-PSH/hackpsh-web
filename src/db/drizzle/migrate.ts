@@ -16,6 +16,19 @@ migrate(db, { migrationsFolder: "src/db/drizzle" })
     console.log("migration success");
 
     await db
+      .insert(schema.app_role)
+      .values({ role_name: "participant" })
+      .onConflictDoNothing();
+    await db
+      .insert(schema.app_role)
+      .values({ role_name: "officer" })
+      .onConflictDoNothing();
+    await db
+      .insert(schema.app_role)
+      .values({ role_name: "admin" })
+      .onConflictDoNothing();
+
+    await db
       .insert(schema.app_school_year)
       .values({ school_year_name: "middle_school" })
       .onConflictDoNothing();
