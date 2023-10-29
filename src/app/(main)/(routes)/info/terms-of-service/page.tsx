@@ -136,7 +136,7 @@ export default function Page() {
                 <ul>
                   <li>
                     <a className="font-bold">7.1 As-Is Basis: </a>
-                    The platformis provided "as is" without warranties of any kind, either express or implied.
+                    The platformis provided &quot;as is&quot; without warranties of any kind, either express or implied.
                   </li>
                   <li>
                     <a className="font-bold">7.2 Limitation on Liability: </a>{" "}

@@ -23,7 +23,7 @@ export default function Page() {
                   Welcome to HackPSH. We value your privacy and are committed to
                   safeguarding your personal information. This privacy policy
                   provides details on the type of data we collect, and how
-                  it's processed, stored, and shared, in accordance with
+                  it&apos;s processed, stored, and shared, in accordance with
                   U.S. federal laws and Pennsylvania state regulations.
                 </p>
               </li>
@@ -61,7 +61,7 @@ export default function Page() {
                       3.1 Registration & Participation:{" "}
                     </a>
                     Account management, participant tracking, judging, and award
-                    distribution. HackPSH may hold users' data as long as it
+                    distribution. HackPSH may hold users&apos; data as long as it
                     needs, but the user may delete their accounts at any time.
                   </li>
                   <li>
@@ -116,7 +116,7 @@ export default function Page() {
                   <li>
                     <a className="font-bold">5.2 Data Breach Protocol:</a> In
                     the unlikely event of a data breach, affected individuals
-                    will be notified in compliance with Pennsylvania's Data
+                    will be notified in compliance with Pennsylvania&apos;s Data
                     Breach Notification Law.
                   </li>
                 </ul>
@@ -156,8 +156,8 @@ export default function Page() {
               <li>
                 <a className="text-2xl font-bold">8. Third-Party Links</a>
                 <p>
-                  HackPSH might link to external sites. We don't control and
-                  aren't responsible for their content or privacy
+                  HackPSH might link to external sites. We don&apos;t control and
+                  aren&apos;t responsible for their content or privacy
                   practices.
                 </p>
               </li>
