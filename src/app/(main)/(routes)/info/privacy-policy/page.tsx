@@ -1,7 +1,17 @@
-export default function PrivacyPolicyPage() {
+import PublicSiteHeader from "@/app/_components/nav/public-site-header";
+import { siteConfig } from "@/app/_config/site";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "HackPSH | Privacy Policy",
+  description: "Privacy Policy for HackPSH",
+};
+
+export default function Page() {
   return (
-    <>
-      <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <div>
+      <PublicSiteHeader />
+      <main className="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           <article className="prose-xl">
             <ol>
@@ -9,11 +19,11 @@ export default function PrivacyPolicyPage() {
               <p className="text-md">Updated 10/27/23</p>
               <li>
                 <a className="text-2xl font-bold">1. Introduction</a>
-                <p className="">
+                <p>
                   Welcome to HackPSH. We value your privacy and are committed to
                   safeguarding your personal information. This privacy policy
                   provides details on the type of data we collect, and how
-                  {` it's`} processed, stored, and shared, in accordance with
+                  it's processed, stored, and shared, in accordance with
                   U.S. federal laws and Pennsylvania state regulations.
                 </p>
               </li>
@@ -51,7 +61,7 @@ export default function PrivacyPolicyPage() {
                       3.1 Registration & Participation:{" "}
                     </a>
                     Account management, participant tracking, judging, and award
-                    distribution. HackPSH may hold users’ data as long as it
+                    distribution. HackPSH may hold users' data as long as it
                     needs, but the user may delete their accounts at any time.
                   </li>
                   <li>
@@ -106,7 +116,7 @@ export default function PrivacyPolicyPage() {
                   <li>
                     <a className="font-bold">5.2 Data Breach Protocol:</a> In
                     the unlikely event of a data breach, affected individuals
-                    will be notified in compliance with {`Pennsylvania's`} Data
+                    will be notified in compliance with Pennsylvania's Data
                     Breach Notification Law.
                   </li>
                 </ul>
@@ -146,8 +156,8 @@ export default function PrivacyPolicyPage() {
               <li>
                 <a className="text-2xl font-bold">8. Third-Party Links</a>
                 <p>
-                  HackPSH might link to external sites. {`We don't`} control and
-                  {` aren't`} responsible for their content or privacy
+                  HackPSH might link to external sites. We don't control and
+                  aren't responsible for their content or privacy
                   practices.
                 </p>
               </li>
@@ -166,8 +176,8 @@ export default function PrivacyPolicyPage() {
                 <p>
                   For any questions or concerns regarding this privacy policy,
                   please contact our designated Data Protection Officer at
-                  {` [DPO's email]`}.
-                </p>{" "}
+                  {siteConfig.emails.general}.
+                </p>
                 <p>
                   Under relevant laws, you are empowered to review, amend, or
                   even erase your personal data from our systems. You can also
@@ -178,6 +188,6 @@ export default function PrivacyPolicyPage() {
           </article>
         </div>
       </main>
-    </>
+    </div>
   );
 }

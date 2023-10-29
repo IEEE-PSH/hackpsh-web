@@ -1,15 +1,25 @@
-export default function TermsOfServicePage() {
+import PublicSiteHeader from "@/app/_components/nav/public-site-header";
+import { siteConfig } from "@/app/_config/site";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "HackPSH | Terms of Service",
+  description: "Terms of Service for HackPSH",
+};
+
+export default function Page() {
   return (
-    <>
-      <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <div>
+      <PublicSiteHeader />
+      <main className="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           <article className="prose-xl">
             <ol>
-              <h2 className="font-bold">Terms Of Service</h2>
+              <h2 className="font-bold">Terms of Service</h2>
               <p className="text-md">Updated 10/27/23</p>
               <li>
                 <a className="text-2xl font-bold">1. Overview & Acceptance</a>
-                <p className="">
+                <p>
                   Welcome to HackPSH, a collegiate hackathon platform. By
                   accessing or using our platform, you are agreeing to these
                   terms and any incorporated guidelines, policies, or
@@ -125,8 +135,8 @@ export default function TermsOfServicePage() {
                 </a>
                 <ul>
                   <li>
-                    <a className="font-bold">7.1 As-Is Basis: </a>{" "}
-                    {`The platformis provided "as is" without warranties of any kind, either express or implied.`}
+                    <a className="font-bold">7.1 As-Is Basis: </a>
+                    The platformis provided "as is" without warranties of any kind, either express or implied.
                   </li>
                   <li>
                     <a className="font-bold">7.2 Limitation on Liability: </a>{" "}
@@ -221,13 +231,13 @@ export default function TermsOfServicePage() {
                 <a className="text-2xl font-bold">13. Contact & Feedback</a>
                 <p>
                   If you have any questions or feedback, please reach out to our
-                  support team at ieeeclub@gmail.com.
+                  support team at {siteConfig.emails.general}.
                 </p>
               </li>
             </ol>
           </article>
         </div>
       </main>
-    </>
+    </div>
   );
 }
