@@ -25,12 +25,14 @@ export default function MakeAnnouncement() {
   const { theme } = useTheme();
 
   useEffect(() => {
-    const htmlTag = document.querySelector("html");
-    const htmlClass = htmlTag?.getAttribute("class");
-    if (htmlClass === "light") {
-      setCurrentTheme("light");
+    if (theme === "light" || theme === "dark") {
+      setCurrentTheme(theme);
     } else {
-      setCurrentTheme("dark");
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        setCurrentTheme("dark");
+      } else {
+        setCurrentTheme("light");
+      }
     }
   }, [theme]);
 
@@ -49,7 +51,7 @@ export default function MakeAnnouncement() {
             Submit
           </Button>
           {arr.map((item, i) => (
-            <Announcement key={"ann-" + i} data={item} />
+            <Announcement key={"ann-" + i} data={item} theme={currentTheme} />
           ))}
         </div>
       </div>
