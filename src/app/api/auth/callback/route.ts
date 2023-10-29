@@ -3,6 +3,7 @@ import {
   redirectToPath,
   redirectToSignInWithError,
 } from "@/app/_lib/server-utils";
+import { serverTRPC } from "@/app/_trpc/server";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { type NextRequest } from "next/server";
@@ -30,7 +31,7 @@ export async function GET(req: NextRequest) {
     const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
     const { data } = await supabase.auth.exchangeCodeForSession(code);
 
-    if (data.session == null) {
+    if (!data.session) {
       return redirectToSignInWithError(
         req,
         "invalid_session",
@@ -38,8 +39,15 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // TODO: Create Logic from session to query against db in order to redirect to onboarding or dashboard appropriately
-    // This is the only entry point to our application
+    const { is_onboarding_complete } =
+      await serverTRPC.user.is_onboarding_complete.query({
+        user_uuid: data.session.user.id,
+      });
+
+    if (!is_onboarding_complete) {
+      return redirectToPath(req, siteConfig.paths.onboarding);
+    }
+
     return redirectToPath(req, siteConfig.paths.dashboard);
   }
 
