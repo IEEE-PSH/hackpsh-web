@@ -5,11 +5,11 @@ import {
   redirectToSignInWithError,
 } from "@/app/_lib/server-utils";
 import { siteConfig } from "./app/_config/site";
+import { serverTRPC } from "./app/_trpc/server";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req, res });
-
   const {
     data: { session },
     error,
@@ -25,24 +25,35 @@ export async function middleware(req: NextRequest) {
     );
   }
 
+  // If an errors in the session acquisition process from supabase,
+  // then redirect to sign in
   if (error && !req.nextUrl.pathname.startsWith(siteConfig.paths.sign_in)) {
     return redirectToSignInWithError(
       req,
-      "invalid_session",
+      "auth_error",
       "Session was not able to be acquired.",
     );
   }
 
-  // If a user has a valid session and navigates to sign-in page,
-  // then automatically redirect them to dashboard (only if their onboarding is complete).
-  if (session && req.nextUrl.pathname.startsWith(siteConfig.paths.sign_in)) {
-    return redirectToPath(req, siteConfig.paths.dashboard);
-  }
+  // If a user has a valid session and lands on sign-in page,
+  // then redirect them onto the platform.
+  if (session) {
+    const { is_onboarding_complete } =
+      await serverTRPC.user.is_onboarding_complete.query({
+        user_uuid: session.user.id,
+      });
 
-  // TODO: Add Check above for onboarding complete
-  // TODO: If Valid Session, but no onboarding complete -> redirectToPath(req, /onboarding)
+    // If a user's onboarding is not complete, and they already are not on onboarding,
+    // then redirect them back onto onboarding.
+    if (
+      !is_onboarding_complete &&
+      !req.nextUrl.pathname.startsWith(siteConfig.paths.onboarding)
+    ) {
+      return redirectToPath(req, siteConfig.paths.onboarding);
+    }
+  }
 }
 
 export const config = {
-  matcher: ["/sign-in", "/dashboard", "/onboarding"],
+  matcher: ["/sign-in", "/dashboard", "/onboarding", "/announcements"],
 };
