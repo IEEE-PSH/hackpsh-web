@@ -1,5 +1,5 @@
 import { OnboardingCompleteLookupSchema } from "@/app/_lib/zod-schemas/onboarding";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { type Database } from "@/db/drizzle";
 
 async function fetchOnboardingStatus(db: Database, user_uuid: string) {
@@ -20,7 +20,7 @@ async function fetchOnboardingStatus(db: Database, user_uuid: string) {
 }
 
 export const userRouter = createTRPCRouter({
-  is_onboarding_complete: protectedProcedure
+  is_onboarding_complete: publicProcedure
     .input(OnboardingCompleteLookupSchema)
     .query(async ({ ctx, input }) => {
       const onboardingStatus = await fetchOnboardingStatus(
