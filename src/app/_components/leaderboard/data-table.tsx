@@ -50,7 +50,8 @@ const data: Entry[] = [
     points: 100,
   },
 ];
-
+//automatically sort initial table by rank
+data.sort((a, b) => (a.rank > b.rank ? 1 : -1));
 export default function DataTable({ className }: { className: string }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
