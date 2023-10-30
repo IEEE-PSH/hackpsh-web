@@ -38,6 +38,26 @@ export async function middleware(req: NextRequest) {
   // If a user has a valid session and lands on sign-in page,
   // then redirect them onto the platform.
   if (session) {
+    // Check if they exist in the database first, otherwise create a basic user record.
+    const { does_user_exist } = await serverTRPC.user.does_user_exist.query({
+      user_uuid: session.user.id,
+    });
+
+    if (!does_user_exist) {
+      const result = await serverTRPC.user.create_user.mutate({
+        user_uuid: session.user.id,
+        user_email_address: session.user.email!,
+      });
+
+      if (!result) {
+        return redirectToSignInWithError(
+          req,
+          "user_creation",
+          "Unable to create brand new user.",
+        );
+      }
+    }
+
     const { is_onboarding_complete } =
       await serverTRPC.user.is_onboarding_complete.query({
         user_uuid: session.user.id,
@@ -55,5 +75,12 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/sign-in", "/dashboard", "/onboarding", "/announcements"],
+  matcher: [
+    "/sign-in",
+    "/dashboard",
+    "/onboarding",
+    "/announcements",
+    "/leaderboard",
+    "/challenges",
+  ],
 };

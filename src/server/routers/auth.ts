@@ -1,4 +1,4 @@
-import { UserAuthFormSchema } from "@/app/_lib/zod-schemas/user-auth";
+import { UserAuthFormSchema } from "@/app/_lib/zod-schemas/forms/user-auth";
 import { publicProcedure, createTRPCRouter } from "../trpc";
 import { type SupabaseClient } from "@supabase/auth-helpers-nextjs";
 
