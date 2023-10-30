@@ -1,6 +1,6 @@
 import PublicSiteHeader from "@/app/_components/nav/public-site-header";
 import { siteConfig } from "@/app/_config/site";
-import { Metadata } from "next";
+import { type Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "HackPSH | Terms of Service",
@@ -107,7 +107,7 @@ export default function Page() {
                   <li>
                     <a className="font-bold">5.3 Prohibited Actions: </a>
                     Distributing malicious software, attempting to gain
-                    unauthorized access, or disrupting the platform’s operations
+                    unauthorized access, or disrupting the platform&apos;s operations
                     are strictly forbidden.
                   </li>
                 </ul>

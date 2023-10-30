@@ -1,6 +1,6 @@
 import PublicSiteHeader from "@/app/_components/nav/public-site-header";
 import { siteConfig } from "@/app/_config/site";
-import { Metadata } from "next";
+import { type Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "HackPSH | Privacy Policy",
