@@ -1,11 +1,19 @@
 import { siteConfig } from "@/app/_config/site";
 import {
+  retrieveCallbackToken,
+  validateErrorURLParams,
+} from "@/app/_lib/auth/server";
+import {
+  BaseError,
   redirectToPath,
   redirectToSignInWithError,
 } from "@/app/_lib/server-utils";
-import { serverTRPC } from "@/app/_trpc/server";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import {
+  composeRouteHandlerClient,
+  exchangeCallbackTokenForSession,
+} from "@/app/_lib/supabase/server";
+import { db } from "@/db/drizzle";
+import { userRouter } from "@/server/routers/user";
 import { type NextRequest } from "next/server";
 
 /**
@@ -20,42 +28,60 @@ import { type NextRequest } from "next/server";
  * @returns New User Session through Cookies
  */
 export async function GET(req: NextRequest) {
-  const requestUrl = new URL(req.url);
-  const code = requestUrl.searchParams.get("code");
+  try {
+    const requestURL = new URL(req.url);
 
-  const error_reason = requestUrl.searchParams.get("error");
-  const error_description = requestUrl.searchParams.get("error_description");
+    // Sanitize Incoming Request against URL Error Parameters
+    validateErrorURLParams(requestURL);
 
-  if (code) {
-    const cookieStore = cookies();
-    const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
-    const {
-      data: { session },
-    } = await supabase.auth.exchangeCodeForSession(code);
+    // Start Session Acquisition Process
+    const callbackToken = retrieveCallbackToken(requestURL);
+    const supabase = composeRouteHandlerClient();
+    const session = await exchangeCallbackTokenForSession(
+      supabase,
+      callbackToken,
+    );
 
-    if (!session) {
-      return redirectToSignInWithError(
-        req,
-        "invalid_session",
-        "Session was not able to be acquired.",
-      );
+    // Create Server-Side Caller `User` to access Procedures
+    const userRPC = userRouter.createCaller({
+      db,
+      req,
+      supabase,
+      headers: req.headers,
+      session: session,
+    });
+
+    // EnsureUserExists
+    const { does_user_exist } = await userRPC.does_user_exist({
+      user_uuid: session.user.id,
+    });
+
+    if (!does_user_exist) {
+      await userRPC.create_user({
+        user_uuid: session.user.id,
+        user_email_address: session.user.email!,
+      });
     }
 
-    const { is_onboarding_complete } =
-      await serverTRPC.user.is_onboarding_complete.query({
-        user_uuid: session.user.id,
-      });
+    const { is_onboarding_complete } = await userRPC.is_onboarding_complete({
+      user_uuid: session.user.id,
+    });
 
-    if (!is_onboarding_complete) {
+    if (is_onboarding_complete) {
+      return redirectToPath(req, siteConfig.paths.dashboard);
+    } else {
       return redirectToPath(req, siteConfig.paths.onboarding);
     }
+  } catch (cause) {
+    if (cause instanceof BaseError) {
+      return redirectToSignInWithError(req, cause);
+    }
 
-    return redirectToPath(req, siteConfig.paths.dashboard);
-  }
+    const unknown_error = new BaseError({
+      error_title: "Unknown Error",
+      error_desc: null,
+    });
 
-  // If the exchange for a valid session generates an error, supabase hits our callback route with
-  // the following: `?error=unauthorized_client&error_code=401&error_description=Email+link+is+invalid+or+has+expired`
-  if (error_reason) {
-    return redirectToSignInWithError(req, error_reason, error_description!);
+    return redirectToSignInWithError(req, unknown_error);
   }
 }
