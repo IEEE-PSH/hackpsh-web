@@ -1,15 +1,17 @@
-import { migrate } from "drizzle-orm/postgres-js/migrator";
-import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
+import { migrate } from "drizzle-orm/node-postgres/migrator";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
 import * as schema from "./schema";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 const connectionString = process.env.DATABASE_URL;
-const client = postgres(connectionString);
+const pool = new Pool({
+  connectionString,
+});
 
-const db = drizzle(client, { schema: schema });
+const db = drizzle(pool, { schema: schema });
 
 migrate(db, { migrationsFolder: "src/db/drizzle" })
   .then(async () => {
@@ -61,9 +63,9 @@ migrate(db, { migrationsFolder: "src/db/drizzle" })
       .values({ school_year_name: "post_graduate" })
       .onConflictDoNothing();
 
-    await client.end({ timeout: 5000 });
+    await pool.end();
   })
   .catch(async (err) => {
     console.log(err);
-    await client.end({ timeout: 5000 });
+    await pool.end();
   });

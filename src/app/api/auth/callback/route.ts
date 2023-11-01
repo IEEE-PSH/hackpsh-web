@@ -53,7 +53,9 @@ export async function GET(req: NextRequest) {
       session: session,
     });
 
-    // EnsureUserExists
+    // On Sign-Up / Sign-In, Verify if the user's
+    // data exists within DB, otherwise create a base user
+    // record within the DB,
     const { does_user_exist } = await userRPC.does_user_exist({
       user_uuid: session.user.id,
     });
@@ -65,7 +67,8 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    // RedirectUser
+    // If the user has not completed onboarding, then
+    // redirect the user to the onboarding forms.
     const { is_onboarding_complete } = await userRPC.is_onboarding_complete({
       user_uuid: session.user.id,
     });
