@@ -43,6 +43,13 @@
       "when": 1698860663522,
       "tag": "0005_breezy_blockbuster",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1698870190019,
+      "tag": "0006_dusty_iron_patriot",
+      "breakpoints": true
     }
   ]
 }

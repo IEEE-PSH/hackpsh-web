@@ -49,8 +49,8 @@ export const app_school_year = app_schema.table("app_school_year", {
 export const app_team = app_schema.table("app_team", {
   team_uuid: uuid("team_uuid").primaryKey(),
   team_name: text("team_name").notNull().unique(),
-  team_join_code: text("team_code").unique(),
-  team_points: integer("team_points").default(0),
+  team_join_code: text("team_code").notNull().unique(),
+  team_points: integer("team_points").notNull().default(0),
 });
 
 export const app_announcement = app_schema.table("app_announcement", {
