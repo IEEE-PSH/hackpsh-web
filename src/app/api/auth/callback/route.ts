@@ -4,6 +4,7 @@ import {
   validateErrorURLParams,
 } from "@/app/_lib/auth/server";
 import { redirectToPath } from "@/app/_lib/server-utils";
+import handleError from "@/app/_lib/server/handleError";
 import {
   composeRouteHandlerClient,
   exchangeCallbackTokenForSession,
@@ -11,7 +12,6 @@ import {
 import { db } from "@/db/drizzle";
 import { userRouter } from "@/server/routers/user";
 import { type NextRequest } from "next/server";
-import handleError from "../../../_lib/server/handleError";
 
 /**
  * This route handles users who use magic link sign-in (email),
