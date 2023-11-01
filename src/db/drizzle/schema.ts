@@ -24,7 +24,10 @@ export const app_user_profile = app_schema.table(
     user_school_year: text("user_school_year").references(
       () => app_school_year.school_year_name,
     ),
-    user_role: text("user_role").references(() => app_role.role_name),
+    user_role: text("user_role")
+      .notNull()
+      .references(() => app_role.role_name)
+      .default("participant"),
   },
   (table) => {
     return {

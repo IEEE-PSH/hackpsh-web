@@ -30,6 +30,7 @@ export async function createUser(
       user_uuid,
       user_email_address,
       user_onboarding_complete: false,
+      user_role: "participant",
     });
   } catch (error) {
     throw new TRPCError({
