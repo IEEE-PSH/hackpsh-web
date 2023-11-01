@@ -14,7 +14,9 @@ import {
 } from "@/app/_lib/supabase/server";
 import { db } from "@/db/drizzle";
 import { userRouter } from "@/server/routers/user";
-import { type NextRequest } from "next/server";
+import { TRPCClientError } from "@trpc/client";
+import { TRPCError, getTRPCErrorFromUnknown } from "@trpc/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 /**
  * This route handles users who use magic link sign-in (email),
@@ -51,22 +53,24 @@ export async function GET(req: NextRequest) {
       session: session,
     });
 
-    // EnsureUserExists
-    const { does_user_exist } = await userRPC.does_user_exist({
-      user_uuid: session.user.id,
-    });
+    // // EnsureUserExists
+    // const { does_user_exist } = await userRPC.does_user_exist({
+    //   user_uuid: session.user.id,
+    // });
 
-    if (!does_user_exist) {
-      await userRPC.create_user({
-        user_uuid: session.user.id,
-        user_email_address: session.user.email!,
-      });
-    }
+    // if (!does_user_exist) {
+    //   await userRPC.create_user({
+    //     user_uuid: session.user.id,
+    //     user_email_address: session.user.email!,
+    //   });
+    // }
 
+    // RedirectUser
     const { is_onboarding_complete } = await userRPC.is_onboarding_complete({
       user_uuid: session.user.id,
     });
 
+    return NextResponse.json(is_onboarding_complete);
     if (is_onboarding_complete) {
       return redirectToPath(req, siteConfig.paths.dashboard);
     } else {
@@ -75,6 +79,15 @@ export async function GET(req: NextRequest) {
   } catch (cause) {
     if (cause instanceof BaseError) {
       return redirectToSignInWithError(req, cause);
+    }
+
+    if (cause instanceof TRPCError) {
+      const trpc_error = new BaseError({
+        error_title: cause.code,
+        error_desc: cause.message,
+      });
+
+      return redirectToSignInWithError(req, trpc_error);
     }
 
     const unknown_error = new BaseError({

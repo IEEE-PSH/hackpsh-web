@@ -1,6 +1,6 @@
-import { BaseError } from "@/app/_lib/server-utils";
 import { type Database } from "@/db/drizzle";
 import { app_user_profile } from "@/db/drizzle/schema";
+import { TRPCError } from "@trpc/server";
 
 export async function getUserOnboardingStatus(db: Database, user_uuid: string) {
   try {
@@ -13,9 +13,9 @@ export async function getUserOnboardingStatus(db: Database, user_uuid: string) {
 
     return result;
   } catch (error) {
-    throw new BaseError({
-      error_title: "Database Error",
-      error_desc: "Server was unable to query the database.",
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
     });
   }
 }
@@ -32,9 +32,9 @@ export async function createUser(
       user_onboarding_complete: false,
     });
   } catch (error) {
-    throw new BaseError({
-      error_title: "Database Error",
-      error_desc: "Server was unable to perform this operation.",
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
     });
   }
 }
@@ -50,9 +50,9 @@ export async function doesUserExist(db: Database, user_uuid: string) {
 
     return result;
   } catch (error) {
-    throw new BaseError({
-      error_title: "Database Error",
-      error_desc: "Server was unable to query the database.",
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
     });
   }
 }
