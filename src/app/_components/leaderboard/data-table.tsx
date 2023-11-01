@@ -1,18 +1,15 @@
 "use client";
 
-import * as React from "react";
 import {
   type ColumnFiltersState,
   type SortingState,
-  type VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { type Entry, columns } from "@/app/_components/leaderboard/columns";
+import { columns } from "@/app/_components/leaderboard/columns";
 import { Input } from "@/app/_components/ui/input";
 import {
   Table,
@@ -23,42 +20,19 @@ import {
   TableRow,
 } from "@/app/_components/ui/table";
 import { cn } from "@/app/_lib/client-utils";
+import { useState } from "react";
+import { LeaderboardStandings } from "@/server/dao/leaderboard";
 
-const data: Entry[] = [
-  {
-    id: "m5gr84i9",
-    rank: 1,
-    name: "Philadelphia Eagles",
-    points: 800,
-  },
-  {
-    id: "3u1reuv4",
-    rank: 3,
-    name: "Nittany Lions",
-    points: 200,
-  },
-  {
-    id: "derv1ws0",
-    rank: 2,
-    name: "The Avengers",
-    points: 500,
-  },
-  {
-    id: "hf3gfda0",
-    rank: 4,
-    name: "Lorem ipsum dolor sit amet, consectetuer adipiscin",
-    points: 100,
-  },
-];
-//automatically sort initial table by rank
-data.sort((a, b) => (a.rank > b.rank ? 1 : -1));
-export default function DataTable({ className }: { className: string }) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+interface DataTableProps {
+  data: LeaderboardStandings,
+  className: string
+}
+
+export default function DataTable({ data, className }: DataTableProps) {
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
     [],
   );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
 
   const table = useReactTable({
     data,
@@ -66,14 +40,11 @@ export default function DataTable({ className }: { className: string }) {
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
     state: {
       sorting,
       columnFilters,
-      columnVisibility,
     },
   });
 
@@ -81,10 +52,10 @@ export default function DataTable({ className }: { className: string }) {
     <div className={cn("w-full", className)}>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter team names..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          placeholder="Search up a team!"
+          value={(table.getColumn("team_name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
+            table.getColumn("team_name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -97,7 +68,6 @@ export default function DataTable({ className }: { className: string }) {
                 {headerGroup.headers.map((header, i) => {
                   return (
                     <TableHead
-                      className={i == 1 ? "w-full" : ""}
                       key={header.id}
                     >
                       {header.isPlaceholder
@@ -132,7 +102,7 @@ export default function DataTable({ className }: { className: string }) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No Results.
                 </TableCell>
               </TableRow>
             )}

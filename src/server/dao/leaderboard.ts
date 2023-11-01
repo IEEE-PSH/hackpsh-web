@@ -23,4 +23,7 @@ export async function getCurrentStandings(db: Database) {
   }
 }
 
-export type TeamStandings = Awaited<ReturnType<typeof getCurrentStandings>>;
+export type LeaderboardStandings = Awaited<
+  ReturnType<typeof getCurrentStandings>
+>;
+export type TeamStanding = LeaderboardStandings[number];

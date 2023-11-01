@@ -1,6 +1,9 @@
 import { type Metadata } from "next";
 import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
-import DataTable from "@/app/_components/leaderboard/data-table";
+import Leaderboard from "@/app/_components/leaderboard/leaderboard";
+
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Leaderboard | HackPSH",
@@ -15,7 +18,7 @@ export default function LeaderboardPage() {
         <p className="mb-10 text-3xl font-bold tracking-tight text-center">
           Leaderboard
         </p>
-        <DataTable className="max-w-[55rem]" />
+        <Leaderboard />
       </div>
     </div>
   );
