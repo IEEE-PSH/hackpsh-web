@@ -1,9 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import {
-  BaseError,
-  redirectToPath,
-  redirectToSignInWithError,
-} from "@/app/_lib/server-utils";
+import { redirectToPath } from "@/app/_lib/server-utils";
 import { siteConfig } from "./app/_config/site";
 import {
   composeMiddlewareClient,

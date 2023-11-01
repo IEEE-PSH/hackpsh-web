@@ -1,4 +1,3 @@
-import { Session } from "@supabase/supabase-js";
 import { BaseError } from "../server-utils";
 
 /**
@@ -34,18 +33,5 @@ export function validateErrorURLParams(requestURL: URL) {
 
   if (error_title) {
     throw new BaseError({ error_title, error_desc });
-  }
-}
-
-export async function ensureUserExistsInDB(userRPC: any, session: Session) {
-  const { does_user_exist } = await userRPC.does_user_exist({
-    user_uuid: session.user.id,
-  });
-
-  if (!does_user_exist) {
-    await userRPC.create_user({
-      user_uuid: session.user.id,
-      user_email_address: session.user.email!,
-    });
   }
 }

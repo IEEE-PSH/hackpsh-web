@@ -1,11 +1,11 @@
 import {
-  SupabaseClient,
+  type SupabaseClient,
   createMiddlewareClient,
   createRouteHandlerClient,
 } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { BaseError } from "../server-utils";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, type NextResponse } from "next/server";
 
 export function composeRouteHandlerClient() {
   const cookieStore = cookies();

@@ -3,7 +3,7 @@ import { type NextRequest } from "next/server";
 import { siteConfig } from "@/app/_config/site";
 import { BaseError, redirectToSignInWithError } from "../server-utils";
 
-export default function (req: NextRequest, cause: unknown) {
+export default function handleError(req: NextRequest, cause: unknown) {
   // Ignore Errors Coming From Sign-In to prevent Infinite Redirect
   if (req.nextUrl.pathname.startsWith(siteConfig.paths.sign_in)) return;
 
