@@ -4,8 +4,8 @@ import {
   createRouteHandlerClient,
 } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { BaseError } from "../server-utils";
 import { type NextRequest, type NextResponse } from "next/server";
+import { BaseError } from "../server-utils";
 
 export function composeRouteHandlerClient() {
   const cookieStore = cookies();

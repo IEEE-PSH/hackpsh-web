@@ -1,5 +1,11 @@
 import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
 import { OnboardingForm } from "@/app/_components/onboarding-form";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Onboarding | HackPSH",
+  description: "Weclome to HackPSH!",
+}
 
 // If they land on onboarding, that means the user was either redirected through
 // api/auth/callback or the middleware function

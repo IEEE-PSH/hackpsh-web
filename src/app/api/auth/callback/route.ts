@@ -1,17 +1,17 @@
 import { siteConfig } from "@/app/_config/site";
+import { db } from "@/db/drizzle";
+import { type NextRequest } from "next/server";
+import { userRouter } from "@/server/routers/user";
+import { redirectToPath } from "@/server/lib/server-utils";
 import {
-  retrieveCallbackToken,
   validateErrorURLParams,
-} from "@/app/_lib/auth/server";
-import { redirectToPath } from "@/app/_lib/server-utils";
-import handleError from "@/app/_lib/server/handleError";
+  retrieveCallbackToken,
+} from "@/server/lib/auth/server";
+import handleError from "@/server/lib/server/handleError";
 import {
   composeRouteHandlerClient,
   exchangeCallbackTokenForSession,
-} from "@/app/_lib/supabase/server";
-import { db } from "@/db/drizzle";
-import { userRouter } from "@/server/routers/user";
-import { type NextRequest } from "next/server";
+} from "@/server/lib/supabase/server";
 
 /**
  * This route handles users who use magic link sign-in (email),

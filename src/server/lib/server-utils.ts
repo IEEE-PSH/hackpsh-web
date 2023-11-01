@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { siteConfig } from "../_config/site";
+import { siteConfig } from "../../app/_config/site";
 
 export function redirectToPath(req: NextRequest, path: string) {
   const redirectUrl = new URL(req.nextUrl.origin);
