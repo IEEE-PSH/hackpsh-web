@@ -1,12 +1,6 @@
-"use client";
-
-import * as React from "react";
-import DataTable from "@/app/_components/leaderboard/data-table";
-import { SiteHeader } from "@/app/_components/nav/site-header";
-import { ProtectedMainNav } from "@/app/_components/nav/protected-main-nav";
-import { ProtectedMobileNav } from "@/app/_components/nav/protected-mobile-nav";
-import { SiteHeaderActions } from "@/app/_components/nav/site-header-actions";
 import { type Metadata } from "next";
+import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
+import DataTable from "@/app/_components/leaderboard/data-table";
 
 export const metadata: Metadata = {
   title: "Leaderboard | HackPSH",
@@ -16,11 +10,7 @@ export const metadata: Metadata = {
 export default function LeaderboardPage() {
   return (
     <div>
-      <SiteHeader>
-        <ProtectedMainNav />
-        <ProtectedMobileNav />
-        <SiteHeaderActions />
-      </SiteHeader>
+      <ProtectedSiteHeader />
       <div className="flex flex-col items-center justify-center w-full mt-14">
         <p className="mb-10 text-3xl font-bold tracking-tight text-center">
           Leaderboard
