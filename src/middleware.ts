@@ -28,15 +28,19 @@ export async function middleware(req: NextRequest) {
       session: session,
     });
 
-    // // If the user has not completed onboarding, then
-    // // redirect the user to the onboarding forms.
-    // const { is_onboarding_complete } = await userRPC.is_onboarding_complete({
-    //   user_uuid: session.user.id,
-    // });
+    // If the user has not completed onboarding, then
+    // redirect the user to the onboarding forms.
+    const { is_onboarding_complete } = await userRPC.is_onboarding_complete({
+      user_uuid: session.user.id,
+    });
 
-    // if (!is_onboarding_complete) {
-    //   return redirectToPath(req, siteConfig.paths.onboarding);
-    // }
+    if (
+      !is_onboarding_complete &&
+      !req.nextUrl.pathname.startsWith(siteConfig.paths.onboarding)
+    ) {
+      return redirectToPath(req, siteConfig.paths.onboarding);
+    }
+
     return res;
   } catch (cause) {
     // Ignore Errors Coming From Sign-In to prevent Infinite Redirect
@@ -64,29 +68,6 @@ export async function middleware(req: NextRequest) {
 
     return redirectToSignInWithError(req, unknown_error);
   }
-
-  // // If a user has a valid session and lands on sign-in page,
-  // // then redirect them onto the platform.
-  // if (session) {
-  //   // Check if they exist in the database first, otherwise create a basic user record.
-  //   const { does_user_exist } = await serverTRPC.user.does_user_exist.query({
-  //     user_uuid: session.user.id,
-  //   });
-
-  //   const { is_onboarding_complete } =
-  //     await serverTRPC.user.is_onboarding_complete.query({
-  //       user_uuid: session.user.id,
-  //     });
-
-  //   // If a user's onboarding is not complete, and they already are not on onboarding,
-  //   // then redirect them back onto onboarding.
-  //   if (
-  //     !is_onboarding_complete &&
-  //     !req.nextUrl.pathname.startsWith(siteConfig.paths.onboarding)
-  //   ) {
-  //     return redirectToPath(req, siteConfig.paths.onboarding);
-  //   }
-  // }
 }
 
 export const config = {
