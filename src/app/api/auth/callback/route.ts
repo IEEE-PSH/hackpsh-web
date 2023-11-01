@@ -14,8 +14,7 @@ import {
 } from "@/app/_lib/supabase/server";
 import { db } from "@/db/drizzle";
 import { userRouter } from "@/server/routers/user";
-import { TRPCClientError } from "@trpc/client";
-import { TRPCError, getTRPCErrorFromUnknown } from "@trpc/server";
+import { TRPCError } from "@trpc/server";
 import { NextResponse, type NextRequest } from "next/server";
 
 /**
@@ -30,6 +29,8 @@ import { NextResponse, type NextRequest } from "next/server";
  * @returns New User Session through Cookies
  */
 export async function GET(req: NextRequest) {
+  const supabase = composeRouteHandlerClient();
+
   try {
     const requestURL = new URL(req.url);
 
@@ -38,7 +39,6 @@ export async function GET(req: NextRequest) {
 
     // Start Session Acquisition Process
     const callbackToken = retrieveCallbackToken(requestURL);
-    const supabase = composeRouteHandlerClient();
     const session = await exchangeCallbackTokenForSession(
       supabase,
       callbackToken,
@@ -53,24 +53,23 @@ export async function GET(req: NextRequest) {
       session: session,
     });
 
-    // // EnsureUserExists
-    // const { does_user_exist } = await userRPC.does_user_exist({
-    //   user_uuid: session.user.id,
-    // });
+    // EnsureUserExists
+    const { does_user_exist } = await userRPC.does_user_exist({
+      user_uuid: session.user.id,
+    });
 
-    // if (!does_user_exist) {
-    //   await userRPC.create_user({
-    //     user_uuid: session.user.id,
-    //     user_email_address: session.user.email!,
-    //   });
-    // }
+    if (!does_user_exist) {
+      await userRPC.create_user({
+        user_uuid: session.user.id,
+        user_email_address: session.user.email!,
+      });
+    }
 
     // RedirectUser
     const { is_onboarding_complete } = await userRPC.is_onboarding_complete({
       user_uuid: session.user.id,
     });
 
-    return NextResponse.json(is_onboarding_complete);
     if (is_onboarding_complete) {
       return redirectToPath(req, siteConfig.paths.dashboard);
     } else {

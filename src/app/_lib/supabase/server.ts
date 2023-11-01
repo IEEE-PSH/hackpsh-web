@@ -66,7 +66,7 @@ export async function getSession(supabase: SupabaseClient) {
   } catch (error) {
     throw new BaseError({
       error_title: "Authentication Error",
-      error_desc: "Session was unable to be acquired.",
+      error_desc: "Session was unable to be acquired or is invalid.",
     });
   }
 }
