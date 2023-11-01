@@ -3,19 +3,15 @@ import {
   retrieveCallbackToken,
   validateErrorURLParams,
 } from "@/app/_lib/auth/server";
-import {
-  BaseError,
-  redirectToPath,
-  redirectToSignInWithError,
-} from "@/app/_lib/server-utils";
+import { redirectToPath } from "@/app/_lib/server-utils";
 import {
   composeRouteHandlerClient,
   exchangeCallbackTokenForSession,
 } from "@/app/_lib/supabase/server";
 import { db } from "@/db/drizzle";
 import { userRouter } from "@/server/routers/user";
-import { TRPCError } from "@trpc/server";
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest } from "next/server";
+import handleError from "../../../_lib/server/handleError";
 
 /**
  * This route handles users who use magic link sign-in (email),
@@ -79,24 +75,6 @@ export async function GET(req: NextRequest) {
       return redirectToPath(req, siteConfig.paths.onboarding);
     }
   } catch (cause) {
-    if (cause instanceof BaseError) {
-      return redirectToSignInWithError(req, cause);
-    }
-
-    if (cause instanceof TRPCError) {
-      const trpc_error = new BaseError({
-        error_title: cause.code,
-        error_desc: cause.message,
-      });
-
-      return redirectToSignInWithError(req, trpc_error);
-    }
-
-    const unknown_error = new BaseError({
-      error_title: "Unknown Error",
-      error_desc: null,
-    });
-
-    return redirectToSignInWithError(req, unknown_error);
+    return handleError(req, cause);
   }
 }
