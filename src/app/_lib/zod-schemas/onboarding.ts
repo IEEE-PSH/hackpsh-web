@@ -63,30 +63,27 @@ export const PersonalFormSchema = z.object({
     z.literal("graduate"),
     z.literal("post_graduate"),
   ]),
-  user_major: MajorSchema
+  user_major: MajorSchema,
 });
 
 export const HelpFormSchema = z.object({
-  be_officer: z.boolean(),
-  type_officer: z.union([
-    z.literal("administrative"),
-    z.literal("technical"),
-    z.literal("both"),
-  ]),
-})
+  //unsure how to use booleans
+  be_officer: z.enum(["yes", "no"]),
+  type_officer: z.enum(["administrative", "technical", "both"]),
+});
 
 export const CreateTeamFormSchema = z.object({
   create_team_name: z.string(),
-})
+});
 export const JoinTeamFormSchema = z.object({
   join_team_name: z.string(),
-})
+});
 
 export const OnboardingCompleteLookupSchema = z.object({
   user_uuid: z.string().uuid("Please provide a valid UUID."),
 });
 
 export type TPersonalForm = z.infer<typeof PersonalFormSchema>;
-export type THelpForm = z.infer<typeof HelpFormSchema>
-export type TCreateTeamForm = z.infer<typeof CreateTeamFormSchema>
-export type TJoinTeamForm = z.infer<typeof JoinTeamFormSchema>
+export type THelpForm = z.infer<typeof HelpFormSchema>;
+export type TCreateTeamForm = z.infer<typeof CreateTeamFormSchema>;
+export type TJoinTeamForm = z.infer<typeof JoinTeamFormSchema>;

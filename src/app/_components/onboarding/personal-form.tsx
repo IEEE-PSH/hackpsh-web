@@ -45,6 +45,7 @@ import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import FormStep from "@/app/_components/onboarding/form-step";
 import { useRouter } from "next/navigation";
 import SignOutButton from "@/app/_components/ui/sign-out-button";
+import Link from "next/link";
 
 export default function PersonalForm() {
   // Form Definition
@@ -56,8 +57,8 @@ export default function PersonalForm() {
   // eslint-disable-next-line @typescript-eslint/require-await
   async function onSubmit(values: TPersonalForm) {
     console.log(values.user_display_name);
-    console.log(values.user_class_year)
-    console.log(values.user_major)
+    console.log(values.user_class_year);
+    console.log(values.user_major);
     router.replace("/onboarding/helpus");
   }
 
@@ -128,7 +129,7 @@ export default function PersonalForm() {
   majors.forEach((major) =>
     items.push({
       label: major,
-      value: major.toLowerCase().replace(" ", "_") as TMajor,
+      value: major.toLowerCase().replaceAll(" ", "_") as TMajor,
     }),
   );
 
@@ -137,10 +138,7 @@ export default function PersonalForm() {
       <div className={cn("w-[23rem]")}>
         <FormStep step="1" />
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <p className=" text-center text-2xl font-bold tracking-tight">
               Tell Us About Yourself
             </p>
@@ -153,7 +151,6 @@ export default function PersonalForm() {
                   <FormControl>
                     <Input
                       className="border-muted-foreground"
-                      id="username"
                       placeholder="CoolHacker123"
                       {...field}
                       value={field.value ?? ""}
@@ -175,7 +172,7 @@ export default function PersonalForm() {
                   <FormControl>
                     <SelectContainer
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      defaultValue={field.value ?? ""}
                     >
                       <SelectTrigger className="w-full">
                         <SelectValue
@@ -187,7 +184,7 @@ export default function PersonalForm() {
                         {classYear.map((year, i) => (
                           <SelectItem
                             key={"select-" + i}
-                            value={year.toLowerCase().replace(" ", "_")}
+                            value={year.toLowerCase().replaceAll(" ", "_")}
                           >
                             {year}
                           </SelectItem>
@@ -227,7 +224,7 @@ export default function PersonalForm() {
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent align="start" className=" p-0">
+                    <PopoverContent align="start" className="w-[23rem] p-0">
                       <Command>
                         <CommandInput placeholder="Search major..." />
                         <ScrollArea className="h-[14rem] w-full rounded-md border">
@@ -262,10 +259,14 @@ export default function PersonalForm() {
               )}
             />
             <div className=" grid w-full grid-cols-2 gap-4">
-              <SignOutButton
-                type="button"
-                className={`w-full ${buttonVariants({ variant: "default" })}`}
-              />
+              <Link
+                className={cn(
+                  `w-full ${buttonVariants({ variant: "default" })}`,
+                )}
+                href="/"
+              >
+                Back
+              </Link>
 
               <Button
                 type="submit"

@@ -34,18 +34,21 @@ import Link from "next/link";
 
 export default function HelpForm() {
   const [help, setHelp] = useState(false);
-  // Form Definition
+
   const form = useForm<THelpForm>({
     resolver: zodResolver(HelpFormSchema),
   });
 
+  const router = useRouter();
   // eslint-disable-next-line @typescript-eslint/require-await
   async function onSubmit(values: THelpForm) {
+    //if help, return role type also
     console.log(values.be_officer);
-    console.log(values.type_officer)
+    if (help) {
+      console.log(values.type_officer);
+    }
+    router.replace("/onboarding/team");
   }
-
-  const router = useRouter();
 
   return (
     <div className="mt-[25vh] flex flex-col items-center ">
@@ -71,6 +74,7 @@ export default function HelpForm() {
                   </FormLabel>
                   <FormControl>
                     <RadioGroup
+                      onValueChange={field.onChange}
                       defaultValue=""
                       className="flex flex-row space-x-4"
                     >
