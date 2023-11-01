@@ -1,18 +1,16 @@
-import { SiteHeader } from "@/app/_components/nav/site-header";
-import { ProtectedMainNav } from "@/app/_components/nav/protected-main-nav";
-import { ProtectedMobileNav } from "@/app/_components/nav/protected-mobile-nav";
-import { SiteHeaderActions } from "@/app/_components/nav/site-header-actions";
-import SignOutButton from "@/app/_components/ui/sign-out-button";
+import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
+import { type Metadata } from "next";
 
-export default function Page() {
+export const metadata: Metadata = {
+  title: "Dashboard | HackPSH",
+  description: "Overview your progress within the competition.",
+}
+
+export default function DashboardPage() {
   return (
     <div>
-      <SiteHeader>
-        <ProtectedMainNav />
-        <ProtectedMobileNav />
-        <SiteHeaderActions />
-      </SiteHeader>
-      <SignOutButton />
+      <ProtectedSiteHeader />
+      <p className="m-10 text-3xl font-bold text-center">Dashboard</p>
     </div>
   );
 }

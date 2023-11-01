@@ -8,7 +8,7 @@ import { Icons } from "@/app/_components/ui/icons"
 import { siteConfig } from "@/app/_config/site"
 
 export const metadata: Metadata = {
-  title: "HackPSH | Sign Up",
+  title: "Sign Up | HackPSH",
   description: "Create an account to join the competition!",
 }
 

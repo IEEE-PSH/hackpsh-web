@@ -1,5 +1,8 @@
 export const siteConfig = {
   name: "HackPSH",
+  emails: {
+    general: "ieee@hackpsh.org",
+  },
   links: {
     instagram: "https://www.instagram.com/psh.ieee/",
   },

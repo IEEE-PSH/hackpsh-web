@@ -1,48 +1,52 @@
-import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { type NextRequest, NextResponse } from "next/server";
+import { redirectToPath } from "@/server/lib/server-utils";
+import { siteConfig } from "@/app/_config/site";
+import { serverTRPC } from "@/app/_trpc/server";
+import handleError from "@/server/lib/server/handleError";
 import {
-  redirectToPath,
-  redirectToSignInWithError,
-} from "@/app/_lib/server-utils";
-import { siteConfig } from "./app/_config/site";
+  composeMiddlewareClient,
+  getSession,
+} from "@/server/lib/supabase/server";
 
 export async function middleware(req: NextRequest) {
-  const res = NextResponse.next();
-  const supabase = createMiddlewareClient({ req, res });
+  try {
+    const res = NextResponse.next();
+    const supabase = composeMiddlewareClient(req, res);
+    const session = await getSession(supabase);
 
-  const {
-    data: { session },
-    error,
-  } = await supabase.auth.getSession();
+    // If the user has not completed onboarding, then
+    // redirect the user to the onboarding forms.
 
-  // If a user does not have a valid session or encounters
-  // an error when retrieving a valid session, redirect to sign in.
-  if (!session && !req.nextUrl.pathname.startsWith(siteConfig.paths.sign_in)) {
-    return redirectToSignInWithError(
-      req,
-      "session_timeout",
-      "Session has timed out. Please login again.",
-    );
+    // Forced to use serverTRPC in middleware due to
+    // Next.js Middleware forced on Edge Runtime,
+    // which doesn't support the net module
+    // (dep of node-postgres / drizzle) when
+    // using server-side callers (like /api/auth/callback)
+    const { is_onboarding_complete } =
+      await serverTRPC.user.is_onboarding_complete.query({
+        user_uuid: session.user.id,
+      });
+
+    if (
+      !is_onboarding_complete &&
+      !req.nextUrl.pathname.startsWith(siteConfig.paths.onboarding)
+    ) {
+      return redirectToPath(req, siteConfig.paths.onboarding);
+    }
+
+    return res;
+  } catch (cause) {
+    return handleError(req, cause);
   }
-
-  if (error && !req.nextUrl.pathname.startsWith(siteConfig.paths.sign_in)) {
-    return redirectToSignInWithError(
-      req,
-      "invalid_session",
-      "Session was not able to be acquired.",
-    );
-  }
-
-  // If a user has a valid session and navigates to sign-in page,
-  // then automatically redirect them to dashboard (only if their onboarding is complete).
-  if (session && req.nextUrl.pathname.startsWith(siteConfig.paths.sign_in)) {
-    return redirectToPath(req, siteConfig.paths.dashboard);
-  }
-
-  // TODO: Add Check above for onboarding complete
-  // TODO: If Valid Session, but no onboarding complete -> redirectToPath(req, /onboarding)
 }
 
 export const config = {
-  matcher: ["/sign-in", "/dashboard", "/onboarding"],
+  matcher: [
+    "/sign-in",
+    "/dashboard",
+    "/onboarding",
+    "/announcements",
+    "/leaderboard",
+    "/challenges",
+  ],
 };

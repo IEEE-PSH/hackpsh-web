@@ -20,8 +20,4 @@ export const OnboardingFormSchema = z.object({
   ]),
 });
 
-export const OnboardingCompleteLookupSchema = z.object({
-  user_uuid: z.string().uuid("Please provide a valid UUID."),
-});
-
 export type TOnboardingForm = z.infer<typeof OnboardingFormSchema>;

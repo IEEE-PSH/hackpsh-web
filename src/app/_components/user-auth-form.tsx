@@ -1,6 +1,6 @@
 "use client";
 
-import { cn, toastErrorParams } from "@/app/_lib/client-utils";
+import { cn } from "@/app/_lib/client-utils";
 import { Input } from "@/app/_components/ui/input";
 import { Button } from "@/app/_components/ui/button";
 import { useForm } from "react-hook-form";
@@ -18,16 +18,13 @@ import { toast } from "@/app/_components/ui/use-toast";
 import {
   type TUserAuthForm,
   UserAuthFormSchema,
-} from "@/app/_lib/zod-schemas/user-auth";
+} from "@/app/_lib/zod-schemas/forms/user-auth";
 import { trpc } from "@/app/_trpc/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  // Handle stale magic link error from /api/auth/callback redirect
-  // by displaying an error toast if there is an `?error=` as part of the url
-  toastErrorParams();
 
   async function handleSignInWithGoogle() {
     const baseURL = (typeof window !== "undefined") ? window.location.origin : '';
@@ -71,6 +68,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       form.reset();
     } catch (err: unknown) {
       console.log(err);
+      // TODO: Add Logger to capture browser api submission errors
     }
   }
 

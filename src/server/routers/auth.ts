@@ -1,12 +1,12 @@
-import { UserAuthFormSchema } from "@/app/_lib/zod-schemas/user-auth";
+import { UserAuthFormSchema } from "@/app/_lib/zod-schemas/forms/user-auth";
 import { publicProcedure, createTRPCRouter } from "../trpc";
-import { cookies } from "next/headers";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { type SupabaseClient } from "@supabase/auth-helpers-nextjs";
 
-async function handleEmailLogin(email: string, baseURL: string) {
-  const cookieStore = cookies();
-  const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
-
+async function handleEmailLogin(
+  supabase: SupabaseClient,
+  email: string,
+  baseURL: string,
+) {
   await supabase.auth.signInWithOtp({
     email,
     options: {
@@ -19,7 +19,11 @@ export const authRouter = createTRPCRouter({
   email_login: publicProcedure
     .input(UserAuthFormSchema)
     .mutation(async ({ ctx, input }) => {
-      await handleEmailLogin(input.email, new URL(ctx.req.url).origin);
+      await handleEmailLogin(
+        ctx.supabase,
+        input.email,
+        new URL(ctx.req.url).origin,
+      );
 
       return {
         message: "Success",

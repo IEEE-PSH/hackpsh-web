@@ -38,7 +38,7 @@
     "lucide-react": "^0.279.0",
     "next": "latest",
     "next-themes": "^0.2.1",
-    "postgres": "^3.4.0",
+    "pg": "8.10.0",
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "^7.47.0",
@@ -47,9 +47,10 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.10",
     "@types/eslint": "latest",
     "@types/node": "latest",
-    "@types/pg": "latest",
+    "@types/pg": "^8.10.0",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
