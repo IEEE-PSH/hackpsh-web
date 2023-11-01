@@ -9,7 +9,7 @@ import { siteConfig } from "@/app/_config/site";
 import { ToastErrorParams } from "@/app/_components/ui/toast-error-params";
 
 export const metadata: Metadata = {
-  title: "HackPSH | Sign In",
+  title: "Sign In | HackPSH",
   description: "Get back to the competition!",
 };
 
