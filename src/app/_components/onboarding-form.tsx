@@ -4,7 +4,7 @@ import { cn } from "@/app/_lib/client-utils";
 import {
   OnboardingFormSchema,
   type TOnboardingForm,
-} from "@/app/_lib/zod-schemas/onboarding";
+} from "@/app/_lib/zod-schemas/forms/onboarding";
 import {
   Form,
   FormControl,
@@ -37,28 +37,6 @@ export function OnboardingForm({ className, ...props }: OnboardingFormProps) {
     <div className={cn("grid gap-6", className)} {...props}>
       <Form {...form}>
         <form id="onboardingForm" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="user_display_name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Display Name</FormLabel>
-                <FormControl>
-                  <Input
-                    className="border-muted-foreground"
-                    id="username"
-                    placeholder="CoolHacker123"
-                    {...field}
-                    value={field.value ?? ""}
-                  />
-                </FormControl>
-                <FormDescription>
-                  This is your public display name. Please be appropriate.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <FormField
             control={form.control}
             name="user_display_name"

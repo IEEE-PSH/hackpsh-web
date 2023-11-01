@@ -1,6 +1,8 @@
 import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
 import { OnboardingForm } from "@/app/_components/onboarding-form";
 
+// If they land on onboarding, that means the user was either redirected through
+// api/auth/callback or the middleware function
 export default function Page() {
   return (
     <>

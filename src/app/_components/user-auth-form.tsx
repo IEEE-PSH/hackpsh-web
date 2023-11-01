@@ -18,7 +18,7 @@ import { toast } from "@/app/_components/ui/use-toast";
 import {
   type TUserAuthForm,
   UserAuthFormSchema,
-} from "@/app/_lib/zod-schemas/user-auth";
+} from "@/app/_lib/zod-schemas/forms/user-auth";
 import { trpc } from "@/app/_trpc/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
