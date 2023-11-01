@@ -1,12 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { redirectToPath } from "@/app/_lib/server-utils";
-import { siteConfig } from "./app/_config/site";
+import { redirectToPath } from "@/server/lib/server-utils";
+import { siteConfig } from "@/app/_config/site";
+import { serverTRPC } from "@/app/_trpc/server";
+import handleError from "@/server/lib/server/handleError";
 import {
   composeMiddlewareClient,
   getSession,
-} from "./app/_lib/supabase/server";
-import handleError from "./app/_lib/server/handleError";
-import { serverTRPC } from "./app/_trpc/server";
+} from "@/server/lib/supabase/server";
 
 export async function middleware(req: NextRequest) {
   try {
