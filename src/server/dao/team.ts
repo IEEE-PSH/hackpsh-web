@@ -1,10 +1,11 @@
-import { Database } from "@/db/drizzle";
+import { type Database } from "@/db/drizzle";
 import { app_team } from "@/db/drizzle/schema";
 import { TRPCError } from "@trpc/server";
 
 export async function createTeam(
   db: Database,
   team_name: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   team_code: string,
 ) {
   try {

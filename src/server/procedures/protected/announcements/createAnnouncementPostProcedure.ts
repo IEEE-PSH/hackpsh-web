@@ -16,6 +16,7 @@ export default protectedProcedure
       });
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const result = await createAnnouncementPost(
       ctx.db,
       input.author_uuid,

@@ -21,18 +21,16 @@ import {
 } from "@/app/_components/ui/table";
 import { cn } from "@/app/_lib/client-utils";
 import { useState } from "react";
-import { LeaderboardStandings } from "@/server/dao/leaderboard";
+import { type LeaderboardStandings } from "@/server/dao/leaderboard";
 
 interface DataTableProps {
-  data: LeaderboardStandings,
-  className: string
+  data: LeaderboardStandings;
+  className: string;
 }
 
 export default function DataTable({ data, className }: DataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-    [],
-  );
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data,
@@ -53,29 +51,29 @@ export default function DataTable({ data, className }: DataTableProps) {
       <div className="flex items-center py-4">
         <Input
           placeholder="Search up a team!"
-          value={(table.getColumn("team_name")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("team_name")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
             table.getColumn("team_name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
       </div>
-      <div className="border rounded-md">
+      <div className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header, i) => {
+                {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead
-                      key={header.id}
-                    >
+                    <TableHead key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
                     </TableHead>
                   );
                 })}

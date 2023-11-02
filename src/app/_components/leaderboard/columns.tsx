@@ -5,7 +5,7 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
 import { Button } from "@/app/_components/ui/button";
-import { TeamStanding } from "@/server/dao/leaderboard";
+import { type TeamStanding } from "@/server/dao/leaderboard";
 
 export const columns: ColumnDef<TeamStanding>[] = [
   {

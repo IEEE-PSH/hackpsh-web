@@ -1,4 +1,4 @@
-import { Database } from "@/db/drizzle";
+import { type Database } from "@/db/drizzle";
 import { app_announcement } from "@/db/drizzle/schema";
 import { TRPCError } from "@trpc/server";
 

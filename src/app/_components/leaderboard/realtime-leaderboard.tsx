@@ -1,11 +1,17 @@
 "use client";
 
-import { LeaderboardStandings } from "@/server/dao/leaderboard";
+import { type LeaderboardStandings } from "@/server/dao/leaderboard";
 import DataTable from "./data-table";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useEffect } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
-export default function RealtimeLeaderboard({ serverData }: { serverData: LeaderboardStandings }) {
+export default function RealtimeLeaderboard({
+  serverData,
+}: {
+  serverData: LeaderboardStandings;
+}) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const supabase = createClientComponentClient();
 
   // useEffect(() => {
@@ -25,7 +31,5 @@ export default function RealtimeLeaderboard({ serverData }: { serverData: Leader
   //   }
   // }, []);
 
-  return (
-    <DataTable data={serverData} className="max-w-[55rem]" />
-  )
+  return <DataTable data={serverData} className="max-w-[55rem]" />;
 }
