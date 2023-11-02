@@ -1,4 +1,4 @@
-import { AnnouncementPost } from "@/server/dao/announcements";
+import { type AnnouncementPost } from "@/server/dao/announcements";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../ui/card";
 
 interface AnnouncementPostProps {

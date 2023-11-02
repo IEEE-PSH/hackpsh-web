@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "Catch the latest updates within the competition!",
 };
 
-export default async function AnnouncementsPage() {
+export default function AnnouncementsPage() {
   return (
     <div>
       <ProtectedSiteHeader />
