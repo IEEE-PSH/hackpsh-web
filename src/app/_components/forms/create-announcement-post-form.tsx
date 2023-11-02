@@ -73,7 +73,7 @@ export function CreateAnnouncementPostForm({ className, ...props }: CreateAnounc
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="Announcement Title" {...field} />
+                    <Input placeholder="Announcement Title" {...field} value={field.value ?? ""} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -90,6 +90,7 @@ export function CreateAnnouncementPostForm({ className, ...props }: CreateAnounc
                       placeholder="Type a message here that you want to send to everyone!"
                       className="resize-none h-36"
                       {...field}
+                      value={field.value ?? ""}
                     />
                   </FormControl>
                   <FormMessage />
