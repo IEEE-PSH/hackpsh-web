@@ -1,5 +1,5 @@
 import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
-import { OnboardingForm } from "@/app/_components/onboarding-form";
+import { OnboardingForm } from "@/app/_components/forms/onboarding-form";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
