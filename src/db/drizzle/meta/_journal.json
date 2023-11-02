@@ -71,6 +71,13 @@
       "when": 1698949733308,
       "tag": "0009_real_wolverine",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1698953630818,
+      "tag": "0010_striped_sage",
+      "breakpoints": true
     }
   ]
 }

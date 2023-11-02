@@ -5,14 +5,18 @@ import { TCreateAnnouncementForm, CreateAnnouncementFormSchema } from "@/app/_li
 import { trpc } from "@/app/_trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useForm, Form } from "react-hook-form";
 import { Button } from "../ui/button";
-import { FormLabel, FormField, FormItem, FormControl, FormMessage, FormDescription } from "../ui/form";
+import { Form, FormLabel, FormField, FormItem, FormControl, FormMessage, FormDescription } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { toast } from "../ui/use-toast";
+import { useForm } from "react-hook-form";
+import { Icons } from "../ui/icons";
+import { cn } from "@/app/_lib/client-utils";
 
-export function CreateAnnouncementPostForm() {
+type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
+
+export function CreateAnnouncementPostForm({ className, ...props }: CreateAnouncementFormProps) {
   const form = useForm<TCreateAnnouncementForm>({
     resolver: zodResolver(CreateAnnouncementFormSchema),
   });
@@ -56,46 +60,51 @@ export function CreateAnnouncementPostForm() {
 
   return (
     <>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full space-y-6"
-        >
-          <FormLabel>Create an Announcement</FormLabel>
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input placeholder="Title" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Textarea
-                    placeholder="Type a message here that you want to send to everyone!"
-                    className="resize-none h-36"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormDescription>This is the content of your announcement</FormDescription>
-          <Button type="submit">
-            Submit
-          </Button>
-        </form>
-      </Form>
+      <div className={cn("grid-gap-6", className)} {...props}>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full space-y-6"
+          >
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Announcement Title" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="content"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Content</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Type a message here that you want to send to everyone!"
+                      className="resize-none h-36"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+              {form.formState.isSubmitting && (
+                <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
+              )}
+              Submit
+            </Button>
+          </form>
+        </Form>
+      </div>
     </>
   );
 }
