@@ -1,4 +1,4 @@
-import { SupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { type SupabaseClient } from "@supabase/auth-helpers-nextjs";
 
 export async function getUser(supabase: SupabaseClient) {
   const {
