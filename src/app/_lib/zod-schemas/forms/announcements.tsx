@@ -6,6 +6,4 @@ export const CreateAnnouncementFormSchema = z.object({
   message: z.string().min(1, "Cannot leave field empty."),
 });
 
-export type TCreateAnnouncementForm = z.infer<
-  typeof CreateAnnouncementFormSchema
->;
+export type TCreateAnnouncementForm = z.infer<typeof CreateAnnouncementFormSchema>;

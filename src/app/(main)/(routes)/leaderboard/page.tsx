@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "See where your team stands amongst the competition.",
 }
 
-export default function LeaderboardPage() {
+export default async function LeaderboardPage() {
   return (
     <div>
       <ProtectedSiteHeader />

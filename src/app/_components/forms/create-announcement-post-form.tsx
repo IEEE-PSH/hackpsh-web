@@ -1,30 +1,17 @@
 "use client";
-import React from "react";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-} from "@/app/_components/ui/form";
-import { Input } from "@/app/_components/ui/input";
-import { Textarea } from "@/app/_components/ui/textarea";
-import {
-  type TCreateAnnouncementForm,
-  CreateAnnouncementFormSchema,
-} from "@/app/_lib/zod-schemas/forms/create-announcement";
-import { useForm } from "react-hook-form";
-import { Button } from "@/app/_components/ui/button";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { getUser } from "@/app/_lib/supabase/client";
+import { TCreateAnnouncementForm, CreateAnnouncementFormSchema } from "@/app/_lib/zod-schemas/forms/announcements";
 import { trpc } from "@/app/_trpc/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Icons } from "@/app/_components/ui/icons";
-import { toast } from "@/app/_components/ui/use-toast";
-import { format, formatDistance, formatRelative, subDays } from "date-fns";
+import { useForm, Form } from "react-hook-form";
+import { Button } from "../ui/button";
+import { FormLabel, FormField, FormItem, FormControl, FormMessage, FormDescription } from "../ui/form";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import { toast } from "../ui/use-toast";
 
-export default function CreateAnnouncement() {
+export function CreateAnnouncementPostForm() {
   const form = useForm<TCreateAnnouncementForm>({
     resolver: zodResolver(CreateAnnouncementFormSchema),
   });
@@ -52,17 +39,15 @@ export default function CreateAnnouncement() {
 
   async function onSubmit(values: TCreateAnnouncementForm) {
     try {
-      const timestamp = format(new Date(), "MMMM d, yyyy h:mma");
-      const data = {
-        title: values.title,
-        message: values.message,
-        created_at: timestamp,
-      };
+      const supabase = createClientComponentClient();
+      const user = await getUser(supabase);
+
       await announcementMutation.mutateAsync({
-        author_uuid: "UUID HERE",
-        content: JSON.stringify(data),
+        author_uuid: user.id,
+        title: values.title,
+        content: values.message,
       });
-      form.reset({ title: "", message: "" });
+      form.reset();
     } catch (err: unknown) {
       console.log(err);
     }
@@ -95,8 +80,8 @@ export default function CreateAnnouncement() {
               <FormItem>
                 <FormControl>
                   <Textarea
-                    placeholder="Type here..."
-                    className="h-36 resize-none"
+                    placeholder="Type a message here that you want to send to everyone!"
+                    className="resize-none h-36"
                     {...field}
                   />
                 </FormControl>
@@ -104,8 +89,8 @@ export default function CreateAnnouncement() {
               </FormItem>
             )}
           />
-          <FormDescription>Create an Announcement.</FormDescription>
-          <Button type="submit" className="">
+          <FormDescription>This is the content of your announcement</FormDescription>
+          <Button type="submit">
             Submit
           </Button>
         </form>
