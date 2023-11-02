@@ -1,4 +1,5 @@
 "use client";
+
 import { getUser } from "@/app/_lib/supabase/client";
 import { TCreateAnnouncementForm, CreateAnnouncementFormSchema } from "@/app/_lib/zod-schemas/forms/announcements";
 import { trpc } from "@/app/_trpc/react";
@@ -45,7 +46,7 @@ export function CreateAnnouncementPostForm() {
       await announcementMutation.mutateAsync({
         author_uuid: user.id,
         title: values.title,
-        content: values.message,
+        content: values.content,
       });
       form.reset();
     } catch (err: unknown) {
@@ -75,7 +76,7 @@ export function CreateAnnouncementPostForm() {
           />
           <FormField
             control={form.control}
-            name="message"
+            name="content"
             render={({ field }) => (
               <FormItem>
                 <FormControl>

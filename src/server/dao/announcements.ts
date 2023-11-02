@@ -18,12 +18,14 @@ export async function getAnnouncementPosts(db: Database) {
 export async function createAnnouncementPost(
   db: Database,
   author_uuid: string,
+  title: string,
   content: string,
 ) {
   try {
     await db.insert(app_announcement).values({
       announcement_author: author_uuid,
       announcement_content: content,
+      // announcement_title: title,
     });
   } catch (error) {
     throw new TRPCError({

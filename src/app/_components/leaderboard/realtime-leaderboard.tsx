@@ -11,8 +11,7 @@ export default function RealtimeLeaderboard({
 }: {
   serverData: LeaderboardStandings;
 }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const supabase = createClientComponentClient();
+  // const supabase = createClientComponentClient();
 
   // useEffect(() => {
   //   const channel = supabase.channel("leaderboard")
