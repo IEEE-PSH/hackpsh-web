@@ -5,31 +5,11 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
 import { Button } from "@/app/_components/ui/button";
-export type Entry = {
-  id: string;
-  points: number;
-  rank: number;
-  name: string;
-};
+import { type TeamStanding } from "@/server/dao/leaderboard";
 
-export const columns: ColumnDef<Entry>[] = [
+export const columns: ColumnDef<TeamStanding>[] = [
   {
-    accessorKey: "rank",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Rank
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="ml-4">{row.getValue("rank")}</div>,
-  },
-  {
-    accessorKey: "name",
+    accessorKey: "team_name",
     header: ({ column }) => {
       return (
         <Button
@@ -37,35 +17,33 @@ export const columns: ColumnDef<Entry>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Team Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="w-4 h-4 ml-2" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="w-0 min-w-full">
-        <p className="overflow-hidden text-ellipsis whitespace-nowrap">
-          {row.getValue("name")}
+      <div>
+        <p className="ml-4 overflow-hidden text-ellipsis whitespace-nowrap">
+          {row.getValue("team_name")}
         </p>
       </div>
     ),
   },
   {
-    accessorKey: "points",
+    accessorKey: "team_points",
     header: ({ column }) => {
       return (
-        <div className="text-right ">
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Points
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Points
+          <ArrowUpDown className="w-4 h-4 ml-2" />
+        </Button>
       );
     },
     cell: ({ row }) => {
-      return <div className="ml-4 font-medium">{row.getValue("points")}</div>;
+      return <div className="ml-4 font-medium">{row.getValue("team_points")}</div>;
     },
   },
 ];
