@@ -50,6 +50,13 @@
       "when": 1698870190019,
       "tag": "0006_dusty_iron_patriot",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1698890488825,
+      "tag": "0007_clumsy_thunderbolt",
+      "breakpoints": true
     }
   ]
 }

@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import {
   boolean,
   index,
@@ -47,14 +48,18 @@ export const app_school_year = app_schema.table("app_school_year", {
 });
 
 export const app_team = app_schema.table("app_team", {
-  team_uuid: uuid("team_uuid").primaryKey(),
+  team_uuid: uuid("team_uuid")
+    .primaryKey()
+    .default(sql`uuid_generate_v4()`),
   team_name: text("team_name").notNull().unique(),
   team_join_code: text("team_code").notNull().unique(),
   team_points: integer("team_points").notNull().default(0),
 });
 
 export const app_announcement = app_schema.table("app_announcement", {
-  announcement_uuid: uuid("announcement_uuid").primaryKey(),
+  announcement_uuid: uuid("announcement_uuid")
+    .primaryKey()
+    .default(sql`uuid_generate_v4()`),
   announcement_created_at: timestamp("announcement_created_at").defaultNow(),
   announcement_author: uuid("announcement_author")
     .notNull()

@@ -5,6 +5,6 @@ export default async function Leaderboard() {
   const data = await serverTRPC.leaderboard.get_current_standings.query();
 
   return (
-    <RealtimeLeaderboard data={data} />
+    <RealtimeLeaderboard serverData={data} />
   )
 }
