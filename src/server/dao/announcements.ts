@@ -2,7 +2,7 @@ import { Database } from "@/db/drizzle";
 import { app_announcement } from "@/db/drizzle/schema";
 import { TRPCError } from "@trpc/server";
 
-export async function getAnnouncements(db: Database) {
+export async function getAnnouncementPosts(db: Database) {
   try {
     const result = await db.select().from(app_announcement);
 
@@ -15,7 +15,7 @@ export async function getAnnouncements(db: Database) {
   }
 }
 
-export async function writePost(
+export async function createAnnouncementPost(
   db: Database,
   author_uuid: string,
   content: string,
@@ -32,5 +32,6 @@ export async function writePost(
     });
   }
 }
-export type Announcements = Awaited<ReturnType<typeof getAnnouncements>>;
+
+export type Announcements = Awaited<ReturnType<typeof getAnnouncementPosts>>;
 export type Post = Announcements[number];
