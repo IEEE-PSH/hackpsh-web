@@ -60,7 +60,9 @@ export const app_announcement = app_schema.table("app_announcement", {
   announcement_uuid: uuid("announcement_uuid")
     .primaryKey()
     .default(sql`uuid_generate_v4()`),
-  announcement_created_at: timestamp("announcement_created_at").defaultNow(),
+  announcement_created_at: timestamp("announcement_created_at")
+    .notNull()
+    .defaultNow(),
   announcement_author: uuid("announcement_author")
     .notNull()
     .references(() => app_user_profile.user_uuid),
