@@ -12,3 +12,5 @@ DO $$ BEGIN
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
+
+ALTER TABLE "app_schema"."app_major" ENABLE ROW LEVEL SECURITY;
