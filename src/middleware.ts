@@ -62,6 +62,8 @@ export const config = {
     "/dashboard",
     "/onboarding",
     "/onboarding/personal-details",
+    "/onboarding/team-creation",
+    "/onboarding/support-us",
     "/announcements",
     "/announcements/create-post",
     "/leaderboard",

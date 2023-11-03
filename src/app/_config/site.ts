@@ -14,6 +14,8 @@ export const siteConfig = {
     sign_up: "/sign-up",
     onboarding: "/onboarding",
     onboarding_personal_details: "/onboarding/personal-details",
+    onboarding_team_creation: "/onboarding/team-creation",
+    onboarding_support_us: "/onboarding/support-us",
     dashboard: "/dashboard",
     leaderboard: "/leaderboard",
     announcements: "/announcements",
