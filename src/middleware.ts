@@ -27,6 +27,10 @@ export async function middleware(req: NextRequest) {
         user_uuid: session.user.id,
       });
 
+    const { get_user_role } = await serverTRPC.user.get_user_role.query({
+      user_uuid: session.user.id,
+    });
+
     if (
       !is_onboarding_complete &&
       !req.nextUrl.pathname.startsWith(siteConfig.paths.onboarding)
@@ -34,6 +38,12 @@ export async function middleware(req: NextRequest) {
       return redirectToPath(req, siteConfig.paths.onboarding);
     }
 
+    if (
+      get_user_role !== "admin" &&
+      req.nextUrl.pathname.startsWith(siteConfig.paths.create_post)
+    ) {
+      return redirectToPath(req, siteConfig.paths.announcements);
+    }
     // TODO: Create external functions for handling protected pages & role-based pages
 
     return res;
@@ -48,6 +58,7 @@ export const config = {
     "/dashboard",
     "/onboarding",
     "/announcements",
+    "/announcements/create-post",
     "/leaderboard",
     "/challenges",
   ],
