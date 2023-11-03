@@ -4,7 +4,7 @@ import { cn } from "@/app/_lib/client-utils";
 import {
   CreateTeamFormSchema,
   type TCreateTeamForm,
-} from "@/app/_lib/zod-schemas/onboarding";
+} from "@/app/_lib/zod-schemas/forms/announcements";
 import {
   Form,
   FormControl,
@@ -67,7 +67,7 @@ export default function CreateTeamForm() {
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
             )}
             Next
           </Button>

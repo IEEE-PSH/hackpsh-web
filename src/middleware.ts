@@ -57,6 +57,7 @@ export const config = {
     "/sign-in",
     "/dashboard",
     "/onboarding",
+    "/onboarding/personal-details",
     "/announcements",
     "/announcements/create-post",
     "/leaderboard",

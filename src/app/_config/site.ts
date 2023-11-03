@@ -13,6 +13,7 @@ export const siteConfig = {
     sign_in: "/sign-in",
     sign_up: "/sign-up",
     onboarding: "/onboarding",
+    onboarding_personal_details: "/onboarding/personal-details",
     dashboard: "/dashboard",
     leaderboard: "/leaderboard",
     announcements: "/announcements",
