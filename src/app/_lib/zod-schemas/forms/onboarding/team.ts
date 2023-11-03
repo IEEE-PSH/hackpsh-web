@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const CreateTeamFormSchema = z.object({
-  create_team_name: z.string(),
+  team_name: z.string(),
 });
 
 export const JoinTeamFormSchema = z.object({

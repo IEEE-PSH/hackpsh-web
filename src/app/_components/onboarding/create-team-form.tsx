@@ -21,6 +21,7 @@ import { Input } from "@/app/_components/ui/input";
 import { Button, buttonVariants } from "@/app/_components/ui/button";
 import { Icons } from "@/app/_components/ui/icons";
 import Link from "next/link";
+import { siteConfig } from "@/app/_config/site";
 
 export default function CreateTeamForm() {
   const form = useForm<TCreateTeamForm>({
@@ -28,7 +29,7 @@ export default function CreateTeamForm() {
   });
 
   function onSubmit(values: TCreateTeamForm) {
-    console.log(values.create_team_name);
+    console.log(values.team_name);
   }
 
   return (
@@ -36,7 +37,7 @@ export default function CreateTeamForm() {
       <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
-          name="create_team_name"
+          name="team_name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Team Name</FormLabel>
@@ -57,7 +58,7 @@ export default function CreateTeamForm() {
         <div className="grid grid-cols-2 gap-4">
           <Link
             className={cn(`w-full ${buttonVariants({ variant: "default" })}`)}
-            href="/onboarding/helpus"
+            href={siteConfig.paths.onboarding_personal_details}
           >
             Back
           </Link>

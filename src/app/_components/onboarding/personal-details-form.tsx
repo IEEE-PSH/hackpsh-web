@@ -19,7 +19,7 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
 
   function onSubmit(values: TPersonalDetailsForm) {
     console.log(values.user_display_name);
-    console.log(values.user_class_year);
+    console.log(values.user_school_year);
     console.log(values.user_major);
   }
 
@@ -66,17 +66,7 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
 
 // const router = useRouter();
 
-// const classYear = [
-//   "N/A",
-//   "Middle School",
-//   "High School",
-//   "Freshman",
-//   "Sophmore",
-//   "Junior",
-//   "Senior",
-//   "Graduate",
-//   "Post Graduate",
-// ];
+
 // const classYearSelects: Array<unknown> = [];
 // classYear.forEach((year) =>
 //   classYearSelects.push(

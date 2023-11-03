@@ -28,7 +28,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { SupportUsFormSchema, type TSupportUsForm } from "@/app/_lib/zod-schemas/forms/onboarding/support-us";
 
-export default function HelpForm() {
+export default function SupportUsForm() {
   const [help, setHelp] = useState(false);
 
   const form = useForm<TSupportUsForm>({

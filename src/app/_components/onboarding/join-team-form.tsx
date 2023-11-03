@@ -17,6 +17,7 @@ import { Button, buttonVariants } from "@/app/_components/ui/button";
 import { Icons } from "@/app/_components/ui/icons";
 import Link from "next/link";
 import { JoinTeamFormSchema, type TJoinTeamForm } from "@/app/_lib/zod-schemas/forms/onboarding/team";
+import { siteConfig } from "@/app/_config/site";
 
 export default function JoinTeamForm() {
   const form = useForm<TJoinTeamForm>({
@@ -55,7 +56,7 @@ export default function JoinTeamForm() {
         <div className="grid grid-cols-2 gap-4">
           <Link
             className={cn(`w-full ${buttonVariants({ variant: "default" })}`)}
-            href="/onboarding/support-us"
+            href={siteConfig.paths.onboarding_personal_details}
           >
             Back
           </Link>
