@@ -34,6 +34,8 @@ export async function middleware(req: NextRequest) {
       return redirectToPath(req, siteConfig.paths.onboarding);
     }
 
+    // TODO: Create external functions for handling protected pages & role-based pages
+
     return res;
   } catch (cause) {
     return handleError(req, cause);

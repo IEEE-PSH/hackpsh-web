@@ -28,13 +28,11 @@ export function AnnouncementPost({ postData }: AnnouncementPostProps) {
       <CardHeader>
         <CardTitle>{announcement_title}</CardTitle>
         <CardDescription>
-          <div>
-            <span className="font-semibold">Created By: </span>
-            {announcement_author_display_name!}
-            {" | "}
-            <span className="font-semibold">Posted On: </span>
-            {formatted_announcement_created_at}
-          </div>
+          <span className="font-semibold">Created By: </span>
+          {announcement_author_display_name!}
+          {" | "}
+          <span className="font-semibold">Posted On: </span>
+          {formatted_announcement_created_at}
         </CardDescription>
       </CardHeader>
       <CardContent>
