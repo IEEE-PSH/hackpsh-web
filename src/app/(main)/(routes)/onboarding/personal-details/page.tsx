@@ -1,4 +1,5 @@
 import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
+import OnboardingPersonalDetailsForm from "@/app/_components/onboarding/personal-details-form";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,7 +14,7 @@ export default function Page() {
     <>
       <ProtectedSiteHeader />
       <div className="container relative flex-col items-center justify-center space-y-6">
-        Personal Details Form
+        <OnboardingPersonalDetailsForm />
       </div>
     </>
   )

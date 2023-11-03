@@ -1,10 +1,16 @@
 "use client";
 
+import { cn } from "@/app/_lib/client-utils";
 import { PersonalDetailsFormSchema, type TPersonalDetailsForm } from "@/app/_lib/zod-schemas/forms/onboarding/personal-details";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Form } from "../ui/form";
+import { Icons } from "../ui/icons";
+import { Button } from "../ui/button";
 
-export default function PersonalForm() {
+type OnboardingPersonalDetailsFormProps = React.HTMLAttributes<HTMLDivElement>;
+
+export default function OnboardingPersonalDetailsForm({ className, ...props }: OnboardingPersonalDetailsFormProps) {
   // Form Definition
   const form = useForm<TPersonalDetailsForm>({
     resolver: zodResolver(PersonalDetailsFormSchema),
@@ -16,6 +22,24 @@ export default function PersonalForm() {
     console.log(values.user_major);
   }
 
+  return (
+    <div className={cn("grid-gap-6", className)} {...props}>
+      <Form {...form}>
+        <form
+          id="onboardingPersonalDetailsForm"
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-6"
+        >
+          <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+            {form.formState.isSubmitting && (
+              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
+            )}
+            Next
+          </Button>
+        </form>
+      </Form>
+    </div>
+  );
 }
 
 // const router = useRouter();
