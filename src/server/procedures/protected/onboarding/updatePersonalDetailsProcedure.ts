@@ -1,6 +1,6 @@
-import { updateUserPersonalDetails } from "@/server/dao/onboarding";
+import { updateUserPersonalDetails } from "@/server/dao/user";
 import { protectedProcedure } from "@/server/trpc";
-import { UpdateUserPersonalDetailsSchema } from "@/server/zod-schemas/onboarding";
+import { UpdateUserPersonalDetailsSchema } from "@/server/zod-schemas/user";
 
 export default protectedProcedure
   .input(UpdateUserPersonalDetailsSchema)
