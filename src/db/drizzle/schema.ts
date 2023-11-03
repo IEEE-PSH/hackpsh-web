@@ -34,6 +34,9 @@ export const app_user_profile = app_schema.table(
       false,
     ),
     user_support_technical: boolean("user_support_technical").default(false),
+    user_onboarding_phase: text("user_onboarding_phase").references(
+      () => app_onboarding_phase.phase_name,
+    ),
   },
   (table) => {
     return {
@@ -78,4 +81,9 @@ export const app_announcement = app_schema.table("app_announcement", {
     .references(() => app_user_profile.user_uuid),
   announcement_title: text("announcement_title").notNull(),
   announcement_content: text("announcement_content").notNull(),
+});
+
+export const app_onboarding_phase = app_schema.table("app_onboarding_phase", {
+  phase_id: serial("phase_id").primaryKey(),
+  phase_name: text("phase_name").notNull().unique(),
 });

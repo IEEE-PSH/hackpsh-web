@@ -5,9 +5,11 @@ import * as schema from "./schema";
 import dotenv from "dotenv";
 import {
   dbMajors,
+  dbOnboardingPhases,
   dbRole,
   dbSchoolYear,
   insertMajor,
+  insertOnboardingPhases,
   insertRole,
   insertSchoolYear,
 } from "./startup_seed";
@@ -26,6 +28,10 @@ migrate(db, { migrationsFolder: "src/db/drizzle" })
     console.log("migration success");
 
     dbRole.forEach((role_name) => insertRole(db, role_name));
+
+    dbOnboardingPhases.forEach((phase_name) =>
+      insertOnboardingPhases(db, phase_name),
+    );
 
     dbSchoolYear.forEach((school_year_name) =>
       insertSchoolYear(db, school_year_name),

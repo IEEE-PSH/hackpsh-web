@@ -1,5 +1,10 @@
 import { type Database } from ".";
-import { app_major, app_role, app_school_year } from "./schema";
+import {
+  app_major,
+  app_onboarding_phase,
+  app_role,
+  app_school_year,
+} from "./schema";
 
 export const dbSchoolYear = [
   "not_applicable",
@@ -83,6 +88,21 @@ export type TUserMajor = (typeof dbMajors)[number];
 export function insertMajor(db: Database, major_name: string) {
   db.insert(app_major)
     .values({ major_name })
+    .onConflictDoNothing()
+    .catch((err) => console.log(err));
+}
+
+export const dbOnboardingPhases = [
+  "personal-details",
+  "team-creation",
+  "support-us",
+] as const;
+
+export type TUserOnboardingPhase = (typeof dbOnboardingPhases)[number];
+
+export function insertOnboardingPhases(db: Database, phase_name: string) {
+  db.insert(app_onboarding_phase)
+    .values({ phase_name })
     .onConflictDoNothing()
     .catch((err) => console.log(err));
 }
