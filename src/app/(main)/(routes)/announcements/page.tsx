@@ -21,6 +21,5 @@ export default function AnnouncementsPage() {
         <Announcements />
       </div>
     </>
-
   );
 }
