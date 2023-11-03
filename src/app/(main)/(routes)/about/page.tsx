@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Learn what HackPSH Is about!",
 }
 
-export default function AboutPage() {
+export default function Page() {
   return (
     <div>
       <PublicSiteHeader />

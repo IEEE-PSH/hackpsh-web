@@ -1,12 +1,12 @@
 "use client";
 
-import { getUser } from "@/app/_lib/supabase/client";
-import { TCreateAnnouncementForm, CreateAnnouncementFormSchema } from "@/app/_lib/zod-schemas/forms/announcements";
+import { getUser } from "@/shared/supabase/auth";
+import { type TCreateAnnouncementForm, CreateAnnouncementFormSchema } from "@/app/_lib/zod-schemas/forms/announcements";
 import { trpc } from "@/app/_trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button } from "../ui/button";
-import { Form, FormLabel, FormField, FormItem, FormControl, FormMessage, FormDescription } from "../ui/form";
+import { Form, FormLabel, FormField, FormItem, FormControl, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { toast } from "../ui/use-toast";

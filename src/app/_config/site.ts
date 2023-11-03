@@ -17,6 +17,7 @@ export const siteConfig = {
     leaderboard: "/leaderboard",
     announcements: "/announcements",
     challenges: "/challenges",
+    create_post: "/announcements/create-post",
   },
 };
 

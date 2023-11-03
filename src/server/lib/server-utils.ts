@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { siteConfig } from "../../app/_config/site";
+import { type BaseError } from "@/shared/error";
 
 export function redirectToPath(req: NextRequest, path: string) {
   const redirectUrl = new URL(req.nextUrl.origin);
@@ -22,17 +23,4 @@ export function redirectToSignInWithError(req: NextRequest, error: BaseError) {
   }
 
   return NextResponse.redirect(redirectURLErrorParams);
-}
-
-export class BaseError {
-  public readonly title: string;
-  public readonly description?: string | null;
-
-  constructor(opts: { error_title: string; error_desc: string | null }) {
-    this.title = opts.error_title;
-    this.description = "Something unexpected has occurred.";
-    if (opts.error_desc) {
-      this.description = opts.error_desc;
-    }
-  }
 }
