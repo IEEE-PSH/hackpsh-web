@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
@@ -20,28 +21,29 @@ const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({
   connectionString,
 });
-
 const db = drizzle(pool, { schema: schema });
 
-migrate(db, { migrationsFolder: "src/db/drizzle" })
-  .then(async () => {
+const main = async () => {
+  try {
+    await migrate(db, { migrationsFolder: "src/db/drizzle" });
+    dbRole.forEach(async (role_name) => insertRole(db, role_name));
+
+    dbOnboardingPhases.forEach(
+      async (phase_name) => await insertOnboardingPhases(db, phase_name),
+    );
+
+    dbSchoolYear.forEach(
+      async (school_year_name) => await insertSchoolYear(db, school_year_name),
+    );
+
+    dbMajors.forEach(async (major_name) => await insertMajor(db, major_name));
+
     console.log("migration success");
+  } catch (error) {
+    console.log(error);
+  }
 
-    dbRole.forEach((role_name) => insertRole(db, role_name));
+  return;
+};
 
-    dbOnboardingPhases.forEach((phase_name) =>
-      insertOnboardingPhases(db, phase_name),
-    );
-
-    dbSchoolYear.forEach((school_year_name) =>
-      insertSchoolYear(db, school_year_name),
-    );
-
-    dbMajors.forEach((major_name) => insertMajor(db, major_name));
-
-    await pool.end();
-  })
-  .catch(async (err) => {
-    console.log(err);
-    await pool.end();
-  });
+void main();

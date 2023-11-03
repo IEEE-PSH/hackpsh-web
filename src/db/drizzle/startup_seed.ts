@@ -20,21 +20,18 @@ export const dbSchoolYear = [
 
 export type TUserSchoolYear = (typeof dbSchoolYear)[number];
 
-export function insertSchoolYear(db: Database, school_year_name: string) {
-  db.insert(app_school_year)
+export async function insertSchoolYear(db: Database, school_year_name: string) {
+  await db
+    .insert(app_school_year)
     .values({ school_year_name })
-    .onConflictDoNothing()
-    .catch((err) => console.log(err));
+    .onConflictDoNothing();
 }
 
 export const dbRole = ["participant", "officer", "admin"] as const;
 export type TUserRole = (typeof dbRole)[number];
 
-export function insertRole(db: Database, role_name: string) {
-  db.insert(app_role)
-    .values({ role_name })
-    .onConflictDoNothing()
-    .catch((err) => console.log(err));
+export async function insertRole(db: Database, role_name: string) {
+  await db.insert(app_role).values({ role_name }).onConflictDoNothing();
 }
 
 export const dbMajors = [
@@ -85,11 +82,8 @@ export const dbMajors = [
 
 export type TUserMajor = (typeof dbMajors)[number];
 
-export function insertMajor(db: Database, major_name: string) {
-  db.insert(app_major)
-    .values({ major_name })
-    .onConflictDoNothing()
-    .catch((err) => console.log(err));
+export async function insertMajor(db: Database, major_name: string) {
+  await db.insert(app_major).values({ major_name }).onConflictDoNothing();
 }
 
 export const dbOnboardingPhases = [
@@ -100,9 +94,9 @@ export const dbOnboardingPhases = [
 
 export type TUserOnboardingPhase = (typeof dbOnboardingPhases)[number];
 
-export function insertOnboardingPhases(db: Database, phase_name: string) {
-  db.insert(app_onboarding_phase)
+export async function insertOnboardingPhases(db: Database, phase_name: string) {
+  await db
+    .insert(app_onboarding_phase)
     .values({ phase_name })
-    .onConflictDoNothing()
-    .catch((err) => console.log(err));
+    .onConflictDoNothing();
 }
