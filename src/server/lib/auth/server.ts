@@ -1,4 +1,4 @@
-import { BaseError } from "../server-utils";
+import { BaseError } from "@/shared/error";
 
 /**
  * Retrieve Callback Token `code` from PKCE Auth Flow from URL parameters

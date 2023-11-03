@@ -12,7 +12,5 @@ export async function Announcements() {
       />
   );
 
-  return (
-    <div>{postElements}</div>
-  )
+  return (<div className="space-y-6">{postElements}</div>);
 }

@@ -1,7 +1,8 @@
 import { TRPCError } from "@trpc/server";
 import { type NextRequest } from "next/server";
 import { siteConfig } from "@/app/_config/site";
-import { BaseError, redirectToSignInWithError } from "../server-utils";
+import { redirectToSignInWithError } from "../server-utils";
+import { BaseError } from "@/shared/error";
 
 export default function handleError(req: NextRequest, cause: unknown) {
   // Ignore Errors Coming From Sign-In to prevent Infinite Redirect

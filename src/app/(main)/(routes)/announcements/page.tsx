@@ -12,10 +12,15 @@ export const metadata: Metadata = {
 
 export default function AnnouncementsPage() {
   return (
-    <div>
-      <ProtectedSiteHeader />
-      <p className="m-10 text-center text-3xl font-bold">Announcements</p>
-      <Announcements />
-    </div>
+    <>
+      <div>
+        <ProtectedSiteHeader />
+      </div>
+      <div className="container relative flex-col items-center justify-center">
+        <p className="m-10 text-3xl font-bold text-center">Announcements</p>
+        <Announcements />
+      </div>
+    </>
+
   );
 }

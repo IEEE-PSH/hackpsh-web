@@ -1,6 +1,6 @@
 "use client";
 
-import { getUser } from "@/app/_lib/supabase/client";
+import { getUser } from "@/shared/supabase/auth";
 import { type TCreateAnnouncementForm, CreateAnnouncementFormSchema } from "@/app/_lib/zod-schemas/forms/announcements";
 import { trpc } from "@/app/_trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";

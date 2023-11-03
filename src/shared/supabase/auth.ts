@@ -1,3 +1,4 @@
+import { BaseError } from "@/shared/error";
 import { type SupabaseClient } from "@supabase/auth-helpers-nextjs";
 
 export async function getUser(supabase: SupabaseClient) {
@@ -6,8 +7,12 @@ export async function getUser(supabase: SupabaseClient) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    throw new Error("User cannot be retrieved from current session.");
+    throw new BaseError({
+      error_title: "Authentication Server Error",
+      error_desc: "Cannot retrieve user information at this time.",
+    });
   }
+
   return user;
 }
 
@@ -17,7 +22,10 @@ export async function getSession(supabase: SupabaseClient) {
   } = await supabase.auth.getSession();
 
   if (!session) {
-    throw new Error("Session cannot be found.");
+    throw new BaseError({
+      error_title: "Authentication Server Error",
+      error_desc: "Cannot retrieve user session at this time.",
+    });
   }
 
   return session;

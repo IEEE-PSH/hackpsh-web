@@ -11,8 +11,8 @@ export default function CreateAnnouncementPage() {
   return (
     <>
       <ProtectedSiteHeader />
-      <h1 className="m-10 text-3xl font-bold text-center">Create an Announcement</h1>
-      <div className="mt-10 flex-1 justify-center w-[40rem]">
+      <div className="container relative flex-col items-center justify-center space-y-6">
+        <h1 className="mt-10 text-3xl font-bold">Create Announcement</h1>
         <CreateAnnouncementPostForm />
       </div>
     </>

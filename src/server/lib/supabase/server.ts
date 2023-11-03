@@ -1,15 +1,22 @@
+import { BaseError } from "@/shared/error";
 import {
   type SupabaseClient,
   createMiddlewareClient,
   createRouteHandlerClient,
+  createServerComponentClient,
 } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { type NextRequest, type NextResponse } from "next/server";
-import { BaseError } from "../server-utils";
 
 export function composeRouteHandlerClient() {
   const cookieStore = cookies();
   const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+  return supabase;
+}
+
+export function composeServerComponentClient() {
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient({ cookies: () => cookieStore });
   return supabase;
 }
 
