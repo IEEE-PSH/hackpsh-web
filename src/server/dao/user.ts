@@ -26,11 +26,13 @@ export async function createUser(
   user_email_address: string,
 ) {
   try {
+    // By Default, New records have the following fields set
+    // user_onboarding_complete: false,
+    // user_role: "participant",
+    // user_onboarding_phase: "personal-details",
     await db.insert(app_user_profile).values({
       user_uuid,
       user_email_address,
-      user_onboarding_complete: false,
-      user_role: "participant",
     });
   } catch (error) {
     throw new TRPCError({

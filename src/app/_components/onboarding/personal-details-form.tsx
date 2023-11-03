@@ -67,64 +67,12 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
 // const router = useRouter();
 
 
-// const classYearSelects: Array<unknown> = [];
 // classYear.forEach((year) =>
 //   classYearSelects.push(
 //     <SelectItem value={year.toLowerCase().replace(" ", "_")}>
 //       {year}
 //     </SelectItem>,
 //   ),
-// );
-// const majors = [
-//   "N/A",
-//   "Accounting",
-//   "American Studies",
-//   "Biobehavioral Health",
-//   "Biology",
-//   "Civil Engineering",
-//   "Communication Sciences and Disorders",
-//   "Communications",
-//   "Computer Science",
-//   "Criminal Justice",
-//   "Cybersecurity Analytics and Operations",
-//   "Electrical Engineering",
-//   "Electrical Engineering Technology",
-//   "Elementary Education",
-//   "English",
-//   "Enterprise Technology Integration",
-//   "Finance",
-//   "Health Policy and Administration",
-//   "Human Capital Management",
-//   "Human Development and Family Studies",
-//   "Human-Centered Design and Development",
-//   "Humanities",
-//   "Information Sciences and Technology",
-//   "Information Systems",
-//   "Kinesiology",
-//   "Management",
-//   "Marketing",
-//   "Mathematical Sciences",
-//   "Mechanical Engineering",
-//   "Mechanical Engineering Technology",
-//   "Nursing (Second Degree)",
-//   "Political Science",
-//   "Project and Supply Chain Management",
-//   "Psychology",
-//   "Public Policy",
-//   "Science",
-//   "Secondary Education English",
-//   "Secondary Education Mathematics",
-//   "Secondary Education Social Studies",
-//   "Security and Risk Analysis",
-//   "Sociology",
-//   "Structural Design & Construction Engineering Technology",
-// ];
-// const items: Array<{ label: string; value: TMajor }> = [];
-// majors.forEach((major) =>
-//   items.push({
-//     label: major,
-//     value: major.toLowerCase().replaceAll(" ", "_") as TMajor,
-//   }),
 // );
 
 // return (

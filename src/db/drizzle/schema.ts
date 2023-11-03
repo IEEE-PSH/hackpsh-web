@@ -34,9 +34,10 @@ export const app_user_profile = app_schema.table(
       false,
     ),
     user_support_technical: boolean("user_support_technical").default(false),
-    user_onboarding_phase: text("user_onboarding_phase").references(
-      () => app_onboarding_phase.phase_name,
-    ),
+    user_onboarding_phase: text("user_onboarding_phase")
+      .notNull()
+      .references(() => app_onboarding_phase.phase_name)
+      .default("personal-details"),
   },
   (table) => {
     return {
