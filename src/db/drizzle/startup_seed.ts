@@ -18,7 +18,7 @@ export const dbSchoolYear = [
   "post_graduate",
 ] as const;
 
-export type TSchoolYear = (typeof dbSchoolYear)[number];
+export type TUserSchoolYear = (typeof dbSchoolYear)[number];
 
 export function insertSchoolYear(db: Database, school_year_name: string) {
   db.insert(app_school_year)
@@ -28,7 +28,7 @@ export function insertSchoolYear(db: Database, school_year_name: string) {
 }
 
 export const dbRole = ["participant", "officer", "admin"] as const;
-export type TRole = (typeof dbRole)[number];
+export type TUserRole = (typeof dbRole)[number];
 
 export function insertRole(db: Database, role_name: string) {
   db.insert(app_role)
