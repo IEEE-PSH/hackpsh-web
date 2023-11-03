@@ -21,3 +21,9 @@ export const UpdateUserPersonalDetailsSchema = z.object({
   user_school_year: z.enum(dbSchoolYear),
   user_major: z.enum(dbMajors),
 });
+
+export const UpdateUserSupportSchema = z.object({
+  user_uuid: z.string().uuid("Please provide a valid UUID."),
+  user_support_administrative: z.boolean(),
+  user_support_technical: z.boolean(),
+});

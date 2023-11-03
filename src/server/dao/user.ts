@@ -110,3 +110,25 @@ export async function updateUserPersonalDetails(
     });
   }
 }
+
+export async function updateUserSupport(
+  db: Database,
+  user_uuid: string,
+  user_support_administrative: boolean,
+  user_support_technical: boolean,
+) {
+  try {
+    await db
+      .update(app_user_profile)
+      .set({
+        user_support_administrative,
+        user_support_technical,
+      })
+      .where(eq(app_user_profile.user_uuid, user_uuid));
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
