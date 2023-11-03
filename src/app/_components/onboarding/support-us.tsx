@@ -2,13 +2,8 @@
 
 import { cn } from "@/app/_lib/client-utils";
 import {
-  HelpFormSchema,
-  type THelpForm,
-} from "@/app/_lib/zod-schemas/onboarding";
-import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -31,17 +26,18 @@ import { RadioGroup, RadioGroupItem } from "@/app/_components/ui/radio-group";
 import FormStep from "@/app/_components/onboarding/form-step";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { SupportUsFormSchema, type TSupportUsForm } from "@/app/_lib/zod-schemas/forms/onboarding/support-us";
 
 export default function HelpForm() {
   const [help, setHelp] = useState(false);
 
-  const form = useForm<THelpForm>({
-    resolver: zodResolver(HelpFormSchema),
+  const form = useForm<TSupportUsForm>({
+    resolver: zodResolver(SupportUsFormSchema),
   });
 
   const router = useRouter();
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async function onSubmit(values: THelpForm) {
+
+  function onSubmit(values: TSupportUsForm) {
     //if help, return role type also
     console.log(values.be_officer);
     if (help) {
@@ -61,7 +57,7 @@ export default function HelpForm() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-4"
           >
-            <p className=" text-center text-2xl font-bold tracking-tight">
+            <p className="text-2xl font-bold tracking-tight text-center ">
               Consider Helping IEEE!
             </p>
             <FormField
@@ -135,7 +131,7 @@ export default function HelpForm() {
                 </FormItem>
               )}
             />
-            <div className=" grid w-full grid-cols-2 gap-4">
+            <div className="grid w-full grid-cols-2 gap-4 ">
               <Link
                 className={cn(
                   `w-full ${buttonVariants({ variant: "default" })}`,
@@ -151,7 +147,7 @@ export default function HelpForm() {
                 disabled={form.formState.isSubmitting}
               >
                 {form.formState.isSubmitting && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
                 )}
                 Next
               </Button>

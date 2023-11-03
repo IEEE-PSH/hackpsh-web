@@ -5,7 +5,6 @@ export const CreateTeamFormSchema = z.object({
 });
 
 export const JoinTeamFormSchema = z.object({
-  team_name: z.string(),
   team_code: z.string(),
 });
 

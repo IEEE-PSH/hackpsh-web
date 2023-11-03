@@ -1,10 +1,11 @@
 "use client";
+
 import React from "react";
 import { cn } from "@/app/_lib/client-utils";
 import {
   CreateTeamFormSchema,
   type TCreateTeamForm,
-} from "@/app/_lib/zod-schemas/forms/announcements";
+} from "@/app/_lib/zod-schemas/forms/onboarding/team";
 import {
   Form,
   FormControl,

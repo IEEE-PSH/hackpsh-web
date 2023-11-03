@@ -4,9 +4,10 @@ import { cn } from "@/app/_lib/client-utils";
 import { PersonalDetailsFormSchema, type TPersonalDetailsForm } from "@/app/_lib/zod-schemas/forms/onboarding/personal-details";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Form } from "../ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Icons } from "../ui/icons";
 import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 type OnboardingPersonalDetailsFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -30,6 +31,27 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-6"
         >
+          <FormField
+            control={form.control}
+            name="user_display_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Display Name</FormLabel>
+                <FormControl>
+                  <Input
+                    className="border-muted-foreground"
+                    placeholder="CoolHacker123"
+                    {...field}
+                    value={field.value ?? ""}
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is your public display name. Please be appropriate.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
             {form.formState.isSubmitting && (
               <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
@@ -124,27 +146,7 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
 //           <p className="text-2xl font-bold tracking-tight text-center ">
 //             Tell Us About Yourself
 //           </p>
-//           <FormField
-//             control={form.control}
-//             name="user_display_name"
-//             render={({ field }) => (
-//               <FormItem>
-//                 <FormLabel>Display Name</FormLabel>
-//                 <FormControl>
-//                   <Input
-//                     className="border-muted-foreground"
-//                     placeholder="CoolHacker123"
-//                     {...field}
-//                     value={field.value ?? ""}
-//                   />
-//                 </FormControl>
-//                 <FormDescription>
-//                   This is your public display name. Please be appropriate.
-//                 </FormDescription>
-//                 <FormMessage />
-//               </FormItem>
-//             )}
-//           />
+
 //           <FormField
 //             control={form.control}
 //             name="user_class_year"

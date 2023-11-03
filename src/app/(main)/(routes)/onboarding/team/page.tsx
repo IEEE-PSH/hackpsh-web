@@ -1,7 +1,7 @@
 import TeamFormWrapper from "@/app/_components/onboarding/team-form-wrapper"
 
-export default function Page(){
-    return(
-<TeamFormWrapper/>
-    )
+export default function Page() {
+  return (
+    <TeamFormWrapper />
+  )
 }

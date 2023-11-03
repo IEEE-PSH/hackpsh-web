@@ -32,6 +32,10 @@ migrate(db, { migrationsFolder: "src/db/drizzle" })
 
     await db
       .insert(schema.app_school_year)
+      .values({ school_year_name: "not_applicable" })
+      .onConflictDoNothing();
+    await db
+      .insert(schema.app_school_year)
       .values({ school_year_name: "middle_school" })
       .onConflictDoNothing();
     await db
@@ -65,7 +69,7 @@ migrate(db, { migrationsFolder: "src/db/drizzle" })
 
     await db
       .insert(schema.app_major)
-      .values({ major_name: "non_applicable" })
+      .values({ major_name: "not_applicable" })
       .onConflictDoNothing();
     await db
       .insert(schema.app_major)

@@ -5,4 +5,4 @@ export const SupportUsFormSchema = z.object({
   type_officer: z.enum(["administrative", "technical", "both"]),
 });
 
-export type THelpForm = z.infer<typeof SupportUsFormSchema>;
+export type TSupportUsForm = z.infer<typeof SupportUsFormSchema>;
