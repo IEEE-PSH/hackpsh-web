@@ -63,6 +63,7 @@ export async function joinTeam(
       .update(app_user_profile)
       .set({
         user_team_uuid: team_from_code.team_uuid,
+        user_onboarding_phase: "support-us",
       })
       .where(eq(app_user_profile.user_uuid, user_uuid));
   } catch (error) {

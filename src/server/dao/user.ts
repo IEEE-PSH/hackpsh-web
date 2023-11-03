@@ -97,6 +97,7 @@ export async function updateUserPersonalDetails(
         user_display_name,
         user_school_year,
         user_major,
+        user_onboarding_phase: "team-creation",
       })
       .where(eq(app_user_profile.user_uuid, user_uuid));
 
@@ -123,6 +124,7 @@ export async function updateUserSupport(
       .set({
         user_support_administrative,
         user_support_technical,
+        user_onboarding_complete: true,
       })
       .where(eq(app_user_profile.user_uuid, user_uuid));
   } catch (error) {
