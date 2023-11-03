@@ -1,6 +1,9 @@
 import { type Database } from "@/db/drizzle";
 import { app_user_profile } from "@/db/drizzle/schema";
-import { TUserMajor, TUserSchoolYear } from "@/db/drizzle/startup_seed";
+import {
+  type TUserMajor,
+  type TUserSchoolYear,
+} from "@/db/drizzle/startup_seed";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 
