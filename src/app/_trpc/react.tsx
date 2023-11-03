@@ -6,6 +6,7 @@ import React, { useState } from "react";
 
 import { type AppRouter } from "@/server/root";
 import { httpBatchLink } from "@trpc/client";
+import { transformer } from "./shared";
 
 export const trpc = createTRPCReact<AppRouter>();
 
@@ -13,6 +14,7 @@ export default function ReactQueryProvider({ children, headers }: { children: Re
   const [queryClient] = useState(() => new QueryClient({}));
   const [trpcClient] = useState(() =>
     trpc.createClient({
+      transformer,
       links: [
         httpBatchLink({
           url: `/api/trpc`,

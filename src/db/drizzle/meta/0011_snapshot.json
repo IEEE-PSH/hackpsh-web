@@ -1,0 +1,375 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "id": "edca77c8-e096-41fe-90b3-678c9d8c6ef1",
+  "prevId": "8730e109-e681-4c76-8c2f-4106040c1a8a",
+  "tables": {
+    "app_announcement": {
+      "name": "app_announcement",
+      "schema": "app_schema",
+      "columns": {
+        "announcement_uuid": {
+          "name": "announcement_uuid",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "uuid_generate_v4()"
+        },
+        "announcement_created_at": {
+          "name": "announcement_created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "announcement_author_uuid": {
+          "name": "announcement_author_uuid",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "announcement_title": {
+          "name": "announcement_title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "announcement_content": {
+          "name": "announcement_content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "app_announcement_announcement_author_uuid_app_user_profile_user_uuid_fk": {
+          "name": "app_announcement_announcement_author_uuid_app_user_profile_user_uuid_fk",
+          "tableFrom": "app_announcement",
+          "tableTo": "app_user_profile",
+          "columnsFrom": [
+            "announcement_author_uuid"
+          ],
+          "columnsTo": [
+            "user_uuid"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "app_major": {
+      "name": "app_major",
+      "schema": "app_schema",
+      "columns": {
+        "major_id": {
+          "name": "major_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "major_name": {
+          "name": "major_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "app_major_major_name_unique": {
+          "name": "app_major_major_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "major_name"
+          ]
+        }
+      }
+    },
+    "app_role": {
+      "name": "app_role",
+      "schema": "app_schema",
+      "columns": {
+        "role_id": {
+          "name": "role_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "role_name": {
+          "name": "role_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "app_role_role_name_unique": {
+          "name": "app_role_role_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "role_name"
+          ]
+        }
+      }
+    },
+    "app_school_year": {
+      "name": "app_school_year",
+      "schema": "app_schema",
+      "columns": {
+        "school_year_id": {
+          "name": "school_year_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "school_year_name": {
+          "name": "school_year_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "app_school_year_school_year_name_unique": {
+          "name": "app_school_year_school_year_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "school_year_name"
+          ]
+        }
+      }
+    },
+    "app_team": {
+      "name": "app_team",
+      "schema": "app_schema",
+      "columns": {
+        "team_uuid": {
+          "name": "team_uuid",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "uuid_generate_v4()"
+        },
+        "team_name": {
+          "name": "team_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "team_code": {
+          "name": "team_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "team_points": {
+          "name": "team_points",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "app_team_team_name_unique": {
+          "name": "app_team_team_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "team_name"
+          ]
+        },
+        "app_team_team_code_unique": {
+          "name": "app_team_team_code_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "team_code"
+          ]
+        }
+      }
+    },
+    "app_user_profile": {
+      "name": "app_user_profile",
+      "schema": "app_schema",
+      "columns": {
+        "user_uuid": {
+          "name": "user_uuid",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_email_address": {
+          "name": "user_email_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_avatar_url": {
+          "name": "user_avatar_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_onboarding_complete": {
+          "name": "user_onboarding_complete",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_display_name": {
+          "name": "user_display_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_resume_url": {
+          "name": "user_resume_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_team_uuid": {
+          "name": "user_team_uuid",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_school_year": {
+          "name": "user_school_year",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_major": {
+          "name": "user_major",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_role": {
+          "name": "user_role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'participant'"
+        },
+        "user_support_administrative": {
+          "name": "user_support_administrative",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "user_support_technical": {
+          "name": "user_support_technical",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        }
+      },
+      "indexes": {
+        "user_uuid_index": {
+          "name": "user_uuid_index",
+          "columns": [
+            "user_uuid"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "app_user_profile_user_team_uuid_app_team_team_uuid_fk": {
+          "name": "app_user_profile_user_team_uuid_app_team_team_uuid_fk",
+          "tableFrom": "app_user_profile",
+          "tableTo": "app_team",
+          "columnsFrom": [
+            "user_team_uuid"
+          ],
+          "columnsTo": [
+            "team_uuid"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "app_user_profile_user_school_year_app_school_year_school_year_name_fk": {
+          "name": "app_user_profile_user_school_year_app_school_year_school_year_name_fk",
+          "tableFrom": "app_user_profile",
+          "tableTo": "app_school_year",
+          "columnsFrom": [
+            "user_school_year"
+          ],
+          "columnsTo": [
+            "school_year_name"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "app_user_profile_user_major_app_major_major_name_fk": {
+          "name": "app_user_profile_user_major_app_major_major_name_fk",
+          "tableFrom": "app_user_profile",
+          "tableTo": "app_major",
+          "columnsFrom": [
+            "user_major"
+          ],
+          "columnsTo": [
+            "major_name"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "app_user_profile_user_role_app_role_role_name_fk": {
+          "name": "app_user_profile_user_role_app_role_role_name_fk",
+          "tableFrom": "app_user_profile",
+          "tableTo": "app_role",
+          "columnsFrom": [
+            "user_role"
+          ],
+          "columnsTo": [
+            "role_name"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "app_user_profile_user_email_address_unique": {
+          "name": "app_user_profile_user_email_address_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "user_email_address"
+          ]
+        },
+        "app_user_profile_user_display_name_unique": {
+          "name": "app_user_profile_user_display_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "user_display_name"
+          ]
+        }
+      }
+    }
+  },
+  "enums": {},
+  "schemas": {
+    "app_schema": "app_schema"
+  },
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}

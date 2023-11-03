@@ -1,0 +1,2 @@
+ALTER TABLE "app_schema"."app_announcement" ALTER COLUMN "announcement_uuid" SET DEFAULT uuid_generate_v4();--> statement-breakpoint
+ALTER TABLE "app_schema"."app_team" ALTER COLUMN "team_uuid" SET DEFAULT uuid_generate_v4();

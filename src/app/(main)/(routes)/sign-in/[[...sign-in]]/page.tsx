@@ -2,14 +2,14 @@ import { type Metadata } from "next";
 import Link from "next/link";
 import { cn } from "@/app/_lib/client-utils";
 import { buttonVariants } from "@/app/_components/ui/button";
-import { UserAuthForm } from "@/app/_components/user-auth-form";
+import { UserAuthForm } from "@/app/_components/forms/user-auth-form";
 import { ModeToggle } from "@/app/_components/ui/mode-toggle";
 import { Icons } from "@/app/_components/ui/icons";
 import { siteConfig } from "@/app/_config/site";
 import { ToastErrorParams } from "@/app/_components/ui/toast-error-params";
 
 export const metadata: Metadata = {
-  title: "HackPSH | Sign In",
+  title: "Sign In | HackPSH",
   description: "Get back to the competition!",
 };
 

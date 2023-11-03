@@ -1,0 +1,2 @@
+ALTER TABLE "app_schema"."app_user_profile" ALTER COLUMN "user_role" SET DEFAULT 'participant';--> statement-breakpoint
+ALTER TABLE "app_schema"."app_user_profile" ALTER COLUMN "user_role" SET NOT NULL;

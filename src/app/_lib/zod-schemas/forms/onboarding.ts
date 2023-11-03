@@ -67,8 +67,7 @@ export const PersonalFormSchema = z.object({
 });
 
 export const HelpFormSchema = z.object({
-  //unsure how to use booleans
-  be_officer: z.enum(["yes", "no"]),
+  be_officer: z.boolean(),
   type_officer: z.enum(["administrative", "technical", "both"]),
 });
 

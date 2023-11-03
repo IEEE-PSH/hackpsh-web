@@ -1,0 +1,1 @@
+ALTER TABLE "app_schema"."app_announcement" ADD COLUMN "announcement_title" text NOT NULL;

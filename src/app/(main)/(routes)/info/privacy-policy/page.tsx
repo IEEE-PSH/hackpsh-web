@@ -3,7 +3,7 @@ import { siteConfig } from "@/app/_config/site";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "HackPSH | Privacy Policy",
+  title: "Privacy Policy | HackPSH",
   description: "Privacy Policy for HackPSH",
 };
 
