@@ -7,11 +7,13 @@ export async function Announcements() {
   const postElements: JSX.Element[] = [];
 
   serverAnnouncementPosts.forEach(
-    announcementPost =>
-      <AnnouncementPost
-        key={announcementPost.announcement_uuid}
-        postData={announcementPost}
-      />
+    announcementPostData =>
+      postElements.push(
+        <AnnouncementPost
+          key={announcementPostData.announcement_uuid}
+          postData={announcementPostData}
+        />
+      )
   );
 
   return (<div className="space-y-6">{postElements}</div>);
