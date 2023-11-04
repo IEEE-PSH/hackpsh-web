@@ -6,12 +6,14 @@ export async function Announcements() {
 
   const postElements: JSX.Element[] = [];
 
-  const postElements = serverAnnouncementPosts.map(
+  serverAnnouncementPosts.forEach(
     announcementPostData =>
-      <AnnouncementPost
-        key={announcementPostData.announcement_uuid}
-        postData={announcementPostData}
-      />
+      postElements.push(
+        <AnnouncementPost
+          key={announcementPostData.announcement_uuid}
+          postData={announcementPostData}
+        />
+      )
   );
 
   return (<div className="space-y-6">{postElements}</div>);
