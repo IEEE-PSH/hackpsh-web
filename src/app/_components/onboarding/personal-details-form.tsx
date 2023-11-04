@@ -15,7 +15,6 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
-import FormStep from "./number-stepper";
 import NumberStepper from "./number-stepper";
 
 type OnboardingPersonalDetailsFormProps = React.HTMLAttributes<HTMLDivElement>;
