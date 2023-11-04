@@ -4,11 +4,43 @@ import { BaseError } from "@/shared/error";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 
+function generateRandomCode() {
+  const code = [];
+
+  // Generate three random uppercase letters
+  for (let i = 0; i < 3; i++) {
+    const randomLetterCode = Math.floor(65 + Math.random() * 26); // ASCII values for A-Z
+    code.push(String.fromCharCode(randomLetterCode));
+  }
+
+  // Generate four random numbers in the range [1000, 9999]
+  for (let i = 0; i < 4; i++) {
+    const randomNumber = Math.floor(1000 + Math.random() * 9000);
+    code.push(randomNumber.toString());
+  }
+
+  return code.join("");
+}
+
+async function availableRandomCode(db: Database) {
+  let code;
+  let team_from_code;
+
+  do {
+    code = generateRandomCode();
+    team_from_code = await getTeamFromCode(db, code);
+  } while (team_from_code?.team_uuid);
+
+  return code;
+}
+
 export async function createTeam(db: Database, team_name: string) {
   try {
+    const team_join_code = await availableRandomCode(db);
+
     const result = await db.insert(app_team).values({
       team_name,
-      team_join_code: "",
+      team_join_code,
     });
 
     return result;

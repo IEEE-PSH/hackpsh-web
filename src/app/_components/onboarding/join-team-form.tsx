@@ -21,7 +21,6 @@ import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
 import { getUser } from "@/shared/supabase/auth";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import NumberStepper from "./number-stepper";
 
 export default function JoinTeamForm() {
   const router = useRouter();
@@ -60,7 +59,6 @@ export default function JoinTeamForm() {
   return (
     <Form {...form}>
       <form id="joinTeamForm" className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
-        <NumberStepper currentStep={2} maxStep={3} />
         <FormField
           control={form.control}
           name="team_join_code"

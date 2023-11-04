@@ -3,6 +3,8 @@ import doesUserExistProcedure from "../procedures/protected/user/doesUserExistPr
 import getUserOnboardingPhaseProcedure from "../procedures/protected/user/getUserOnboardingPhaseProcedure";
 import getUserRoleProcedure from "../procedures/protected/user/getUserRoleProcedure";
 import isOnboardingCompeleteProcedure from "../procedures/protected/user/isOnboardingCompeleteProcedure";
+import updatePersonalDetailsProcedure from "../procedures/protected/user/updatePersonalDetailsProcedure";
+import updateSupportUsProcedure from "../procedures/protected/user/updateSupportUsProcedure";
 import { createTRPCRouter } from "../trpc";
 
 export const userRouter = createTRPCRouter({
@@ -11,4 +13,6 @@ export const userRouter = createTRPCRouter({
   does_user_exist: doesUserExistProcedure,
   get_user_role: getUserRoleProcedure,
   get_user_onboarding_phase: getUserOnboardingPhaseProcedure,
+  update_personal_details: updatePersonalDetailsProcedure,
+  update_support_us: updateSupportUsProcedure,
 });

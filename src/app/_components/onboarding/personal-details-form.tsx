@@ -32,7 +32,7 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
     resolver: zodResolver(PersonalDetailsFormSchema),
   });
 
-  const updatePersonalDetailsMutation = trpc.onboarding.update_personal_details.useMutation({
+  const updatePersonalDetailsMutation = trpc.user.update_personal_details.useMutation({
     onSuccess: () => {
       router.push(siteConfig.paths.onboarding, { scroll: false });
     },
