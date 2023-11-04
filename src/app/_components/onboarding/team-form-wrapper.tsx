@@ -9,7 +9,7 @@ import {
 } from "@/app/_components/ui/tabs";
 import CreateTeamForm from "@/app/_components/onboarding/create-team-form";
 import JoinTeamForm from "@/app/_components/onboarding/join-team-form";
-import FormStep from "@/app/_components/onboarding/form-step";
+import FormStep from "@/app/_components/onboarding/number-stepper";
 import { buttonVariants } from "@/app/_components/ui/button";
 import Link from "next/link";
 
