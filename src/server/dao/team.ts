@@ -1,5 +1,6 @@
 import { type Database } from "@/db/drizzle";
 import { app_team, app_user_profile } from "@/db/drizzle/schema";
+import { BaseError } from "@/shared/error";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 
@@ -37,25 +38,37 @@ export async function doesTeamExist(db: Database, team_name: string) {
   }
 }
 
-export async function joinTeam(
-  db: Database,
-  user_uuid: string,
-  team_join_code: string,
-) {
+export async function getTeamFromCode(db: Database, team_join_code: string) {
   try {
     const team_from_code = await db.query.app_team.findFirst({
       columns: {
-        team_name: true,
         team_uuid: true,
       },
       where: (team_data, { eq }) =>
         eq(team_data.team_join_code, team_join_code),
     });
 
-    if (!team_from_code?.team_name) {
-      throw new TRPCError({
-        message: "The provided team code is invalid.",
-        code: "NOT_FOUND",
+    return team_from_code;
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function joinTeam(
+  db: Database,
+  user_uuid: string,
+  team_join_code: string,
+) {
+  try {
+    const team_from_code = await getTeamFromCode(db, team_join_code);
+
+    if (!team_from_code?.team_uuid) {
+      throw new BaseError({
+        error_title: "Invalid Team Code",
+        error_desc: "The provided team code is invalid.",
       });
     }
 
@@ -67,6 +80,12 @@ export async function joinTeam(
       })
       .where(eq(app_user_profile.user_uuid, user_uuid));
   } catch (error) {
+    if (error instanceof BaseError) {
+      throw new TRPCError({
+        message: error.description!,
+        code: "NOT_FOUND",
+      });
+    }
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",
