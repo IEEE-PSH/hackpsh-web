@@ -9,7 +9,7 @@ import { trpc } from "@/app/_trpc/react";
 import { siteConfig } from "@/app/_config/site";
 import { toast } from "../ui/use-toast";
 import { getUser } from "@/shared/supabase/auth";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "../ui/form";
 import { cn } from "@/app/_lib/client-utils";
 import NumberStepper from "./number-stepper";
 import { Switch } from "../ui/switch";
@@ -32,7 +32,7 @@ export default function SupportUsForm({ className, ...props }: SupportUsFormProp
 
   const updateSupportUsMutation = trpc.user.update_support_us.useMutation({
     onSuccess: () => {
-      router.push(siteConfig.paths.dashboard, { scroll: false });
+      router.push(siteConfig.paths.onboarding, { scroll: false });
     },
     onError: (error) => {
       toast({

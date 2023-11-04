@@ -1,6 +1,7 @@
 import { type Database } from "@/db/drizzle";
 import { app_user_profile } from "@/db/drizzle/schema";
 import {
+  TUserOnboardingPhase,
   type TUserMajor,
   type TUserSchoolYear,
 } from "@/db/drizzle/startup_seed";
@@ -183,7 +184,70 @@ export async function updateUserSupport(
       .set({
         user_support_administrative,
         user_support_technical,
-        user_onboarding_complete: true,
+        user_onboarding_phase: "validate-onboarding",
+      })
+      .where(eq(app_user_profile.user_uuid, user_uuid));
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function getUserOnboardingFields(db: Database, user_uuid: string) {
+  try {
+    const user_profile = await db.query.app_user_profile.findFirst({
+      columns: {
+        user_display_name: true,
+        user_major: true,
+        user_school_year: true,
+        user_team_uuid: true,
+        user_support_administrative: true,
+        user_support_technical: true,
+      },
+      where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
+    });
+
+    return user_profile;
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function updateUserOnboardingPhase(
+  db: Database,
+  user_uuid: string,
+  user_onboarding_phase: TUserOnboardingPhase,
+) {
+  try {
+    await db
+      .update(app_user_profile)
+      .set({
+        user_onboarding_phase,
+      })
+      .where(eq(app_user_profile.user_uuid, user_uuid));
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function updateUserOnboardingStatus(
+  db: Database,
+  user_uuid: string,
+  user_onboarding_complete: boolean,
+) {
+  try {
+    await db
+      .update(app_user_profile)
+      .set({
+        user_onboarding_complete,
       })
       .where(eq(app_user_profile.user_uuid, user_uuid));
   } catch (error) {

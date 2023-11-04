@@ -1,4 +1,8 @@
-import { dbMajors, dbSchoolYear } from "@/db/drizzle/startup_seed";
+import {
+  dbMajors,
+  dbOnboardingPhases,
+  dbSchoolYear,
+} from "@/db/drizzle/startup_seed";
 import { z } from "zod";
 
 export const CreateUserSchema = z.object({
@@ -26,4 +30,23 @@ export const UpdateUserSupportSchema = z.object({
   user_uuid: z.string().uuid("Please provide a valid UUID."),
   user_support_administrative: z.boolean(),
   user_support_technical: z.boolean(),
+});
+
+export const ValidUserProfileAfterOnboardingSchema = z.object({
+  user_display_name: z.string(),
+  user_team_uuid: z.string().uuid(),
+  user_school_year: z.enum(dbSchoolYear),
+  user_major: z.enum(dbMajors),
+  user_support_administrative: z.boolean(),
+  user_support_technical: z.boolean(),
+});
+
+export const UpdateUserOnboardingPhaseSchema = z.object({
+  user_uuid: z.string().uuid("Please provide a valid UUID."),
+  user_onboarding_phase: z.enum(dbOnboardingPhases),
+});
+
+export const UpdateUserOnboardingStatusSchema = z.object({
+  user_uuid: z.string().uuid("Please provide a valid UUID."),
+  user_onboarding_complete: z.boolean(),
 });
