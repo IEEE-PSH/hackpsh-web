@@ -18,14 +18,40 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/app/_components/ui/input";
 import { Button } from "@/app/_components/ui/button";
 import { Icons } from "@/app/_components/ui/icons";
+import { trpc } from "@/app/_trpc/react";
+import { siteConfig } from "@/app/_config/site";
+import { useRouter } from "next/navigation";
+import { toast } from "../ui/use-toast";
 
 export default function CreateTeamForm() {
+  const router = useRouter();
+
   const form = useForm<TCreateTeamForm>({
     resolver: zodResolver(CreateTeamFormSchema),
   });
 
-  function onSubmit(values: TCreateTeamForm) {
-    console.log(values.team_name);
+  const createTeamMutation = trpc.team.create_team.useMutation({
+    onSuccess: () => {
+      router.push(siteConfig.paths.onboarding, { scroll: false });
+    },
+    onError: (error) => {
+      toast({
+        description: error.message,
+        variant: "destructive",
+        duration: 6000
+      })
+    }
+  })
+
+  async function onSubmit(values: TCreateTeamForm) {
+    try {
+      await createTeamMutation.mutateAsync({
+        team_name: values.team_name
+      })
+    } catch (err: unknown) {
+      console.log(err);
+      // TODO: Add Logger to capture browser api submission errors
+    }
   }
 
   return (

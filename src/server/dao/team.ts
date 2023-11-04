@@ -36,6 +36,16 @@ async function availableRandomCode(db: Database) {
 
 export async function createTeam(db: Database, team_name: string) {
   try {
+    const team_from_name = await getTeamFromName(db, team_name);
+
+    if (team_from_name?.team_name) {
+      throw new BaseError({
+        error_title: "Team Already Exists.",
+        error_desc:
+          "Please pick a different team, as this team name is already taken.",
+      });
+    }
+
     const team_join_code = await availableRandomCode(db);
 
     const result = await db.insert(app_team).values({
@@ -45,6 +55,12 @@ export async function createTeam(db: Database, team_name: string) {
 
     return result;
   } catch (error) {
+    if (error instanceof BaseError) {
+      throw new TRPCError({
+        message: error.description!,
+        code: "CONFLICT",
+      });
+    }
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",
@@ -52,7 +68,7 @@ export async function createTeam(db: Database, team_name: string) {
   }
 }
 
-export async function doesTeamExist(db: Database, team_name: string) {
+export async function getTeamFromName(db: Database, team_name: string) {
   try {
     const result = await db.query.app_team.findFirst({
       columns: {
