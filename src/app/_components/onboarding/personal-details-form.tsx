@@ -197,21 +197,3 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
     </div>
   );
 }
-
-
-
-//           <div className="grid w-full grid-cols-2 gap-4 ">
-//             <Link
-//               className={cn(
-//                 `w-full ${buttonVariants({ variant: "default" })}`,
-//               )}
-//               href="/"
-//             >
-//               Back
-//             </Link>
-
-//           </div>
-//         </form>
-//       </Form>
-//     </div>
-//   </div>
