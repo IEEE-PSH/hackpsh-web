@@ -90,6 +90,7 @@ export const dbOnboardingPhases = [
   "personal-details",
   "team-creation",
   "support-us",
+  "validate-onboarding",
 ] as const;
 
 export type TUserOnboardingPhase = (typeof dbOnboardingPhases)[number];

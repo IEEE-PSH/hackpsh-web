@@ -72,7 +72,7 @@ export async function GET(req: NextRequest) {
     if (is_onboarding_complete) {
       return redirectToPath(req, siteConfig.paths.dashboard);
     } else {
-      return redirectToPath(req, siteConfig.paths.onboarding_personal_details);
+      return redirectToPath(req, siteConfig.paths.onboarding);
     }
   } catch (cause) {
     return handleError(req, cause);

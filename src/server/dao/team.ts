@@ -13,11 +13,9 @@ function generateRandomCode() {
     code.push(String.fromCharCode(randomLetterCode));
   }
 
-  // Generate four random numbers in the range [1000, 9999]
-  for (let i = 0; i < 4; i++) {
-    const randomNumber = Math.floor(1000 + Math.random() * 9000);
-    code.push(randomNumber.toString());
-  }
+  // Generate four random digits in the range [1000, 9999]
+  const randomNumber = Math.floor(1000 + Math.random() * 9000);
+  code.push(randomNumber.toString());
 
   return code.join("");
 }
@@ -34,7 +32,11 @@ async function availableRandomCode(db: Database) {
   return code;
 }
 
-export async function createTeam(db: Database, team_name: string) {
+export async function createTeam(
+  db: Database,
+  user_uuid: string,
+  team_name: string,
+) {
   try {
     const team_from_name = await getTeamFromName(db, team_name);
 
@@ -48,12 +50,12 @@ export async function createTeam(db: Database, team_name: string) {
 
     const team_join_code = await availableRandomCode(db);
 
-    const result = await db.insert(app_team).values({
+    await db.insert(app_team).values({
       team_name,
       team_join_code,
     });
 
-    return result;
+    await joinTeam(db, user_uuid, team_join_code);
   } catch (error) {
     if (error instanceof BaseError) {
       throw new TRPCError({

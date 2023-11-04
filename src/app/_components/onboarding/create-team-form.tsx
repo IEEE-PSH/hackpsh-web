@@ -22,9 +22,12 @@ import { trpc } from "@/app/_trpc/react";
 import { siteConfig } from "@/app/_config/site";
 import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { getUser } from "@/shared/supabase/auth";
 
 export default function CreateTeamForm() {
   const router = useRouter();
+  const supabase = createClientComponentClient();
 
   const form = useForm<TCreateTeamForm>({
     resolver: zodResolver(CreateTeamFormSchema),
@@ -45,8 +48,11 @@ export default function CreateTeamForm() {
 
   async function onSubmit(values: TCreateTeamForm) {
     try {
+      const user = await getUser(supabase);
+
       await createTeamMutation.mutateAsync({
-        team_name: values.team_name
+        user_uuid: user.id,
+        team_name: values.team_name,
       })
     } catch (err: unknown) {
       console.log(err);

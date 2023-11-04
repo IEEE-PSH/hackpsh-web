@@ -8,6 +8,7 @@ export const JoinTeamSchema = z.object({
 });
 
 export const CreateTeamSchema = z.object({
+  user_uuid: z.string().uuid("Please provide a valid UUID."),
   team_name: z
     .string()
     .min(5, "Please provide a team name of at least 5 characters."),

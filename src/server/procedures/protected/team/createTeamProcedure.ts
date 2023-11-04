@@ -5,7 +5,7 @@ import { CreateTeamSchema } from "@/server/zod-schemas/team";
 export default protectedProcedure
   .input(CreateTeamSchema)
   .mutation(async ({ ctx, input }) => {
-    await createTeam(ctx.db, input.team_name);
+    await createTeam(ctx.db, input.user_uuid, input.team_name);
 
     return {
       create_team: true,
