@@ -4,11 +4,13 @@ import { AnnouncementPost } from "./announcement-post";
 export async function Announcements() {
   const serverAnnouncementPosts = await serverTRPC.announcements.get_announcement_posts.query();
 
-  const postElements = serverAnnouncementPosts.map(
-    announcementPostData =>
+  const postElements: JSX.Element[] = [];
+
+  serverAnnouncementPosts.forEach(
+    announcementPost =>
       <AnnouncementPost
-        key={announcementPostData.announcement_uuid}
-        postData={announcementPostData}
+        key={announcementPost.announcement_uuid}
+        postData={announcementPost}
       />
   );
 
