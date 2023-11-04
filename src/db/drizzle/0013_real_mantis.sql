@@ -1,0 +1,2 @@
+ALTER TABLE "app_schema"."app_user_profile" ALTER COLUMN "user_onboarding_phase" SET DEFAULT 'personal-details';--> statement-breakpoint
+ALTER TABLE "app_schema"."app_user_profile" ALTER COLUMN "user_onboarding_phase" SET NOT NULL;
