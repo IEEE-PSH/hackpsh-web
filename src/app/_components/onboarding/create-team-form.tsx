@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/app/_components/ui/input";
 import { Button } from "@/app/_components/ui/button";
 import { Icons } from "@/app/_components/ui/icons";
+import NumberStepper from "./number-stepper";
 
 export default function CreateTeamForm() {
   const form = useForm<TCreateTeamForm>({
@@ -30,7 +31,8 @@ export default function CreateTeamForm() {
 
   return (
     <Form {...form}>
-      <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+      <form id="createTeamForm" className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+        <NumberStepper currentStep={2} maxStep={3} />
         <FormField
           control={form.control}
           name="team_name"

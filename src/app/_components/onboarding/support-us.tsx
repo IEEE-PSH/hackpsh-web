@@ -23,7 +23,6 @@ import {
 import React, { useState } from "react";
 import { Label } from "@/app/_components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/app/_components/ui/radio-group";
-import FormStep from "@/app/_components/onboarding/number-stepper";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { SupportUsFormSchema, type TSupportUsForm } from "@/app/_lib/zod-schemas/forms/onboarding/support-us";
@@ -49,7 +48,6 @@ export default function SupportUsForm() {
   return (
     <div className="mt-[25vh] flex flex-col items-center ">
       <div className={cn("w-[23rem]")}>
-        <FormStep step="2" />
 
         <Form {...form}>
           <form
