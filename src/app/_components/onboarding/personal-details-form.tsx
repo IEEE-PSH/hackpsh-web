@@ -16,22 +16,49 @@ import { ScrollArea } from "../ui/scroll-area";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
 import NumberStepper from "./number-stepper";
+import { trpc } from "@/app/_trpc/react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { getUser } from "@/shared/supabase/auth";
+import { toast } from "../ui/use-toast";
 
 type OnboardingPersonalDetailsFormProps = React.HTMLAttributes<HTMLDivElement>;
 
 export default function OnboardingPersonalDetailsForm({ className, ...props }: OnboardingPersonalDetailsFormProps) {
   const router = useRouter();
+  const supabase = createClientComponentClient();
 
   // Form Definition
   const form = useForm<TPersonalDetailsForm>({
     resolver: zodResolver(PersonalDetailsFormSchema),
   });
 
-  function onSubmit(values: TPersonalDetailsForm) {
-    console.log(values.user_display_name);
-    console.log(values.user_school_year);
-    console.log(values.user_major);
-    router.push(siteConfig.paths.onboarding_team_creation, { scroll: false })
+  const updatePersonalDetailsMutation = trpc.onboarding.update_personal_details.useMutation({
+    onSuccess: () => {
+      router.push(siteConfig.paths.onboarding, { scroll: false });
+    },
+    onError: (error) => {
+      toast({
+        description: error.message,
+        variant: "destructive",
+        duration: 6000
+      })
+    },
+  })
+
+  async function onSubmit(values: TPersonalDetailsForm) {
+    try {
+      const user = await getUser(supabase);
+
+      await updatePersonalDetailsMutation.mutateAsync({
+        user_display_name: values.user_display_name,
+        user_school_year: values.user_school_year,
+        user_major: values.user_major,
+        user_uuid: user.id
+      });
+    } catch (err: unknown) {
+      console.log(err);
+      // TODO: Add Logger to capture browser api submission errors
+    }
   }
 
   return (
@@ -42,7 +69,7 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8"
         >
-          <NumberStepper currentStep={2} maxStep={3} />
+          <NumberStepper currentStep={1} maxStep={3} />
           <FormField
             control={form.control}
             name="user_display_name"

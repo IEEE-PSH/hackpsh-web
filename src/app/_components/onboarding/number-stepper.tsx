@@ -6,7 +6,7 @@ export default function NumberStepper({ currentStep, maxStep }: StepperNumberPro
 
   const stepperElements: JSX.Element[] = [];
   for (let index = 1; index <= maxStep; index++) {
-    stepperElements.push(<StepNumber displayNumber={index} currentStep={currentStep} />)
+    stepperElements.push(<StepNumber key={index} displayNumber={index} currentStep={currentStep} />)
   }
 
   return (
