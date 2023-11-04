@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-import { cn } from "@/app/_lib/client-utils";
 import {
   CreateTeamFormSchema,
   type TCreateTeamForm,
@@ -18,10 +16,8 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "@/app/_components/ui/input";
-import { Button, buttonVariants } from "@/app/_components/ui/button";
+import { Button } from "@/app/_components/ui/button";
 import { Icons } from "@/app/_components/ui/icons";
-import Link from "next/link";
-import { siteConfig } from "@/app/_config/site";
 
 export default function CreateTeamForm() {
   const form = useForm<TCreateTeamForm>({
@@ -34,7 +30,7 @@ export default function CreateTeamForm() {
 
   return (
     <Form {...form}>
-      <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="team_name"
@@ -46,6 +42,7 @@ export default function CreateTeamForm() {
                   className="border-muted-foreground"
                   placeholder="Enter Team Name"
                   {...field}
+                  value={field.value ?? ""}
                 />
               </FormControl>
               <FormDescription>
@@ -55,25 +52,17 @@ export default function CreateTeamForm() {
             </FormItem>
           )}
         />
-        <div className="grid grid-cols-2 gap-4">
-          <Link
-            className={cn(`w-full ${buttonVariants({ variant: "default" })}`)}
-            href={siteConfig.paths.onboarding_personal_details}
-          >
-            Back
-          </Link>
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting && (
-              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
-            )}
-            Next
-          </Button>
-        </div>
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting && (
+            <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
+          )}
+          Next
+        </Button>
       </form>
     </Form>
   );

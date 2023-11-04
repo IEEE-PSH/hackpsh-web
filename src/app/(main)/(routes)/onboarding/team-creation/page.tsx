@@ -11,7 +11,7 @@ export default function Page() {
   return (
     <>
       <ProtectedSiteHeader />
-      <div className="container relative flex-col items-center justify-center space-y-6">
+      <div className="container relative flex-col items-center justify-center space-y-6 md:max-w-3xl">
         <h1 className="mt-10 mb-10 text-3xl font-bold text-center">Team Creation</h1>
         <TeamFormWrapper />
       </div>

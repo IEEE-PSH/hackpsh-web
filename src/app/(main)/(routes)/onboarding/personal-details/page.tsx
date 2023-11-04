@@ -4,7 +4,7 @@ import { type Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Onboarding | Personal Details | HackPSH",
-  description: "Weclome to HackPSH!",
+  description: "Welcome to HackPSH!",
 }
 
 // If they land on onboarding, that means the user was either redirected through

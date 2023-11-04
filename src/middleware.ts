@@ -45,11 +45,6 @@ export async function middleware(req: NextRequest) {
       return redirectToPath(req, siteConfig.paths.announcements);
     }
 
-    if (req.nextUrl.pathname === siteConfig.paths.onboarding) {
-      return redirectToPath(req, siteConfig.paths.onboarding_personal_details);
-    }
-    // TODO: Create external functions for handling protected pages & role-based pages
-
     return res;
   } catch (cause) {
     return handleError(req, cause);
