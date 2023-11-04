@@ -6,11 +6,11 @@ export async function Announcements() {
 
   const postElements: JSX.Element[] = [];
 
-  serverAnnouncementPosts.forEach(
-    announcementPost =>
+  const postElements = serverAnnouncementPosts.map(
+    announcementPostData =>
       <AnnouncementPost
-        key={announcementPost.announcement_uuid}
-        postData={announcementPost}
+        key={announcementPostData.announcement_uuid}
+        postData={announcementPostData}
       />
   );
 
