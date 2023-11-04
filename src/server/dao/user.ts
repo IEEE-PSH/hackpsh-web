@@ -1,7 +1,7 @@
 import { type Database } from "@/db/drizzle";
 import { app_user_profile } from "@/db/drizzle/schema";
 import {
-  TUserOnboardingPhase,
+  type TUserOnboardingPhase,
   type TUserMajor,
   type TUserSchoolYear,
 } from "@/db/drizzle/startup_seed";
