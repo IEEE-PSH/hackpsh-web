@@ -1,16 +1,18 @@
 {
-    "image":"mcr.microsoft.com/devcontainers/universal:2",
-    "customizations": {
-        "vscode": {
-          "extensions": [        
-            "eamodio.gitlens",
-            "bradlc.vscode-tailwindcss",
-            "dbaeumer.vscode-eslint",
-            "esbenp.prettier-vscode"
-        ]
-        }
-    },
-    "features": {
-        "ghcr.io/devcontainers-contrib/features/supabase-cli:1": {}
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "eamodio.gitlens",
+        "bradlc.vscode-tailwindcss",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
     }
+  },
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/supabase-cli:1": {}
+  },
+  "postCreateCommand": ["pmpm i", "pnpm migrate"],
+  "postStartCommand": "pnpm run dev"
 }
