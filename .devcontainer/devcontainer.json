@@ -13,8 +13,8 @@
   "features": {
     "ghcr.io/devcontainers-contrib/features/supabase-cli:1": {}
   },
-  //run when container is created
-  "postCreateCommand": ["pmpm i", "pnpm migrate"],
-  //run when container starts; currently in testing
-  "postStartCommand": ["supabase start", "pnpm run dev"]
+  //install dependencies and migrate sql scripts on container creation
+  "postCreateCommand": "pnpm i && pnpm migrate",
+  //start supabase in background on container start
+  "postStartCommand": "nohup bash -c 'supabase start &'"
 }

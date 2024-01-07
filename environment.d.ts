@@ -28,5 +28,30 @@ namespace NodeJS {
      * @type {string}
      */
     VERCEL_URL: string;
+
+    /**
+     *
+     *
+     *
+     */
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: string;
+    /**
+     *
+     *
+     *
+     */
+    NEXT_PUBLIC_SUPABASE_URL: string;
+    /**
+     *
+     *
+     *
+     */
+    SUPABASE_AUTH_EXTERNAL_GOOGLE_OAUTH_CLIENT_ID: string;
+    /**
+     *
+     *
+     *
+     */
+    SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET: string;
   }
 }
