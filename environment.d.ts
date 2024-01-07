@@ -2,8 +2,6 @@
 namespace NodeJS {
   interface ProcessEnv {
     /**
-     * Make sure to run `pnpm run introspect` to pull table schema and all types.
-     *
      * We utilize Drizzle ORM for this project for type-safety and SQL Migrations
      * and to access the DB.
      *
@@ -28,5 +26,30 @@ namespace NodeJS {
      * @type {string}
      */
     VERCEL_URL: string;
+
+    /**
+     * JWT (JSON Web Token) used to interact with the database if the user is not logged
+     * in (anonymous). This key is meant to have limited privilegeswhich can be defined
+     * using RLS (Row Level Security) policies.
+     *
+     * See Docs for more about RLS policies:
+     * https://supabase.com/docs/guides/auth/row-level-security
+     * @type {string}
+     */
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: string;
+
+    /**
+     * URL for Supabase API.
+     *
+     * @type {string}
+     */
+    NEXT_PUBLIC_SUPABASE_URL: string;
+
+    /**
+     * Credentials used to allow access to Google OAuth services.
+     * @type {string}
+     */
+    SUPABASE_AUTH_EXTERNAL_GOOGLE_OAUTH_CLIENT_ID: string;
+    SUPABASE_AUTH_EXTERNAL_GOOGLE_SECRET: string;
   }
 }
