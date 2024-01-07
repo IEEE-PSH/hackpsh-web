@@ -12,7 +12,8 @@
     "generate": "drizzle-kit generate:pg",
     "drop_migrations": "drizzle-kit drop",
     "db_push": "drizzle-kit push:pg",
-    "migrate": "pnpm dlx esno src/db/drizzle/migrate.ts"
+    "migrate": "pnpm dlx esno src/db/drizzle/migrate.ts",
+    "setup": "supabase start && pnpm migrate && pnpm run dev"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
