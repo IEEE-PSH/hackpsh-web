@@ -35,6 +35,7 @@ export default function CreateTeamForm() {
 
   const createTeamMutation = trpc.team.create_team.useMutation({
     onSuccess: () => {
+      router.refresh();
       router.push(siteConfig.paths.onboarding, { scroll: false });
     },
     onError: (error) => {
