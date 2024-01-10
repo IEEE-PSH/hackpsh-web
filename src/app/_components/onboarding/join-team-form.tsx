@@ -14,7 +14,10 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/app/_components/ui/input";
 import { Button } from "@/app/_components/ui/button";
 import { Icons } from "@/app/_components/ui/icons";
-import { JoinTeamFormSchema, type TJoinTeamForm } from "@/app/_lib/zod-schemas/forms/onboarding/team";
+import {
+  JoinTeamFormSchema,
+  type TJoinTeamForm,
+} from "@/app/_lib/zod-schemas/forms/onboarding/team";
 import { trpc } from "@/app/_trpc/react";
 import { toast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
@@ -32,24 +35,25 @@ export default function JoinTeamForm() {
 
   const joinTeamMutation = trpc.team.join_team.useMutation({
     onSuccess: () => {
+      router.refresh();
       router.push(siteConfig.paths.onboarding, { scroll: false });
     },
     onError: (error) => {
       toast({
         description: error.message,
         variant: "destructive",
-        duration: 6000
-      })
-    }
-  })
+        duration: 6000,
+      });
+    },
+  });
 
   async function onSubmit(values: TJoinTeamForm) {
     try {
       const user = await getUser(supabase);
       await joinTeamMutation.mutateAsync({
         team_join_code: values.team_join_code,
-        user_uuid: user.id
-      })
+        user_uuid: user.id,
+      });
     } catch (err: unknown) {
       console.log(err);
       // TODO: Add Logger to capture browser api submission errors
@@ -58,7 +62,11 @@ export default function JoinTeamForm() {
 
   return (
     <Form {...form}>
-      <form id="joinTeamForm" className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        id="joinTeamForm"
+        className="space-y-8"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <FormField
           control={form.control}
           name="team_join_code"
@@ -85,10 +93,10 @@ export default function JoinTeamForm() {
         <Button
           type="submit"
           className="w-full"
-          disabled={form.formState.isSubmitting || form.formState.isSubmitted}
+          disabled={form.formState.isSubmitting}
         >
           {form.formState.isSubmitting && (
-            <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           )}
           Next
         </Button>
