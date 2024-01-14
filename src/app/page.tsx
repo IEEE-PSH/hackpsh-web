@@ -2,6 +2,7 @@ import { Scale, Smile, User } from "lucide-react";
 import PublicSiteHeader from "./_components/nav/public-site-header";
 import { Button, buttonVariants } from "./_components/ui/button";
 import { ReactNode } from "react";
+import { cn } from "./_lib/client-utils";
 
 function Section({ children, bg }: { children?: ReactNode; bg: string }) {
   return (
@@ -23,8 +24,8 @@ function CustomImg({
 
 function Hero() {
   return (
-    <section className="bg-blue-200 py-40">
-      <div className="container grid grid-cols-2 ">
+    <section className="bg-blue-200 ">
+      <div className="container grid grid-cols-2 px-24 py-40">
         <div className="grid gap-y-6">
           <p className="text-5xl font-bold">HackPSH Spring 2024</p>
           <p>
@@ -33,7 +34,15 @@ function Hero() {
             ad minim veniam.
           </p>
           <p>Madlyn Hanes Library | Morrison Gallery</p>
-          <Button className={buttonVariants({ variant: "outline" })}>
+          <Button
+            className={cn(
+              buttonVariants({
+                variant: "outline",
+                size: "sm",
+                className: "w-48",
+              }),
+            )}
+          >
             Join Us!
           </Button>
         </div>
@@ -45,25 +54,28 @@ function Hero() {
 function HomeCountdown() {
   return (
     <Section bg="bg-foreground">
-      <p className="text-center text-xl text-background">
-        This event starts in
-      </p>
-      <div className="container grid grid-cols-4 place-items-center">
-        <div className="flex flex-col items-center">
-          <p className="text-5xl text-background">24</p>
-          <p className="text-xl text-background">Days</p>
-        </div>
-        <div className="flex flex-col items-center">
-          <p className="text-5xl text-background">03</p>
-          <p className="text-xl text-background">Hours</p>
-        </div>
-        <div className="flex flex-col items-center">
-          <p className="text-5xl text-background">46</p>
-          <p className="text-xl text-background">Minutes</p>
-        </div>
-        <div className="flex flex-col items-center">
-          <p className="text-5xl text-background">02</p>
-          <p className="text-xl text-background">Seconds</p>
+      <div className="flex flex-col items-center space-y-6">
+        <p className="text-xl text-background">This event starts in</p>
+        <div className="grid grid-cols-7 place-items-center items-start text-background">
+          <div className="flex flex-col items-center">
+            <p className="text-5xl font-bold">24</p>
+            <p className="text-xl">Days</p>
+          </div>
+          <p className="text-5xl font-bold">:</p>
+          <div className="flex flex-col items-center">
+            <p className="text-5xl font-bold">03</p>
+            <p className="text-xl">Hours</p>
+          </div>
+          <p className="text-5xl font-bold">:</p>
+          <div className="flex flex-col items-center">
+            <p className="text-5xl font-bold">46</p>
+            <p className="text-xl">Minutes</p>
+          </div>
+          <p className="text-5xl font-bold">:</p>
+          <div className="flex flex-col items-center">
+            <p className="text-5xl font-bold">02</p>
+            <p className="text-xl">Seconds</p>
+          </div>
         </div>
       </div>
     </Section>
@@ -73,10 +85,10 @@ function HomeCountdown() {
 function HomeInfo() {
   return (
     <Section bg="bg-background">
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-2 grid-rows-3 gap-6">
         <CustomImg
           source={
-            "https://i0.wp.com/images.onwardstate.com/uploads/2022/08/8-29-22-scaled.jpg?fit=2560%2C1707&ssl=1"
+            "https://www.abc27.com/wp-content/uploads/sites/55/2016/08/28480319612_9590ae5671_z_39096617_ver1.0.jpg?w=640"
           }
         />
         <div>
@@ -88,8 +100,6 @@ function HomeInfo() {
             aliquip ex ea commodo consequat. Duis aute irure.
           </p>
         </div>
-      </div>
-      <div className="grid grid-cols-2">
         <div>
           <p className="text-xl font-bold">Who is it for?</p>
           <p className="text-md">
@@ -100,14 +110,12 @@ function HomeInfo() {
         </div>
         <CustomImg
           source={
-            "https://i0.wp.com/images.onwardstate.com/uploads/2022/08/8-29-22-scaled.jpg?fit=2560%2C1707&ssl=1"
+            "https://www.abc27.com/wp-content/uploads/sites/55/2016/08/28480319612_9590ae5671_z_39096617_ver1.0.jpg?w=640"
           }
         />
-      </div>
-      <div className="grid grid-cols-2">
         <CustomImg
           source={
-            "https://i0.wp.com/images.onwardstate.com/uploads/2022/08/8-29-22-scaled.jpg?fit=2560%2C1707&ssl=1"
+            "https://www.abc27.com/wp-content/uploads/sites/55/2016/08/28480319612_9590ae5671_z_39096617_ver1.0.jpg?w=640"
           }
         />
         <div>
@@ -128,8 +136,8 @@ function HomeRules() {
   return (
     <Section bg="bg-muted">
       <p className="text-center text-2xl font-bold">Rules</p>
-      <div className="grid grid-cols-3 place-items-center">
-        <div className="flex flex-col items-center">
+      <div className="my-6 grid grid-cols-3 place-items-center gap-x-6">
+        <div className="flex flex-col items-center space-y-6">
           <User />
           <p className="text-xl">Teams</p>
           <p className="text-md">
@@ -139,7 +147,7 @@ function HomeRules() {
           </p>
         </div>
 
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center space-y-6">
           <Scale />
           <p className="text-xl">Integrity</p>
           <p className="text-md">
@@ -148,7 +156,7 @@ function HomeRules() {
             ad minim veniam
           </p>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center space-y-6">
           <Smile />
           <p className="text-xl">Conduct</p>
           <p className="text-md">
