@@ -79,13 +79,13 @@ function HomeInfo() {
   return (
     <Section bg="bg-white">
       <div className="mx-32 grid gap-y-8 text-black">
-        <div className="grid grid-cols-2 gap-8 rounded-xl bg-neutral-100 p-8">
+        <div className="grid grid-cols-2 gap-8 rounded-xl p-8">
           <CustomImg
             source={
-              "https://www.abc27.com/wp-content/uploads/sites/55/2016/08/28480319612_9590ae5671_z_39096617_ver1.0.jpg?w=640"
+              "https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
             }
           />
-          <div className="flex flex-col space-y-8">
+          <div className="flex flex-col">
             <p className="text-3xl font-bold">What is HackPSH?</p>
             <p className="text-md">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -95,7 +95,8 @@ function HomeInfo() {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-8 rounded-xl bg-neutral-100 p-8">
+        <hr />
+        <div className="grid grid-cols-2 gap-8 rounded-xl p-8">
           <div className="flex flex-col space-y-8">
             <p className="text-3xl font-bold">Who is it for?</p>
             <p className="text-md">
@@ -106,14 +107,15 @@ function HomeInfo() {
           </div>
           <CustomImg
             source={
-              "https://www.abc27.com/wp-content/uploads/sites/55/2016/08/28480319612_9590ae5671_z_39096617_ver1.0.jpg?w=640"
+              "https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
             }
           />
         </div>
-        <div className="grid grid-cols-2 gap-8 rounded-xl bg-neutral-100 p-8">
+        <hr />
+        <div className="grid grid-cols-2 gap-8 rounded-xl p-8">
           <CustomImg
             source={
-              "https://www.abc27.com/wp-content/uploads/sites/55/2016/08/28480319612_9590ae5671_z_39096617_ver1.0.jpg?w=640"
+              "https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
             }
           />
           <div className="flex flex-col space-y-8">
