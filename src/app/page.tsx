@@ -288,7 +288,7 @@ function Footer() {
       <div className="flex flex-row items-start justify-center text-foreground lg:justify-between">
         <Link
           href={siteConfig.paths.home}
-          className="mr-auto hidden origin-left scale-[2] items-center space-x-2 lg:flex"
+          className="mr-auto hidden origin-top-left scale-[2] items-center space-x-2 lg:flex"
           scroll={false}
         >
           <Icons.brand className="h-[2.4rem] w-[2.0rem]" />
