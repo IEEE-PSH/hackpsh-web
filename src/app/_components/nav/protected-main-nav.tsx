@@ -16,8 +16,8 @@ export function ProtectedMainNav() {
         className="mr-6 flex items-center space-x-2"
         scroll={false}
       >
-        <Icons.brand className="mr-2 h-[2.4rem] w-[2.0rem]" />
-        <span className="hidden font-bold sm:inline-block">
+        <Icons.brand className="h-[2.4rem] w-[2.0rem]" />
+        <span className="hidden text-xl font-bold sm:inline-block">
           {siteConfig.name}
         </span>
       </Link>
