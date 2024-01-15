@@ -12,6 +12,7 @@ export default function PublicSiteHeader() {
         <PublicMainNav />
         <PublicMobileNav />
         <SiteHeaderActions>
+          <ModeToggle />
           <SessionButton />
         </SiteHeaderActions>
       </SiteHeader>
