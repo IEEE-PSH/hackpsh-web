@@ -42,10 +42,10 @@ export default function CreateTeamForm() {
       toast({
         description: error.message,
         variant: "destructive",
-        duration: 6000
-      })
-    }
-  })
+        duration: 6000,
+      });
+    },
+  });
 
   async function onSubmit(values: TCreateTeamForm) {
     try {
@@ -54,7 +54,7 @@ export default function CreateTeamForm() {
       await createTeamMutation.mutateAsync({
         user_uuid: user.id,
         team_name: values.team_name,
-      })
+      });
     } catch (err: unknown) {
       console.log(err);
       // TODO: Add Logger to capture browser api submission errors
@@ -63,7 +63,11 @@ export default function CreateTeamForm() {
 
   return (
     <Form {...form}>
-      <form id="createTeamForm" className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        id="createTeamForm"
+        className="space-y-8"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <FormField
           control={form.control}
           name="team_name"
@@ -92,7 +96,7 @@ export default function CreateTeamForm() {
           disabled={form.formState.isSubmitting}
         >
           {form.formState.isSubmitting && (
-            <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           )}
           Next
         </Button>

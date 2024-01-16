@@ -11,9 +11,7 @@ function CustomImg({
   source: string;
   className?: string;
 }) {
-  return (
-    <img src={source} className={`${className} overflow-hidden rounded-md`} />
-  );
+  return <img src={source} className={`${className} rounded-md`} />;
 }
 
 function Hero() {
@@ -133,8 +131,8 @@ function HomeRules() {
   return (
     <Section bg="bg-neutral-100">
       <div className="mx-auto max-w-[30rem] md:max-w-full">
-        <p className="mb-8 text-center text-4xl font-bold text-black">RULES</p>
-        <div className="my-6 grid grid-cols-1 place-items-center items-start gap-8 text-black md:grid-cols-3">
+        <p className="text-center text-4xl font-bold text-black">RULES</p>
+        <div className="my-6 mt-8 grid grid-cols-1 place-items-center items-start gap-8 text-black md:grid-cols-3">
           <div className="flex flex-col items-center">
             <User size="2rem" />
             <p className="mt-4 text-xl">Teams</p>

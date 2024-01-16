@@ -1,16 +1,37 @@
 "use client";
 
 import { cn } from "@/app/_lib/client-utils";
-import { PersonalDetailsFormSchema, type TPersonalDetailsForm } from "@/app/_lib/zod-schemas/forms/onboarding/personal-details";
+import {
+  PersonalDetailsFormSchema,
+  type TPersonalDetailsForm,
+} from "@/app/_lib/zod-schemas/forms/onboarding/personal-details";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { Icons } from "../ui/icons";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { dbMajors, dbSchoolYear } from "@/db/drizzle/startup_seed";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "../ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/combo-scroll-popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "../ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../ui/combo-scroll-popover";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import { useRouter } from "next/navigation";
@@ -23,7 +44,10 @@ import { toast } from "../ui/use-toast";
 
 type OnboardingPersonalDetailsFormProps = React.HTMLAttributes<HTMLDivElement>;
 
-export default function OnboardingPersonalDetailsForm({ className, ...props }: OnboardingPersonalDetailsFormProps) {
+export default function OnboardingPersonalDetailsForm({
+  className,
+  ...props
+}: OnboardingPersonalDetailsFormProps) {
   const router = useRouter();
   const supabase = createClientComponentClient();
 
@@ -32,18 +56,19 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
     resolver: zodResolver(PersonalDetailsFormSchema),
   });
 
-  const updatePersonalDetailsMutation = trpc.user.update_personal_details.useMutation({
-    onSuccess: () => {
-      router.push(siteConfig.paths.onboarding, { scroll: false });
-    },
-    onError: (error) => {
-      toast({
-        description: error.message,
-        variant: "destructive",
-        duration: 6000
-      })
-    },
-  })
+  const updatePersonalDetailsMutation =
+    trpc.user.update_personal_details.useMutation({
+      onSuccess: () => {
+        router.push(siteConfig.paths.onboarding, { scroll: false });
+      },
+      onError: (error) => {
+        toast({
+          description: error.message,
+          variant: "destructive",
+          duration: 6000,
+        });
+      },
+    });
 
   async function onSubmit(values: TPersonalDetailsForm) {
     try {
@@ -53,7 +78,7 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
         user_display_name: values.user_display_name,
         user_school_year: values.user_school_year,
         user_major: values.user_major,
-        user_uuid: user.id
+        user_uuid: user.id,
       });
     } catch (err: unknown) {
       console.log(err);
@@ -69,7 +94,6 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8"
         >
-          <NumberStepper currentStep={1} maxStep={3} />
           <FormField
             control={form.control}
             name="user_display_name"
@@ -104,28 +128,36 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
                       <Button
                         variant={"outline"}
                         role="combobox"
-                        className={cn("justify-between", !field.value && "text-muted-foreground")}
+                        className={cn(
+                          "justify-between",
+                          !field.value && "text-muted-foreground",
+                        )}
                       >
                         {field.value
-                          ? dbSchoolYear.find(
-                            (school_year) => school_year === field.value
-                          )?.replace("_", " ").toLocaleUpperCase()
+                          ? dbSchoolYear
+                              .find(
+                                (school_year) => school_year === field.value,
+                              )
+                              ?.replace("_", " ")
+                              .toLocaleUpperCase()
                           : "Select school year"}
-                        <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="p-0">
                     <Command>
                       <CommandInput placeholder="Search school year..." />
-                      <CommandEmpty>Cannot find provided school year.</CommandEmpty>
+                      <CommandEmpty>
+                        Cannot find provided school year.
+                      </CommandEmpty>
                       <CommandGroup>
                         {dbSchoolYear.map((school_year) => (
                           <CommandItem
                             value={school_year}
                             key={school_year}
                             onSelect={() => {
-                              form.setValue("user_school_year", school_year)
+                              form.setValue("user_school_year", school_year);
                             }}
                           >
                             <Check
@@ -133,7 +165,7 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
                                 "mr-2 h-4 w-4",
                                 school_year === field.value
                                   ? "opacity-100"
-                                  : "opacity-0"
+                                  : "opacity-0",
                               )}
                             />
                             {school_year.replace("_", " ").toLocaleUpperCase()}
@@ -163,14 +195,18 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
                       <Button
                         variant={"outline"}
                         role="combobox"
-                        className={cn("justify-between", !field.value && "text-muted-foreground")}
+                        className={cn(
+                          "justify-between",
+                          !field.value && "text-muted-foreground",
+                        )}
                       >
                         {field.value
-                          ? dbMajors.find(
-                            (major_name) => major_name === field.value
-                          )?.replaceAll("_", " ").toLocaleUpperCase()
+                          ? dbMajors
+                              .find((major_name) => major_name === field.value)
+                              ?.replaceAll("_", " ")
+                              .toLocaleUpperCase()
                           : "Select major"}
-                        <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -178,7 +214,6 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
                     <Command>
                       <CommandInput placeholder="Search majors..." />
                       <ScrollArea className="h-[350px]">
-
                         <CommandEmpty>Cannot find provided major.</CommandEmpty>
                         <CommandGroup>
                           {dbMajors.map((major_name) => (
@@ -186,7 +221,7 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
                               value={major_name}
                               key={major_name}
                               onSelect={() => {
-                                form.setValue("user_major", major_name)
+                                form.setValue("user_major", major_name);
                               }}
                             >
                               <Check
@@ -194,10 +229,12 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
                                   "mr-2 h-4 w-4",
                                   major_name === field.value
                                     ? "opacity-100"
-                                    : "opacity-0"
+                                    : "opacity-0",
                                 )}
                               />
-                              {major_name.replaceAll("_", " ").toLocaleUpperCase()}
+                              {major_name
+                                .replaceAll("_", " ")
+                                .toLocaleUpperCase()}
                             </CommandItem>
                           ))}
                         </CommandGroup>
@@ -206,16 +243,21 @@ export default function OnboardingPersonalDetailsForm({ className, ...props }: O
                   </PopoverContent>
                 </Popover>
                 <FormDescription>
-                  Select a major that you are pursuing or the most interested in.
+                  Select a major that you are pursuing or the most interested
+                  in.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={form.formState.isSubmitting}
+          >
             {form.formState.isSubmitting && (
-              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
             Next
           </Button>

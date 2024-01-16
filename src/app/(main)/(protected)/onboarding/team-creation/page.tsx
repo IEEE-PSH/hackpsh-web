@@ -1,4 +1,4 @@
-import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
+import NumberStepper from "@/app/_components/onboarding/number-stepper";
 import TeamFormWrapper from "@/app/_components/onboarding/team-form-wrapper";
 import { type Metadata } from "next";
 
@@ -10,12 +10,11 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <div className="container relative flex-col items-center justify-center space-y-6 md:max-w-3xl">
-        <h1 className="mb-10 mt-10 text-center text-3xl font-bold">
-          Team Creation
-        </h1>
-        <TeamFormWrapper />
-      </div>
+      <h1 className="mb-10 text-center text-3xl font-bold">
+        Team Creation
+      </h1>
+      <NumberStepper currentStep={2} maxStep={3} />
+      <TeamFormWrapper />
     </>
   );
 }
