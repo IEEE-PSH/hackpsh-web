@@ -1,4 +1,4 @@
-import "./globals.css";
+import "@/app/globals.css";
 import type { Metadata } from "next";
 import { Roboto_Condensed } from "next/font/google";
 import { ThemeProvider } from "@/app/_components/theme-provider";

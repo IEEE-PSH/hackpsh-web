@@ -1,19 +1,8 @@
-import { Badge, Medal, Scale, Smile, Trophy, User } from "lucide-react";
-import PublicSiteHeader from "./_components/nav/public-site-header";
-import { Button } from "./_components/ui/button";
-import { ReactNode } from "react";
-import { Card } from "./_components/ui/card";
-import { Icons } from "./_components/ui/icons";
-import { siteConfig } from "./_config/site";
-import Link from "next/link";
-
-function Section({ children, bg }: { children?: ReactNode; bg: string }) {
-  return (
-    <section className={`bg-blue-40 ${bg}`}>
-      <div className="container max-w-[64rem] py-16">{children}</div>
-    </section>
-  );
-}
+import { Medal, Scale, Smile, Trophy, User } from "lucide-react";
+import { Button } from "../../_components/ui/button";
+import { Card } from "../../_components/ui/card";
+import Section from "../../_components/page-assets/section";
+import ContactSection from "../../_components/page-assets/contact-section";
 
 function CustomImg({
   source,
@@ -30,16 +19,15 @@ function CustomImg({
 function Hero() {
   return (
     <Section bg="bg-slate-800">
-      <div className="flex min-h-[25rem] flex-col space-y-8 text-white">
+      <div className="flex min-h-[25rem] flex-col text-white">
         <p className="text-6xl font-bold">HackPSH Spring 2024 is Here!</p>
-        <p className="text-lg">
+        <p className="mt-8 text-lg">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam.
         </p>
-        <p className="text-lg">
-          Madlyn Hanes Library | Morrison Gallery | February 17, 2024
-        </p>
+        <p className="mt-8 text-lg">Madlyn Hanes Library | Morrison Gallery</p>
+        <p className="text-lg">February 17, 2024 | 9:00 AM</p>
         <Button className="mt-auto w-48 bg-white text-lg hover:bg-white/80">
           Join Us!
         </Button>
@@ -265,78 +253,9 @@ function HomePastEvents() {
   );
 }
 
-function ContactSection({ title, bg }: { title: string; bg: string }) {
-  return (
-    <Section bg={bg}>
-      <div className="flex flex-col items-center space-y-6 text-center text-white">
-        <p className="text-4xl font-bold">{title}</p>
-        <p className="text-lg">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt.
-        </p>
-        <Button className="mt-auto w-48 bg-white text-lg hover:bg-white/80">
-          Contact Us
-        </Button>
-      </div>
-    </Section>
-  );
-}
-
-function Footer() {
-  return (
-    <Section bg="bg-background">
-      <div className="flex flex-row items-start justify-center text-foreground lg:justify-between">
-        <Link
-          href={siteConfig.paths.home}
-          className="mr-auto hidden origin-top-left scale-[2] items-center space-x-2 lg:flex"
-          scroll={false}
-        >
-          <Icons.brand className="h-[2.4rem] w-[2.0rem]" />
-          <span className="hidden text-xl font-bold sm:inline-block">
-            {siteConfig.name}
-          </span>
-        </Link>
-        <div className="flex flex-row space-x-20">
-          <div>
-            <p className="text-lg font-bold">Follow Us</p>
-            <ul className="text-lg">
-              <li>LinkedIn</li>
-              <li>Facebook</li>
-              <li>Instagram</li>
-            </ul>
-          </div>
-          <div>
-            <p className="text-lg font-bold">Directory</p>
-            <ul className="text-lg">
-              <li>Home</li>
-              <li>About</li>
-              <li>Partners</li>
-            </ul>
-          </div>
-          <div>
-            <p className="text-lg font-bold">Information</p>
-            <ul className="text-lg">
-              <li>Contact</li>
-              <li>Privacy Policy</li>
-              <li>Terms and Service</li>
-            </ul>
-          </div>
-          <div className="hidden md:block">
-            <p className="text-lg font-bold">Other Links</p>
-            <ul>
-              <li>PSH IEEE</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </Section>
-  );
-}
-
 export default function Page() {
   return (
-    <div>
-      <PublicSiteHeader />
+    <>
       <Hero />
       <HomeCountdown />
       <HomeInfo />
@@ -344,7 +263,6 @@ export default function Page() {
       <HomePrizes />
       <HomePastEvents />
       <ContactSection bg="bg-black" title="Have a Question?" />
-      <Footer />
-    </div>
+    </>
   );
 }
