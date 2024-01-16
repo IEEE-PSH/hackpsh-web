@@ -6,8 +6,9 @@ import { Icons } from "../ui/icons";
 
 export default function Footer() {
   return (
-    <Section bg="bg-background" className="">
-      <div className="flex flex-row items-start justify-center text-foreground lg:justify-between">
+    <div className="mt-auto">
+    <div className="bottom-0 w-full absolute py-16 bg-background">
+      <div className="flex flex-row items-start container max-w-[64rem] justify-center text-foreground lg:justify-between">
         <Link
           href={siteConfig.paths.home}
           className="mr-auto hidden origin-top-left scale-[2] items-center space-x-2 lg:flex"
@@ -51,6 +52,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </Section>
+    </div>
+    </div>
   );
 }

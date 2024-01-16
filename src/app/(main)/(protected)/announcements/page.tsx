@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function AnnouncementsPage() {
   return (
     <>
-      <div className="container relative flex-col items-center justify-center">
+      <div className="container flex-col items-center justify-center">
         <p className="m-10 text-center text-3xl font-bold">Announcements</p>
         <AdminCreatePostLink className="mb-4" />
         <Announcements />

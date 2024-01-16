@@ -32,7 +32,7 @@ export default function RootLayout({
           enableSystem={true}
           storageKey="hackpsh-theme"
         >
-          <ReactQueryProvider headers={headers()}>
+          <ReactQueryProvider headers={headers()}>              
             {children}
           </ReactQueryProvider>
           <Toaster />
