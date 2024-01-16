@@ -10,8 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div>
-      <PublicSiteHeader />
-      <main className="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           <article className="prose-xl">
             <ol>
@@ -107,8 +106,8 @@ export default function Page() {
                   <li>
                     <a className="font-bold">5.3 Prohibited Actions: </a>
                     Distributing malicious software, attempting to gain
-                    unauthorized access, or disrupting the platform&apos;s operations
-                    are strictly forbidden.
+                    unauthorized access, or disrupting the platform&apos;s
+                    operations are strictly forbidden.
                   </li>
                 </ul>
               </li>
@@ -136,7 +135,8 @@ export default function Page() {
                 <ul>
                   <li>
                     <a className="font-bold">7.1 As-Is Basis: </a>
-                    The platformis provided &quot;as is&quot; without warranties of any kind, either express or implied.
+                    The platformis provided &quot;as is&quot; without warranties
+                    of any kind, either express or implied.
                   </li>
                   <li>
                     <a className="font-bold">7.2 Limitation on Liability: </a>{" "}

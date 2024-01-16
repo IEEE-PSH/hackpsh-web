@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 export default function CreateAnnouncementPage() {
   return (
     <>
-      <ProtectedSiteHeader />
       <div className="container relative flex-col items-center justify-center space-y-6">
         <h1 className="mt-10 text-3xl font-bold">Create Announcement</h1>
         <CreateAnnouncementPostForm />

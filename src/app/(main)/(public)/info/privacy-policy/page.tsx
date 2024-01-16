@@ -10,8 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div>
-      <PublicSiteHeader />
-      <main className="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
           <article className="prose-xl">
             <ol>
@@ -61,8 +60,9 @@ export default function Page() {
                       3.1 Registration & Participation:{" "}
                     </a>
                     Account management, participant tracking, judging, and award
-                    distribution. HackPSH may hold users&apos; data as long as it
-                    needs, but the user may delete their accounts at any time.
+                    distribution. HackPSH may hold users&apos; data as long as
+                    it needs, but the user may delete their accounts at any
+                    time.
                   </li>
                   <li>
                     <a className="font-bold">3.2 Platform Improvement: </a> For
@@ -156,8 +156,8 @@ export default function Page() {
               <li>
                 <a className="text-2xl font-bold">8. Third-Party Links</a>
                 <p>
-                  HackPSH might link to external sites. We don&apos;t control and
-                  aren&apos;t responsible for their content or privacy
+                  HackPSH might link to external sites. We don&apos;t control
+                  and aren&apos;t responsible for their content or privacy
                   practices.
                 </p>
               </li>

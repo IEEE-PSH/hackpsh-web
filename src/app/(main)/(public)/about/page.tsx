@@ -9,7 +9,6 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div>
-      <PublicSiteHeader />
       <p className="m-10 text-center text-3xl font-bold">About</p>
     </div>
   );
