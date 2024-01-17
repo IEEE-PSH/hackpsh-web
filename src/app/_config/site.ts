@@ -21,6 +21,8 @@ export const siteConfig = {
     announcements: "/announcements",
     challenges: "/challenges",
     create_post: "/announcements/create-post",
+    privacy_policy: "/info/privacy-policy",
+    terms_of_service: "/info/terms-of-service",
   },
 };
 

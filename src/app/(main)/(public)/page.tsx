@@ -25,7 +25,7 @@ function Hero() {
           minim veniam.
         </p>
         <p className="mt-8 text-lg">Madlyn Hanes Library | Morrison Gallery</p>
-        <p className="text-lg">February 17, 2024 | 9:00 AM</p>
+        <p className="mb-8 text-lg">February 17, 2024 | 9:00 AM</p>
         <Button className="mt-auto w-48 bg-white text-lg hover:bg-white/80">
           Join Us!
         </Button>
