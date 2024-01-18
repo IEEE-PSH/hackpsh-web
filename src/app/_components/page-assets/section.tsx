@@ -1,17 +1,16 @@
-import React, { ReactNode } from "react";
+import { cn } from "@/app/_lib/client-utils";
+import { type ReactNode } from "react";
 
-export default function Section({
-  children,
-  bg,
-  className,
-}: {
-  children?: ReactNode;
-  bg: string;
-  className?: string;
-}) {
+type SectionProps = {
+  children: ReactNode
+} & React.HTMLAttributes<HTMLElement>
+
+export default function Section({children, className}: SectionProps) {
   return (
-    <section className={`${bg} ${className}`}>
-      <div className="container max-w-[64rem] py-16">{children}</div>
+    <section className={cn(className)}>
+      <div className="container max-w-[64rem] py-16">
+        {children}
+      </div>
     </section>
   );
 }

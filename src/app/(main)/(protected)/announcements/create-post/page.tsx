@@ -1,4 +1,3 @@
-import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
 import { CreateAnnouncementPostForm } from "@/app/_components/forms/create-announcement-post-form";
 import { type Metadata } from "next";
 

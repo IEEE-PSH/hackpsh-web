@@ -1,4 +1,3 @@
-import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
 import { type Metadata } from "next";
 import { Announcements } from "@/app/_components/announcement/announcements";
 import { AdminCreatePostLink } from "@/app/_components/announcement/admin-create-post-link";
@@ -13,12 +12,14 @@ export const metadata: Metadata = {
 
 export default function AnnouncementsPage() {
   return (
-    <>
-      <div className="container flex-col items-center justify-center">
-        <p className="m-10 text-center text-3xl font-bold">Announcements</p>
+    <div>
+      <div className="mt-14 flex w-full flex-col items-center justify-center">
+        <p className="mb-10 text-center text-3xl font-bold tracking-tight">
+          Announcements
+        </p>
         <AdminCreatePostLink className="mb-4" />
         <Announcements />
       </div>
-    </>
+    </div>
   );
 }

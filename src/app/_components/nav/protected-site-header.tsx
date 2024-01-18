@@ -6,7 +6,6 @@ import ProfileButton from "@/app/_components/nav/profile-button";
 
 export default function ProtectedSiteHeader() {
   return (
-    <>
       <SiteHeader>
         <ProtectedMainNav />
         <ProtectedMobileNav />
@@ -14,6 +13,5 @@ export default function ProtectedSiteHeader() {
           <ProfileButton />
         </SiteHeaderActions>
       </SiteHeader>
-    </>
   );
 }

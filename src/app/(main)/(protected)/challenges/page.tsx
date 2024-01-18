@@ -1,5 +1,3 @@
-import React from "react";
-import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,7 +8,11 @@ export const metadata: Metadata = {
 export default function ChallengesPage() {
   return (
     <div>
-      <p className="m-10 text-center text-3xl font-bold">Challenges</p>
+      <div className="mt-14 flex w-full flex-col items-center justify-center">
+        <p className="mb-10 text-center text-3xl font-bold tracking-tight">
+          Challenges
+        </p>
+      </div>
     </div>
   );
 }

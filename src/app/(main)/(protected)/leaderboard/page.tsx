@@ -1,5 +1,4 @@
 import { type Metadata } from "next";
-import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
 import Leaderboard from "@/app/_components/leaderboard/leaderboard";
 
 export const revalidate = 0;

@@ -1,4 +1,3 @@
-import PublicSiteHeader from "@/app/_components/nav/public-site-header";
 import { siteConfig } from "@/app/_config/site";
 import { type Metadata } from "next";
 

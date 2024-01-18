@@ -2,16 +2,20 @@ import { Medal, Scale, Smile, Trophy, User } from "lucide-react";
 import { Button } from "../../_components/ui/button";
 import { Card } from "../../_components/ui/card";
 import Section from "../../_components/page-assets/section";
+import Image from 'next/image';
 import ContactSection from "../../_components/page-assets/contact-section";
+import { cn } from "@/app/_lib/client-utils";
 
 function CustomImg({
   source,
   className,
+  alt,
 }: {
+  alt: string;
   source: string;
   className?: string;
 }) {
-  return <img src={source} className={`${className} rounded-md`} />;
+  return <Image src={source} alt={alt} className={cn(className, "rounded-md")} />;
 }
 
 function Hero() {
@@ -36,7 +40,7 @@ function Hero() {
 
 function HomeCountdown() {
   return (
-    <Section bg="bg-neutral-950">
+    <Section className="bg-neutral-950">
       <div className="flex flex-col items-center space-y-8">
         <div className="grid grid-cols-7 place-items-center items-start text-white">
           <div className="flex flex-col items-center">

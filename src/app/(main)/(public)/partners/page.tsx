@@ -1,4 +1,3 @@
-import PublicSiteHeader from "@/app/_components/nav/public-site-header";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
