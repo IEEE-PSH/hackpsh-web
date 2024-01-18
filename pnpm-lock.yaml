@@ -80,6 +80,9 @@ dependencies:
   drizzle-orm:
     specifier: ^0.28.6
     version: 0.28.6(@types/pg@8.10.0)(pg@8.10.0)
+  geist:
+    specifier: ^1.2.1
+    version: 1.2.1(next@14.0.1)
   lucide-react:
     specifier: ^0.279.0
     version: 0.279.0(react@18.2.0)
@@ -3108,6 +3111,14 @@ packages:
   /functions-have-names@1.2.3:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
     dev: true
+
+  /geist@1.2.1(next@14.0.1):
+    resolution: {integrity: sha512-xCl7zWfnWqc+TbCG5qqyeT5tnVlOO4pSJsT3Ei59DN1SR4N2VlauF8Fv0D1pPFXGUJgu6RMoeZX+wsR4T9bMhg==}
+    peerDependencies:
+      next: ^13.2 || ^14
+    dependencies:
+      next: 14.0.1(react-dom@18.2.0)(react@18.2.0)
+    dev: false
 
   /get-intrinsic@1.2.1:
     resolution: {integrity: sha512-2DcsyfABl+gVHEfCOaTrWgyt+tb6MSEGmKq+kI5HwLbIYgjgmMcV8KQ41uaKz1xxUcn9tJtgFbQUEVcEbd0FYw==}

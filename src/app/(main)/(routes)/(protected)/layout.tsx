@@ -3,7 +3,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative flex min-h-screen flex-col">
       <ProtectedSiteHeader />
-      <div className="pb-[15rem]">{children}</div>
+      <div className="pb-[17.25rem]">{children}</div>
     </div>
   );
 }

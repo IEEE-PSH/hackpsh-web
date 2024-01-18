@@ -8,7 +8,7 @@ export default function Layout({
   return (
       <div className="min-h-screen flex flex-col relative">
         <PublicSiteHeader />
-        <div className="pb-[15rem]">
+        <div className="pb-[17.25rem]">
           {children}
         </div>
         <Footer />

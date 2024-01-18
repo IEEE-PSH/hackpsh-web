@@ -6,10 +6,10 @@ import { Icons } from "../ui/icons";
 export default function Footer() {
   return (
     <div className="absolute bottom-0 w-full bg-background py-16">
-      <div className="container flex max-w-[64rem] flex-row items-start justify-center text-foreground lg:justify-between">
+      <div className="container flex max-w-[80rem] flex-row items-start justify-center text-foreground lg:justify-between">
         <Link
           href={siteConfig.paths.home}
-          className="mr-auto hidden origin-top-left scale-[2] items-center space-x-2 lg:flex"
+          className="hidden origin-top-left scale-[2] items-center space-x-2 lg:flex"
           scroll={false}
         >
           <Icons.brand className="h-[2.4rem] w-[2.0rem]" />
@@ -17,11 +17,10 @@ export default function Footer() {
             {siteConfig.name}
           </span>
         </Link>
-        <div className="flex flex-row space-x-16 md:space-x-20">
+        <div className="flex flex-row space-x-16 md:space-x-28 ">
           <div>
-            <p className="text-lg font-bold">Follow Us</p>
-            <ul className="text-lg">
-              <li>
+            <ul className="space-y-3"><p className=" font-bold">Follow Us</p>
+              <li className="hover:underline">
                 <a
                   href="https://www.linkedin.com/company/ieee-penn-state-harrisbrurg/"
                   target="_blank"
@@ -29,7 +28,7 @@ export default function Footer() {
                   LinkedIn
                 </a>
               </li>
-              <li>
+              <li className="hover:underline">
                 <a
                   href="https://www.facebook.com/groups/183119638427039/"
                   target="_blank"
@@ -37,7 +36,7 @@ export default function Footer() {
                   Facebook
                 </a>
               </li>
-              <li>
+              <li className="hover:underline">
                 <a href="https://www.instagram.com/psh.ieee/" target="_blank">
                   Instagram
                 </a>
@@ -45,29 +44,28 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <p className="text-lg font-bold">Directory</p>
-            <ul className="text-lg">
-              <li>
+            
+            <ul className="space-y-3"><p className=" font-bold">Directory</p>
+              <li className="hover:underline">
                 <Link href={siteConfig.paths.home}>Home</Link>
               </li>
-              <li>
+              <li className="hover:underline">
                 <Link href={siteConfig.paths.about}>About</Link>
               </li>
-              <li>
+              <li className="hover:underline">
                 <Link href={siteConfig.paths.partners}>Partners</Link>
               </li>
             </ul>
           </div>
           <div>
-            <p className="text-lg font-bold">Information</p>
-            <ul className="text-lg">
-              <li>Contact</li>
-              <li>
+            
+            <ul className="space-y-3"><p className=" font-bold">Legal</p>
+              <li className="hover:underline">
                 <Link href={siteConfig.paths.privacy_policy}>
                   Privacy Policy
                 </Link>
               </li>
-              <li>
+              <li className="hover:underline">
                 <Link href={siteConfig.paths.terms_of_service}>
                   Terms of Service
                 </Link>
@@ -75,9 +73,9 @@ export default function Footer() {
             </ul>
           </div>
           <div className="hidden md:block">
-            <p className="text-lg font-bold">Other Links</p>
-            <ul>
-              <li>
+            
+            <ul className="space-y-3"><p className=" font-bold">Blog</p>
+              <li className="hover:underline">
                 <a href="https://edu.ieee.org/us-psu/" target="_blank">
                   PSH IEEE
                 </a>

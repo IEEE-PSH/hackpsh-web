@@ -1,14 +1,12 @@
 import "@/app/globals.css";
 import type { Metadata } from "next";
-import { Roboto_Condensed } from "next/font/google";
+import {GeistSans} from "geist/font/sans"
 import { ThemeProvider } from "@/app/_components/theme-provider";
 import { Toaster } from "@/app/_components/ui/toaster";
 import ReactQueryProvider from "@/app/_trpc/react";
 import { headers } from "next/headers";
 
-const font = Roboto_Condensed({
-  subsets: ["latin"],
-});
+const font = GeistSans;
 
 export const metadata: Metadata = {
   title: "HackPSH",
