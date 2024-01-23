@@ -48,7 +48,7 @@ function PartnerInfo() {
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat. Duis aute irure.
             </p>
-            <Button className="ml-auto mt-auto w-32">
+            <Button className="mr-auto mt-auto w-32">
                 Visit
               </Button>
           </div>
@@ -71,7 +71,7 @@ function PartnerInfo() {
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat. Duis aute irure.
             </p>
-            <Button className="ml-auto mt-auto w-32">
+            <Button className="mr-auto mt-auto w-32">
                 Visit
               </Button>
           </div>
