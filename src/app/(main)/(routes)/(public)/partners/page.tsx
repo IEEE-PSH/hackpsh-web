@@ -1,3 +1,4 @@
+import Section from "@/app/_components/page-assets/section";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,8 +9,15 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <div>
-      <p className="m-10 text-center text-3xl font-bold">Partners</p>
-    </div>
+    <Section className="bg-neutral-400">
+      <div>
+
+      </div>
+    
+    </Section>
+    
+    
   );
 }
+
+
