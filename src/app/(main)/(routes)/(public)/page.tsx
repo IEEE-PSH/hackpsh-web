@@ -1,59 +1,29 @@
 import { Medal, Scale, Smile, Trophy, User } from "lucide-react";
-import { Button } from "@/app/_components/ui/button"
+import { Button } from "@/app/_components/ui/button";
 import { Card } from "@/app/_components/ui/card";
 import Section from "@/app/_components/page-assets/section";
 import ContactSection from "@/app/_components/page-assets/contact-section";
-import { cn } from "@/app/_lib/client-utils";
+import Countdown from "@/app/_components/page-assets/countdown";
 
 function Hero() {
   return (
     <Section className="bg-slate-800">
-      <div className="flex min-h-[25rem] justify-center text-center items-center space-y-8 flex-col text-white">
-        <p className="text-6xl font-bold">HackPSH Spring 2024 is Here!</p> 
-        <div className="flex flex-col max-w-2xl">  
+      <div className="flex min-h-[25rem] flex-col items-center justify-center space-y-8 text-center text-white">
+        <p className="text-6xl font-bold">HackPSH Spring 2024 is Here!</p>
+        <div className="flex max-w-2xl flex-col">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-            minim veniam.
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam.
           </p>
           <div>
             <p className="mt-8">Educational Activities Building | EAB 104</p>
             <p className="">March 23, 2024 | 9:00 AM</p>
           </div>
         </div>
-        <Button className="text-xl h-12 w-48 bg-white hover:bg-white/80">
+        <Button className="h-12 w-48 bg-white text-xl hover:bg-white/80">
           Join Us!
         </Button>
-      </div>
-    </Section>
-  );
-}
-
-function HomeCountdown() {
-  return (
-    <Section className="bg-neutral-950">
-      <div className="flex flex-col items-center space-y-8">
-        <div className="grid grid-cols-7 place-items-center items-start text-white">
-          <div className="flex flex-col items-center">
-            <p className="text-5xl">24</p>
-            <p className="">Days</p>
-          </div>
-          <p className="text-5xl">:</p>
-          <div className="flex flex-col items-center">
-            <p className="text-5xl">03</p>
-            <p className="">Hours</p>
-          </div>
-          <p className="text-5xl">:</p>
-          <div className="flex flex-col items-center">
-            <p className="text-5xl">46</p>
-            <p className="">Minutes</p>
-          </div>
-          <p className="text-5xl">:</p>
-          <div className="flex flex-col items-center">
-            <p className="text-5xl">02</p>
-            <p className="">Seconds</p>
-          </div>
-        </div>
       </div>
     </Section>
   );
@@ -66,10 +36,8 @@ function HomeInfo() {
         <div className="grid grid-cols-1 gap-y-8 md:grid-cols-2">
           <img
             alt="penn-state-img"
-            className="hidden md:block rounded-md"
-            src=
-              "https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
-            
+            className="hidden rounded-md md:block"
+            src="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
           />
 
           <div className="flex flex-col space-y-8 md:px-8">
@@ -95,20 +63,16 @@ function HomeInfo() {
           </div>
           <img
             alt="penn-state-img"
-            className="hidden md:block rounded-md"
-            src=
-              "https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
-            
+            className="hidden rounded-md md:block"
+            src="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
           />
         </div>
         <hr />
         <div className="grid grid-cols-1 gap-y-8 md:grid-cols-2">
-        <img
+          <img
             alt="penn-state-img"
-            className="hidden md:block rounded-md"
-            src=
-              "https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
-            
+            className="hidden rounded-md md:block"
+            src="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
           />
           <div className="flex flex-col space-y-8 md:px-8">
             <p className="text-4xl font-bold">What is the theme?</p>
@@ -204,12 +168,11 @@ function HomePastEvents() {
         <p className="text-center text-4xl font-bold text-white">PAST EVENTS</p>
         <Card>
           <div className="grid grid-cols-1 gap-8 rounded-xl p-4 md:grid-cols-2">
-          <img
-            alt="penn-state-img"
-            className="rounded-md"
-            src=
-              "https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
-          />
+            <img
+              alt="penn-state-img"
+              className="rounded-md"
+              src="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
+            />
             <div className="flex flex-col justify-between">
               <p className="text-3xl font-bold">HackPSH Spring 2023</p>
               <p className="my-4">
@@ -217,21 +180,17 @@ function HomePastEvents() {
                 eiumdod tempor incididunt ut labore et dolore magna aliqua. Ut
                 enim ad minim veniam, quis nostrud.
               </p>
-              <Button className="ml-auto mt-auto w-32">
-                Read More
-              </Button>
+              <Button className="ml-auto mt-auto w-32">Read More</Button>
             </div>
           </div>
         </Card>
         <Card>
           <div className="grid grid-cols-1 gap-8 rounded-xl p-4 md:grid-cols-2">
-          <img
-            alt="penn-state-img"
-            className="rounded-md"
-            src=
-              "https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
-            
-          />
+            <img
+              alt="penn-state-img"
+              className="rounded-md"
+              src="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
+            />
             <div className="flex flex-col justify-between">
               <p className="text-3xl font-bold">HackPSH Fall 2023</p>
               <p className="my-4">
@@ -239,9 +198,7 @@ function HomePastEvents() {
                 eiumdod tempor incididunt ut labore et dolore magna aliqua. Ut
                 enim ad minim.
               </p>
-              <Button className="ml-auto mt-auto w-32">
-                Read More
-              </Button>
+              <Button className="ml-auto mt-auto w-32">Read More</Button>
             </div>
           </div>
         </Card>
@@ -254,7 +211,7 @@ export default function Page() {
   return (
     <>
       <Hero />
-      <HomeCountdown />
+      <Countdown />
       <HomeInfo />
       <HomeRules />
       <HomePrizes />
