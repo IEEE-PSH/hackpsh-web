@@ -1,22 +1,27 @@
 "use client";
 import { useEffect, useState } from "react";
 import Section from "./section";
+import { trpc } from "@/app/_trpc/react";
+import { Skeleton } from "../ui/skeleton";
 
-//must add condition for end of countdown
 export default function Countdown() {
-  const timeDiff = () => {
-    return Math.abs(Date.parse("March 23, 2024 10:00:00") - Date.now());
-  };
-  const [time, setTime] = useState(timeDiff);
+  const { data, isSuccess } = trpc.countdown.get_current_time.useQuery();
+
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [time, setTime] = useState(0);
 
   useEffect(() => {
+    if (isSuccess && isLoaded == false) {
+      setTime(data);
+      setIsLoaded(true);
+    }
     const timerID = setTimeout(() => {
-      setTime(timeDiff);
+      setTime(time - 1000);
     }, 1000);
     return () => clearTimeout(timerID);
-  }, [timeDiff]);
+  }, [time]);
 
-  if (time == 0) return;
+  if (!isLoaded) return <CountdownLoading />;
   return <CountdownClock timeRem={time} />;
 }
 
@@ -64,6 +69,21 @@ function CountdownClock({ timeRem }: { timeRem: number }) {
             </p>
             <p>Seconds</p>
           </div>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+function CountdownLoading() {
+  return (
+    <Section className="bg-neutral-950">
+      <div className="flex items-center justify-center">
+        <div className="flex w-[28.25rem] justify-between">
+          <Skeleton className="h-[4.5rem] w-[4.5rem] rounded-md" />
+          <Skeleton className="h-[4.5rem] w-[4.5rem] rounded-md" />
+          <Skeleton className="h-[4.5rem] w-[4.5rem] rounded-md" />
+          <Skeleton className="h-[4.5rem] w-[4.5rem] rounded-md" />
         </div>
       </div>
     </Section>
