@@ -5,7 +5,7 @@ import { trpc } from "@/app/_trpc/react";
 import { Skeleton } from "../ui/skeleton";
 
 export default function Countdown() {
-  const { data, isSuccess } = trpc.countdown.get_current_time.useQuery();
+  const { data, isSuccess } = trpc.countdown.get_time_remaining.useQuery();
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [time, setTime] = useState(0);

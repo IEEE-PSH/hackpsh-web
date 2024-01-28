@@ -1,6 +1,6 @@
-import getCurrentTimeProcedure from "../procedures/public/countdown/getCurrentTimeProcedure";
+import getTimeRemainingProcedure from "../procedures/public/countdown/getTimeRemaining";
 import { createTRPCRouter } from "../trpc";
 
 export const countdownRouter = createTRPCRouter({
-  get_current_time: getCurrentTimeProcedure,
+  get_time_remaining: getTimeRemainingProcedure,
 });
