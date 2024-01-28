@@ -8,7 +8,7 @@ export default function Countdown() {
   const { data, isSuccess } = trpc.countdown.get_time_remaining.useQuery();
 
   const [isLoaded, setIsLoaded] = useState(false);
-  const [time, setTime] = useState(0);
+  const [timeRem, setTime] = useState(0);
 
   useEffect(() => {
     if (isSuccess && isLoaded == false) {
@@ -16,13 +16,13 @@ export default function Countdown() {
       setIsLoaded(true);
     }
     const timerID = setTimeout(() => {
-      setTime(time - 1000);
+      setTime(timeRem - 1000);
     }, 1000);
     return () => clearTimeout(timerID);
-  }, [time]);
+  }, [timeRem]);
 
   if (!isLoaded) return <CountdownLoading />;
-  return <CountdownClock timeRem={time} />;
+  return <CountdownClock timeRem={timeRem} />;
 }
 
 function millisecondsToUnits(totalTime: number) {
@@ -64,7 +64,7 @@ function CountdownClock({ timeRem }: { timeRem: number }) {
           </div>
           <p className="text-5xl">:</p>
           <div className="flex flex-col items-center">
-            <p className="text-5xl" suppressHydrationWarning={true}>
+            <p className="text-5xl">
               {seconds}
             </p>
             <p>Seconds</p>
