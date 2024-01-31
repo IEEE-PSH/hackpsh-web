@@ -1,31 +1,30 @@
 import { createFeedbackReport } from "@/server/dao/feedback"
 import { publicProcedure } from "@/server/trpc"
 import { z } from "zod"
-//
-// Goal: Build a public mutation procedure to accept
-// feedback_name and feedback_report. Ensure you santize the input
-// given through a zod object.
-//
-//
-// Goal A: Create a Zod Input Schema in order to validate the input
-// and tell the client the shape of data that they are allowed to
-// submit into our API Endpoint.
-//
-// Hint: Look at `src/server/zod-schemas/announcements.ts`
-// Fields:
-// - feedback_name: string [min 1 char] "The name of this report cannot be empty."
-// - feedback_report string [min 1 char] "The report's contents cannot be empty."
-//
-const CreateFeedbackReportSchema = z.object({
 
+const CreateFeedbackReportSchema = z.object({
+  feedback_name: z.string().min(1, "The name of this report cannot be empty."),
+  feedback_report: z.string().min(1, "The report's contents cannot be empty."),
 })
 
-// Goal B: Create a procedure that sanitizes the input from your 
-// zod schema and performs a mutation to the database which creates a feedback
-// report record using the dao function you defined earlier.
+export default publicProcedure
+  .input(CreateFeedbackReportSchema)
+  .mutation(async ({ ctx, input }) => {
+    await createFeedbackReport(
+      ctx.db,
+      input.feedback_name,
+      input.feedback_report
+    );
+  });
+
+// Congratualations, you've created the essence of a public API Endpoint to mutate data.
+// (Usually having a public API endpoint to mutate data is never a good thing, but this is just an interview.)
 //
-// export default publicProcedure
-// .input()
-// .mutation(async({ ctx, input }) => {
+// In the trpc ecosystem, you group together procedures as part of a router to represent a single entity / service.
+// We are classifying this feedback route / component as a single entity, and as such we need to create a feedback
+// router and attach this procedure to our feedback router. Then we'll need to attach it to the main router
+// which handles the responsibility of taking all incoming requests to our API Endpoint and "route" them
+// to the proper / correct procedure.
 //
-// });
+// Goal: Create a feedback router and attach it to the main router
+// To begin, go to `src/server/routers/feedback.ts`
