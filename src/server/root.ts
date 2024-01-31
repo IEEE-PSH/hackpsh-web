@@ -16,16 +16,3 @@ export const appRouter = createTRPCRouter({
 });
 
 export type AppRouter = typeof appRouter;
-
-// Congratulations! You've now created an API Endpoint
-// to accept requests from the clients, sanitize their input,
-// and then create records within the database.
-//
-// Now we need to create a front-end page so the users 
-// can provide input and call our API Endpoint to submit
-// their data into our database!
-//
-// Goal: Build out the Feedback Page to accept input and
-// submit data to our API Endpoint to create feedback report records.
-//
-// Get started at `src/app/(main)/(routes)/feedback/page.tsx`
