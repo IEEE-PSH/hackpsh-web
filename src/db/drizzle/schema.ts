@@ -89,15 +89,9 @@ export const app_onboarding_phase = app_schema.table("app_onboarding_phase", {
   phase_name: text("phase_name").notNull().unique(),
 });
 
-// Create app_feedback table as part of the app_schema with the following fields:
-//
-// The following are fields attached with their corresponding attributes that it should contain as part of the schema.
-//
-// feedback_id: auto_incrementing number aka serial as the primaryKey
-// feedback_timestamp: timestamp notNull defaultNow
-// feedback_name: text notNull
-// feedback_report: text notNull
-// 
-// Run the command pnpm migrate to apply these changes
-//
-// Afterwards, go to "src/server/dao/feedback.ts"
+export const app_feedback = app_schema.table("app_feedback", {
+  feedback_id: serial("feedback_id").primaryKey(),
+  feedback_timestamp: timestamp("feedback_timestamp").notNull().defaultNow(),
+  feedback_name: text("feedback_name").notNull(),
+  feedback_report: text("feedback_report").notNull(),
+})
