@@ -9,7 +9,7 @@ export default function Countdown() {
   const [time, setTime] = useState(0);
 
   useEffect(() => {
-    const diff = Date.parse("February 2, 2024 21:57:00") - Date.now();
+    const diff = Date.parse("March 23, 2024 10:00:00") - Date.now();
     if (!isLoaded) {
       setIsLoaded(true);
       if (diff > 0) setTime(diff);
