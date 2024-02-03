@@ -1,28 +1,33 @@
 "use client";
-import { useEffect, useState } from "react";
 import Section from "./section";
-import { trpc } from "@/app/_trpc/react";
 import { Skeleton } from "../ui/skeleton";
+import { useEffect, useState } from "react";
 
 export default function Countdown() {
-  const { data, isSuccess } = trpc.countdown.get_time_remaining.useQuery();
-
+  //remove usage of trpc; reliant on local machine time per render
   const [isLoaded, setIsLoaded] = useState(false);
-  const [timeRem, setTime] = useState(0);
+  const [time, setTime] = useState(0);
 
   useEffect(() => {
-    if (isSuccess && isLoaded == false) {
-      setTime(data);
+    const diff = Date.parse("February 2, 2024 21:57:00") - Date.now();
+    if (!isLoaded) {
       setIsLoaded(true);
+      if (diff > 0) setTime(diff);
+      else return;
     }
     const timerID = setTimeout(() => {
-      setTime(timeRem - 1000);
+      setTime(diff);
     }, 1000);
+
+    if (time < 0) {
+      clearTimeout(timerID);
+    }
+
     return () => clearTimeout(timerID);
-  }, [timeRem]);
+  }, [time]);
 
   if (!isLoaded) return <CountdownLoading />;
-  return <CountdownClock timeRem={timeRem} />;
+  return <CountdownClock timeRem={time} />;
 }
 
 function millisecondsToUnits(totalTime: number) {
@@ -64,7 +69,7 @@ function CountdownClock({ timeRem }: { timeRem: number }) {
           </div>
           <p className="text-5xl">:</p>
           <div className="flex flex-col items-center">
-            <p className="text-5xl">
+            <p className="text-5xl" suppressHydrationWarning={true}>
               {seconds}
             </p>
             <p>Seconds</p>
@@ -80,12 +85,17 @@ function CountdownLoading() {
     <Section className="bg-neutral-950">
       <div className="flex items-center justify-center">
         <div className="flex w-[28.25rem] justify-between">
-          <Skeleton className="h-[4.5rem] w-[4.5rem] rounded-md" />
-          <Skeleton className="h-[4.5rem] w-[4.5rem] rounded-md" />
-          <Skeleton className="h-[4.5rem] w-[4.5rem] rounded-md" />
-          <Skeleton className="h-[4.5rem] w-[4.5rem] rounded-md" />
+          <Skeleton className="h-[4.5rem] w-full rounded-md" />
         </div>
       </div>
     </Section>
   );
 }
+
+// function CountdownDone() {
+//   return (
+//     <Section className="bg-neutral-950">
+//       <p className="text-center text-5xl">Test</p>
+//     </Section>
+//   );
+// }
