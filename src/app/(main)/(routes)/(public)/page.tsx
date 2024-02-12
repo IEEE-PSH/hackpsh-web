@@ -12,9 +12,7 @@ function Hero() {
         <p className="text-6xl font-bold">HackPSH Spring 2024 is Here!</p> 
         <div className="flex flex-col max-w-2xl">  
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-            minim veniam.
+          Welcome to HackPSH Spring 2024! Dive into challenges testing your software and hardware skills. Whether you're new to coding or a circuit-building pro, this event has something for everyone. Join us for an exciting journey of learning, creativity, and teamwork with fellow students. Make the most of this fantastic opportunity!
           </p>
           <div>
             <p className="mt-8">Educational Activities Building | EAB 104</p>
@@ -75,10 +73,7 @@ function HomeInfo() {
           <div className="flex flex-col space-y-8 md:px-8">
             <p className="text-4xl font-bold">What is HackPSH?</p>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure.
+            HackPSH is a dynamic student-led hackathon built by Penn State Harrisburg's IEEE Student Chapter. We focus on solving challenges dedicated towards subjects within the Computer Science and Electrical Engineering disciplines. Participants will be provided with Raspbery Pi Pico W kits to build various circuits and engage in coding challenges via HackerRank. We aim to explore learning in areas such as cryptography, circuitry, algorithms, and much more!
             </p>
           </div>
         </div>
@@ -87,10 +82,7 @@ function HomeInfo() {
           <div className="flex flex-col space-y-8 md:pr-8">
             <p className="text-4xl font-bold">Who is it for?</p>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure.
+            HackPSH caters towards students eager to explore the intricacies of building complex circuits and solving real-world coding problems. We aim our event towards those who want to improve their skills while providing an inclusive environment for learning and competition. With a diverse range of skill levels in mind, the event encourages participation from beginners to experienced students, fostering a collaborative and competitive environment.
             </p>
           </div>
           <img
@@ -113,10 +105,7 @@ function HomeInfo() {
           <div className="flex flex-col space-y-8 md:px-8">
             <p className="text-4xl font-bold">What is the theme?</p>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure.
+            As of right now, the theme is being determined, and will be announced once determined. Traditionally, HackPSH tends to choose a theme that can be interpreted in an open manner to allow for the most creativity, as we simply want to see unique projects.
             </p>
           </div>
         </div>
@@ -144,18 +133,14 @@ function HomeRules() {
             <Scale size="2rem" />
             <p className="mt-4 text-xl">Integrity</p>
             <p className="mt-8">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam
+            Our commitment to integrity means promoting a culture where ethical practices are the norm. We believe in the power of collaboration, honesty, and respect in driving innovation. By joining HackPSH, participants commit to upholding these principles and contributing to a positive and inclusive community.
             </p>
           </div>
           <div className="flex flex-col items-center">
             <Smile size="2rem" />
             <p className="mt-4 text-xl">Conduct</p>
             <p className="mt-8">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam
+            At HackPSH, we expect all participants to engage with respect and fairness, valuing the contributions and efforts of every individual. We have no tolerance for communication that makes anyone feel unwelcome, unsupported, insulted, or discriminated against.
             </p>
           </div>
         </div>
@@ -213,9 +198,7 @@ function HomePastEvents() {
             <div className="flex flex-col justify-between">
               <p className="text-3xl font-bold">HackPSH Spring 2023</p>
               <p className="my-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiumdod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud.
+              The Spring 2023 Hackathon at Penn State Harrisburg, co-hosted by IEEE and ACM, was a success, drawing students across majors to engage in hardware and software projects, including Arduino programming and circuit building. The event fostered team-building, workshops, and networking with over 60 students participating, some without prior coding experience. Sponsors like Capgemini Engineering and The Pennsylvania Air National Guard Recruiting played a key role, with plans to build on this success for the upcoming Fall Hackathon.
               </p>
               <Button className="ml-auto mt-auto w-32">
                 Read More
@@ -235,9 +218,7 @@ function HomePastEvents() {
             <div className="flex flex-col justify-between">
               <p className="text-3xl font-bold">HackPSH Fall 2023</p>
               <p className="my-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiumdod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim.
+              The Fall 2023 Hackathon, organized by IEEE, was a vibrant event with over 70 students participating. It facilitated collaboration across disciplines, offering a mix of team-building, workshops, building a project, and networking with faculty, alumni, and industry professionals. Challenges ranged from basic programming like Hello World to developing an algorithm to minimize the waiting time in a hypothetical pizza restaurant, with each participant receiving an Arduino kit for the circuit challenges. The event also featured a partnership with TRC Companies, Inc., insights from industry professionals, and the introduction of the HackPSH platform for coding challenges and live updates.
               </p>
               <Button className="ml-auto mt-auto w-32">
                 Read More
