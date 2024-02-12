@@ -12,7 +12,7 @@ function Hero() {
         <p className="text-6xl font-bold">HackPSH Spring 2024 is Here!</p> 
         <div className="flex flex-col max-w-2xl">  
           <p>
-          Welcome to HackPSH Spring 2024! Dive into challenges testing your software and hardware skills. Whether you're new to coding or a circuit-building pro, this event has something for everyone. Join us for an exciting journey of learning, creativity, and teamwork with fellow students. Make the most of this fantastic opportunity!
+          Welcome to HackPSH Spring 2024! Dive into challenges testing your software and hardware skills. Whether you&apos;re new to coding or a circuit-building pro, this event has something for everyone. Join us for an exciting journey of learning, creativity, and teamwork with fellow students. Make the most of this fantastic opportunity!
           </p>
           <div>
             <p className="mt-8">Educational Activities Building | EAB 104</p>
@@ -73,7 +73,7 @@ function HomeInfo() {
           <div className="flex flex-col space-y-8 md:px-8">
             <p className="text-4xl font-bold">What is HackPSH?</p>
             <p>
-            HackPSH is a dynamic student-led hackathon built by Penn State Harrisburg's IEEE Student Chapter. We focus on solving challenges dedicated towards subjects within the Computer Science and Electrical Engineering disciplines. Participants will be provided with Raspbery Pi Pico W kits to build various circuits and engage in coding challenges via HackerRank. We aim to explore learning in areas such as cryptography, circuitry, algorithms, and much more!
+            HackPSH is a dynamic student-led hackathon built by Penn State Harrisburg&apos;s IEEE Student Chapter. We focus on solving challenges dedicated towards subjects within the Computer Science and Electrical Engineering disciplines. Participants will be provided with Raspbery Pi Pico W kits to build various circuits and engage in coding challenges via HackerRank. We aim to explore learning in areas such as cryptography, circuitry, algorithms, and much more!
             </p>
           </div>
         </div>
