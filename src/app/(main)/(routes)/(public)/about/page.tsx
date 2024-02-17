@@ -23,7 +23,19 @@ function AboutHero() {
 function AboutIEEE() {
   return (
     <Section className="bg-primary text-black">
-      <p className="text-center text-4xl font-bold">We are IEEE</p>
+      <div className="mx-auto flex flex-col space-y-8">
+        <p className="text-center text-4xl font-bold">We are IEEE!</p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <p>*ADD PICS*</p>
+      </div>
     </Section>
   );
 }
@@ -31,7 +43,7 @@ function AboutIEEE() {
 function AboutTeam() {
   return (
     <Section className="bg-neutral-100 text-black">
-      <p className="text-center text-4xl font-bold">Connect with our Team!</p>
+      <p className="text-center text-4xl font-bold">Connect with our Team</p>
       <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3">
         <div className="flex flex-col">
           <p className="font-bold">PRESIDENT</p>
