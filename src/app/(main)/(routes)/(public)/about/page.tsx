@@ -9,9 +9,15 @@ export const metadata: Metadata = {
 
 function AboutHero() {
   return (
-    <Section className="bg-slate-800">
-      <h1 className="text-4xl font-bold">About Us</h1>
-      <p className="mt-6">Lorem ipsum</p>
+    <Section className="bg-neutral-400 flex flex-col justify-center items-center py-8">
+      <div className="flex flex-col text-black items-center mb-4">
+        <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-center">About Us</p> 
+      </div>
+      <div className="flex flex-col max-w-2xl w-full items-center mb-4">  
+        <p className="text-center">
+          
+        </p>
+      </div>
     </Section>
   );
 }
