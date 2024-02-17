@@ -228,7 +228,9 @@ function HomePastEvents() {
                 Guard Recruiting played a key role, with plans to build on this
                 success for the upcoming Fall Hackathon.
               </p>
-              <Button className="ml-auto mt-auto w-32">Read More</Button>
+              <Button className="text-md ml-auto mt-auto w-32">
+                Read More
+              </Button>
             </div>
           </div>
         </Card>
@@ -255,7 +257,9 @@ function HomePastEvents() {
                 and the introduction of the HackPSH platform for coding
                 challenges and live updates.
               </p>
-              <Button className="ml-auto mt-auto w-32">Read More</Button>
+              <Button className="text-md ml-auto mt-auto w-32">
+                Read More
+              </Button>
             </div>
           </div>
         </Card>

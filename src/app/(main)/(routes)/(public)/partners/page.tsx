@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 function PartnerHero() {
   return (
-    <Section className="bg-slate-800">
+    <Section className="min-h-[16.75rem] bg-slate-800">
       <div className="flex max-w-[60rem] flex-col space-y-8 text-white">
         <p className="text-6xl font-bold">Partners</p>
         <p className="text-left">
@@ -43,7 +43,7 @@ function PartnerInfo() {
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat. Duis aute irure.
             </p>
-            <Button className="ml-auto mt-auto w-32">Visit</Button>
+            <Button className="text-md ml-auto mt-auto w-32">Visit</Button>
           </div>
         </div>
         <hr />
@@ -62,7 +62,7 @@ function PartnerInfo() {
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat. Duis aute irure.
             </p>
-            <Button className="ml-auto mt-auto w-32">Visit</Button>
+            <Button className="text-md ml-auto mt-auto w-32">Visit</Button>
           </div>
         </div>
       </div>
