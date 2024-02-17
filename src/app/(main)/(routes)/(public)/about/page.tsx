@@ -50,7 +50,7 @@ function AboutOfficers() {
 
 function Helpers() {
   return (
-    <Section className="bg-white">
+    <Section className="bg-neutral-200">
       <h1 className="text-center text-4xl font-bold text-black">Helpers</h1>
       <div className="grid grid-cols-2 gap-10 text-black">
         <div className="text-center">

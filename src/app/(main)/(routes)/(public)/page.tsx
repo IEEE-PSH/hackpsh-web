@@ -199,9 +199,9 @@ function HomePrizes() {
 
 function HomePastEvents() {
   return (
-    <Section className="bg-neutral-900">
+    <Section className="bg-neutral-100">
       <div className="mx-auto grid max-w-[30rem] gap-y-8 text-black md:max-w-[60rem]">
-        <p className="text-center text-4xl font-bold text-white">PAST EVENTS</p>
+        <p className="text-center text-4xl font-bold text-black">PAST EVENTS</p>
         <Card>
           <div className="grid grid-cols-1 gap-8 rounded-xl p-4 md:grid-cols-2">
           <img
