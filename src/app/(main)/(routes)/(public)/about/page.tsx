@@ -18,8 +18,6 @@ function A() {
   )
 }
 
-
-
 function Officers() {
   return (
     <Section >
@@ -42,7 +40,6 @@ function Officers() {
           <p>frjfjrfr</p>
         </div>
       </div>
-       
     </Section>
   )
 }
@@ -68,8 +65,7 @@ function Helpers() {
           <h1 className="font-bold">John Smith</h1>
           <p>frjfjrfr</p>
         </div>
-      </div>
-       
+      </div> 
     </Section>
   )
   
@@ -99,8 +95,6 @@ export default function Page() {
       <Officers></Officers>
       <Helpers></Helpers>
       <ContactSection className="bg-black" title="Have Feedback?" />
-
-      
     </>
   );
 }
