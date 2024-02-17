@@ -7,8 +7,8 @@ import { cn } from "@/app/_lib/client-utils";
 
 function Hero() {
   return (
-    <Section className="bg-slate-800">
-      <div className="flex min-h-[25rem] justify-center text-center items-center space-y-8 flex-col text-white">
+    <Section className="bg-neutral-400">
+      <div className="flex min-h-[25rem] justify-center text-center items-center space-y-8 flex-col text-black">
         <p className="text-6xl font-bold">HackPSH Spring 2024 is Here!</p> 
         <div className="flex flex-col max-w-2xl">  
           <p>

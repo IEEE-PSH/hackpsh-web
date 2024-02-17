@@ -15,7 +15,7 @@ function PartnerHero(){
       <p className="text-5xl m-5 font-bold">Partners</p> 
       </div>
       <div className="flex flex-col max-w-2xl ml-6">  
-        <p className="ml-6">
+        <p className="ml-6 text-black">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam.
