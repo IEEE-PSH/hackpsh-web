@@ -12,7 +12,7 @@ function AboutHero() {
   return (
     <Section className="min-h-[16.75rem] bg-slate-800">
       <p className="text-6xl font-bold">About US</p>
-      <p className="mt-6">
+      <p className="mt-8">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam.
@@ -57,27 +57,21 @@ function AboutTeam() {
           <div className="flex flex-col">
             <p className="font-bold">SOCIAL MEDIA CHAIR</p>
             <p className="mb-4 text-2xl">Kuber Dey</p>
-            <p className="font-light text-neutral-500">
-              Electrical Engineering
-            </p>
+            <p className="font-light text-neutral-500">Computer Science</p>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex flex-col">
             <p className="font-bold">COMPUTER SCIENCE LEAD</p>
             <p className="mb-4 text-2xl">Dinesh Umansankar</p>
-            <p className="font-light text-neutral-500">
-              Electrical Engineering
-            </p>
+            <p className="font-light text-neutral-500">Computer Science</p>
           </div>
         </Card>
         <Card className="p-4">
           <div className="flex flex-col">
             <p className="font-bold">COMPUTER SCIENCE LEAD ASSISTANT</p>
             <p className="mb-4 text-2xl">John Nguyen</p>
-            <p className="font-light text-neutral-500">
-              Electrical Engineering
-            </p>
+            <p className="font-light text-neutral-500">Computer Science</p>
           </div>
         </Card>{" "}
         <Card className="p-4">

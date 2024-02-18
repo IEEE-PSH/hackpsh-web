@@ -12,14 +12,12 @@ export const metadata: Metadata = {
 function PartnerHero() {
   return (
     <Section className="min-h-[16.75rem] bg-slate-800">
-      <div className="flex max-w-[60rem] flex-col space-y-8 text-white">
-        <p className="text-6xl font-bold">Partners</p>
-        <p className="text-left">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam.
-        </p>
-      </div>
+      <p className="text-6xl font-bold">About US</p>
+      <p className="mt-8">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam.
+      </p>
     </Section>
   );
 }

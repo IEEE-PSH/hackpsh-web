@@ -3,6 +3,9 @@ import { Button } from "@/app/_components/ui/button";
 import { Card } from "@/app/_components/ui/card";
 import Section from "@/app/_components/page-assets/section";
 import ContactSection from "@/app/_components/page-assets/contact-section";
+import HackPSH2023Fall from "@/app/_images/fall-2023-event.jpg";
+import HackPSH2023Spring from "@/app/_images/spring-2023-event.jpg";
+import Image from "next/image";
 
 function Hero() {
   return (
@@ -18,8 +21,8 @@ function Hero() {
             fellow students. Make the most of this fantastic opportunity!
           </p>
           <div>
-            <p className="mt-8">Educational Activities Building | EAB 104</p>
-            <p className="">March 23, 2024 | 9:00 AM</p>
+            <p className="mt-8">Educational Activities Building | EAB 103</p>
+            <p className="">March 23, 2024 | 10:00 AM - 10:00PM EST</p>
           </div>
         </div>
         <Button className="h-12 w-48 bg-white text-xl hover:bg-white/80">
@@ -210,36 +213,10 @@ function HomePastEvents() {
         <p className="text-center text-4xl font-bold text-white">PAST EVENTS</p>
         <Card>
           <div className="grid grid-cols-1 gap-8 rounded-xl p-4 md:grid-cols-2">
-            <img
+            <Image
               alt="penn-state-img"
               className="rounded-md"
-              src="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
-            />
-            <div className="flex flex-col justify-between">
-              <p className="text-3xl font-bold">HackPSH Spring 2023</p>
-              <p className="my-4">
-                The Spring 2023 Hackathon at Penn State Harrisburg, co-hosted by
-                IEEE and ACM, was a success, drawing students across majors to
-                engage in hardware and software projects, including Arduino
-                programming and circuit building. The event fostered
-                team-building, workshops, and networking with over 60 students
-                participating, some without prior coding experience. Sponsors
-                like Capgemini Engineering and The Pennsylvania Air National
-                Guard Recruiting played a key role, with plans to build on this
-                success for the upcoming Fall Hackathon.
-              </p>
-              <Button className="text-md ml-auto mt-auto w-32">
-                Read More
-              </Button>
-            </div>
-          </div>
-        </Card>
-        <Card>
-          <div className="grid grid-cols-1 gap-8 rounded-xl p-4 md:grid-cols-2">
-            <img
-              alt="penn-state-img"
-              className="rounded-md"
-              src="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
+              src={HackPSH2023Fall}
             />
             <div className="flex flex-col justify-between">
               <p className="text-3xl font-bold">HackPSH Fall 2023</p>
@@ -256,6 +233,35 @@ function HomePastEvents() {
                 with TRC Companies, Inc., insights from industry professionals,
                 and the introduction of the HackPSH platform for coding
                 challenges and live updates.
+              </p>
+              <Button className="text-md ml-auto mt-auto w-32">
+                Read More
+              </Button>
+            </div>
+          </div>
+        </Card>
+        <Card>
+          <div className="grid grid-cols-1 gap-8 rounded-xl p-4 md:grid-cols-2">
+            <picture>
+              <Image
+                alt="penn-state-img"
+                className="rounded-md"
+                src={HackPSH2023Spring}
+              />
+            </picture>
+
+            <div className="flex flex-col justify-between">
+              <p className="text-3xl font-bold">HackPSH Spring 2023</p>
+              <p className="my-4">
+                The Spring 2023 Hackathon at Penn State Harrisburg, co-hosted by
+                IEEE and ACM, was a success, drawing students across majors to
+                engage in hardware and software projects, including Arduino
+                programming and circuit building. The event fostered
+                team-building, workshops, and networking with over 60 students
+                participating, some without prior coding experience. Sponsors
+                like Capgemini Engineering and The Pennsylvania Air National
+                Guard Recruiting played a key role, with plans to build on this
+                success for the upcoming Fall Hackathon.
               </p>
               <Button className="text-md ml-auto mt-auto w-32">
                 Read More

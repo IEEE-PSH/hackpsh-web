@@ -35,18 +35,6 @@ export function PublicMainNav() {
           Home
         </Link>
         <Link
-          href={siteConfig.paths.about}
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname.startsWith(siteConfig.paths.about)
-              ? "text-foreground"
-              : "text-foreground/60",
-          )}
-          scroll={false}
-        >
-          About
-        </Link>
-        <Link
           href={siteConfig.paths.partners}
           className={cn(
             "transition-colors hover:text-foreground/80",
@@ -57,6 +45,18 @@ export function PublicMainNav() {
           scroll={false}
         >
           Partners
+        </Link>
+        <Link
+          href={siteConfig.paths.about}
+          className={cn(
+            "transition-colors hover:text-foreground/80",
+            pathname.startsWith(siteConfig.paths.about)
+              ? "text-foreground"
+              : "text-foreground/60",
+          )}
+          scroll={false}
+        >
+          About
         </Link>
         <Link
           href={siteConfig.paths.contact}
