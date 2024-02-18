@@ -3,6 +3,7 @@ import { Button } from "@/app/_components/ui/button";
 import { Card } from "@/app/_components/ui/card";
 import Section from "@/app/_components/page-assets/section";
 import ContactSection from "@/app/_components/page-assets/contact-section";
+import CountdownWrapper from "@/app/_components/countdown/countdown-wrapper";
 
 function Hero() {
   return (
@@ -25,36 +26,6 @@ function Hero() {
         <Button className="h-12 w-48 bg-white text-xl hover:bg-white/80">
           Join Us!
         </Button>
-      </div>
-    </Section>
-  );
-}
-
-function HomeCountdown() {
-  return (
-    <Section className="bg-neutral-950">
-      <div className="flex flex-col items-center space-y-8">
-        <div className="grid grid-cols-7 place-items-center items-start text-white">
-          <div className="flex flex-col items-center">
-            <p className="text-5xl">24</p>
-            <p className="">Days</p>
-          </div>
-          <p className="text-5xl">:</p>
-          <div className="flex flex-col items-center">
-            <p className="text-5xl">03</p>
-            <p className="">Hours</p>
-          </div>
-          <p className="text-5xl">:</p>
-          <div className="flex flex-col items-center">
-            <p className="text-5xl">46</p>
-            <p className="">Minutes</p>
-          </div>
-          <p className="text-5xl">:</p>
-          <div className="flex flex-col items-center">
-            <p className="text-5xl">02</p>
-            <p className="">Seconds</p>
-          </div>
-        </div>
       </div>
     </Section>
   );
@@ -272,7 +243,7 @@ export default function Page() {
   return (
     <>
       <Hero />
-      <HomeCountdown />
+      <CountdownWrapper />
       <HomeInfo />
       <HomeRules />
       <HomePrizes />

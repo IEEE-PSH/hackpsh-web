@@ -1,4 +1,5 @@
 import { announcementsRouter } from "./routers/announcements";
+import { countdownRouter } from "./routers/countdown";
 import { authRouter } from "./routers/auth";
 import { contactRouter } from "./routers/contact";
 import { leaderboardRouter } from "./routers/leaderboard";
@@ -13,6 +14,7 @@ export const appRouter = createTRPCRouter({
   announcements: announcementsRouter,
   team: teamRouter,
   contact: contactRouter,
+  countdown: countdownRouter,
 });
 
 export type AppRouter = typeof appRouter;
