@@ -129,7 +129,7 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
                   <FormLabel>Content</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Give your feedback here!"
+                      placeholder="Type here..."
                       className="h-36 resize-none"
                       {...field}
                       value={field.value ?? ""}
