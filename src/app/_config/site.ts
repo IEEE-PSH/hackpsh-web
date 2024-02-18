@@ -10,6 +10,7 @@ export const siteConfig = {
     home: "/",
     about: "/about",
     partners: "/partners",
+    contact: "/contact",
     sign_in: "/sign-in",
     sign_up: "/sign-up",
     onboarding: "/onboarding",

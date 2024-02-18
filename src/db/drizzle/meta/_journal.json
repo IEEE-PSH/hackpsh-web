@@ -99,6 +99,13 @@
       "when": 1699041209982,
       "tag": "0013_real_mantis",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "5",
+      "when": 1708215950751,
+      "tag": "0014_strange_alex_power",
+      "breakpoints": true
     }
   ]
 }

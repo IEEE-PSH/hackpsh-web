@@ -88,3 +88,14 @@ export const app_onboarding_phase = app_schema.table("app_onboarding_phase", {
   phase_id: serial("phase_id").primaryKey(),
   phase_name: text("phase_name").notNull().unique(),
 });
+
+export const app_contact = app_schema.table("app_contact", {
+  contact_uuid: uuid("contact_uuid")
+    .primaryKey()
+    .default(sql`uuid_generate_v4()`),
+  contact_created_at: timestamp("contact_created_at").notNull().defaultNow(),
+  contact_first_name: text("contact_first_name").notNull(),
+  contact_last_name: text("contact_last_name").notNull(),
+  contact_email: text("contact_email").notNull(),
+  contact_content: text("contact_content").notNull(),
+});

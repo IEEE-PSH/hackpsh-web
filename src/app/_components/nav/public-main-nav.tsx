@@ -58,6 +58,18 @@ export function PublicMainNav() {
         >
           Partners
         </Link>
+        <Link
+          href={siteConfig.paths.contact}
+          className={cn(
+            "transition-colors hover:text-foreground/80",
+            pathname.startsWith(siteConfig.paths.contact)
+              ? "text-foreground"
+              : "text-foreground/60",
+          )}
+          scroll={false}
+        >
+          Contact
+        </Link>
       </nav>
     </div>
   );
