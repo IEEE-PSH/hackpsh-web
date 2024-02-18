@@ -9,10 +9,10 @@ export const metadata: Metadata = {
     "Our partners help us make this event! Please consider partnerring with us.",
 };
 
-function PartnerHero() {
+function PartnersHero() {
   return (
-    <Section className="min-h-[16.75rem] bg-slate-800">
-      <p className="text-6xl font-bold">About US</p>
+    <Section className="min-h-[16.75rem] bg-slate-800 text-white">
+      <p className="text-6xl font-bold">Partners</p>
       <p className="mt-8">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -22,7 +22,7 @@ function PartnerHero() {
   );
 }
 
-function PartnerInfo() {
+function PartnersInfo() {
   return (
     <Section className="bg-white">
       <div className="mx-auto grid gap-y-8 text-black">
@@ -71,8 +71,8 @@ function PartnerInfo() {
 export default function Page() {
   return (
     <>
-      <PartnerHero />
-      <PartnerInfo />
+      <PartnersHero />
+      <PartnersInfo />
       <ContactSection className="bg-black" title="Interested in Partnering?" />
     </>
   );

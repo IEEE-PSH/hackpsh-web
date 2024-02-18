@@ -22,7 +22,7 @@ function Hero() {
           </p>
           <div>
             <p className="mt-8">Educational Activities Building | EAB 103</p>
-            <p className="">March 23, 2024 | 10:00 AM - 10:00PM EST</p>
+            <p className="">March 23, 2024 | 10:00 AM - 10:00 PM EST</p>
           </div>
         </div>
         <Button className="h-12 w-48 bg-white text-xl hover:bg-white/80">
