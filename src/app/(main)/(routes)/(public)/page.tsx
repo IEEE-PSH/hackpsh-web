@@ -8,7 +8,7 @@ function Hero() {
   return (
     <Section className="bg-slate-800">
       <div className="flex min-h-[25rem] flex-col items-center justify-center space-y-8 text-center text-white">
-        <p className="text-6xl font-bold">HackPSH Spring 2024 is Here!</p>
+        <p className="text-6xl font-bold">HackPSH Spring 2024</p>
         <div className="flex max-w-2xl flex-col">
           <p>
             Welcome to HackPSH Spring 2024! Dive into challenges testing your
