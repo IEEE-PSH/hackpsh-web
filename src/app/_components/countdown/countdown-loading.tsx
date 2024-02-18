@@ -3,12 +3,10 @@ import { Skeleton } from "../ui/skeleton";
 
 export default function CountdownLoading() {
   return (
-    <Section className="bg-neutral-950">
-      <div className="flex items-center justify-center">
-        <div className="flex w-[28.25rem] justify-between">
-          <Skeleton className="h-[4.5rem] w-full rounded-md" />
-        </div>
+    <div className="flex items-center justify-center">
+      <div className="flex w-[28.25rem] justify-between">
+        <Skeleton className="h-[4.5rem] w-full rounded-md" />
       </div>
-    </Section>
+    </div>
   );
 }

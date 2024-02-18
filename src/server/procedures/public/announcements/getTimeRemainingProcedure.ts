@@ -1,7 +1,8 @@
 import { publicProcedure } from "@/server/trpc";
 
 export default publicProcedure.query(() => {
-  const timeRemaining = Date.parse("March 23, 2024 10:00:00") - Date.now();
-
-  return timeRemaining;
+  const startTime = "03-23-2024 10:00:00";
+  const timeRemaining = Date.parse(startTime) - Date.now();
+  console.log(timeRemaining);
+  return { startTime, timeRemaining };
 });
