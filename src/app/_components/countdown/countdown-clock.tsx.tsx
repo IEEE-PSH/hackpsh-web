@@ -33,9 +33,9 @@ export default function CountdownClock({
 
   return (
     <Section>
-      <div className="flex flex-col items-center space-y-8">
+      <div className="mx-auto flex max-w-[28rem] flex-col items-center space-y-8">
         <p className="text-2xl">{title}</p>
-        <div className="grid auto-cols-max grid-flow-col place-items-center items-start gap-x-6 text-white">
+        <div className="flex w-full justify-between text-white">
           {isLoaded ? (
             <>
               <div className="flex flex-col items-center">

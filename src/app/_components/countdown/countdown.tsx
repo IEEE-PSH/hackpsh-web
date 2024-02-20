@@ -7,12 +7,17 @@ type CountdownProps = {
   eventStartTime: Date;
   timeRemaining: number;
 };
+
 export default function Countdown({
   eventStartTime,
   timeRemaining,
 }: CountdownProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [time, setTime] = useState(timeRemaining);
+
+  const twelveHourMS = 43200000;
+  const eventHasCompleted = time < -twelveHourMS;
+  const eventStillActive = time > -twelveHourMS && time < 0;
 
   useEffect(() => {
     const diff = eventStartTime.valueOf() - Date.now();
@@ -25,30 +30,28 @@ export default function Countdown({
       setTime(diff);
     }, 1000);
 
-    if (time < -43200000) {
+    if (eventHasCompleted) {
       clearTimeout(timerID);
     }
 
     return () => clearTimeout(timerID);
-  }, [time, isLoaded, eventStartTime]);
+  }, [time, isLoaded, eventStartTime, eventHasCompleted]);
 
-  if (time > -43200000 && time < 0) {
+  if (eventStillActive)
     return (
       <CountdownClock
-        timeRemaining={43200000 + time}
-        title="Event ends in"
+        timeRemaining={twelveHourMS + time}
         isLoaded={isLoaded}
+        title="Event ends in"
       />
     );
-  } else if (time <= -43200000) {
-    return <CountdownComplete />;
-  }
+  else if (eventHasCompleted) return <CountdownComplete />;
 
   return (
     <CountdownClock
       timeRemaining={time}
-      title="Event starts in"
       isLoaded={isLoaded}
+      title="Event starts in"
     />
   );
 }
