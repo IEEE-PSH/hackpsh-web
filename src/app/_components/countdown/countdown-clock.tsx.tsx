@@ -1,5 +1,3 @@
-"use client";
-
 import Section from "../page-assets/section";
 import { Skeleton } from "../ui/skeleton";
 
