@@ -20,8 +20,10 @@ function Hero() {
         className="absolute z-[-1] h-full w-full object-cover brightness-[28%] saturate-[110%]"
       />
       <div className="container max-w-[80rem] py-16">
-        <div className="flex min-h-[25rem] flex-col items-center justify-center space-y-8 text-center text-white">
-          <p className="text-6xl font-bold">HackPSH Spring 2024</p>
+        <div className="flex flex-col items-center justify-center space-y-8 text-center text-white">
+          <p className="text-[7vw] font-bold sm:text-6xl">
+            HackPSH Spring 2024
+          </p>
           <div className="flex max-w-2xl flex-col">
             <p>
               Welcome to HackPSH Spring 2024! Dive into challenges testing your
