@@ -5,7 +5,7 @@ import { Icons } from "../ui/icons";
 
 export default function Footer() {
   return (
-    <div className="absolute bottom-0 w-full bg-background py-16 sm:block">
+    <div className="absolute bottom-0 w-full border-t bg-background py-16 sm:block">
       <div className="container max-w-[80rem] items-start text-foreground sm:flex sm:flex-row sm:justify-center lg:justify-between">
         <Link
           href={siteConfig.paths.home}

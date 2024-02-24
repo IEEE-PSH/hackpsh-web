@@ -30,10 +30,10 @@ export default function CountdownClock({
   const { days, hours, minutes, seconds } = millisecondsToUnits(timeRemaining);
 
   return (
-    <Section className="bg-background">
+    <Section className="border-y bg-background">
       <div className="mx-auto flex max-w-[28rem] flex-col items-center space-y-8">
         <p className="text-2xl">{title}</p>
-        <div className="flex w-full justify-between text-white">
+        <div className="flex w-full justify-between text-foreground">
           {isLoaded ? (
             <>
               <div className="flex flex-col items-center">

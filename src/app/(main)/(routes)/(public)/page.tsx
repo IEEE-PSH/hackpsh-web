@@ -55,8 +55,8 @@ function Hero() {
 
 function HomeInfo() {
   return (
-    <Section className="bg-white">
-      <div className="mx-auto grid gap-y-8 text-black">
+    <Section>
+      <div className="mx-auto grid gap-y-8 text-foreground/80">
         <div className="grid grid-cols-1 gap-y-8 md:grid-cols-2">
           <Image
             alt="penn-state-img"
@@ -65,7 +65,9 @@ function HomeInfo() {
           />
 
           <div className="flex flex-col space-y-8 md:px-8">
-            <p className="text-4xl font-bold">What is HackPSH?</p>
+            <p className="text-4xl font-bold text-foreground">
+              What is HackPSH?
+            </p>
             <p>
               HackPSH is a dynamic student-led hackathon built by Penn State
               Harrisburg&apos;s IEEE Student Chapter. We focus on solving
@@ -81,7 +83,7 @@ function HomeInfo() {
         <hr />
         <div className="grid grid-cols-1 gap-y-8 md:grid-cols-2">
           <div className="flex flex-col space-y-8 md:pr-8">
-            <p className="text-4xl font-bold">Who is it for?</p>
+            <p className="text-4xl font-bold text-foreground">Who is it for?</p>
             <p>
               HackPSH caters towards students eager to explore the intricacies
               of building complex circuits and solving real-world coding
@@ -106,7 +108,9 @@ function HomeInfo() {
             src={PennStatePlaceholder}
           />
           <div className="flex flex-col space-y-8 md:px-8">
-            <p className="text-4xl font-bold">What is the theme?</p>
+            <p className="text-4xl font-bold text-foreground">
+              What is the theme?
+            </p>
             <p>
               As of right now, the theme is being determined, and will be
               announced once determined. Traditionally, HackPSH tends to choose
@@ -122,14 +126,14 @@ function HomeInfo() {
 
 function HomeRules() {
   return (
-    <Section className="bg-neutral-100">
+    <Section className="bg-background">
       <div className="mx-auto max-w-[30rem] md:max-w-full">
-        <p className="text-center text-4xl font-bold text-black">RULES</p>
-        <div className="my-6 mt-8 grid grid-cols-1 place-items-center items-start gap-8 text-black md:grid-cols-3">
+        <p className="text-center text-4xl font-bold text-foreground">RULES</p>
+        <div className="my-6 mt-8 grid grid-cols-1 place-items-center items-start gap-8 text-foreground md:grid-cols-3">
           <div className="flex flex-col items-center">
             <User size="2rem" />
             <p className="mt-4 text-xl">Teams</p>
-            <p className="mt-8">
+            <p className="mt-8 text-foreground/80">
               Teams are comprised of up to 4 people. You cannot leave or join
               other teams.
             </p>
@@ -138,7 +142,7 @@ function HomeRules() {
           <div className="flex flex-col items-center">
             <Scale size="2rem" />
             <p className="mt-4 text-xl">Integrity</p>
-            <p className="mt-8">
+            <p className="mt-8 text-foreground/80">
               Our commitment to integrity means promoting a culture where
               ethical practices are the norm. We believe in the power of
               collaboration, honesty, and respect in driving innovation. By
@@ -149,7 +153,7 @@ function HomeRules() {
           <div className="flex flex-col items-center">
             <Smile size="2rem" />
             <p className="mt-4 text-xl">Conduct</p>
-            <p className="mt-8">
+            <p className="mt-8 text-foreground/80">
               At HackPSH, we expect all participants to engage with respect and
               fairness, valuing the contributions and efforts of every
               individual. We have no tolerance for communication that makes
@@ -198,9 +202,11 @@ function HomePrizes() {
 
 function HomePastEvents() {
   return (
-    <Section className="bg-neutral-900">
-      <div className="mx-auto grid max-w-[30rem] gap-y-8 text-black md:max-w-[60rem]">
-        <p className="text-center text-4xl font-bold text-white">PAST EVENTS</p>
+    <Section>
+      <div className="mx-auto grid max-w-[30rem] gap-y-8 md:max-w-[60rem]">
+        <p className="text-center text-4xl font-bold text-foreground">
+          PAST EVENTS
+        </p>
         <Card>
           <div className="grid grid-cols-1 gap-8 rounded-xl p-4 md:grid-cols-2">
             <Image
@@ -283,7 +289,7 @@ export default function Page() {
       <HomeRules />
       <HomePrizes />
       <HomePastEvents />
-      <ContactSection className="bg-black" title="Have a Question?" />
+      <ContactSection title="Have a Question?" />
     </>
   );
 }

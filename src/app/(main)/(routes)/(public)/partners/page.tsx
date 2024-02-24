@@ -24,8 +24,8 @@ function PartnersHero() {
 
 function PartnersInfo() {
   return (
-    <Section className="bg-white">
-      <div className="mx-auto grid gap-y-8 text-black">
+    <Section>
+      <div className="mx-auto grid gap-y-8 text-foreground">
         <div className="grid grid-cols-1 gap-y-8 md:grid-cols-2">
           <img
             alt="penn-state-img"
@@ -35,7 +35,7 @@ function PartnersInfo() {
 
           <div className="relative flex h-full flex-col md:px-8">
             <p className="text-4xl font-bold">Sponsor Name</p>
-            <p className="py-8">
+            <p className="py-8 text-foreground/80">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -54,7 +54,7 @@ function PartnersInfo() {
 
           <div className="relative flex h-full flex-col md:px-8">
             <p className="text-4xl font-bold">Sponsor Name</p>
-            <p className="py-8">
+            <p className="py-8 text-foreground/80">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -73,7 +73,7 @@ export default function Page() {
     <>
       <PartnersHero />
       <PartnersInfo />
-      <ContactSection className="bg-black" title="Interested in Partnering?" />
+      <ContactSection title="Interested in Partnering?" />
     </>
   );
 }
