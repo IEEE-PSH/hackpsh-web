@@ -218,17 +218,16 @@ function HomePastEvents() {
               <p className="text-3xl font-bold">HackPSH Fall 2023</p>
               <p className="my-4">
                 The Fall 2023 Hackathon, organized by IEEE, was a vibrant event
-                with over 70 students participating. It facilitated
-                collaboration across disciplines, offering a mix of
-                team-building, workshops, building a project, and networking
-                with faculty, alumni, and industry professionals. Challenges
-                ranged from basic programming like Hello World to developing an
-                algorithm to minimize the waiting time in a hypothetical pizza
-                restaurant, with each participant receiving an Arduino kit for
-                the circuit challenges. The event also featured a partnership
-                with TRC Companies, Inc., insights from industry professionals,
-                and the introduction of the HackPSH platform for coding
-                challenges and live updates.
+                with over 70 participants. It facilitated collaboration across
+                disciplines, offering a mix of team-building, workshops,
+                building a project, and networking with faculty, alumni, and
+                industry professionals. Challenges ranged from basic programming
+                like Hello World to developing an algorithm to minimize the
+                waiting time in a hypothetical pizza restaurant, with each
+                participant receiving an Arduino kit for the circuit challenges.
+                The event also featured a partnership with TRC Companies, Inc.,
+                insights from industry professionals, and the introduction of
+                the HackPSH platform for coding challenges and live updates.
               </p>
               <Button className="text-md ml-auto mt-auto w-32" asChild>
                 <Link
