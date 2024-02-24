@@ -14,7 +14,10 @@ export default function ContactSection({
     <Section className={className}>
       <div className="flex flex-col items-center text-center text-white">
         <p className="text-4xl font-bold">{title}</p>
-        <Button className="text-md mt-8 w-48 bg-white hover:bg-white/80">
+        <Button
+          className="text-md mt-8 w-48 bg-white hover:bg-white/80"
+          asChild
+        >
           <Link href={siteConfig.paths.contact}>Contact Us</Link>
         </Button>
       </div>

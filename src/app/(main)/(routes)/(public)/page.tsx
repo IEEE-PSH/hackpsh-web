@@ -36,7 +36,10 @@ function Hero() {
               <p className="">March 23, 2024 | 10:00 AM - 10:00 PM EST</p>
             </div>
           </div>
-          <Button className="text-md w-48 bg-white hover:bg-neutral-200">
+          <Button
+            className="text-md w-48 bg-white hover:bg-neutral-200"
+            asChild
+          >
             <Link
               href="https://docs.google.com/forms/d/e/1FAIpQLSdkVRX1e8lNruVzWVKgcQ6YOt9NWhkotzOysjU8YdewjDvvTA/viewform"
               target="_blank"
@@ -221,7 +224,7 @@ function HomePastEvents() {
                 and the introduction of the HackPSH platform for coding
                 challenges and live updates.
               </p>
-              <Button className="text-md ml-auto mt-auto w-32">
+              <Button className="text-md ml-auto mt-auto w-32" asChild>
                 <Link
                   href="https://edu.ieee.org/us-psu/event/hackpsh/"
                   target="_blank"
@@ -255,7 +258,7 @@ function HomePastEvents() {
                 Guard Recruiting played a key role, with plans to build on this
                 success for the upcoming Fall Hackathon.
               </p>
-              <Button className="text-md ml-auto mt-auto w-32">
+              <Button className="text-md ml-auto mt-auto w-32" asChild>
                 <Link
                   href="https://edu.ieee.org/us-psu/event/ieee-acm-hackathon/"
                   target="_blank"
