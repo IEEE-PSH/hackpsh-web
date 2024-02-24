@@ -13,7 +13,7 @@ import Link from "next/link";
 
 function Hero() {
   return (
-    <section className="relative py-16 sm:h-[33rem]">
+    <section className="relative py-16 sm:h-[32rem]">
       <Image
         alt="eab-building"
         src={EAB}
@@ -40,7 +40,7 @@ function Hero() {
           </div>
         </div>
         <Button
-          className="text-md mt-auto w-48 bg-white hover:bg-neutral-200"
+          className="text-md mt-auto w-48 bg-white text-black hover:bg-neutral-200"
           asChild
         >
           <Link
@@ -136,8 +136,9 @@ function HomeRules() {
             <User size="2rem" />
             <p className="mt-4 text-xl">Teams</p>
             <p className="mt-8 text-foreground/80">
-              Teams are comprised of up to 4 people. You cannot leave or join
-              other teams.
+              Teams are comprised of up to 4 people. Team members must work
+              together to complete challenges and earn points. Once joining a
+              team, members cannot leave to join other teams.
             </p>
           </div>
 
@@ -221,15 +222,12 @@ function HomePastEvents() {
               <p className="my-4">
                 The Fall 2023 Hackathon, organized by IEEE, was a vibrant event
                 with over 70 participants. It facilitated collaboration across
-                disciplines, offering a mix of team-building, workshops,
-                building a project, and networking with faculty, alumni, and
-                industry professionals. Challenges ranged from basic programming
-                like Hello World to developing an algorithm to minimize the
-                waiting time in a hypothetical pizza restaurant, with each
-                participant receiving an Arduino kit for the circuit challenges.
-                The event also featured a partnership with TRC Companies, Inc.,
-                insights from industry professionals, and the introduction of
-                the HackPSH platform for coding challenges and live updates.
+                different disciplines, offering a mix of team-building,
+                networking, workshops, and project-building. Each participant
+                received Arduino kits and earned points by completing coding and
+                circuit challenges. The event also featured a partnership with
+                TRC Companies, Inc., insights from industry professionals, and
+                the introduction of the HackPSH platform itself.
               </p>
               <Button className="text-md ml-auto mt-auto w-32" asChild>
                 <Link
@@ -255,15 +253,15 @@ function HomePastEvents() {
             <div className="flex flex-col justify-between">
               <p className="text-3xl font-bold">HackPSH Spring 2023</p>
               <p className="my-4">
-                The Spring 2023 Hackathon at Penn State Harrisburg, co-hosted by
-                IEEE and ACM, was a success, drawing students across majors to
-                engage in hardware and software projects, including Arduino
-                programming and circuit building. The event fostered
-                team-building, workshops, and networking with over 60 students
-                participating, some without prior coding experience. Sponsors
-                like Capgemini Engineering and The Pennsylvania Air National
-                Guard Recruiting played a key role, with plans to build on this
-                success for the upcoming Fall Hackathon.
+                The Spring 2023 Hackathon, co-hosted by IEEE and ACM, was Penn
+                State Harrisburg{"'"}s first-ever hackathon. It drew students
+                across various majors to engage in hardware and software
+                projects, including Arduino programming and circuit building.
+                The event fostered team-building, workshops, and networking with
+                over 60 students, including those without prior technical
+                experience. Sponsors such as Capgemini Engineering and the
+                Pennsylvania Air National Guard Recruiting played a key role on
+                the success of the event.
               </p>
               <Button className="text-md ml-auto mt-auto w-32" asChild>
                 <Link

@@ -13,10 +13,10 @@ export default function ContactSection({
 }) {
   return (
     <Section className={cn(className, "border-y bg-background")}>
-      <div className="flex flex-col items-center text-center text-foreground">
-        <p className="text-4xl font-bold">{title}</p>
+      <div className="flex flex-col items-center ">
+        <p className="text-4xl font-bold text-foreground">{title}</p>
         <Button
-          className="text-md mt-8 w-48 bg-foreground hover:bg-foreground/80"
+          className="text-md mt-8 w-48 bg-foreground text-background hover:bg-foreground/80"
           asChild
         >
           <Link href={siteConfig.paths.contact} className="text-background">
