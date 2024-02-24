@@ -13,14 +13,14 @@ import Link from "next/link";
 
 function Hero() {
   return (
-    <section className="relative">
+    <section className="relative py-16 sm:h-[33rem]">
       <Image
         alt="eab-building"
         src={EAB}
-        className="absolute z-[-1] h-full w-full object-cover brightness-[28%] saturate-[110%]"
+        className="absolute z-[-1] -mt-16 h-full w-full object-cover brightness-[28%] saturate-[110%]"
       />
-      <div className="container max-w-[80rem] py-16">
-        <div className="flex flex-col items-center justify-center space-y-8 text-center text-white">
+      <div className="container flex h-full flex-col items-center">
+        <div className="mb-8 flex flex-col items-center space-y-8 text-center text-white">
           <p className="text-[7vw] font-bold sm:text-6xl">
             HackPSH Spring 2024
           </p>
@@ -35,21 +35,21 @@ function Hero() {
             </p>
             <div>
               <p className="mt-8">Educational Activities Building | EAB 103</p>
-              <p className="">March 23, 2024 | 10:00 AM - 10:00 PM EST</p>
+              <p>March 23, 2024 | 10:00 AM - 10:00 PM EST</p>
             </div>
           </div>
-          <Button
-            className="text-md w-48 bg-white hover:bg-neutral-200"
-            asChild
-          >
-            <Link
-              href="https://docs.google.com/forms/d/e/1FAIpQLSdkVRX1e8lNruVzWVKgcQ6YOt9NWhkotzOysjU8YdewjDvvTA/viewform"
-              target="_blank"
-            >
-              Register
-            </Link>
-          </Button>
         </div>
+        <Button
+          className="text-md mt-auto w-48 bg-white hover:bg-neutral-200"
+          asChild
+        >
+          <Link
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdkVRX1e8lNruVzWVKgcQ6YOt9NWhkotzOysjU8YdewjDvvTA/viewform"
+            target="_blank"
+          >
+            Register
+          </Link>
+        </Button>
       </div>
     </section>
   );
@@ -57,7 +57,7 @@ function Hero() {
 
 function HomeInfo() {
   return (
-    <Section>
+    <Section className="border-y">
       <div className="mx-auto grid gap-y-8 text-foreground/80">
         <div className="grid grid-cols-1 gap-y-8 md:grid-cols-2">
           <Image
@@ -175,18 +175,18 @@ function HomePrizes() {
       <div className="mx-auto flex max-w-[30rem] flex-col items-center text-center text-black">
         <p className="text-4xl font-bold">PRIZES</p>
         <p className="mt-8 text-xl">Participate in HackPSH to earn prizes!</p>
-        <div className="my-14 flex flex-row space-x-8">
-          <div className="flex flex-col items-center space-y-4 rounded-xl bg-white p-4 shadow-lg">
+        <div className="my-14 flex scale-[0.85] flex-row space-x-8 sm:scale-[1]">
+          <div className="flex h-[9.5rem] w-[7rem] flex-col items-center space-y-4 rounded-xl bg-white p-4 shadow-lg">
             <Medal size="2rem" />
             <p className=" font-bold">2nd Place</p>
             <p className="text-xl">$50</p>
           </div>
-          <div className="box-border flex scale-[1.3] flex-col items-center space-y-4 rounded-xl bg-white p-4 shadow-lg">
+          <div className="box-border flex h-[9.5rem] w-[7rem] scale-[1.3] flex-col items-center space-y-4 rounded-xl bg-white p-4 shadow-lg">
             <Trophy size="2rem" />
             <p className=" font-bold">1st Place</p>
             <p className="text-xl">$100</p>
           </div>
-          <div className="flex flex-col items-center space-y-4 rounded-xl bg-white p-4 shadow-lg">
+          <div className="flex h-[9.5rem] w-[7rem] flex-col items-center space-y-4 rounded-xl bg-white p-4 shadow-lg">
             <Medal size="2rem" />
             <p className=" font-bold">3rd Place</p>
             <p className="text-xl">$25</p>

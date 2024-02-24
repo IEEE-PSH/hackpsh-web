@@ -14,9 +14,7 @@ function PartnersHero() {
     <Section className="min-h-[16.75rem] bg-slate-800 text-white">
       <p className="text-6xl font-bold">Partners</p>
       <p className="mt-8">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam.
+        Learn more about our partners who will be sponsoring HackPSH.
       </p>
     </Section>
   );
@@ -33,7 +31,7 @@ function PartnersInfo() {
             src="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
           />
 
-          <div className="relative flex h-full flex-col md:px-8">
+          <div className="relative flex h-full flex-col md:pl-8">
             <p className="text-4xl font-bold">Sponsor Name</p>
             <p className="py-8 text-foreground/80">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -52,7 +50,7 @@ function PartnersInfo() {
             src="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
           />
 
-          <div className="relative flex h-full flex-col md:px-8">
+          <div className="relative flex h-full flex-col md:pl-8">
             <p className="text-4xl font-bold">Sponsor Name</p>
             <p className="py-8 text-foreground/80">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
