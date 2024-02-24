@@ -1,6 +1,7 @@
 import Section from "@/app/_components/page-assets/section";
 import { type Metadata } from "next";
 import ContactSection from "@/app/_components/page-assets/contact-section";
+import { Card } from "@/app/_components/ui/card";
 
 export const metadata: Metadata = {
   title: "About | HackPSH",
@@ -9,9 +10,9 @@ export const metadata: Metadata = {
 
 function AboutHero() {
   return (
-    <Section className="min-h-[16.75rem] bg-slate-800">
+    <Section className="min-h-[16.75rem] bg-slate-800 text-white">
       <p className="text-6xl font-bold">About US</p>
-      <p className="mt-6">
+      <p className="mt-8">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam.
@@ -20,131 +21,95 @@ function AboutHero() {
   );
 }
 
-function AboutIEEE() {
-  return (
-    <Section className="bg-primary text-black">
-      <div className="mx-auto flex flex-col space-y-8">
-        <p className="text-center text-4xl font-bold">We are IEEE!</p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <p>*ADD PICS*</p>
-      </div>
-    </Section>
-  );
-}
-
 function AboutTeam() {
   return (
-    <Section className="bg-neutral-100 text-black">
+    <Section className="bg-white text-black">
       <p className="text-center text-4xl font-bold">Connect with our Team</p>
-      <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3">
-        <div className="flex flex-col">
-          <p className="font-bold">PRESIDENT</p>
-          <p className="mb-4 text-2xl">Jeremiah Ddumba</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">VICE PRESIDENT</p>
-          <p className="mb-4 text-2xl">Max Valentine</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">TREASURER</p>
-          <p className="mb-4 text-2xl">Bramantyo Bhaskoro</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">SECRETARY</p>
-          <p className="mb-4 text-2xl">Matthew Rice</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">SOCIAL MEDIA CHAIR</p>
-          <p className="mb-4 text-2xl">Kuber Dey</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">TECHNICAL LEAD</p>
-          <p className="mb-4 text-2xl">Aaron Olsen</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">COMPUTER SCIENCE LEAD</p>
-          <p className="mb-4 text-2xl">Dinesh Umansankar</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">CORPORATE LIAISON</p>
-          <p className="mb-4 text-2xl">Michael Villalona</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">TECHNICAL LEAD ASSISTANT</p>
-          <p className="mb-4 text-2xl">Michael Cieslak</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">EVENT COORDINATOR</p>
-          <p className="mb-4 text-2xl">Rizzie Lu</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">RADIO STATION LEAD</p>
-          <p className="mb-4 text-2xl">Alexandor Caylor</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">OUTREACH CHAIR</p>
-          <p className="mb-4 text-2xl">Chase Brown</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">SALES COORDINATOR</p>
-          <p className="mb-4 text-2xl">Juliana Lenge</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">WEBMASTER</p>
-          <p className="mb-4 text-2xl">Steven Carr</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">MASTER{`'`}S ADVISORY STUDENT</p>
-          <p className="mb-4 text-2xl">Peter Lee</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">EXECUTIVE ASSISTANT</p>
-          <p className="mb-4 text-2xl">Kimberly Ulishney</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">COMPUTER SCIENCE LEAD ASSISTANT</p>
-          <p className="mb-4 text-2xl">John Nguyen</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">INTERNAL PRESIDENT</p>
-          <p className="mb-4 text-2xl">Luke Goldstein</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">CORPORATE LIAISON ASSISANT</p>
-          <p className="mb-4 text-2xl">Christina Voltz</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
-        <div className="flex flex-col">
-          <p className="font-bold">COMPUTER SCIENCE ASSISTANT</p>
-          <p className="mb-4 text-2xl">Suryansh Sijwali</p>
-          <p className="font-light text-neutral-500">Electrical Engineering</p>
-        </div>
+      <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+        <Card className="bg-white p-4">
+          <div className="flex flex-col text-black">
+            <p className="font-bold">PRESIDENT</p>
+            <p className="mb-4 text-2xl">Jeremiah Ddumba</p>
+            <p className="font-light text-neutral-500">
+              Electrical Engineering
+            </p>
+          </div>
+        </Card>
+        <Card className="bg-white p-4">
+          <div className="flex flex-col text-black">
+            <p className="font-bold">SECRETARY</p>
+            <p className="mb-4 text-2xl">Matthew Rice</p>
+            <p className="font-light text-neutral-500">
+              Electrical Engineering
+            </p>
+          </div>
+        </Card>
+        <Card className="bg-white p-4">
+          <div className="flex flex-col text-black">
+            <p className="font-bold">TECHNICAL LEAD</p>
+            <p className="mb-4 text-2xl">Aaron Olsen</p>
+            <p className="font-light text-neutral-500">
+              Electrical Engineering
+            </p>
+          </div>
+        </Card>
+        <Card className="bg-white p-4">
+          <div className="flex flex-col text-black">
+            <p className="font-bold">SOCIAL MEDIA CHAIR</p>
+            <p className="mb-4 text-2xl">Kuber Dey</p>
+            <p className="font-light text-neutral-500">Computer Science</p>
+          </div>
+        </Card>
+        <Card className="bg-white p-4">
+          <div className="flex flex-col text-black">
+            <p className="font-bold">COMPUTER SCIENCE LEAD</p>
+            <p className="mb-4 text-2xl">Dinesh Umansankar</p>
+            <p className="font-light text-neutral-500">Computer Science</p>
+          </div>
+        </Card>
+        <Card className="bg-white p-4">
+          <div className="flex flex-col text-black">
+            <p className="font-bold">COMPUTER SCIENCE LEAD ASSISTANT</p>
+            <p className="mb-4 text-2xl">John Nguyen</p>
+            <p className="font-light text-neutral-500">Computer Science</p>
+          </div>
+        </Card>
+        <Card className="bg-white p-4">
+          <div className="flex flex-col text-black">
+            <p className="font-bold">CORPORATE LIAISON</p>
+            <p className="mb-4 text-2xl">Michael Villalona</p>
+            <p className="font-light text-neutral-500">
+              Electrical Engineering
+            </p>
+          </div>
+        </Card>
+        <Card className="bg-white p-4">
+          <div className="flex flex-col text-black">
+            <p className="font-bold">CORPORATE LIAISON ASSISANT</p>
+            <p className="mb-4 text-2xl">Christina Voltz</p>
+            <p className="font-light text-neutral-500">
+              Electrical Engineering
+            </p>
+          </div>
+        </Card>
+        <Card className="bg-white p-4">
+          <div className="flex flex-col text-black">
+            <p className="font-bold">INTERNAL PRESIDENT</p>
+            <p className="mb-4 text-2xl">Luke Goldstein</p>
+            <p className="font-light text-neutral-500">
+              Electrical Engineering
+            </p>
+          </div>
+        </Card>
+        <Card className="bg-white p-4">
+          <div className="flex flex-col text-black">
+            <p className="font-bold">SALES COORDINATOR</p>
+            <p className="mb-4 text-2xl">Juliana Lenge</p>
+            <p className="font-light text-neutral-500">
+              Electrical Engineering
+            </p>
+          </div>
+        </Card>
       </div>
     </Section>
   );
@@ -154,7 +119,6 @@ export default function Page() {
   return (
     <>
       <AboutHero />
-      <AboutIEEE />
       <AboutTeam />
       <ContactSection className="bg-black" title="Have Feedback?" />
     </>

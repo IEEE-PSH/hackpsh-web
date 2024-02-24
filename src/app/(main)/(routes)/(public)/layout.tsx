@@ -4,7 +4,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative flex min-h-screen flex-col">
       <PublicSiteHeader />
-      <div className="pb-[26.5rem] sm:pb-[16.25rem]">{children}</div>
+      <div className="pb-[24.25rem] sm:pb-[16.25rem]">{children}</div>
       <Footer />
     </div>
   );

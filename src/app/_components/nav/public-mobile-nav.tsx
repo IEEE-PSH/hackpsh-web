@@ -41,6 +41,13 @@ export function PublicMobileNav() {
             Home
           </MobileLink>
           <MobileLink
+            href={siteConfig.paths.partners}
+            onOpenChange={setIsOpen}
+            scroll={false}
+          >
+            Partners
+          </MobileLink>
+          <MobileLink
             href={siteConfig.paths.about}
             onOpenChange={setIsOpen}
             scroll={false}
@@ -48,13 +55,12 @@ export function PublicMobileNav() {
             About
           </MobileLink>
           <MobileLink
-            href={siteConfig.paths.partners}
+            href={siteConfig.paths.contact}
             onOpenChange={setIsOpen}
             scroll={false}
           >
-            Partners
+            Contact
           </MobileLink>
-
           <SocialMediaMobileNav setIsOpen={setIsOpen} />
         </div>
       </SheetContent>

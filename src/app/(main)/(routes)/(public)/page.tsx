@@ -4,30 +4,49 @@ import { Card } from "@/app/_components/ui/card";
 import Section from "@/app/_components/page-assets/section";
 import ContactSection from "@/app/_components/page-assets/contact-section";
 import CountdownWrapper from "@/app/_components/countdown/countdown-wrapper";
+import HackPSH2023Fall from "@/app/_images/fall-2023-event.jpg";
+import HackPSH2023Spring from "@/app/_images/spring-2023-event.jpg";
+import EAB from "@/app/_images/eab.jpg";
+import PennStatePlaceholder from "@/app/_images/penn-state-placeholder.jpg";
+import Image from "next/image";
+import Link from "next/link";
 
 function Hero() {
   return (
-    <Section className="bg-slate-800">
-      <div className="flex min-h-[25rem] flex-col items-center justify-center space-y-8 text-center text-white">
-        <p className="text-6xl font-bold">HackPSH Spring 2024</p>
-        <div className="flex max-w-2xl flex-col">
-          <p>
-            Welcome to HackPSH Spring 2024! Dive into challenges testing your
-            software and hardware skills. Whether you&apos;re new to coding or a
-            circuit-building pro, this event has something for everyone. Join us
-            for an exciting journey of learning, creativity, and teamwork with
-            fellow students. Make the most of this fantastic opportunity!
-          </p>
-          <div>
-            <p className="mt-8">Educational Activities Building | EAB 104</p>
-            <p className="">March 23, 2024 | 9:00 AM</p>
+    <section className="relative">
+      <Image
+        alt="eab-building"
+        src={EAB}
+        className="absolute z-[-1] h-full w-full object-cover brightness-[28%] saturate-[110%]"
+      />
+      <div className="container max-w-[80rem] py-16">
+        <div className="flex min-h-[25rem] flex-col items-center justify-center space-y-8 text-center text-white">
+          <p className="text-6xl font-bold">HackPSH Spring 2024</p>
+          <div className="flex max-w-2xl flex-col">
+            <p>
+              Welcome to HackPSH Spring 2024! Dive into challenges testing your
+              software and hardware skills. Whether you&apos;re new to coding or
+              a circuit-building pro, this event has something for everyone.
+              Join us for an exciting journey of learning, creativity, and
+              teamwork with fellow students. Make the most of this fantastic
+              opportunity!
+            </p>
+            <div>
+              <p className="mt-8">Educational Activities Building | EAB 103</p>
+              <p className="">March 23, 2024 | 10:00 AM - 10:00 PM EST</p>
+            </div>
           </div>
+          <Button className="text-md w-48 bg-white hover:bg-neutral-200">
+            <Link
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdkVRX1e8lNruVzWVKgcQ6YOt9NWhkotzOysjU8YdewjDvvTA/viewform"
+              target="_blank"
+            >
+              Register
+            </Link>
+          </Button>
         </div>
-        <Button className="h-12 w-48 bg-white text-xl hover:bg-white/80">
-          Join Us!
-        </Button>
       </div>
-    </Section>
+    </section>
   );
 }
 
@@ -36,10 +55,10 @@ function HomeInfo() {
     <Section className="bg-white">
       <div className="mx-auto grid gap-y-8 text-black">
         <div className="grid grid-cols-1 gap-y-8 md:grid-cols-2">
-          <img
+          <Image
             alt="penn-state-img"
             className="hidden rounded-md md:block"
-            src="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
+            src={PennStatePlaceholder}
           />
 
           <div className="flex flex-col space-y-8 md:px-8">
@@ -70,18 +89,18 @@ function HomeInfo() {
               students, fostering a collaborative and competitive environment.
             </p>
           </div>
-          <img
+          <Image
             alt="penn-state-img"
             className="hidden rounded-md md:block"
-            src="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
+            src={PennStatePlaceholder}
           />
         </div>
         <hr />
         <div className="grid grid-cols-1 gap-y-8 md:grid-cols-2">
-          <img
+          <Image
             alt="penn-state-img"
             className="hidden rounded-md md:block"
-            src="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
+            src={PennStatePlaceholder}
           />
           <div className="flex flex-col space-y-8 md:px-8">
             <p className="text-4xl font-bold">What is the theme?</p>
@@ -181,36 +200,10 @@ function HomePastEvents() {
         <p className="text-center text-4xl font-bold text-white">PAST EVENTS</p>
         <Card>
           <div className="grid grid-cols-1 gap-8 rounded-xl p-4 md:grid-cols-2">
-            <img
+            <Image
               alt="penn-state-img"
-              className="rounded-md"
-              src="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
-            />
-            <div className="flex flex-col justify-between">
-              <p className="text-3xl font-bold">HackPSH Spring 2023</p>
-              <p className="my-4">
-                The Spring 2023 Hackathon at Penn State Harrisburg, co-hosted by
-                IEEE and ACM, was a success, drawing students across majors to
-                engage in hardware and software projects, including Arduino
-                programming and circuit building. The event fostered
-                team-building, workshops, and networking with over 60 students
-                participating, some without prior coding experience. Sponsors
-                like Capgemini Engineering and The Pennsylvania Air National
-                Guard Recruiting played a key role, with plans to build on this
-                success for the upcoming Fall Hackathon.
-              </p>
-              <Button className="text-md ml-auto mt-auto w-32">
-                Read More
-              </Button>
-            </div>
-          </div>
-        </Card>
-        <Card>
-          <div className="grid grid-cols-1 gap-8 rounded-xl p-4 md:grid-cols-2">
-            <img
-              alt="penn-state-img"
-              className="rounded-md"
-              src="https://kubrick.htvapps.com/htv-prod-media.s3.amazonaws.com/images/penn-state-logo-1596642604.jpg?crop=1.00xw:1.00xh;0,0&resize=900:*"
+              className="rounded-md brightness-[105%] saturate-[120%]"
+              src={HackPSH2023Fall}
             />
             <div className="flex flex-col justify-between">
               <p className="text-3xl font-bold">HackPSH Fall 2023</p>
@@ -229,7 +222,46 @@ function HomePastEvents() {
                 challenges and live updates.
               </p>
               <Button className="text-md ml-auto mt-auto w-32">
-                Read More
+                <Link
+                  href="https://edu.ieee.org/us-psu/event/hackpsh/"
+                  target="_blank"
+                >
+                  Read More
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </Card>
+        <Card>
+          <div className="grid grid-cols-1 gap-8 rounded-xl p-4 md:grid-cols-2">
+            <picture>
+              <Image
+                alt="penn-state-img"
+                className="rounded-md brightness-[105%] saturate-[120%]"
+                src={HackPSH2023Spring}
+              />
+            </picture>
+
+            <div className="flex flex-col justify-between">
+              <p className="text-3xl font-bold">HackPSH Spring 2023</p>
+              <p className="my-4">
+                The Spring 2023 Hackathon at Penn State Harrisburg, co-hosted by
+                IEEE and ACM, was a success, drawing students across majors to
+                engage in hardware and software projects, including Arduino
+                programming and circuit building. The event fostered
+                team-building, workshops, and networking with over 60 students
+                participating, some without prior coding experience. Sponsors
+                like Capgemini Engineering and The Pennsylvania Air National
+                Guard Recruiting played a key role, with plans to build on this
+                success for the upcoming Fall Hackathon.
+              </p>
+              <Button className="text-md ml-auto mt-auto w-32">
+                <Link
+                  href="https://edu.ieee.org/us-psu/event/ieee-acm-hackathon/"
+                  target="_blank"
+                >
+                  Read More
+                </Link>
               </Button>
             </div>
           </div>
