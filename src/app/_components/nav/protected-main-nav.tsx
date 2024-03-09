@@ -14,7 +14,7 @@ export function ProtectedMainNav() {
       <Link
         href={siteConfig.paths.home}
         className="mr-6 flex items-center space-x-2"
-        scroll={false}
+        scroll={true}
       >
         <Icons.brand className="h-[2.4rem] w-[2.0rem]" />
         <span className="hidden text-xl font-bold sm:inline-block">
@@ -30,7 +30,7 @@ export function ProtectedMainNav() {
               ? "text-foreground"
               : "text-foreground/60",
           )}
-          scroll={false}
+          scroll={true}
         >
           Challenges
         </Link>
@@ -42,7 +42,7 @@ export function ProtectedMainNav() {
               ? "text-foreground"
               : "text-foreground/60",
           )}
-          scroll={false}
+          scroll={true}
         >
           Leaderboard
         </Link>
@@ -54,7 +54,7 @@ export function ProtectedMainNav() {
               ? "text-foreground"
               : "text-foreground/60",
           )}
-          scroll={false}
+          scroll={true}
         >
           Announcements
         </Link>
@@ -66,7 +66,7 @@ export function ProtectedMainNav() {
               ? "text-foreground"
               : "text-foreground/60",
           )}
-          scroll={false}
+          scroll={true}
         >
           Dashboard
         </Link>

@@ -21,25 +21,19 @@ export default function Footer() {
           <ul className="space-y-3">
             <p className=" font-bold">Follow Us</p>
             <li className="hover:underline">
-              <a
-                href="https://www.linkedin.com/company/ieee-penn-state-harrisbrurg/"
-                target="_blank"
-              >
+              <Link href={siteConfig.links.linkedin} target="_blank">
                 LinkedIn
-              </a>
+              </Link>
             </li>
             <li className="hover:underline">
-              <a
-                href="https://www.facebook.com/groups/183119638427039/"
-                target="_blank"
-              >
+              <Link href={siteConfig.links.facebook} target="_blank">
                 Facebook
-              </a>
+              </Link>
             </li>
             <li className="hover:underline">
-              <a href="https://www.instagram.com/psh.ieee/" target="_blank">
+              <Link href={siteConfig.links.instagram} target="_blank">
                 Instagram
-              </a>
+              </Link>
             </li>
           </ul>
 
@@ -71,9 +65,9 @@ export default function Footer() {
           <ul className="space-y-3">
             <p className=" font-bold">Blog</p>
             <li className="hover:underline">
-              <a href="https://edu.ieee.org/us-psu/" target="_blank">
+              <Link href={siteConfig.links.blog} target="_blank">
                 PSH IEEE
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

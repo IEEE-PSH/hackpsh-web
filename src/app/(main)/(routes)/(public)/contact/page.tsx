@@ -65,19 +65,59 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
 
   return (
     <>
-      <div className={cn("grid-gap-6 mx-auto max-w-xl", className)} {...props}>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-2 gap-x-6">
+      <Section className="bg-background-variant-other">
+        <p className="mb-10 text-center text-3xl font-bold">Help us Improve!</p>
+        <div
+          className={cn("grid-gap-6 mx-auto max-w-xl", className)}
+          {...props}
+        >
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="grid grid-cols-2 gap-x-6">
+                <FormField
+                  control={form.control}
+                  name="first_name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>First</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="First Name"
+                          {...field}
+                          value={field.value ?? ""}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="last_name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Last</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Last Name"
+                          {...field}
+                          value={field.value ?? ""}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <FormField
                 control={form.control}
-                name="first_name"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>First</FormLabel>
+                    <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="First Name"
+                        placeholder="Email"
                         {...field}
                         value={field.value ?? ""}
                       />
@@ -88,13 +128,14 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
               />
               <FormField
                 control={form.control}
-                name="last_name"
+                name="content"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Last</FormLabel>
+                    <FormLabel>Content</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Last Name"
+                      <Textarea
+                        placeholder="Type here..."
+                        className="h-36 resize-none"
                         {...field}
                         value={field.value ?? ""}
                       />
@@ -103,66 +144,45 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
                   </FormItem>
                 )}
               />
-            </div>
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Email"
-                      {...field}
-                      value={field.value ?? ""}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="content"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Content</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Type here..."
-                      className="h-36 resize-none"
-                      {...field}
-                      value={field.value ?? ""}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={form.formState.isSubmitting}
-            >
-              {form.formState.isSubmitting && (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              Submit
-            </Button>
-          </form>
-        </Form>
-      </div>
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Submit
+              </Button>
+            </form>
+          </Form>
+        </div>
+      </Section>
     </>
+  );
+}
+
+function ContactHero() {
+  return (
+    <Section className="h-[16.75rem] border-b bg-background text-foreground">
+      <div className="flex justify-between space-x-12">
+        <div>
+          <p className="text-6xl font-bold">Contact</p>
+          <p className="mt-8">
+            Reach out to us if you have any questions, feedback, etc.
+          </p>
+        </div>
+        <div className="-mt-[2rem] hidden items-center justify-start md:flex"></div>
+      </div>
+    </Section>
   );
 }
 
 export default function Page() {
   return (
     <>
-      <Section>
-        <p className="mb-10 text-center text-3xl font-bold">Contact Us</p>
-        <ContactForm />
-      </Section>
+      <ContactHero />
+      <ContactForm />
     </>
   );
 }

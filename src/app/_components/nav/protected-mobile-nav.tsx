@@ -101,6 +101,7 @@ export function MobileLink({
       }}
       className={cn(className)}
       {...props}
+      scroll={true}
     >
       {children}
     </Link>

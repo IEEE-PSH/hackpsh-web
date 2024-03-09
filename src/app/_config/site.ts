@@ -4,7 +4,10 @@ export const siteConfig = {
     general: "ieee@hackpsh.org",
   },
   links: {
+    linkedin: "https://www.linkedin.com/company/ieee-penn-state-harrisbrurg/",
+    facebook: "https://www.facebook.com/groups/183119638427039/",
     instagram: "https://www.instagram.com/psh.ieee/",
+    blog: "https://edu.ieee.org/us-psu/",
   },
   paths: {
     home: "/",
