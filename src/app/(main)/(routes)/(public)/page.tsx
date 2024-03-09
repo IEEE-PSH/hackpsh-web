@@ -4,15 +4,15 @@ import { Card } from "@/app/_components/ui/card";
 import Section from "@/app/_components/page-assets/section";
 import ContactSection from "@/app/_components/page-assets/contact-section";
 import CountdownWrapper from "@/app/_components/countdown/countdown-wrapper";
-import HackPSH2023Fall from "@/app/_images/fall-2023-event.jpg";
-import HackPSH2023Spring from "@/app/_images/spring-2023-event.jpg";
+import HackPSH2023Fall from "@/../public/2023-fall-event.jpg";
+import HackPSH2023Spring from "@/../public/2023-spring-event.jpg";
 import Image from "next/image";
 import Link from "next/link";
-import HeroSvg from "@/app/_images/herosvg";
-import PrizeSvg from "@/app/_images/prizesvg";
-import InfoWhoSvg from "@/app/_images/info-who";
-import Logo from "@/app/_images/logo";
-import Info2 from "@/app/_images/info2";
+import HomeInfo1Svg from "@/app/_components/svg-components/home/home-info1-svg";
+import HomePrizeSvg from "@/app/_components/svg-components/home/home-prize-svg";
+import HomeInfo3Svg from "@/app/_components/svg-components/home/home-info3-svg";
+import HomeHeroSvg from "@/app/_components/svg-components/home/home-hero-svg";
+import HomeInfo2Svg from "@/app/_components/svg-components/home/home-info2-svg";
 import { siteConfig } from "@/app/_config/site";
 
 function Hero() {
@@ -47,7 +47,7 @@ function Hero() {
           </Button>
         </div>
         <div className="hidden lg:flex">
-          <Logo />
+          <HomeHeroSvg/>
         </div>
       </div>
     </Section>
@@ -59,7 +59,7 @@ function HomeInfo() {
     <Section className="border-y">
       <div className="grid grid-cols-5 gap-8">
         <div className="hidden items-center justify-center p-6 md:col-span-2 md:flex">
-          <HeroSvg />
+          <HomeInfo1Svg />
         </div>
         <Card className="col-span-full p-6 text-foreground/80 md:col-span-3">
           <p className="mb-8 text-4xl font-bold text-foreground">
@@ -88,7 +88,7 @@ function HomeInfo() {
         </Card>
         <hr className="col-span-full" />
         <div className="hidden items-center justify-center p-6 md:col-span-2 md:flex">
-          <Info2 />
+          <HomeInfo2Svg/>
         </div>
         <Card className="col-span-full p-6 text-foreground/80 md:col-span-3">
           <p className="mb-8 text-4xl font-bold text-foreground">
@@ -106,7 +106,7 @@ function HomeInfo() {
         </Card>
         <hr className="col-span-full" />
         <div className="hidden items-center justify-center p-6 md:col-span-2 md:flex">
-          <InfoWhoSvg />
+          <HomeInfo3Svg />
         </div>
         <Card className="col-span-full p-6 text-foreground/80 md:col-span-3">
           <p className="mb-8 text-4xl font-bold text-foreground">
@@ -178,6 +178,9 @@ function HomePrizes() {
             Attend HackPSH to earn prizes, participate in raffles, and much
             more!
           </p>
+          <p className="mt-8 text-xl font-semibold">
+            Money prizes for each person on winning teams!
+          </p>
           <div className="my-14 flex scale-[0.85] flex-row space-x-4 sm:scale-[1]">
             <div className="flex h-[9.5rem] w-[7rem] rotate-[2deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 shadow-lg">
               <Medal size="2rem" />
@@ -195,17 +198,14 @@ function HomePrizes() {
               <p className="text-xl">$25</p>
             </div>
           </div>
-          <span className="text-xl font-semibold">
-            Money prizes for each person on winning teams!
-          </span>
-          <p className="mt-8 text-xl">
+          <p className="text-xl">
             Everyone will receive a{" "}
             <span className="italic">Certificate of Participation</span> and an
             entry in the <span className="italic">Resume Book.</span>
           </p>
         </div>
         <div className="hidden md:flex">
-          <PrizeSvg />
+          <HomePrizeSvg />
         </div>
       </div>
     </Section>
@@ -222,7 +222,7 @@ function HomePastEvents() {
         <Card>
           <div className="grid grid-cols-1 gap-8 rounded-xl p-6 md:grid-cols-2">
             <Image
-              alt="penn-state-img"
+              alt="fall-2023-event"
               className="rounded-md brightness-[105%] saturate-[120%]"
               src={HackPSH2023Fall}
             />
@@ -251,13 +251,11 @@ function HomePastEvents() {
         </Card>
         <Card>
           <div className="grid grid-cols-1 gap-8 rounded-xl p-6 md:grid-cols-2">
-            <picture>
-              <Image
-                alt="penn-state-img"
-                className="rounded-md brightness-[105%] saturate-[120%]"
-                src={HackPSH2023Spring}
-              />
-            </picture>
+            <Image
+              alt="spring-2023-event"
+              className="rounded-md brightness-[105%] saturate-[120%]"
+              src={HackPSH2023Spring}
+            />
 
             <div className="flex flex-col justify-between">
               <p className="text-3xl font-bold">HackPSH Spring 2023</p>

@@ -3,7 +3,7 @@ import { type Metadata } from "next";
 import ContactSection from "@/app/_components/page-assets/contact-section";
 import { Card } from "@/app/_components/ui/card";
 import MemberButtons from "@/app/_components/page-assets/member-buttons";
-import AboutSvg from "@/app/_images/about-svg";
+import AboutHeroSvg from "@/app/_components/svg-components/about/about-hero-svg";
 
 export const metadata: Metadata = {
   title: "About | HackPSH",
@@ -22,7 +22,7 @@ function AboutHero() {
           </p>
         </div>
         <div className="-mt-[2rem] hidden items-center justify-start md:flex">
-          <AboutSvg />
+          <AboutHeroSvg />
         </div>
       </div>
     </Section>

@@ -64,9 +64,8 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
   }
 
   return (
-    <>
+    <>  
       <Section className="bg-background-variant-other">
-        <p className="mb-10 text-center text-3xl font-bold">Help us Improve!</p>
         <div
           className={cn("grid-gap-6 mx-auto max-w-xl", className)}
           {...props}
