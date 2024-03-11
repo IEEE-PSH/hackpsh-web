@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 
 function AboutHero() {
   return (
-    <Section className="h-[16.75rem] border-b bg-background text-foreground">
-      <div className="flex justify-between space-x-12">
+    <Section className="border-b h-96 bg-background text-foreground">
+      <div className="flex justify-between">
         <div>
           <p className="text-6xl font-bold">About</p>
           <p className="mt-8">
@@ -21,7 +21,7 @@ function AboutHero() {
             coordinators, developers, and more.
           </p>
         </div>
-        <div className="-mt-[2rem] hidden items-center justify-start md:flex">
+        <div className="items-center justify-start hidden md:flex">
           <AboutHeroSvg />
         </div>
       </div>
@@ -32,11 +32,11 @@ function AboutHero() {
 function AboutTeam() {
   return (
     <Section className="bg-background-variant-other">
-      <p className="text-center text-3xl font-bold text-foreground">
+      <p className="text-3xl font-bold text-center text-foreground">
         Connect with our Team
       </p>
-      <p className="ml-4 mt-8 text-lg font-semibold">CURRENT MEMBERS</p>
-      <div className="my-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+      <p className="mt-8 ml-4 text-lg font-semibold">CURRENT MEMBERS</p>
+      <div className="grid grid-cols-1 gap-6 my-8 md:grid-cols-2">
         <Card className="p-4">
           <div className="relative flex flex-col text-foreground">
             <p className="font-bold">PRESIDENT</p>
@@ -252,11 +252,11 @@ function AboutTeam() {
         </Card>
       </div>
       <hr />
-      <p className="ml-4 mt-8 text-lg font-semibold">ALUMNI</p>
-      <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
+      <p className="mt-8 ml-4 text-lg font-semibold">ALUMNI</p>
+      <div className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
         <Card className="p-4">
           <div className="relative flex flex-col text-foreground">
-            <p className="font-bold">PRESIDENT</p>
+            <p className="font-bold">SECRETRARY</p>
             <p className="mb-4 text-2xl">Joyce Buhano</p>
             <p className="font-light text-foreground/80">
               Electrical Engineering

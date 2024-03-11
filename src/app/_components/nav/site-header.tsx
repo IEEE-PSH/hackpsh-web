@@ -2,10 +2,10 @@ import { type ReactNode } from "react";
 
 export function SiteHeader({ children }: { children: ReactNode }) {
   return (
-    <div className="sticky top-0 z-[2] w-full border-b bg-background/75 backdrop-blur-[.5rem]">
-      <div className="container flex h-16 max-w-[80rem] items-center">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex items-center h-16 max-w-screen-2xl">
         {children}
       </div>
-    </div>
+    </header>
   );
 }

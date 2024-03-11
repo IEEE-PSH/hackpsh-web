@@ -36,7 +36,6 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
-import NumberStepper from "./number-stepper";
 import { trpc } from "@/app/_trpc/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
@@ -141,7 +140,7 @@ export default function OnboardingPersonalDetailsForm({
                               ?.replace("_", " ")
                               .toLocaleUpperCase()
                           : "Select school year"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -206,7 +205,7 @@ export default function OnboardingPersonalDetailsForm({
                               ?.replaceAll("_", " ")
                               .toLocaleUpperCase()
                           : "Select major"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -257,7 +256,7 @@ export default function OnboardingPersonalDetailsForm({
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
             )}
             Next
           </Button>
