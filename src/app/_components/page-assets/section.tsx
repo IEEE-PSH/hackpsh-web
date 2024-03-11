@@ -1,9 +1,9 @@
 import { cn } from "@/app/_lib/client-utils";
-import { type ReactNode } from "react";
+import { type ReactNode, type ComponentProps } from "react";
 
 type SectionProps = {
   children: ReactNode;
-} & React.HTMLAttributes<HTMLElement>;
+} & ComponentProps<"section">
 
 export default function Section({ children, className }: SectionProps) {
   return (
