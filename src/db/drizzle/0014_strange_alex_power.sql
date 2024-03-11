@@ -6,3 +6,5 @@ CREATE TABLE IF NOT EXISTS "app_schema"."app_contact" (
 	"contact_email" text NOT NULL,
 	"contact_content" text NOT NULL
 );
+
+ALTER TABLE "app_schema"."app_contact" ENABLE ROW LEVEL SECURITY;
