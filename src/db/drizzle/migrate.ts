@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schema from "./schema";
-import dotenv from "dotenv";
 import {
   dbMajors,
   dbOnboardingPhases,
@@ -14,8 +12,6 @@ import {
   insertRole,
   insertSchoolYear,
 } from "./startup_seed";
-
-dotenv.config();
 
 const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({
