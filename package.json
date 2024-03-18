@@ -11,7 +11,7 @@
     "generate": "dotenvx run --env-file=.env.local -- drizzle-kit generate:pg",
     "drop_migrations": "drizzle-kit drop",
     "migrate": "dotenvx run --env-file=.env.local -- pnpm dlx esno src/db/drizzle/migrate.ts",
-    "setup": "supabase start && pnpm migrate && pnpm run dev"
+    "setup": "dotenvx run --env-file=.env.local -- supabase start && pnpm migrate && pnpm run dev"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
