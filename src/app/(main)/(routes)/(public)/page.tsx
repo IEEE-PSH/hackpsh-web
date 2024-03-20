@@ -3,7 +3,7 @@ import { Button } from "@/app/_components/ui/button";
 import { Card } from "@/app/_components/ui/card";
 import Section from "@/app/_components/page-assets/section";
 import ContactSection from "@/app/_components/page-assets/contact-section";
-import CountdownWrapper from "@/app/_components/countdown/countdown-wrapper";
+import CountdownSection from "@/app/_components/countdown/countdown-wrapper";
 import HackPSH2023Fall from "@/../public/2023-fall-event.jpg";
 import HackPSH2023Spring from "@/../public/2023-spring-event.jpg";
 import Image from "next/image";
@@ -18,35 +18,38 @@ import { siteConfig } from "@/app/_config/site";
 function Hero() {
   return (
     <Section className="bg-background">
-      <div className="flex max-w-[80rem] flex-row justify-center space-x-12 text-center lg:justify-between lg:text-left">
-        <div className="flex max-w-[50rem] flex-col items-center space-y-8 lg:items-start">
+      <div className="flex flex-row justify-center space-x-12 text-center lg:justify-between lg:text-left">
+        <div className="flex max-w-[40rem] flex-col items-center space-y-8 lg:items-start">
           <p className="whitespace-nowrap text-[7vw] font-bold text-foreground md:text-6xl">
             HackPSH Spring 2024
           </p>
-          <div className="text-md flex flex-col md:text-lg">
+
+          <div className="flex flex-col text-muted-foreground md:text-lg">
             <p>
               Welcome to HackPSH Spring 2024! Dive into challenges testing your
               software and hardware skills. Whether you&apos;re new to coding or
               a circuit-building pro, this event has something for everyone!
             </p>
-            <div className="mt-8">
-              <p>Educational Activities Building | EAB 103</p>
-              <p>March 23, 2024 | 10:00 AM - 10:00 PM EST</p>
-            </div>
           </div>
-          <Button
-            className="text-md mt-auto w-48 bg-foreground text-background hover:bg-foreground/80"
-            asChild
-          >
-            <Link
-              href="https://docs.google.com/forms/d/e/1FAIpQLSdkVRX1e8lNruVzWVKgcQ6YOt9NWhkotzOysjU8YdewjDvvTA/viewform"
-              target="_blank"
-            >
-              Register
-            </Link>
-          </Button>
+
+          <div className="text-foreground">
+            <Button variant={"inline_link"} size={"navigation"} className="text-md" asChild>
+              <Link href={siteConfig.location} target="_blank">
+                <span>Educational Activities Building | EAB 103</span>
+              </Link>
+            </Button>
+            <p>March 23, 2024 | 10:00 AM - 10:00 PM EST</p>
+          </div>
+
+          <div>
+            <Button variant={"default"} className="text-md w-48" asChild>
+              <Link href={siteConfig.registration_form} target="_blank">
+                <span>Register</span>
+              </Link>
+            </Button>
+          </div>
         </div>
-        <div className="hidden lg:flex">
+        <div className="hidden lg:block">
           <HomeHeroSvg/>
         </div>
       </div>
@@ -88,7 +91,7 @@ function HomeInfo() {
         </Card>
         <hr className="col-span-full" />
         <div className="hidden items-center justify-center p-6 md:col-span-2 md:flex">
-          <HomeInfo2Svg/>
+          <HomeInfo2Svg />
         </div>
         <Card className="col-span-full p-6 text-foreground/80 md:col-span-3">
           <p className="mb-8 text-4xl font-bold text-foreground">
@@ -290,12 +293,12 @@ export default function Page() {
   return (
     <>
       <Hero />
-      <CountdownWrapper />
-      <HomeInfo />
+      <CountdownSection />
+      {/* <HomeInfo />
       <HomeRules />
       <HomePrizes />
-      <HomePastEvents />
-      <ContactSection title="Have a Question?" />
+      <HomePastEvents /> 
+      <ContactSection title="Have a Question?" />*/}
     </>
   );
 }

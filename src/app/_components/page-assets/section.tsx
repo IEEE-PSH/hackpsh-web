@@ -8,7 +8,7 @@ type SectionProps = {
 export default function Section({ children, className }: SectionProps) {
   return (
     <section className={cn(className)}>
-      <div className="container max-w-[80rem] py-16">{children}</div>
+      <div className="container py-16">{children}</div>
     </section>
   );
 }

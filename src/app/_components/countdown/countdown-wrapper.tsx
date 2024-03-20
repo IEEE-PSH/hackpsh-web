@@ -1,5 +1,5 @@
 import { serverTRPC } from "@/app/_trpc/server";
-import Countdown from "./countdown";
+import Countdown from "./countdown-section";
 
 export default async function CountdownWrapper() {
   const { eventStartTime, timeRemaining } =

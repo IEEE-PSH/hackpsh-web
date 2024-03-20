@@ -1,6 +1,7 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import CountdownClock from "@/app/_components/countdown/countdown-clock.tsx";
+import CountdownClock from "@/app/_components/countdown/countdown-clock";
 import CountdownComplete from "./countdown-complete";
 
 type CountdownProps = {
@@ -8,7 +9,7 @@ type CountdownProps = {
   timeRemaining: number;
 };
 
-export default function Countdown({
+export default function CountdownSection({
   eventStartTime,
   timeRemaining,
 }: CountdownProps) {
@@ -37,7 +38,7 @@ export default function Countdown({
     return () => clearTimeout(timerID);
   }, [time, isLoaded, eventStartTime, eventHasCompleted]);
 
-  if (eventStillActive)
+  if (eventStillActive) {
     return (
       <CountdownClock
         timeRemaining={twelveHourMS + time}
@@ -45,13 +46,16 @@ export default function Countdown({
         title="Event ends in"
       />
     );
-  else if (eventHasCompleted) return <CountdownComplete />;
+  } else if (eventHasCompleted) {
+    return <CountdownComplete />;
+  } else {
+    return (
+      <CountdownClock
+        timeRemaining={time}
+        isLoaded={isLoaded}
+        title="Event starts in"
+      />
+    );
+  }
 
-  return (
-    <CountdownClock
-      timeRemaining={time}
-      isLoaded={isLoaded}
-      title="Event starts in"
-    />
-  );
 }

@@ -1,27 +1,12 @@
 import Section from "../page-assets/section";
 import { Skeleton } from "../ui/skeleton";
 
-function millisecondsToUnits(totalTime: number) {
-  const seconds = Math.floor((totalTime / 1000) % 60).toLocaleString(`en-US`, {
-    minimumIntegerDigits: 2,
-  });
-  const minutes = Math.floor((totalTime / 60000) % 60).toLocaleString(`en-US`, {
-    minimumIntegerDigits: 2,
-  });
-  const hours = Math.floor((totalTime / 3600000) % 24).toLocaleString(`en-US`, {
-    minimumIntegerDigits: 2,
-  });
-  const days = Math.floor(totalTime / 86400000).toLocaleString(`en-US`, {
-    minimumIntegerDigits: 2,
-  });
-  return { days, hours, minutes, seconds };
-}
-
 type CountdownClockProps = {
   timeRemaining: number;
   title: string;
   isLoaded: boolean;
 };
+
 export default function CountdownClock({
   timeRemaining,
   title,
@@ -63,4 +48,20 @@ export default function CountdownClock({
       </div>
     </Section>
   );
+}
+
+function millisecondsToUnits(totalTime: number) {
+  const seconds = Math.floor((totalTime / 1000) % 60).toLocaleString(`en-US`, {
+    minimumIntegerDigits: 2,
+  });
+  const minutes = Math.floor((totalTime / 60000) % 60).toLocaleString(`en-US`, {
+    minimumIntegerDigits: 2,
+  });
+  const hours = Math.floor((totalTime / 3600000) % 24).toLocaleString(`en-US`, {
+    minimumIntegerDigits: 2,
+  });
+  const days = Math.floor(totalTime / 86400000).toLocaleString(`en-US`, {
+    minimumIntegerDigits: 2,
+  });
+  return { days, hours, minutes, seconds };
 }
