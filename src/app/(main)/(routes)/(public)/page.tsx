@@ -25,7 +25,7 @@ function Hero() {
             HackPSH Spring 2024
           </p>
 
-          <p className="text-muted-foreground md:text-lg">
+          <p className="text-muted-foreground text-lg">
             Welcome to HackPSH Spring 2024! Dive into challenges testing your
             software and hardware skills. Whether you&apos;re new to coding or
             a circuit-building pro, this event has something for everyone!
@@ -47,7 +47,7 @@ function Hero() {
           </Button>
 
         </div>
-        
+
         <div className="hidden lg:block">
           <HomeHeroSvg />
         </div>
