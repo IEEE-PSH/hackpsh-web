@@ -1,6 +1,6 @@
 import { Medal, Scale, Smile, Trophy, User } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
-import { Card } from "@/app/_components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/app/_components/ui/card";
 import Section from "@/app/_components/page-assets/section";
 import ContactSection from "@/app/_components/page-assets/contact-section";
 import CountdownSection from "@/app/_components/countdown/countdown-wrapper";
@@ -8,11 +8,11 @@ import HackPSH2023Fall from "@/../public/2023-fall-event.jpg";
 import HackPSH2023Spring from "@/../public/2023-spring-event.jpg";
 import Image from "next/image";
 import Link from "next/link";
-import HomeInfo1Svg from "@/app/_components/svg-components/home/home-info1-svg";
-import HomePrizeSvg from "@/app/_components/svg-components/home/home-prize-svg";
-import HomeInfo3Svg from "@/app/_components/svg-components/home/home-info3-svg";
 import HomeHeroSvg from "@/app/_components/svg-components/home/home-hero-svg";
-import HomeInfo2Svg from "@/app/_components/svg-components/home/home-info2-svg";
+import HomeInfo1Svg from "@/app/../../public/hackpsh-home-info-1.svg";
+import HomeInfo2Svg from "@/app/../../public/hackpsh-home-info-2.svg";
+import HomeInfo3Svg from "@/app/../../public/hackpsh-home-info-3.svg";
+import HomePrizeSvg from "@/app/../../public/hackpsh-home-prize.svg";
 import { siteConfig } from "@/app/_config/site";
 
 function Hero() {
@@ -58,67 +58,71 @@ function Hero() {
 
 function HomeInfo() {
   return (
-    <Section className="border-y">
+    <Section className="bg-background-variant dark:bg-background/60 border-y">
       <div className="grid grid-cols-5 gap-8">
-        <div className="hidden items-center justify-center p-6 md:col-span-2 md:flex">
-          <HomeInfo1Svg />
+        <div className="hidden justify-center md:col-span-2 md:flex">
+          <Image priority={true} alt="Graphical Element" src={HomeInfo1Svg} width={230} />
         </div>
-        <Card className="col-span-full p-6 text-foreground/80 md:col-span-3">
-          <p className="mb-8 text-4xl font-bold text-foreground">
-            What is HackPSH?
-          </p>
-          <p>
-            HackPSH is a dynamic student-led hackathon built by{" "}
-            <span className="font-semibold text-foreground hover:underline">
+        <Card className="col-span-full text-foreground/80 md:col-span-3">
+          <CardHeader>
+            <CardTitle className="text-3xl text-card-foreground">What is HackPSH?</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>
+              Built by students of {" "}
+              <Button variant="inline_link" size="navigation" className="text-md" asChild>
+                <Link href={siteConfig.links.blog} target="_blank">
+                  Penn State Harrisburg&apos;s IEEE Student Chapter
+                </Link>
+              </Button>
+              , HackPSH is a dynamic hackathon focused on solving challenges dedicated towards subjects within
+              the Computer Science and Electrical Engineering disciplines.
+              Participants will be provided with Raspbery Pi Pico W kits to build
+              various circuits and engage in coding challenges via
               {" "}
-              <Link href={siteConfig.links.blog} target="_blank">
-                Penn State Harrisburg&apos;s IEEE Student Chapter
-              </Link>
-            </span>
-            . We focus on solving challenges dedicated towards subjects within
-            the Computer Science and Electrical Engineering disciplines.
-            Participants will be provided with Raspbery Pi Pico W kits to build
-            various circuits and engage in coding challenges via{" "}
-            <span className="font-semibold text-foreground hover:underline">
-              <Link href="https://www.hackerrank.com/" target="_blank">
-                HackerRank
-              </Link>
-            </span>
-            . We aim to explore learning in areas such as cryptography,
-            circuitry, algorithms, and much more!
-          </p>
+              <Button variant="inline_link" size="navigation" className="text-md" asChild>
+                <Link href="https://www.hackerrank.com/" target="_blank">
+                  HackerRank
+                </Link>
+              </Button>
+              . We aim to explore learning in areas such as cryptography,
+              circuitry, algorithms, and much more!
+            </p>
+          </CardContent>
         </Card>
         <hr className="col-span-full" />
-        <div className="hidden items-center justify-center p-6 md:col-span-2 md:flex">
-          <HomeInfo2Svg />
+        <Card className="col-span-full text-foreground/80 md:col-span-3">
+          <CardHeader>
+            <CardTitle className="text-3xl text-card-foreground">Who is it for?</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>
+              HackPSH caters towards students eager to explore the intricacies of
+              building complex circuits and solving real-world coding problems. We
+              aim our event towards those who want to improve their skills while
+              providing an inclusive environment for learning and competition.
+              With a diverse range of skill levels in mind, the event encourages
+              participation from beginners to experienced students, fostering a
+              collaborative and competitive environment.
+            </p>
+          </CardContent>
+        </Card>
+        <div className="hidden justify-center p-6 md:col-span-2 md:flex">
+          <Image alt="Graphical Element" src={HomeInfo2Svg} width={210} height={250} />
         </div>
-        <Card className="col-span-full p-6 text-foreground/80 md:col-span-3">
-          <p className="mb-8 text-4xl font-bold text-foreground">
-            Who is it for?
-          </p>
-          <p>
-            HackPSH caters towards students eager to explore the intricacies of
-            building complex circuits and solving real-world coding problems. We
-            aim our event towards those who want to improve their skills while
-            providing an inclusive environment for learning and competition.
-            With a diverse range of skill levels in mind, the event encourages
-            participation from beginners to experienced students, fostering a
-            collaborative and competitive environment.
-          </p>
-        </Card>
+
         <hr className="col-span-full" />
         <div className="hidden items-center justify-center p-6 md:col-span-2 md:flex">
-          <HomeInfo3Svg />
+          <Image alt="Graphical Element" src={HomeInfo3Svg} width={160} />
         </div>
         <Card className="col-span-full p-6 text-foreground/80 md:col-span-3">
           <p className="mb-8 text-4xl font-bold text-foreground">
             What is the theme?
           </p>
           <p>
-            As of right now, the theme is being decided, and will be announced
-            once determined. Traditionally, HackPSH tends to choose a theme that
-            can be interpreted in an open manner to allow for the most
-            creativity, as we simply want to see unique projects.
+          The theme for HackPSH is currently in the works, awaiting its grand reveal. 
+          Traditionally, HackPSH selects themes that encourage boundless creativity, allowing participants to embark on unique projects. 
+          Stay tuned for the exciting theme announcement—it&apos;s going to be epic! 🚀🌑
           </p>
         </Card>
       </div>
@@ -128,13 +132,12 @@ function HomeInfo() {
 
 function HomeRules() {
   return (
-    <Section className="bg-background-variant">
-      <div className="mx-auto max-w-[30rem] md:max-w-full">
+    <Section className="bg-background mx-auto">
         <p className="text-center text-4xl font-bold text-foreground">RULES</p>
-        <div className="my-6 mt-8 grid grid-cols-1 place-items-center items-start gap-8 text-foreground md:grid-cols-3">
+        <div className="my-6 mt-8 grid grid-cols-1 place-items-center items-start gap-8 md:grid-cols-3">
           <div className="flex flex-col items-center">
-            <User size="2rem" />
-            <p className="mt-4 text-xl">Teams</p>
+            <User className="h-8 w-8 text-xl text-foreground" />
+            <p className="mt-4 text-xl text-foreground">Teams</p>
             <p className="mt-8 text-foreground/80">
               Teams are comprised of up to 4 people. Team members must work
               together to complete challenges and earn points. Once joining a
@@ -143,8 +146,8 @@ function HomeRules() {
           </div>
 
           <div className="flex flex-col items-center">
-            <Scale size="2rem" />
-            <p className="mt-4 text-xl">Integrity</p>
+            <Scale className="h-8 w-8 text-xl text-foreground" />
+            <p className="mt-4 text-xl text-foreground">Integrity</p>
             <p className="mt-8 text-foreground/80">
               Our commitment to integrity means promoting a culture where
               ethical practices are the norm. We believe in the power of
@@ -153,9 +156,10 @@ function HomeRules() {
               and contributing to a positive and inclusive community.
             </p>
           </div>
+
           <div className="flex flex-col items-center">
-            <Smile size="2rem" />
-            <p className="mt-4 text-xl">Conduct</p>
+            <Smile className="h-8 w-8 text-xl text-foreground" />
+            <p className="mt-4 text-xl text-foreground">Conduct</p>
             <p className="mt-8 text-foreground/80">
               At HackPSH, we expect all participants to engage with respect and
               fairness, valuing the contributions and efforts of every
@@ -165,49 +169,44 @@ function HomeRules() {
             </p>
           </div>
         </div>
-      </div>
     </Section>
   );
 }
 
 function HomePrizes() {
   return (
-    <Section className="border-y bg-primary">
-      <div className="flex items-center space-x-12">
-        <div className="mx-auto flex max-w-[30rem] flex-col items-center text-center text-black">
-          <p className="text-4xl font-bold">PRIZES</p>
-          <p className="mt-8 text-xl">
-            Attend HackPSH to earn prizes, participate in raffles, and much
-            more!
-          </p>
-          <p className="mt-8 text-xl font-semibold">
-            Money prizes for each person on winning teams!
-          </p>
-          <div className="my-14 flex scale-[0.85] flex-row space-x-4 sm:scale-[1]">
-            <div className="flex h-[9.5rem] w-[7rem] rotate-[2deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 shadow-lg">
-              <Medal size="2rem" />
-              <p className=" font-bold">2nd Place</p>
-              <p className="text-xl">$50</p>
-            </div>
-            <div className="z-[2] box-border flex h-[9.5rem] w-[7rem] rotate-[-7deg] scale-[1.3] flex-col items-center space-y-4 rounded-xl bg-white p-4 shadow-lg">
-              <Trophy size="2rem" />
-              <p className=" font-bold">1st Place</p>
-              <p className="text-xl">$100</p>
-            </div>
-            <div className="flex h-[9.5rem] w-[7rem] rotate-[5deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 shadow-lg">
-              <Medal size="2rem" />
-              <p className=" font-bold">3rd Place</p>
-              <p className="text-xl">$25</p>
-            </div>
-          </div>
-          <p className="text-xl">
-            Everyone will receive a{" "}
-            <span className="italic">Certificate of Participation</span> and an
-            entry in the <span className="italic">Resume Book.</span>
-          </p>
-        </div>
+    <Section className="border-y bg-primary/90">
+      <div className="flex flex-row space-x-12 justify-center">
+        <Card className="bg-background-banana border-black max-w-[32rem]">
+          <CardHeader>
+            <CardTitle className="dark:text-background text-3xl">PRIZES</CardTitle>
+            <CardDescription className="text-foreground dark:text-background/80 text-md">Attend HackPSH to earn prizes, participate in raffles, and much more!</CardDescription>
+            <CardContent className="mx-auto">
+              <div className="my-14 flex scale-[0.85] flex-row space-x-4 sm:scale-[1]">
+                <div className="text-foreground dark:text-background flex h-42 w-28 rotate-[2deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 shadow-lg">
+                  <Medal className="h-8 w-8" />
+                  <p className="font-bold">2nd Place</p>
+                  <p className="text-xl">$50</p>
+                </div>
+                <div className="text-foreground dark:text-background z-[2] box-border flex h-42 w-28 rotate-[-7deg] scale-[1.3] flex-col items-center space-y-4 rounded-xl bg-white p-4 shadow-lg">
+                  <Trophy className="h-8 w-8" />
+                  <p className="font-bold">1st Place</p>
+                  <p className="text-xl">$100</p>
+                </div>
+                <div className="text-foreground dark:text-background flex h-42 w-28 rotate-[5deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 shadow-lg">
+                  <Medal className="h-8 w-8" />
+                  <p className="font-bold">3rd Place</p>
+                  <p className="text-xl">$25</p>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter className="text-lg dark:text-background/80 font-medium">
+              Everyone will receive a Certificate of Participation and an entry in the Resume Book.
+            </CardFooter>
+          </CardHeader>
+        </Card>
         <div className="hidden md:flex">
-          <HomePrizeSvg />
+          <Image alt="Graphical Element" src={HomePrizeSvg} />
         </div>
       </div>
     </Section>
@@ -292,12 +291,12 @@ export default function Page() {
   return (
     <>
       <Hero />
-      { /* <CountdownSection /> */}
-      {/* <HomeInfo />
+      <HomeInfo />
       <HomeRules />
       <HomePrizes />
-      <HomePastEvents /> 
-      <ContactSection title="Have a Question?" />*/}
+      <HomePastEvents />
+      { /* <CountdownSection /> */}
+      <ContactSection title="Have a Question?" />
     </>
   );
 }
