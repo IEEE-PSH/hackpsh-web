@@ -20,7 +20,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         inline_link: "text-foreground underline-offset-4 hover:underline",
         navigation: "transition-colors hover:text-foreground/80",
-        brand: "items-center mr-6 space-x-2",
+        brand: "items-center space-x-2",
       },
       size: {
         default: "h-10 px-4 py-2",

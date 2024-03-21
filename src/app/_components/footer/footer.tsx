@@ -2,22 +2,23 @@ import React from "react";
 import Link from "next/link";
 import { siteConfig } from "@/app/_config/site";
 import { Icons } from "../ui/icons";
+import { Button } from "../ui/button";
 
 export default function Footer() {
   return (
-    <div className="absolute bottom-0 w-full border-t bg-background py-16 sm:block">
-      <div className="container max-w-[80rem] items-start text-foreground sm:flex sm:flex-row sm:justify-center lg:justify-between">
-        <Link
-          href={siteConfig.paths.home}
-          className="hidden origin-top-left scale-[2] items-center space-x-2 lg:flex"
-          scroll={false}
-        >
-          <Icons.brand className="h-[2.4rem] w-[2.0rem]" />
-          <span className="hidden text-xl font-bold sm:inline-block">
-            {siteConfig.name}
-          </span>
-        </Link>
-        <div className="grid grid-cols-2 gap-8 whitespace-nowrap sm:flex sm:w-[39.5rem] sm:flex-row sm:justify-between">
+    <div className="border-t bg-background py-16">
+      <nav className="flex flex-col">
+        <Button variant="brand" size="navigation" asChild>
+          <Link href={siteConfig.paths.home} scroll={true}>
+            <Icons.brand className="h-[6rem] w-[5rem]" />
+            <span className="text-4xl font-bold">
+              {siteConfig.name}
+            </span>
+          </Link>
+        </Button>
+      </nav>
+
+        {/* <div className="grid grid-cols-2 gap-8 whitespace-nowrap">
           <ul className="space-y-3">
             <p className=" font-bold">Follow Us</p>
             <li className="hover:underline">
@@ -70,8 +71,7 @@ export default function Footer() {
               </Link>
             </li>
           </ul>
-        </div>
-      </div>
-    </div>
+        </div>*/}
+      </div> 
   );
 }

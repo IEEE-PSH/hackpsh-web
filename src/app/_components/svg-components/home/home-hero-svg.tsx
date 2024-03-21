@@ -7,8 +7,7 @@ export default function HomeHeroSvg() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* <rect x="54" y="54" width="144" height="141" fill="white" /> */}
-      <g mask="url(#mask0_34_241)">
+      <g>
         <path d="M82 2H62V46H82V2Z" fill="#FACC15" />
         <path d="M188 2H168V46H188V2Z" fill="#FACC15" />
         <path d="M188 204H168V248H188V204Z" fill="#FACC15" />

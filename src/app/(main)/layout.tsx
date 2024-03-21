@@ -1,7 +1,7 @@
 import "@/app/globals.css";
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans"
-import { ThemeProvider } from "@/app/_components/theme-provider";
+import { ThemeProvider as NextThemesProvider } from "next-themes"
 import { Toaster } from "@/app/_components/ui/toaster";
 import ReactQueryProvider from "@/app/_trpc/react";
 import { headers } from "next/headers";
@@ -20,17 +20,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" type="image/svg+xml" href="/brand.svg" />
       </head>
       <body className={font.className}>
-        <ThemeProvider
+        <NextThemesProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem={true}
           storageKey="hackpsh-theme"
         >
-          <ReactQueryProvider headers={headers()}>              
+          <ReactQueryProvider headers={headers()}>
             {children}
           </ReactQueryProvider>
           <Toaster />
-        </ThemeProvider>
+        </NextThemesProvider>
       </body>
     </html>
   );

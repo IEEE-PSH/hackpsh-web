@@ -12,7 +12,7 @@ export function PublicMainNav() {
 
   return (
     <div className="hidden mr-4 md:flex">
-      <Button variant={"brand"} size={"navigation"} asChild>
+      <Button variant="brand" size="navigation" className="mr-6" asChild>
         <Link href={siteConfig.paths.home} scroll={true}>
           <Icons.brand className="h-[2.4rem] w-[2.0rem]" />
           <span className="hidden text-xl font-bold sm:inline-block">
