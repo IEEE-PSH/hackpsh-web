@@ -18,22 +18,21 @@ import { siteConfig } from "@/app/_config/site";
 function Hero() {
   return (
     <Section className="bg-background">
-      <div className="flex flex-row justify-center space-x-12 text-center lg:justify-between lg:text-left">
-        <div className="flex max-w-[40rem] flex-col items-center space-y-8 lg:items-start">
-          <p className="whitespace-nowrap text-[7vw] font-bold text-foreground md:text-6xl">
+      <div className="flex justify-center lg:justify-between">
+        <div className="flex flex-col max-w-xl text-center lg:text-left items-center space-y-8 lg:items-start">
+
+          <p className="text-4xl font-bold text-foreground">
             HackPSH Spring 2024
           </p>
 
-          <div className="flex flex-col text-muted-foreground md:text-lg">
-            <p>
-              Welcome to HackPSH Spring 2024! Dive into challenges testing your
-              software and hardware skills. Whether you&apos;re new to coding or
-              a circuit-building pro, this event has something for everyone!
-            </p>
-          </div>
+          <p className="text-muted-foreground md:text-lg">
+            Welcome to HackPSH Spring 2024! Dive into challenges testing your
+            software and hardware skills. Whether you&apos;re new to coding or
+            a circuit-building pro, this event has something for everyone!
+          </p>
 
           <div className="text-foreground">
-            <Button variant={"inline_link"} size={"navigation"} className="text-md" asChild>
+            <Button variant="inline_link" size="navigation" className="text-md" asChild>
               <Link href={siteConfig.location} target="_blank">
                 <span>Educational Activities Building | EAB 103</span>
               </Link>
@@ -41,16 +40,16 @@ function Hero() {
             <p>March 23, 2024 | 10:00 AM - 10:00 PM EST</p>
           </div>
 
-          <div>
-            <Button variant={"default"} className="text-md w-48" asChild>
-              <Link href={siteConfig.registration_form} target="_blank">
-                <span>Register</span>
-              </Link>
-            </Button>
-          </div>
+          <Button variant="default" className="text-md w-48" asChild>
+            <Link href={siteConfig.registration_form} target="_blank">
+              <span>Register</span>
+            </Link>
+          </Button>
+
         </div>
+        
         <div className="hidden lg:block">
-          <HomeHeroSvg/>
+          <HomeHeroSvg />
         </div>
       </div>
     </Section>
@@ -293,7 +292,7 @@ export default function Page() {
   return (
     <>
       <Hero />
-      <CountdownSection />
+      { /* <CountdownSection /> */}
       {/* <HomeInfo />
       <HomeRules />
       <HomePrizes />
