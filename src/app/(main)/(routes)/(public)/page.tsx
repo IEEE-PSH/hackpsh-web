@@ -61,6 +61,7 @@ function HomeInfo() {
     <Section className="bg-background-variant dark:bg-background/60 border-y">
       <div className="grid grid-cols-5 gap-8">
         <div className="hidden justify-center md:col-span-2 md:flex">
+          {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
           <Image priority={true} alt="Graphical Element" src={HomeInfo1Svg} width={230} />
         </div>
         <Card className="col-span-full text-foreground/80 md:col-span-3">
@@ -108,11 +109,13 @@ function HomeInfo() {
           </CardContent>
         </Card>
         <div className="hidden justify-center p-6 md:col-span-2 md:flex">
+          {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
           <Image alt="Graphical Element" src={HomeInfo2Svg} width={210} height={250} />
         </div>
 
         <hr className="col-span-full" />
         <div className="hidden items-center justify-center p-6 md:col-span-2 md:flex">
+          {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
           <Image alt="Graphical Element" src={HomeInfo3Svg} width={160} />
         </div>
         <Card className="col-span-full p-6 text-foreground/80 md:col-span-3">
@@ -120,9 +123,9 @@ function HomeInfo() {
             What is the theme?
           </p>
           <p>
-          The theme for HackPSH is currently in the works, awaiting its grand reveal. 
-          Traditionally, HackPSH selects themes that encourage boundless creativity, allowing participants to embark on unique projects. 
-          Stay tuned for the exciting theme announcement—it&apos;s going to be epic! 🚀🌑
+            The theme for HackPSH is currently in the works, awaiting its grand reveal.
+            Traditionally, HackPSH selects themes that encourage boundless creativity, allowing participants to embark on unique projects.
+            Stay tuned for the exciting theme announcement—it&apos;s going to be epic! 🚀🌑
           </p>
         </Card>
       </div>
@@ -133,42 +136,42 @@ function HomeInfo() {
 function HomeRules() {
   return (
     <Section className="bg-background mx-auto">
-        <p className="text-center text-4xl font-bold text-foreground">RULES</p>
-        <div className="my-6 mt-8 grid grid-cols-1 place-items-center items-start gap-8 md:grid-cols-3">
-          <div className="flex flex-col items-center">
-            <User className="h-8 w-8 text-xl text-foreground" />
-            <p className="mt-4 text-xl text-foreground">Teams</p>
-            <p className="mt-8 text-foreground/80">
-              Teams are comprised of up to 4 people. Team members must work
-              together to complete challenges and earn points. Once joining a
-              team, members cannot leave to join other teams.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center">
-            <Scale className="h-8 w-8 text-xl text-foreground" />
-            <p className="mt-4 text-xl text-foreground">Integrity</p>
-            <p className="mt-8 text-foreground/80">
-              Our commitment to integrity means promoting a culture where
-              ethical practices are the norm. We believe in the power of
-              collaboration, honesty, and respect in driving innovation. By
-              joining HackPSH, participants commit to upholding these principles
-              and contributing to a positive and inclusive community.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center">
-            <Smile className="h-8 w-8 text-xl text-foreground" />
-            <p className="mt-4 text-xl text-foreground">Conduct</p>
-            <p className="mt-8 text-foreground/80">
-              At HackPSH, we expect all participants to engage with respect and
-              fairness, valuing the contributions and efforts of every
-              individual. We have no tolerance for communication that makes
-              anyone feel unwelcome, unsupported, insulted, or discriminated
-              against.
-            </p>
-          </div>
+      <p className="text-center text-4xl font-bold text-foreground">RULES</p>
+      <div className="my-6 mt-8 grid grid-cols-1 place-items-center items-start gap-8 md:grid-cols-3">
+        <div className="flex flex-col items-center">
+          <User className="h-8 w-8 text-xl text-foreground" />
+          <p className="mt-4 text-xl text-foreground">Teams</p>
+          <p className="mt-8 text-foreground/80">
+            Teams are comprised of up to 4 people. Team members must work
+            together to complete challenges and earn points. Once joining a
+            team, members cannot leave to join other teams.
+          </p>
         </div>
+
+        <div className="flex flex-col items-center">
+          <Scale className="h-8 w-8 text-xl text-foreground" />
+          <p className="mt-4 text-xl text-foreground">Integrity</p>
+          <p className="mt-8 text-foreground/80">
+            Our commitment to integrity means promoting a culture where
+            ethical practices are the norm. We believe in the power of
+            collaboration, honesty, and respect in driving innovation. By
+            joining HackPSH, participants commit to upholding these principles
+            and contributing to a positive and inclusive community.
+          </p>
+        </div>
+
+        <div className="flex flex-col items-center">
+          <Smile className="h-8 w-8 text-xl text-foreground" />
+          <p className="mt-4 text-xl text-foreground">Conduct</p>
+          <p className="mt-8 text-foreground/80">
+            At HackPSH, we expect all participants to engage with respect and
+            fairness, valuing the contributions and efforts of every
+            individual. We have no tolerance for communication that makes
+            anyone feel unwelcome, unsupported, insulted, or discriminated
+            against.
+          </p>
+        </div>
+      </div>
     </Section>
   );
 }
@@ -206,6 +209,7 @@ function HomePrizes() {
           </CardHeader>
         </Card>
         <div className="hidden md:flex">
+          {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
           <Image alt="Graphical Element" src={HomePrizeSvg} />
         </div>
       </div>
