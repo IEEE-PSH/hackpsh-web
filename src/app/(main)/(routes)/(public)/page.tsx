@@ -294,11 +294,11 @@ export default function Page() {
   return (
     <>
       <Hero />
+      <CountdownSection />
       <HomeInfo />
       <HomeRules />
       <HomePrizes />
       <HomePastEvents />
-      { /* <CountdownSection /> */}
       <ContactSection title="Have a Question?" cta="Reach Out!" />
     </>
   );
