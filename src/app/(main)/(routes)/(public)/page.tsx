@@ -265,7 +265,7 @@ function HomePastEvents() {
               <p className="text-3xl font-bold">HackPSH Spring 2023</p>
               <p className="my-4">
                 The Spring 2023 Hackathon, co-hosted by IEEE and ACM, was Penn
-                State Harrisburg{"'"}s first-ever hackathon. It drew students
+                State Harrisburg&apos;s first-ever hackathon. It drew students
                 across various majors to engage in hardware and software
                 projects, including Arduino programming and circuit building.
                 The event fostered team-building, workshops, and networking with
