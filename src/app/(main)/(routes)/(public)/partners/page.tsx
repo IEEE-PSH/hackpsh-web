@@ -11,7 +11,7 @@ import DeloitteLogo from "@/../public/sponsors/Deloitte_Logo.jpg";
 import FootLockerLogo from "@/../public/sponsors/Foot_Locker_Logo.png";
 import MicrochipLogo from "@/../public/sponsors/Microchip-Logo.png";
 import RohdeSchwarzLogo from "@/../public/sponsors/Rohde_Schwarz_Logo.png";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import { type StaticImport } from "next/dist/shared/lib/get-img-props";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -28,10 +28,12 @@ function PartnersHero() {
           <div className="flex flex-col space-y-6 md:space-y-4 justify-center">
             <h2 className="text-6xl font-bold">Partners</h2>
             <p className="text-lg text-muted-foreground max-w-[44rem]">
-              We're thrilled to partner with exceptional organizations that share our passion for innovation and community-driven experiences.
-              These partners play a pivotal role in making each event unforgettable, and we're excited to introduce them to you!
+              We&apos;re thrilled to partner with exceptional organizations that share our passion for innovation and community-driven experiences.
+              These partners play a pivotal role in making each event unforgettable, and we&apos;re excited to introduce them to you!
             </p>
           </div>
+          
+          {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
           <Image src={PartnersHeroSvg} width={300} alt="Graphical Element" className="hidden md:flex" />
         </div>
       </div>
@@ -51,6 +53,7 @@ function PartnerSpotCard({ name, description, image_src, image_alt, partner_url 
   return (
     <Card className="mx-auto grid gap-y-8 text-foreground">
       <div className="flex flex-row">
+        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
         <Image
           alt={image_alt}
           src={image_src}

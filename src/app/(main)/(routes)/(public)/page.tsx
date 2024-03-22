@@ -48,9 +48,8 @@ function Hero() {
 
         </div>
 
-        <div className="hidden lg:block">
-          <Image src={HomeHeroSvg} width={300} alt="Graphical Element" />
-        </div>
+        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
+        <Image src={HomeHeroSvg} width={300} alt="Graphical Element" className="hidden lg:block" />
       </div>
     </Section>
   );

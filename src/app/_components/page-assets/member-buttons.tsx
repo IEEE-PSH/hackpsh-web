@@ -3,13 +3,13 @@ import { Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 
-type MemberContactInformation = {
+export type MemberContactInformation = {
   github?: string;
   linkedin?: string;
   email?: string;
 };
 
-export default function MemberButtons({ github, linkedin, email }: MemberContactInformation) {
+export function MemberButtons({ github, linkedin, email }: MemberContactInformation) {
   return (
     <div className="absolute bottom-0 right-0 flex space-x-2">
       {github && (

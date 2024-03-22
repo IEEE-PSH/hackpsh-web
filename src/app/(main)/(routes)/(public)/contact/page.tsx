@@ -163,17 +163,20 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
 
 function ContactHero() {
   return (
-    <Section className="h-[16.75rem] border-b bg-background text-foreground">
-      <div className="flex justify-between space-x-12">
-        <div>
-          <p className="text-6xl font-bold">Contact</p>
-          <p className="mt-8">
-            Reach out to us if you have any questions, feedback, etc.
-          </p>
+    <section className="bg-background text-foreground">
+      <div className="container">
+        <div className="flex py-6 md:py-12 justify-center">
+          <div className="flex flex-col space-y-6 md:space-y-4 justify-center">
+            <h2 className="text-6xl font-bold">Contact Us</h2>
+            <p className="text-lg text-muted-foreground max-w-[44rem]">
+              Do you have any questions regarding our event? Are you interested in working together?
+              This is the right place to reach out for general questions and interests in partnership
+              for future events.
+            </p>
+          </div>
         </div>
-        <div className="-mt-[2rem] hidden items-center justify-start md:flex"></div>
       </div>
-    </Section>
+    </section>
   );
 }
 
