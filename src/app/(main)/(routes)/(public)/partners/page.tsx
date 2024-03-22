@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 function PartnersHero() {
   return (
-    <section className="bg-background border-y text-foreground">
+    <section className="bg-background text-foreground">
       <div className="container">
         <div className="flex flex-row justify-between py-6">
           <div className="flex flex-col space-y-6 md:space-y-4 justify-center">

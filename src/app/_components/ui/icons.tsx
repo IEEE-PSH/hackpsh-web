@@ -39,7 +39,7 @@ export const Icons = {
       <g>
         <line
           transform="rotate(90 62.5 35.3464)"
-          stroke="rgb(220,212,97)"
+          stroke="rgb(250, 204, 21)"
           id="svg_1"
           y2="97.42981"
           x2="62.5"
@@ -50,7 +50,7 @@ export const Icons = {
         />
         <line
           transform="rotate(90 62.5 89.0833)"
-          stroke="rgb(220,212,97)"
+          stroke="rgb(250, 204, 21)"
           id="svg_85"
           y2="151.16663"
           x2="62.41667"
@@ -61,7 +61,7 @@ export const Icons = {
         />
         <line
           transform="rotate(90 62.5 62.0833)"
-          stroke="rgb(220,212,97)"
+          stroke="rgb(250, 204, 21)"
           id="svg_86"
           y2="124.16665"
           x2="62.5"
@@ -71,7 +71,7 @@ export const Icons = {
           fill="none"
         />
         <line
-          stroke="rgb(220,212,97)"
+          stroke="rgb(250, 204, 21)"
           id="svg_74"
           y2="124.58331"
           x2="35.63158"
@@ -81,7 +81,7 @@ export const Icons = {
           fill="none"
         />
         <line
-          stroke="rgb(220,212,97)"
+          stroke="rgb(250, 204, 21)"
           id="svg_79"
           y2="124.58331"
           x2="88.74561"
@@ -91,7 +91,7 @@ export const Icons = {
           fill="none"
         />
         <line
-          stroke="rgb(220,212,97)"
+          stroke="rgb(250, 204, 21)"
           id="svg_80"
           y2="124.58331"
           x2="62.5"
@@ -101,7 +101,7 @@ export const Icons = {
           fill="none"
         />
         <rect
-          stroke="rgb(220,212,97)"
+          stroke="rgb(250, 204, 21)"
           rx="3"
           strokeWidth="12"
           id="svg_5"
@@ -112,7 +112,7 @@ export const Icons = {
           fill="#000000"
         ></rect>
         <polygon
-          fill="rgb(220,212,97)"
+          fill="rgb(250, 204, 21)"
           points="65 42 45 66 63 66 61 82 81 58 63 58 65 42"
           id="svg_3"
         />

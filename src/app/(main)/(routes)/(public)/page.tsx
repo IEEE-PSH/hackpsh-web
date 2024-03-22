@@ -8,7 +8,7 @@ import HackPSH2023Fall from "@/../public/2023-fall-event.jpg";
 import HackPSH2023Spring from "@/../public/2023-spring-event.jpg";
 import Image from "next/image";
 import Link from "next/link";
-import HomeHeroSvg from "@/app/_components/svg-components/home/home-hero-svg";
+import HomeHeroSvg from "@/app/../../public/hackpsh-home-hero.svg";
 import HomeInfo1Svg from "@/app/../../public/hackpsh-home-info-1.svg";
 import HomeInfo2Svg from "@/app/../../public/hackpsh-home-info-2.svg";
 import HomeInfo3Svg from "@/app/../../public/hackpsh-home-info-3.svg";
@@ -49,7 +49,7 @@ function Hero() {
         </div>
 
         <div className="hidden lg:block">
-          <HomeHeroSvg />
+          <Image src={HomeHeroSvg} width={300} alt="Graphical Element" />
         </div>
       </div>
     </Section>

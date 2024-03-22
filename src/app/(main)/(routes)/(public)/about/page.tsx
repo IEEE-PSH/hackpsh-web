@@ -3,7 +3,8 @@ import { type Metadata } from "next";
 import ContactSection from "@/app/_components/page-assets/contact-section";
 import { Card } from "@/app/_components/ui/card";
 import MemberButtons from "@/app/_components/page-assets/member-buttons";
-import AboutHeroSvg from "@/app/_components/svg-components/about/about-hero-svg";
+import AboutHeroSvg from "@/app/../../public/hackpsh-about-1.svg";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About | HackPSH",
@@ -12,20 +13,20 @@ export const metadata: Metadata = {
 
 function AboutHero() {
   return (
-    <Section className="border-b h-96 bg-background text-foreground">
-      <div className="flex justify-between">
-        <div>
-          <p className="text-6xl font-bold">About</p>
-          <p className="mt-8">
-            Learn more about the HackPSH team including administrators,
-            coordinators, developers, and more.
-          </p>
-        </div>
-        <div className="items-center justify-start hidden md:flex">
-          <AboutHeroSvg />
+    <section className="bg-background text-foreground">
+      <div className="container">
+        <div className="flex flex-row justify-between py-6">
+          <div className="flex flex-col space-y-6 md:space-y-4 justify-center">
+            <h2 className="text-6xl font-bold">About</h2>
+            <p className="text-lg text-muted-foreground max-w-[44rem]">
+              We're thrilled to partner with exceptional organizations that share our passion for innovation and community-driven experiences.
+              These partners play a pivotal role in making each event unforgettable, and we're excited to introduce them to you!
+            </p>
+          </div>
+          <Image src={AboutHeroSvg} width={300} alt="Graphical Element" className="hidden md:flex" />
         </div>
       </div>
-    </Section>
+    </section>
   );
 }
 
@@ -277,7 +278,7 @@ export default function Page() {
     <>
       <AboutHero />
       <AboutTeam />
-      <ContactSection title="Have Feedback?" />
+      <ContactSection title="Have Feedback?" cta="Let Us Know!" />
     </>
   );
 }
