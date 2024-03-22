@@ -24,8 +24,8 @@ module.exports = {
           DEFAULT: "hsl(var(--background))",
           variant: {
             DEFAULT: "hsl(var(--background-variant))",
-            other: "hsl(var(--background-variant-other))",
           },
+          banana: "hsl(var(--banana))",
         },
         foreground: "hsl(var(--foreground))",
         primary: {

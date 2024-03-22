@@ -3,6 +3,8 @@ export const siteConfig = {
   emails: {
     general: "ieee@hackpsh.org",
   },
+  registration_form: "https://docs.google.com/forms/d/e/1FAIpQLSdkVRX1e8lNruVzWVKgcQ6YOt9NWhkotzOysjU8YdewjDvvTA/viewform",
+  location: "https://maps.app.goo.gl/EEXBSXZNzEgM6dhv7",
   links: {
     linkedin: "https://www.linkedin.com/company/ieee-penn-state-harrisbrurg/",
     facebook: "https://www.facebook.com/groups/183119638427039/",
