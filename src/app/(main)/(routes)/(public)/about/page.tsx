@@ -23,6 +23,8 @@ function AboutHero() {
               A round of applause truly goes to the individuals listed below for each of their contributions towards the event.
             </p>
           </div>
+          
+          {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
           <Image src={AboutHeroSvg} width={300} alt="Graphical Element" className="hidden md:flex" />
         </div>
       </div>
