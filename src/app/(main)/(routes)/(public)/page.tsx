@@ -300,7 +300,7 @@ export default function Page() {
       <HomePrizes />
       <HomePastEvents />
       { /* <CountdownSection /> */}
-      <ContactSection title="Have a Question?" />
+      <ContactSection title="Have a Question?" cta="Reach Out!" />
     </>
   );
 }
