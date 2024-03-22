@@ -8,28 +8,23 @@ import { getUser } from "@/shared/supabase/auth";
 import { serverTRPC } from "@/app/_trpc/server";
 
 export default async function ProtectedSiteHeader() {
-  //add trpc here
   const supabase = composeServerComponentClient();
-  try {
-    const user = await getUser(supabase);
-    const { user_display_name, user_email_address } =
-      await serverTRPC.user.get_user_dropdown_info.query({
-        user_uuid: user.id,
-      });
+  const user = await getUser(supabase);
+  const { user_display_name, user_email_address } =
+    await serverTRPC.user.get_user_dropdown_info.query({
+      user_uuid: user.id,
+    });
 
-    return (
-      <SiteHeader>
-        <ProtectedMainNav />
-        <ProtectedMobileNav />
-        <SiteHeaderActions>
-          <ProfileButton
-            userDisplayName={user_display_name!}
-            userEmailAddress={user_email_address}
-          />
-        </SiteHeaderActions>
-      </SiteHeader>
-    );
-  } catch (error) {
-    console.log(error);
-  }
+  return (
+    <SiteHeader>
+      <ProtectedMainNav />
+      <ProtectedMobileNav />
+      <SiteHeaderActions>
+        <ProfileButton
+          userDisplayName={user_display_name!}
+          userEmailAddress={user_email_address}
+        />
+      </SiteHeaderActions>
+    </SiteHeader>
+  );
 }
