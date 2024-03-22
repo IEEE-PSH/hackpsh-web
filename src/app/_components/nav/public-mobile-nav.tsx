@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/app/_components/ui/sheet";
 import { Button } from "@/app/_components/ui/button";
@@ -16,9 +17,9 @@ export function PublicMobileNav() {
       <SheetTrigger asChild>
         <Button
           variant="ghost"
-          className="px-0 mr-2 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
         >
-          <Menu className="w-5 h-5" />
+          <Menu className="h-5 w-5" />
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
@@ -27,38 +28,47 @@ export function PublicMobileNav() {
           href={siteConfig.paths.home}
           className="flex items-center"
           onOpenChange={setIsOpen}
-          scroll={false}
+          scroll={true}
         >
-          <Icons.brand className="w-4 h-4 mr-2" />
-          <span className="font-bold">{siteConfig.name}</span>
+          <Icons.brand className="mr-2 h-4 w-4" />
+          <span className="text-xl font-bold">{siteConfig.name}</span>
         </MobileLink>
-        <div className="flex flex-col h-full pb-10 pl-6 my-4 space-y-3 text-base">
+        <div className="my-4 flex h-full flex-col space-y-3 pb-10 pl-6 text-base">
           <MobileLink
             href={siteConfig.paths.home}
             onOpenChange={setIsOpen}
-            scroll={false}
+            scroll={true}
+            className="hover:underline"
           >
             Home
           </MobileLink>
           <MobileLink
+            href={siteConfig.paths.partners}
+            onOpenChange={setIsOpen}
+            scroll={true}
+            className="hover:underline"
+          >
+            Partners
+          </MobileLink>
+          <MobileLink
             href={siteConfig.paths.about}
             onOpenChange={setIsOpen}
-            scroll={false}
+            scroll={true}
+            className="hover:underline"
           >
             About
           </MobileLink>
           <MobileLink
-            href={siteConfig.paths.partners}
+            href={siteConfig.paths.contact}
             onOpenChange={setIsOpen}
-            scroll={false}
+            scroll={true}
+            className="hover:underline"
           >
-            Partners
+            Contact
           </MobileLink>
-
-
           <SocialMediaMobileNav setIsOpen={setIsOpen} />
         </div>
       </SheetContent>
     </Sheet>
-  )
+  );
 }

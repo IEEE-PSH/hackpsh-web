@@ -24,8 +24,8 @@ export default function SignIn() {
             className="flex flex-row items-center justify-start ml-4 space-x-2 lg:hidden"
             scroll={false}
           >
-            <Icons.brand className="h-[2.4rem] w-[2.0rem] mr-2" />
-            <span className="inline-block font-bold">{siteConfig.name}</span>
+            <Icons.brand className="h-[2.4rem] w-[2.0rem]" />
+            <span className="inline-block text-xl font-bold">{siteConfig.name}</span>
           </Link>
           <nav className="flex items-center justify-end flex-1 mr-4 space-x-2">
             <Link
@@ -47,8 +47,8 @@ export default function SignIn() {
               className="flex flex-row items-center justify-start space-x-2"
               scroll={false}
             >
-              <Icons.brand className="h-[2.4rem] w-[2.0rem] mr-2" />
-              <span className="hidden font-bold sm:inline-block">{siteConfig.name}</span>
+              <Icons.brand className="h-[2.4rem] w-[2.0rem]" />
+              <span className="hidden font-bold text-lg sm:inline-block">{siteConfig.name}</span>
             </Link>
           </div>
         </div>

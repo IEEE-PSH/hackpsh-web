@@ -80,7 +80,6 @@ export default function SupportUsForm({
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8"
         >
-          <NumberStepper currentStep={3} maxStep={3} />
           <div className="space-y-4">
             <FormField
               control={form.control}
