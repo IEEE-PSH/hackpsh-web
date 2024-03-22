@@ -3,15 +3,33 @@ import { ProtectedMainNav } from "@/app/_components/nav/protected-main-nav";
 import { ProtectedMobileNav } from "@/app/_components/nav/protected-mobile-nav";
 import { SiteHeaderActions } from "@/app/_components/nav/site-header-actions";
 import ProfileButton from "@/app/_components/nav/profile-button";
+import { composeServerComponentClient } from "@/server/lib/supabase/server";
+import { getUser } from "@/shared/supabase/auth";
+import { serverTRPC } from "@/app/_trpc/server";
 
-export default function ProtectedSiteHeader() {
-  return (
+export default async function ProtectedSiteHeader() {
+  //add trpc here
+  const supabase = composeServerComponentClient();
+  try {
+    const user = await getUser(supabase);
+    const { user_display_name, user_email_address } =
+      await serverTRPC.user.get_user_dropdown_info.query({
+        user_uuid: user.id,
+      });
+
+    return (
       <SiteHeader>
         <ProtectedMainNav />
         <ProtectedMobileNav />
         <SiteHeaderActions>
-          <ProfileButton />
+          <ProfileButton
+            userDisplayName={user_display_name!}
+            userEmailAddress={user_email_address}
+          />
         </SiteHeaderActions>
       </SiteHeader>
-  );
+    );
+  } catch (error) {
+    console.log(error);
+  }
 }
