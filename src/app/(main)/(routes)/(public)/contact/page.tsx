@@ -65,7 +65,7 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
 
   return (
     <>  
-      <Section className="bg-background-variant-other">
+      <Section className="bg-background-variant">
         <div
           className={cn("grid-gap-6 mx-auto max-w-xl", className)}
           {...props}
@@ -134,7 +134,7 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
                     <FormControl>
                       <Textarea
                         placeholder="Type here..."
-                        className="h-36 resize-none"
+                        className="resize-none h-36"
                         {...field}
                         value={field.value ?? ""}
                       />
@@ -149,7 +149,7 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
                 disabled={form.formState.isSubmitting}
               >
                 {form.formState.isSubmitting && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
                 )}
                 Submit
               </Button>
@@ -163,10 +163,10 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
 
 function ContactHero() {
   return (
-    <section className="bg-background text-foreground">
+    <section className="bg-background border-b-[1px] text-foreground">
       <div className="container">
-        <div className="flex py-6 md:py-12 justify-center">
-          <div className="flex flex-col space-y-6 md:space-y-4 justify-center">
+        <div className="flex justify-center py-6 md:py-12">
+          <div className="flex flex-col justify-center space-y-6 md:space-y-4">
             <h2 className="text-6xl font-bold">Contact Us</h2>
             <p className="text-lg text-muted-foreground max-w-[44rem]">
               Do you have any questions regarding our event? Are you interested in working together?

@@ -9,7 +9,7 @@ type CountdownProps = {
   timeRemaining: number;
 };
 
-export default function CountdownSection({
+export function CountdownSection({
   eventStartTime,
   timeRemaining,
 }: CountdownProps) {

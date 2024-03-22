@@ -22,10 +22,10 @@ export const metadata: Metadata = {
 
 function PartnersHero() {
   return (
-    <section className="bg-background text-foreground">
+    <section className="bg-background border-b-[1px] text-foreground">
       <div className="container">
         <div className="flex flex-row justify-between py-6">
-          <div className="flex flex-col space-y-6 md:space-y-4 justify-center">
+          <div className="flex flex-col justify-center space-y-6 md:space-y-4">
             <h2 className="text-6xl font-bold">Partners</h2>
             <p className="text-lg text-muted-foreground max-w-[44rem]">
               We&apos;re thrilled to partner with exceptional organizations that share our passion for innovation and community-driven experiences.
@@ -51,7 +51,7 @@ type PartnerSpotCardProps = {
 
 function PartnerSpotCard({ name, description, image_src, image_alt, partner_url }: PartnerSpotCardProps) {
   return (
-    <Card className="mx-auto grid gap-y-8 text-foreground">
+    <Card className="grid mx-auto gap-y-8 text-foreground">
       <div className="flex flex-row">
         {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
         <Image
@@ -69,7 +69,7 @@ function PartnerSpotCard({ name, description, image_src, image_alt, partner_url 
             <p className="text-muted-foreground">{description}</p>
           </CardContent>
           <CardFooter className="justify-end">
-            <Button className="text-md w-32" asChild>
+            <Button className="w-32 text-md" asChild>
               <Link href={partner_url} target="_blank">
                 Visit
               </Link>

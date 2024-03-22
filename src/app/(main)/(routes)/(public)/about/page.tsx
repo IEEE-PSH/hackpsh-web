@@ -13,10 +13,10 @@ export const metadata: Metadata = {
 
 function AboutHero() {
   return (
-    <section className="bg-background text-foreground">
+    <section className="bg-background border-b-[1px] text-foreground">
       <div className="container">
         <div className="flex flex-row justify-between py-6">
-          <div className="flex flex-col space-y-6 md:space-y-4 justify-center">
+          <div className="flex flex-col justify-center space-y-6 md:space-y-4">
             <h2 className="text-6xl font-bold">About</h2>
             <p className="text-lg text-muted-foreground max-w-[44rem]">
               Without the individuals listed below, our event would never flourish into the interactive engaging experience for everyone.
