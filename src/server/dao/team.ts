@@ -142,3 +142,37 @@ export async function joinTeam(
     });
   }
 }
+
+export async function getTeamInfo(db: Database, user_uuid: string) {
+  try {
+    const teamUUID = await db.query.app_user_profile.findFirst({
+      columns: { user_team_uuid: true },
+      where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
+    });
+
+    const teamGeneralInfo = await db.query.app_team.findFirst({
+      columns: {
+        team_name: true,
+        team_join_code: true,
+        team_points: true,
+      },
+      where: (team_data, { eq }) =>
+        eq(team_data.team_uuid, teamUUID!.user_team_uuid!),
+    });
+
+    const teamMembers = await db.query.app_user_profile.findMany({
+      columns: {
+        user_display_name: true,
+      },
+      where: (user_data, { eq }) =>
+        eq(user_data.user_team_uuid, teamUUID!.user_team_uuid!),
+    });
+
+    return { teamGeneralInfo, teamMembers };
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
