@@ -29,8 +29,9 @@ export default function ChallengesPage() {
           </p>
           <p className="text-muted-foreground">
             Teams can use online resources to help them complete challenges.
-            Teams are able to use AI (ex: ChatGPT), but will only receive half
-            their total points earned in this category.
+            Teams are able to use AI (ex: ChatGPT), but may only receive half
+            their total points earned in this category. This rule will be
+            determined by the event administrators.
           </p>
           <Button className="w-48" asChild>
             <Link href={siteConfig.links.hackerrank} target="_blank">
