@@ -1,4 +1,13 @@
+import { Button } from "@/app/_components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/app/_components/ui/card";
+import { siteConfig } from "@/app/_config/site";
 import { type Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Challenges | HackPSH",
@@ -7,12 +16,29 @@ export const metadata: Metadata = {
 
 export default function ChallengesPage() {
   return (
-    <div>
-      <div className="mt-14 flex w-full flex-col items-center justify-center">
-        <p className="mb-10 text-center text-3xl font-bold tracking-tight">
-          Challenges
-        </p>
-      </div>
+    <div className="container mt-8 max-w-[52rem]">
+      <Card className="text-center">
+        <CardHeader>
+          <CardTitle>Internal Challenges Coming Soon!</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col items-center space-y-4">
+          <p>
+            For this event, we will be using Hackerrank to host software
+            challenges. We are currently working on hosting our own coding
+            problems for future events!
+          </p>
+          <p className="text-muted-foreground">
+            Teams can use online resources to help them complete challenges.
+            Teams are able to use AI (ex: ChatGPT), but will only receive half
+            their total points earned in this category.
+          </p>
+          <Button className="w-48" asChild>
+            <Link href={siteConfig.links.hackerrank} target="_blank">
+              <span>Software Challenges</span>
+            </Link>
+          </Button>
+        </CardContent>
+      </Card>
     </div>
   );
 }
