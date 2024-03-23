@@ -229,18 +229,18 @@ function HomePrizes() {
               more!
             </CardDescription>
             <CardContent className="mx-auto">
-              <div className="my-14 flex flex-row space-x-4">
-                {/* <div className="h-42 flex rotate-[2deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
+              <div className="my-14 flex flex-row text-nowrap">
+                <div className="flex rotate-[2deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
                   <Medal className="h-8 w-8" />
                   <p className="font-bold">2nd Place</p>
                   <p className="text-xl">$50</p>
-                </div> */}
-                <div className="h-42 z-[2] box-border flex  rotate-[-7deg] scale-[1.3] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
+                </div>
+                <div className="z-[2] box-border flex rotate-[-7deg] scale-[1.2] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
                   <Trophy className="h-8 w-8" />
                   <p className="font-bold">1st Place</p>
                   <p className="text-xl">$100</p>
                 </div>
-                <div className="h-42 flex  rotate-[5deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
+                <div className="flex rotate-[5deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
                   <Medal className="h-8 w-8" />
                   <p className="font-bold">3rd Place</p>
                   <p className="text-xl">$25</p>
