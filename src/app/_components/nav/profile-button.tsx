@@ -56,33 +56,33 @@ export default function ProfileDropdown({
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
             <p className="font-medium">{userDisplayName}</p>
-            <p className="w-[200px] truncate text-sm text-muted-foreground">
+            <p className="text-sm truncate text-muted-foreground">
               {userEmailAddress}
             </p>
           </div>
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer">
-          <Settings className="mr-2 h-4 w-4" />
+          <Settings className="w-4 h-4 mr-2" />
           <span>Settings</span>
         </DropdownMenuItem>
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            <Palette className="mr-2 h-4 w-4" />
+          <DropdownMenuSubTrigger className="space-x-2">
+            <Palette className="w-4 h-4" />
             <span>Change Appearance</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
               <DropdownMenuItem onClick={() => setTheme("light")}>
-                <Sun className="mr-2 h-4 w-4" />
+                <Sun className="w-4 h-4 mr-2" />
                 <span>Light</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setTheme("dark")}>
-                <Moon className="mr-2 h-4 w-4" />
+                <Moon className="w-4 h-4 mr-2" />
                 <span>Dark</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setTheme("system")}>
-                <Tv2 className="mr-2 h-4 w-4" />
+                <Tv2 className="w-4 h-4 mr-2" />
                 <span>System</span>
               </DropdownMenuItem>
             </DropdownMenuSubContent>
@@ -90,7 +90,7 @@ export default function ProfileDropdown({
         </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer" onClick={handleSignOut}>
-          <LogOut className="mr-2 h-4 w-4" />
+          <LogOut className="w-4 h-4 mr-2" />
           <span>Sign Out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
