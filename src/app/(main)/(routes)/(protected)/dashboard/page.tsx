@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/app/_components/ui/card";
@@ -25,29 +24,27 @@ export default async function DashboardPage() {
     });
 
   return (
-    <div className="container my-8 grid gap-6 md:grid-cols-2">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-4xl">User</CardTitle>
-        </CardHeader>
-      </Card>
+    <div className="container my-8">
       <Card>
         <CardHeader>
           <CardTitle className="text-4xl">Team</CardTitle>
         </CardHeader>
-        <CardContent className="text-muted-foreground">
-          <p className="text-xl text-foreground">General Information</p>
-          <p>Team Name: {team_name}</p>
-          <p>Team Code: {team_join_code}</p>
-          <p>Points: {team_points}</p>
-        </CardContent>
-        <CardContent>
-          <p className="text-xl">Members</p>
-          {team_members.map((member, index) => (
-            <p key={`member-${index}`} className="text-muted-foreground">
-              {member.user_display_name}
-            </p>
-          ))}
+        <CardContent className="flex flex-col space-y-4 text-muted-foreground">
+          <div>
+            <p className="text-xl text-foreground">General Information</p>
+            <p>Team Name: {team_name}</p>
+            <p>Team Code: {team_join_code}</p>
+            <p>Points: {team_points}</p>
+          </div>
+
+          <div>
+            <p className="text-xl text-foreground">Members</p>
+            {team_members.map((member, index) => (
+              <p key={`member-${index}`} className="text-muted-foreground">
+                {member.user_display_name}
+              </p>
+            ))}
+          </div>
         </CardContent>
       </Card>
     </div>
