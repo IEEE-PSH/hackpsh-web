@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
 import React from "react";
 import { User, Settings, LogOut, Palette, Moon, Sun, Tv2 } from "lucide-react";
-import { useTheme } from "next-themes"
+import { useTheme } from "next-themes";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,30 +12,62 @@ import {
   DropdownMenuSub,
   DropdownMenuTrigger,
   DropdownMenuSubContent,
-  DropdownMenuSubTrigger
+  DropdownMenuSubTrigger,
 } from "@/app/_components/ui/dropdown-menu";
 import { Button } from "@/app/_components/ui/button";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { toast } from "@/app/_components/ui/use-toast";
+import { Skeleton } from "../ui/skeleton";
 
-export default function ProfileDropdown() {
+type ProfileDropdownProps = {
+  userDisplayName: string | null;
+  userEmailAddress: string | null;
+};
+
+function createUserProfileElements({
+  userDisplayName,
+  userEmailAddress,
+}: ProfileDropdownProps) {
+  if (userDisplayName && userEmailAddress) {
+    return (
+      <>
+        <p className="font-medium">{userDisplayName}</p>
+        <p className="text-sm truncate text-muted-foreground">
+          {userEmailAddress}
+        </p>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <Skeleton className="w-48 h-4" />
+        <Skeleton className="w-48 h-4" />
+      </>
+    );
+  }
+}
+
+export default function ProfileDropdown({
+  userDisplayName,
+  userEmailAddress,
+}: ProfileDropdownProps) {
   const router = useRouter();
   const supabase = createClientComponentClient();
   const { setTheme } = useTheme();
 
   async function handleSignOut() {
     toast({
-      title: "Signing Out..."
-    })
+      title: "Signing Out...",
+    });
     await supabase.auth.signOut();
     router.push(siteConfig.paths.home);
     router.refresh();
     toast({
       title: "Signed Out Successfully!",
-      variant: "success"
-    })
+      variant: "success",
+    });
   }
 
   return (
@@ -48,10 +80,7 @@ export default function ProfileDropdown() {
       <DropdownMenuContent>
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            <p className="font-medium">John Smith</p>
-            <p className="w-[200px] truncate text-sm text-muted-foreground">
-              johnsmith@gmail.com
-            </p>
+            {createUserProfileElements({ userDisplayName, userEmailAddress })}
           </div>
         </div>
         <DropdownMenuSeparator />
@@ -60,8 +89,8 @@ export default function ProfileDropdown() {
           <span>Settings</span>
         </DropdownMenuItem>
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            <Palette className="w-4 h-4 mr-2" />
+          <DropdownMenuSubTrigger className="space-x-2">
+            <Palette className="w-4 h-4" />
             <span>Change Appearance</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>

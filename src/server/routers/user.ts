@@ -1,3 +1,4 @@
+import getUserDropdownInfoProcedure from "../procedures/protected/user/getUserDropdownInfoProcedure";
 import createUserProcedure from "../procedures/protected/user/createUserProcedure";
 import doesUserExistProcedure from "../procedures/protected/user/doesUserExistProcedure";
 import getUserOnboardingPhaseProcedure from "../procedures/protected/user/getUserOnboardingPhaseProcedure";
@@ -16,6 +17,7 @@ export const userRouter = createTRPCRouter({
   does_user_exist: doesUserExistProcedure,
   get_user_role: getUserRoleProcedure,
   get_user_onboarding_phase: getUserOnboardingPhaseProcedure,
+  get_user_dropdown_info: getUserDropdownInfoProcedure,
   update_personal_details: updatePersonalDetailsProcedure,
   update_support_us: updateSupportUsProcedure,
   validate_user_onboarding: validateUserOnboardingProcedure,
