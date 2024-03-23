@@ -21,7 +21,7 @@ export default async function ProtectedSiteHeader() {
       <ProtectedMobileNav />
       <SiteHeaderActions>
         <ProfileButton
-          userDisplayName={user_display_name!}
+          userDisplayName={user_display_name}
           userEmailAddress={user_email_address}
         />
       </SiteHeaderActions>

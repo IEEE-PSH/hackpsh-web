@@ -8,7 +8,7 @@ export default protectedProcedure
     const result = await getUserDropdownInfo(ctx.db, input.user_uuid);
 
     return {
-      user_display_name: result!.user_display_name,
-      user_email_address: result!.user_email_address,
+      user_display_name: result ? result.user_display_name : null,
+      user_email_address: result ? result.user_email_address : null,
     };
   });

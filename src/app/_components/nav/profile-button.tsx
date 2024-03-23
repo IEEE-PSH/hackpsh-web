@@ -19,11 +19,36 @@ import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { toast } from "@/app/_components/ui/use-toast";
+import { Skeleton } from "../ui/skeleton";
 
 type ProfileDropdownProps = {
-  userDisplayName: string;
-  userEmailAddress: string;
+  userDisplayName: string | null;
+  userEmailAddress: string | null;
 };
+
+function createUserProfileElements({
+  userDisplayName,
+  userEmailAddress,
+}: ProfileDropdownProps) {
+  if (userDisplayName && userEmailAddress) {
+    return (
+      <>
+        <p className="font-medium">{userDisplayName}</p>
+        <p className="text-sm truncate text-muted-foreground">
+          {userEmailAddress}
+        </p>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <Skeleton className="w-48 h-4" />
+        <Skeleton className="w-48 h-4" />
+      </>
+    );
+  }
+}
+
 export default function ProfileDropdown({
   userDisplayName,
   userEmailAddress,
@@ -55,10 +80,7 @@ export default function ProfileDropdown({
       <DropdownMenuContent>
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            <p className="font-medium">{userDisplayName}</p>
-            <p className="text-sm truncate text-muted-foreground">
-              {userEmailAddress}
-            </p>
+            {createUserProfileElements({ userDisplayName, userEmailAddress })}
           </div>
         </div>
         <DropdownMenuSeparator />
