@@ -21,7 +21,6 @@ import {
   FormLabel,
 } from "../ui/form";
 import { cn } from "@/app/_lib/client-utils";
-import NumberStepper from "./number-stepper";
 import { Switch } from "../ui/switch";
 import { Button } from "../ui/button";
 import { Icons } from "../ui/icons";
@@ -85,7 +84,7 @@ export default function SupportUsForm({
               control={form.control}
               name="user_support_administrative"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                <FormItem className="flex flex-row items-center justify-between p-4 border rounded-lg">
                   <div className="space-y-0.5">
                     <FormLabel className="text-base">Administrative</FormLabel>
                     <FormDescription>
@@ -107,7 +106,7 @@ export default function SupportUsForm({
               control={form.control}
               name="user_support_technical"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                <FormItem className="flex flex-row items-center justify-between p-4 border rounded-lg">
                   <div className="space-y-0.5">
                     <FormLabel className="text-base">Technical</FormLabel>
                     <FormDescription>
@@ -131,7 +130,7 @@ export default function SupportUsForm({
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
             )}
             Next
           </Button>
