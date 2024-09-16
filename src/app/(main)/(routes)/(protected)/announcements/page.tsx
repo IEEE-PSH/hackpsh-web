@@ -12,12 +12,12 @@ export const metadata: Metadata = {
 
 export default function AnnouncementsPage() {
   return (
-    <div className="container mt-8">
-      <p className="mb-10 text-center text-3xl font-bold tracking-tight">
-        Announcements
-      </p>
-      <AdminCreatePostLink className="mb-4" />
-      <Announcements />
-    </div>
+      <div className="mt-8 container">
+        <p className="mb-10 text-center text-3xl font-bold tracking-tight">
+          Announcements
+        </p>
+        <AdminCreatePostLink className="mb-4" />
+        <Announcements />
+      </div>
   );
 }
