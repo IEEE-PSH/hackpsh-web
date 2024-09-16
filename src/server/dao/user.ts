@@ -8,6 +8,7 @@ import {
 import { BaseError } from "@/shared/error";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
+import { getTeamFromName, getTeamInfo } from "./team";
 
 export async function getUserOnboardingStatus(db: Database, user_uuid: string) {
   try {
@@ -104,6 +105,38 @@ export async function getUserDropdownInfo(db: Database, user_uuid: string) {
   }
 }
 
+export async function getUserSettingsInfo(db: Database, user_uuid: string) {
+  try {
+    const userInfo = await db.query.app_user_profile.findFirst({
+      columns: {
+        user_display_name: true,
+        user_email_address: true,
+        user_school_year: true,
+        user_major: true,
+      },
+      where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
+    });
+
+    const teamInfo = await getTeamInfo(db, user_uuid);
+
+    //explicity list variables in result to maintain consistency with other procedures
+    const result = {
+      user_display_name: userInfo?.user_display_name,
+      user_email_address: userInfo?.user_email_address,
+      user_school_year: userInfo?.user_school_year,
+      user_major: userInfo?.user_major,
+      user_team_name: teamInfo?.teamGeneralInfo?.team_name,
+    };
+
+    return result;
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
 export async function getUserOnboardingPhase(db: Database, user_uuid: string) {
   try {
     const result = await db.query.app_user_profile.findFirst({
@@ -157,7 +190,20 @@ export async function updateUserPersonalDetails(
       user_display_name,
     );
 
-    if (user_from_display_name?.user_display_name === user_display_name) {
+    const user_display_name_from_uuid =
+      await db.query.app_user_profile.findFirst({
+        columns: {
+          user_display_name: true,
+        },
+        where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
+      });
+
+    const onboarding_complete = await getUserOnboardingStatus(db, user_uuid);
+
+    if (
+      user_from_display_name?.user_display_name === user_display_name &&
+      user_display_name_from_uuid?.user_display_name !== user_display_name
+    ) {
       throw new BaseError({
         error_title: "Unavailable Display Name",
         error_desc: "This display name has already been taken.",
@@ -170,7 +216,9 @@ export async function updateUserPersonalDetails(
         user_display_name,
         user_school_year,
         user_major,
-        user_onboarding_phase: "team-creation",
+        user_onboarding_phase: onboarding_complete
+          ? "validate-onboarding"
+          : "team-creation",
       })
       .where(eq(app_user_profile.user_uuid, user_uuid));
 
@@ -206,6 +254,62 @@ export async function updateUserSupport(
         user_onboarding_phase: "validate-onboarding",
       })
       .where(eq(app_user_profile.user_uuid, user_uuid));
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function updateUserSettings(
+  db: Database,
+  user_uuid: string,
+  user_display_name: string,
+  user_school_year: TUserSchoolYear,
+  user_major: TUserMajor,
+  user_support_administrative: boolean,
+  user_support_technical: boolean,
+) {
+  try {
+    await updateUserPersonalDetails(
+      db,
+      user_uuid,
+      user_display_name,
+      user_school_year,
+      user_major,
+    );
+    await updateUserSupport(
+      db,
+      user_uuid,
+      user_support_administrative,
+      user_support_technical,
+    );
+  } catch (error) {
+    if (error instanceof BaseError) {
+      throw new TRPCError({
+        message: error.description!,
+        code: "CONFLICT",
+      });
+    }
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function getUserSupportInfo(db: Database, user_uuid: string) {
+  try {
+    const user_support_info = await db.query.app_user_profile.findFirst({
+      columns: {
+        user_support_administrative: true,
+        user_support_technical: true,
+      },
+      where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
+    });
+
+    return user_support_info;
   } catch (error) {
     throw new TRPCError({
       message: "The database has encountered some issues.",

@@ -9,7 +9,10 @@ import updatePersonalDetailsProcedure from "../procedures/protected/user/updateP
 import updateSupportUsProcedure from "../procedures/protected/user/updateSupportUsProcedure";
 import updateUserOnboardingStatusProcedure from "../procedures/protected/user/updateUserOnboardingStatusProcedure";
 import validateUserOnboardingProcedure from "../procedures/protected/user/validateUserOnboardingProcedure";
+import getUserSettingsInfoProcedure from "../procedures/protected/user/getUserSettingsInfoProcedure";
+import getUserSupportInfoProcedure from "../procedures/protected/user/getUserSupportInfoProcedure";
 import { createTRPCRouter } from "../trpc";
+import updateUserSettingsProcedure from "../procedures/protected/user/updateUserSettingsProcedure";
 
 export const userRouter = createTRPCRouter({
   is_onboarding_complete: isOnboardingCompeleteProcedure,
@@ -18,8 +21,11 @@ export const userRouter = createTRPCRouter({
   get_user_role: getUserRoleProcedure,
   get_user_onboarding_phase: getUserOnboardingPhaseProcedure,
   get_user_dropdown_info: getUserDropdownInfoProcedure,
+  get_user_settings_info: getUserSettingsInfoProcedure,
   update_personal_details: updatePersonalDetailsProcedure,
   update_support_us: updateSupportUsProcedure,
+  update_user_settings: updateUserSettingsProcedure,
+  get_user_support_info: getUserSupportInfoProcedure,
   validate_user_onboarding: validateUserOnboardingProcedure,
   update_onboarding_phase: updateOnboardingPhaseProcedure,
   update_onboarding_status: updateUserOnboardingStatusProcedure,
