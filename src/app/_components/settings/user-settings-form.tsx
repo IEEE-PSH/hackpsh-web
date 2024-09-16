@@ -22,8 +22,8 @@ import { Input } from "@/app/_components/ui/input";
 import {
   dbMajors,
   dbSchoolYear,
-  TUserMajor,
-  TUserSchoolYear,
+  type TUserMajor,
+  type TUserSchoolYear,
 } from "@/db/drizzle/startup_seed";
 import {
   Command,
@@ -43,25 +43,39 @@ import { trpc } from "@/app/_trpc/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { toast } from "@/app/_components/ui/use-toast";
+import { Switch } from "../ui/switch";
+import {
+  SettingsFormSchema,
+  type TSettingsForm,
+} from "@/app/_lib/zod-schemas/forms/settings";
+import { Separator } from "../ui/separator";
+import { type TSupportUsForm } from "@/app/_lib/zod-schemas/forms/onboarding/support-us";
+import { useRouter } from "next/navigation";
 
 type UserSettingsFormProps = {
   userDisplayName: string | null;
   userEmailAddress: string | null;
   userSchoolYear: string | null;
   userMajor: string | null;
+  userSupportAdministrative: boolean;
+  userSupportTechnical: boolean;
+  userTeamName: string | null;
 };
 
-export default function PersonalDetailsForm({
+export default function UserSettingsForm({
   userDisplayName,
   userEmailAddress,
   userSchoolYear,
   userMajor,
+  userSupportAdministrative,
+  userSupportTechnical,
+  userTeamName,
 }: UserSettingsFormProps) {
   const supabase = createClientComponentClient();
 
   // Form Definition
-  const form = useForm<TPersonalDetailsForm>({
-    resolver: zodResolver(PersonalDetailsFormSchema),
+  const form = useForm<TSettingsForm>({
+    resolver: zodResolver(SettingsFormSchema),
     defaultValues: {
       user_display_name: userDisplayName!,
       user_school_year: dbSchoolYear.includes(userSchoolYear as TUserSchoolYear)
@@ -71,36 +85,43 @@ export default function PersonalDetailsForm({
       user_major: dbMajors.includes(userMajor as TUserMajor)
         ? (userMajor as TUserMajor)
         : undefined,
+      user_support_administrative: userSupportAdministrative,
+      user_support_technical: userSupportTechnical,
     },
   });
 
-  const updatePersonalDetailsMutation =
-    trpc.user.update_personal_details.useMutation({
-      onSuccess: () => {
-        toast({
-          variant: "success",
-          title: "Personal Details Saved!",
-          duration: 4000,
-        });
-      },
-      onError: (error) => {
-        toast({
-          description: error.message,
-          variant: "destructive",
-          duration: 6000,
-        });
-      },
-    });
+  const router = useRouter();
 
-  async function onSubmit(values: TPersonalDetailsForm) {
+  const updateSettingsMutation = trpc.user.update_user_settings.useMutation({
+    onSuccess: () => {
+      //refresh to repopulate values on cached pages
+      router.refresh();
+      toast({
+        variant: "success",
+        title: "Settings Saved!",
+        duration: 4000,
+      });
+    },
+    onError: (error) => {
+      toast({
+        description: error.message,
+        variant: "destructive",
+        duration: 6000,
+      });
+    },
+  });
+
+  async function onSubmit(values: TPersonalDetailsForm & TSupportUsForm) {
     try {
       const user = await getUser(supabase);
 
-      await updatePersonalDetailsMutation.mutateAsync({
+      await updateSettingsMutation.mutateAsync({
+        user_uuid: user.id,
         user_display_name: values.user_display_name,
         user_school_year: values.user_school_year,
         user_major: values.user_major,
-        user_uuid: user.id,
+        user_support_administrative: values.user_support_administrative,
+        user_support_technical: values.user_support_technical,
       });
     } catch (err: unknown) {
       console.log(err);
@@ -114,6 +135,10 @@ export default function PersonalDetailsForm({
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8"
       >
+        <h1 className="mt-6 text-2xl font-semibold leading-none tracking-tight">
+          Personal Details
+        </h1>
+
         <FormField
           control={form.control}
           name="user_display_name"
@@ -142,7 +167,7 @@ export default function PersonalDetailsForm({
             <Input
               disabled={true}
               className="border-muted-foreground"
-              placeholder={userEmailAddress ?? ""}
+              placeholder={userEmailAddress!}
             />
           </FormControl>
           <FormDescription>
@@ -282,6 +307,75 @@ export default function PersonalDetailsForm({
             </FormItem>
           )}
         />
+
+        <Separator />
+        <h1 className="text-2xl font-semibold leading-none tracking-tight">
+          Support Preferences
+        </h1>
+
+        <FormField
+          control={form.control}
+          name="user_support_administrative"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+              <div className="space-y-0.5">
+                <FormLabel className="text-base">Administrative</FormLabel>
+                <FormDescription>
+                  Help us organize our social events, fundraising, and better
+                  our social media!
+                </FormDescription>
+              </div>
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="user_support_technical"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+              <div className="space-y-0.5">
+                <FormLabel className="text-base">Technical</FormLabel>
+                <FormDescription>
+                  Help us innovate and develop hardware and software to further
+                  our unique experiences! {userSupportTechnical}
+                </FormDescription>
+              </div>
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
+        <Separator />
+        <h1 className="text-2xl font-semibold leading-none tracking-tight">
+          Team Details
+        </h1>
+
+        <FormItem>
+          <FormLabel>Team</FormLabel>
+          <FormControl>
+            <Input
+              disabled={true}
+              className="border-muted-foreground"
+              placeholder={userTeamName!}
+            />
+          </FormControl>
+          <FormDescription>
+            This is the team linked to your account. This cannot be changed.
+          </FormDescription>
+          <FormMessage />
+        </FormItem>
 
         <Button
           type="submit"

@@ -12,5 +12,6 @@ export default protectedProcedure
       user_email_address: result ? result.user_email_address : null,
       user_school_year: result ? result.user_school_year : null,
       user_major: result ? result.user_major : null,
+      user_team_name: result ? result.user_team_name : null,
     };
   });
