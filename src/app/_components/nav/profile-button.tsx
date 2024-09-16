@@ -34,16 +34,16 @@ function createUserProfileElements({
     return (
       <>
         <p className="font-medium">{userDisplayName}</p>
-        <p className="text-sm truncate text-muted-foreground">
+        <p className="truncate text-sm text-muted-foreground">
           {userEmailAddress}
         </p>
       </>
-    )
+    );
   } else {
     return (
       <>
-        <Skeleton className="w-48 h-4" />
-        <Skeleton className="w-48 h-4" />
+        <Skeleton className="h-4 w-48" />
+        <Skeleton className="h-4 w-48" />
       </>
     );
   }
@@ -84,27 +84,41 @@ export default function ProfileDropdown({
           </div>
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer">
-          <Settings className="w-4 h-4 mr-2" />
+        <DropdownMenuItem
+          onClick={() => {
+            router.replace(siteConfig.paths.settings);
+          }}
+          className="cursor-pointer"
+        >
+          <Settings className="mr-2 h-4 w-4" />
           <span>Settings</span>
         </DropdownMenuItem>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className="space-x-2">
-            <Palette className="w-4 h-4" />
+            <Palette className="h-4 w-4" />
             <span>Change Appearance</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
-              <DropdownMenuItem onClick={() => setTheme("light")}>
-                <Sun className="w-4 h-4 mr-2" />
+              <DropdownMenuItem
+                onClick={() => setTheme("light")}
+                className="cursor-pointer"
+              >
+                <Sun className="mr-2 h-4 w-4" />
                 <span>Light</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")}>
-                <Moon className="w-4 h-4 mr-2" />
+              <DropdownMenuItem
+                onClick={() => setTheme("dark")}
+                className="cursor-pointer"
+              >
+                <Moon className="mr-2 h-4 w-4" />
                 <span>Dark</span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")}>
-                <Tv2 className="w-4 h-4 mr-2" />
+              <DropdownMenuItem
+                onClick={() => setTheme("system")}
+                className="cursor-pointer"
+              >
+                <Tv2 className="mr-2 h-4 w-4" />
                 <span>System</span>
               </DropdownMenuItem>
             </DropdownMenuSubContent>
@@ -112,7 +126,7 @@ export default function ProfileDropdown({
         </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer" onClick={handleSignOut}>
-          <LogOut className="w-4 h-4 mr-2" />
+          <LogOut className="mr-2 h-4 w-4" />
           <span>Sign Out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
