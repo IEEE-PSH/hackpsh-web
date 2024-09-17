@@ -1,5 +1,6 @@
 import { type Metadata } from "next";
-import Leaderboard from "@/app/_components/leaderboard/leaderboard";
+import RealtimeLeaderboard from "@/app/_components/leaderboard/realtime-leaderboard";
+import { serverTRPC } from "@/app/_trpc/server";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
@@ -9,15 +10,11 @@ export const metadata: Metadata = {
   description: "See where your team stands amongst the competition.",
 };
 
-export default function LeaderboardPage() {
+export default async function LeaderboardPage() {
+  const data = await serverTRPC.leaderboard.get_current_standings.query();
   return (
-    <div>
-      <div className="mt-14 flex w-full flex-col items-center justify-center">
-        <p className="mb-10 text-center text-3xl font-bold tracking-tight">
-          Leaderboard
-        </p>
-        <Leaderboard />
-      </div>
+    <div className="container flex w-full flex-col items-center justify-center">
+      <RealtimeLeaderboard serverData={data} />
     </div>
   );
 }
