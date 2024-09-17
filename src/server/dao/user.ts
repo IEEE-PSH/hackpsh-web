@@ -271,32 +271,20 @@ export async function updateUserSettings(
   user_support_administrative: boolean,
   user_support_technical: boolean,
 ) {
-  try {
-    await updateUserPersonalDetails(
-      db,
-      user_uuid,
-      user_display_name,
-      user_school_year,
-      user_major,
-    );
-    await updateUserSupport(
-      db,
-      user_uuid,
-      user_support_administrative,
-      user_support_technical,
-    );
-  } catch (error) {
-    if (error instanceof BaseError) {
-      throw new TRPCError({
-        message: error.description!,
-        code: "CONFLICT",
-      });
-    }
-    throw new TRPCError({
-      message: "The database has encountered some issues.",
-      code: "INTERNAL_SERVER_ERROR",
-    });
-  }
+  //error handling belongs in the below functions
+  await updateUserPersonalDetails(
+    db,
+    user_uuid,
+    user_display_name,
+    user_school_year,
+    user_major,
+  );
+  await updateUserSupport(
+    db,
+    user_uuid,
+    user_support_administrative,
+    user_support_technical,
+  );
 }
 
 export async function getUserSupportInfo(db: Database, user_uuid: string) {
