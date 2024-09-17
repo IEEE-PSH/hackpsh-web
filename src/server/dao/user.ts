@@ -216,7 +216,7 @@ export async function updateUserPersonalDetails(
         user_display_name,
         user_school_year,
         user_major,
-        user_onboarding_phase: onboarding_complete
+        user_onboarding_phase: onboarding_complete?.user_onboarding_complete
           ? "validate-onboarding"
           : "team-creation",
       })
