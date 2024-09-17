@@ -1,10 +1,8 @@
 {
-  "version": "5",
-  "dialect": "pg",
-  "id": "fdf54a3c-1c7e-403f-afb6-8462ad9073da",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
   "tables": {
-    "app_user_profile": {
+    "app_schema.app_user_profile": {
       "name": "app_user_profile",
       "schema": "app_schema",
       "columns": {
@@ -47,11 +45,19 @@
       },
       "indexes": {
         "user_uuid_index": {
-          "name": "user_uuid_index",
           "columns": [
-            "user_uuid"
+            {
+              "expression": "user_uuid",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
           ],
-          "isUnique": false
+          "with": {},
+          "name": "user_uuid_index",
+          "isUnique": false,
+          "method": "btree",
+          "concurrently": false
         }
       },
       "foreignKeys": {},
@@ -59,34 +65,35 @@
       "uniqueConstraints": {
         "app_user_profile_user_email_address_unique": {
           "name": "app_user_profile_user_email_address_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "user_email_address"
-          ]
+          ],
+          "nullsNotDistinct": false
         },
         "app_user_profile_user_display_name_unique": {
           "name": "app_user_profile_user_display_name_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "user_display_name"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     }
   },
   "enums": {
-    "app_schema\".\"class_year": {
+    "public.app_schema\".\"class_year": {
       "name": "app_schema\".\"class_year",
-      "values": {
-        "middle_school": "middle_school",
-        "high_school": "high_school",
-        "freshman": "freshman",
-        "sophmore": "sophmore",
-        "junior": "junior",
-        "senior": "senior",
-        "graduate": "graduate",
-        "post_graduate": "post_graduate"
-      }
+      "schema": "public",
+      "values": [
+        "middle_school",
+        "high_school",
+        "freshman",
+        "sophmore",
+        "junior",
+        "senior",
+        "graduate",
+        "post_graduate"
+      ]
     }
   },
   "schemas": {
@@ -96,5 +103,8 @@
     "schemas": {},
     "tables": {},
     "columns": {}
-  }
+  },
+  "id": "fdf54a3c-1c7e-403f-afb6-8462ad9073da",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "sequences": {}
 }

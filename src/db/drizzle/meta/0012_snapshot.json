@@ -1,10 +1,8 @@
 {
-  "version": "5",
-  "dialect": "pg",
-  "id": "6a020616-0377-4caa-bd63-6c96b097abe7",
-  "prevId": "edca77c8-e096-41fe-90b3-678c9d8c6ef1",
+  "version": "7",
+  "dialect": "postgresql",
   "tables": {
-    "app_announcement": {
+    "app_schema.app_announcement": {
       "name": "app_announcement",
       "schema": "app_schema",
       "columns": {
@@ -46,21 +44,21 @@
         "app_announcement_announcement_author_uuid_app_user_profile_user_uuid_fk": {
           "name": "app_announcement_announcement_author_uuid_app_user_profile_user_uuid_fk",
           "tableFrom": "app_announcement",
-          "tableTo": "app_user_profile",
           "columnsFrom": [
             "announcement_author_uuid"
           ],
+          "tableTo": "app_user_profile",
           "columnsTo": [
             "user_uuid"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "app_major": {
+    "app_schema.app_major": {
       "name": "app_major",
       "schema": "app_schema",
       "columns": {
@@ -83,14 +81,14 @@
       "uniqueConstraints": {
         "app_major_major_name_unique": {
           "name": "app_major_major_name_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "major_name"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "app_onboarding_phase": {
+    "app_schema.app_onboarding_phase": {
       "name": "app_onboarding_phase",
       "schema": "app_schema",
       "columns": {
@@ -113,14 +111,14 @@
       "uniqueConstraints": {
         "app_onboarding_phase_phase_name_unique": {
           "name": "app_onboarding_phase_phase_name_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "phase_name"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "app_role": {
+    "app_schema.app_role": {
       "name": "app_role",
       "schema": "app_schema",
       "columns": {
@@ -143,14 +141,14 @@
       "uniqueConstraints": {
         "app_role_role_name_unique": {
           "name": "app_role_role_name_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "role_name"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "app_school_year": {
+    "app_schema.app_school_year": {
       "name": "app_school_year",
       "schema": "app_schema",
       "columns": {
@@ -173,14 +171,14 @@
       "uniqueConstraints": {
         "app_school_year_school_year_name_unique": {
           "name": "app_school_year_school_year_name_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "school_year_name"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "app_team": {
+    "app_schema.app_team": {
       "name": "app_team",
       "schema": "app_schema",
       "columns": {
@@ -217,21 +215,21 @@
       "uniqueConstraints": {
         "app_team_team_name_unique": {
           "name": "app_team_team_name_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "team_name"
-          ]
+          ],
+          "nullsNotDistinct": false
         },
         "app_team_team_code_unique": {
           "name": "app_team_team_code_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "team_code"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "app_user_profile": {
+    "app_schema.app_user_profile": {
       "name": "app_user_profile",
       "schema": "app_schema",
       "columns": {
@@ -319,95 +317,103 @@
       },
       "indexes": {
         "user_uuid_index": {
-          "name": "user_uuid_index",
           "columns": [
-            "user_uuid"
+            {
+              "expression": "user_uuid",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
           ],
-          "isUnique": false
+          "with": {},
+          "name": "user_uuid_index",
+          "isUnique": false,
+          "method": "btree",
+          "concurrently": false
         }
       },
       "foreignKeys": {
         "app_user_profile_user_team_uuid_app_team_team_uuid_fk": {
           "name": "app_user_profile_user_team_uuid_app_team_team_uuid_fk",
           "tableFrom": "app_user_profile",
-          "tableTo": "app_team",
           "columnsFrom": [
             "user_team_uuid"
           ],
+          "tableTo": "app_team",
           "columnsTo": [
             "team_uuid"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "app_user_profile_user_school_year_app_school_year_school_year_name_fk": {
           "name": "app_user_profile_user_school_year_app_school_year_school_year_name_fk",
           "tableFrom": "app_user_profile",
-          "tableTo": "app_school_year",
           "columnsFrom": [
             "user_school_year"
           ],
+          "tableTo": "app_school_year",
           "columnsTo": [
             "school_year_name"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "app_user_profile_user_major_app_major_major_name_fk": {
           "name": "app_user_profile_user_major_app_major_major_name_fk",
           "tableFrom": "app_user_profile",
-          "tableTo": "app_major",
           "columnsFrom": [
             "user_major"
           ],
+          "tableTo": "app_major",
           "columnsTo": [
             "major_name"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "app_user_profile_user_role_app_role_role_name_fk": {
           "name": "app_user_profile_user_role_app_role_role_name_fk",
           "tableFrom": "app_user_profile",
-          "tableTo": "app_role",
           "columnsFrom": [
             "user_role"
           ],
+          "tableTo": "app_role",
           "columnsTo": [
             "role_name"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "app_user_profile_user_onboarding_phase_app_onboarding_phase_phase_name_fk": {
           "name": "app_user_profile_user_onboarding_phase_app_onboarding_phase_phase_name_fk",
           "tableFrom": "app_user_profile",
-          "tableTo": "app_onboarding_phase",
           "columnsFrom": [
             "user_onboarding_phase"
           ],
+          "tableTo": "app_onboarding_phase",
           "columnsTo": [
             "phase_name"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "app_user_profile_user_email_address_unique": {
           "name": "app_user_profile_user_email_address_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "user_email_address"
-          ]
+          ],
+          "nullsNotDistinct": false
         },
         "app_user_profile_user_display_name_unique": {
           "name": "app_user_profile_user_display_name_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "user_display_name"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     }
@@ -420,5 +426,8 @@
     "schemas": {},
     "tables": {},
     "columns": {}
-  }
+  },
+  "id": "6a020616-0377-4caa-bd63-6c96b097abe7",
+  "prevId": "edca77c8-e096-41fe-90b3-678c9d8c6ef1",
+  "sequences": {}
 }

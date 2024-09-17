@@ -1,10 +1,8 @@
 {
-  "version": "5",
-  "dialect": "pg",
-  "id": "71f350d1-addc-4e6e-90ea-8ffb332c5185",
-  "prevId": "fdf54a3c-1c7e-403f-afb6-8462ad9073da",
+  "version": "7",
+  "dialect": "postgresql",
   "tables": {
-    "app_school_year": {
+    "app_schema.app_school_year": {
       "name": "app_school_year",
       "schema": "app_schema",
       "columns": {
@@ -27,14 +25,14 @@
       "uniqueConstraints": {
         "app_school_year_school_year_name_unique": {
           "name": "app_school_year_school_year_name_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "school_year_name"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "app_team": {
+    "app_schema.app_team": {
       "name": "app_team",
       "schema": "app_schema",
       "columns": {
@@ -70,21 +68,21 @@
       "uniqueConstraints": {
         "app_team_team_name_unique": {
           "name": "app_team_team_name_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "team_name"
-          ]
+          ],
+          "nullsNotDistinct": false
         },
         "app_team_team_code_unique": {
           "name": "app_team_team_code_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "team_code"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "app_user_profile": {
+    "app_schema.app_user_profile": {
       "name": "app_user_profile",
       "schema": "app_schema",
       "columns": {
@@ -139,56 +137,64 @@
       },
       "indexes": {
         "user_uuid_index": {
-          "name": "user_uuid_index",
           "columns": [
-            "user_uuid"
+            {
+              "expression": "user_uuid",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
           ],
-          "isUnique": false
+          "with": {},
+          "name": "user_uuid_index",
+          "isUnique": false,
+          "method": "btree",
+          "concurrently": false
         }
       },
       "foreignKeys": {
         "app_user_profile_user_team_uuid_app_team_team_uuid_fk": {
           "name": "app_user_profile_user_team_uuid_app_team_team_uuid_fk",
           "tableFrom": "app_user_profile",
-          "tableTo": "app_team",
           "columnsFrom": [
             "user_team_uuid"
           ],
+          "tableTo": "app_team",
           "columnsTo": [
             "team_uuid"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         },
         "app_user_profile_user_school_year_app_school_year_school_year_name_fk": {
           "name": "app_user_profile_user_school_year_app_school_year_school_year_name_fk",
           "tableFrom": "app_user_profile",
-          "tableTo": "app_school_year",
           "columnsFrom": [
             "user_school_year"
           ],
+          "tableTo": "app_school_year",
           "columnsTo": [
             "school_year_name"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "app_user_profile_user_email_address_unique": {
           "name": "app_user_profile_user_email_address_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "user_email_address"
-          ]
+          ],
+          "nullsNotDistinct": false
         },
         "app_user_profile_user_display_name_unique": {
           "name": "app_user_profile_user_display_name_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "user_display_name"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     }
@@ -203,5 +209,8 @@
     "columns": {
       "\"app_schema\".\"app_user_profile\".\"user_class_year\"": "\"app_schema\".\"app_user_profile\".\"user_school_year\""
     }
-  }
+  },
+  "id": "71f350d1-addc-4e6e-90ea-8ffb332c5185",
+  "prevId": "fdf54a3c-1c7e-403f-afb6-8462ad9073da",
+  "sequences": {}
 }
