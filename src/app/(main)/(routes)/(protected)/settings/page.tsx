@@ -26,9 +26,9 @@ export default async function Page() {
 
   return (
     <>
-      <div className="container max-w-3xl">
-        <Card className={cn("grid-gap-6 row-span-2")}>
-          <CardContent>
+      <div className="container max-w-6xl">
+        <Card>
+          <CardContent className="p-8">
             <UserSettingsForm
               userDisplayName={user_display_name!}
               userEmailAddress={user_email_address!}
