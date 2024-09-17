@@ -4,7 +4,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen">
       <ProtectedSiteHeader />
-      <div className="my-8">{children}</div>
+      <div className="">{children}</div>
     </div>
   );
 }

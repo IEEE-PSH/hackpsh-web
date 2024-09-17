@@ -26,7 +26,7 @@ export default async function Page() {
 
   return (
     <>
-      <div className="container max-w-6xl">
+      <div className="md:container md:mt-8">
         <Card>
           <CardContent className="p-8">
             <UserSettingsForm
