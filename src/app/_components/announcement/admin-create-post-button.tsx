@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Plus } from "lucide-react";
 import { usePathname } from "next/navigation";
 
-export default async function AdminCreatePostButton() {
+export default function AdminCreatePostButton() {
   const pathname = usePathname();
 
   if (pathname !== siteConfig.paths.announcements) return;
