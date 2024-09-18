@@ -5,7 +5,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background">
       <div className="flex">
-        <ProtectedSideNav />
+        {/* <ProtectedSideNav /> */}
         <div className="w-full">
           <ProtectedSiteHeader />
           <div>{children}</div>
