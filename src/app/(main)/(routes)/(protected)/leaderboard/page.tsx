@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default async function LeaderboardPage() {
   const data = await serverTRPC.leaderboard.get_current_standings.query();
   return (
-    <div className="container flex w-full flex-col items-center justify-center">
+    <div className="container">
       <RealtimeLeaderboard serverData={data} />
     </div>
   );

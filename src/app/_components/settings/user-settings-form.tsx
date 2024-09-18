@@ -133,12 +133,13 @@ export default function UserSettingsForm({
       <form
         id="onboardingPersonalDetailsForm"
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid gap-8 md:grid-cols-2"
+        className="grid gap-8 lg:grid-cols-2"
       >
         <div>
-          <h1 className="mb-8 text-2xl font-semibold leading-none tracking-tight">
+          <h1 className="text-2xl font-semibold leading-none tracking-tight">
             Personal Details
           </h1>
+          <Separator className="my-4" />
           <div className="space-y-8">
             <FormField
               control={form.control}
@@ -322,81 +323,88 @@ export default function UserSettingsForm({
           </div>
         </div>
         <div>
-          <Separator className="md:hidden" />
-          <h1 className="mb-8 mt-8 text-2xl font-semibold leading-none tracking-tight md:mt-0">
+          <h1 className="text-2xl font-semibold leading-none tracking-tight">
             Support Preferences
           </h1>
-          <div className="space-y-8">
-            <FormField
-              control={form.control}
-              name="user_support_administrative"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel className="text-base">Administrative</FormLabel>
-                    <FormDescription>
-                      Help us organize our social events, fundraising, and
-                      better our social media!
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="user_support_technical"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel className="text-base">Technical</FormLabel>
-                    <FormDescription>
-                      Help us innovate and develop hardware and software to
-                      further our unique experiences! {userSupportTechnical}
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <Separator />
-            <h1 className="text-2xl font-semibold leading-none tracking-tight">
+          <Separator className="my-4" />
+          <div>
+            <div className="space-y-8">
+              <FormField
+                control={form.control}
+                name="user_support_administrative"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                    <div className="space-y-0.5">
+                      <FormLabel className="text-base">
+                        Administrative
+                      </FormLabel>
+                      <FormDescription>
+                        Help us organize our social events, fundraising, and
+                        better our social media!
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="user_support_technical"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                    <div className="space-y-0.5">
+                      <FormLabel className="text-base">Technical</FormLabel>
+                      <FormDescription>
+                        Help us innovate and develop hardware and software to
+                        further our unique experiences! {userSupportTechnical}
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+            <h1 className="mt-8 text-2xl font-semibold leading-none tracking-tight">
               Team Details
             </h1>
-            <FormItem>
-              <FormLabel>Team</FormLabel>
-              <FormControl>
-                <Input
-                  disabled={true}
-                  className="border-muted-foreground"
-                  placeholder={userTeamName!}
-                />
-              </FormControl>
-              <FormDescription>
-                This is the team linked to your account. This cannot be changed.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={form.formState.isSubmitting}
-            >
-              {form.formState.isSubmitting && (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              Save
-            </Button>
+            <Separator className="my-4" />
+            <div className="flex flex-col space-y-8">
+              <FormItem>
+                <FormLabel>Team</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={true}
+                    className="border-muted-foreground"
+                    placeholder={userTeamName!}
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is the team linked to your account. This cannot be
+                  changed.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+              <Button
+                type="submit"
+                className="ml-auto w-32"
+                disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Save
+              </Button>
+            </div>
           </div>
         </div>
       </form>

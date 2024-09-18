@@ -34,5 +34,5 @@ export default function RealtimeLeaderboard({
     // }
   }, []);
 
-  return <DataTable data={serverData} className="max-w-4xl" />;
+  return <DataTable data={serverData} />;
 }

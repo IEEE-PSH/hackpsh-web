@@ -40,13 +40,23 @@ export function ProtectedMobileNav() {
             href={siteConfig.paths.home}
             onOpenChange={setIsOpen}
             scroll={false}
+            className="hover:underline"
           >
             Home
+          </MobileLink>
+          <MobileLink
+            href={siteConfig.paths.dashboard}
+            onOpenChange={setIsOpen}
+            scroll={false}
+            className="hover:underline"
+          >
+            Dashboard
           </MobileLink>
           <MobileLink
             href={siteConfig.paths.challenges}
             onOpenChange={setIsOpen}
             scroll={false}
+            className="hover:underline"
           >
             Challenges
           </MobileLink>
@@ -54,24 +64,18 @@ export function ProtectedMobileNav() {
             href={siteConfig.paths.leaderboard}
             onOpenChange={setIsOpen}
             scroll={false}
+            className="hover:underline"
           >
             Leaderboard
           </MobileLink>
           <MobileLink
             href={siteConfig.paths.announcements}
             onOpenChange={setIsOpen}
+            scroll={false}
+            className="hover:underline"
           >
             Announcements
           </MobileLink>
-          <MobileLink
-            href={siteConfig.paths.dashboard}
-            onOpenChange={setIsOpen}
-            scroll={false}
-          >
-            Dashboard
-          </MobileLink>
-
-          <SocialMediaMobileNav setIsOpen={setIsOpen} />
         </div>
       </SheetContent>
     </Sheet>

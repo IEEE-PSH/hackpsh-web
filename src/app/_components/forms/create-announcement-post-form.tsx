@@ -1,29 +1,44 @@
 "use client";
 
 import { getUser } from "@/shared/supabase/auth";
-import { type TCreateAnnouncementForm, CreateAnnouncementFormSchema } from "@/app/_lib/zod-schemas/forms/announcements";
+import {
+  type TCreateAnnouncementForm,
+  CreateAnnouncementFormSchema,
+} from "@/app/_lib/zod-schemas/forms/announcements";
 import { trpc } from "@/app/_trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button } from "../ui/button";
-import { Form, FormLabel, FormField, FormItem, FormControl, FormMessage } from "../ui/form";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormControl,
+  FormMessage,
+} from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { toast } from "../ui/use-toast";
 import { useForm } from "react-hook-form";
 import { Icons } from "../ui/icons";
 import { cn } from "@/app/_lib/client-utils";
+import { useRouter } from "next/navigation";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
 
-export function CreateAnnouncementPostForm({ className, ...props }: CreateAnouncementFormProps) {
+export function CreateAnnouncementPostForm({
+  className,
+  ...props
+}: CreateAnouncementFormProps) {
   const form = useForm<TCreateAnnouncementForm>({
     resolver: zodResolver(CreateAnnouncementFormSchema),
   });
+  const router = useRouter();
 
   const announcementMutation =
     trpc.announcements.create_announcement_post.useMutation({
       onSuccess: () => {
+        router.replace("/announcements");
         toast({
           variant: "success",
           title: "Announcement Created!",
@@ -64,16 +79,19 @@ export function CreateAnnouncementPostForm({ className, ...props }: CreateAnounc
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="w-full space-y-6"
+            className="flex flex-col space-y-6"
           >
             <FormField
               control={form.control}
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="Announcement Title" {...field} value={field.value ?? ""} />
+                    <Input
+                      placeholder="Title"
+                      {...field}
+                      value={field.value ?? ""}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -84,11 +102,10 @@ export function CreateAnnouncementPostForm({ className, ...props }: CreateAnounc
               name="content"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Content</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Type a message here that you want to send to everyone!"
-                      className="resize-none h-36"
+                      placeholder="Body"
+                      className="h-36 resize-none"
                       {...field}
                       value={field.value ?? ""}
                     />
@@ -97,11 +114,15 @@ export function CreateAnnouncementPostForm({ className, ...props }: CreateAnounc
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+            <Button
+              type="submit"
+              className="ml-auto px-8"
+              disabled={form.formState.isSubmitting}
+            >
               {form.formState.isSubmitting && (
-                <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}
-              Submit
+              Post
             </Button>
           </form>
         </Form>
