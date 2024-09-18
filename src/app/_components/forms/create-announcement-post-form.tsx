@@ -38,13 +38,14 @@ export function CreateAnnouncementPostForm({
   const announcementMutation =
     trpc.announcements.create_announcement_post.useMutation({
       onSuccess: () => {
-        router.replace("/announcements");
         toast({
           variant: "success",
           title: "Announcement Created!",
           description: "Visit the announcements page to see your message.",
           duration: 4000,
         });
+        router.replace("/announcements");
+        router.refresh();
       },
       onError: () => {
         toast({
