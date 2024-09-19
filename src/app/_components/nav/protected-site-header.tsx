@@ -17,7 +17,7 @@ export default async function ProtectedSiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background/95">
-      <div className="mx-8 flex h-16 items-center">
+      <div className="mx-4 flex h-16 items-center">
         <ProtectedMainNav />
         <ProtectedMobileNav />
         <SiteHeaderActions>
