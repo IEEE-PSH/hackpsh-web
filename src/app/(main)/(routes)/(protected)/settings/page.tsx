@@ -25,7 +25,7 @@ export default async function Page() {
     });
 
   return (
-    <div className="container my-8">
+    <div className="container my-4">
       <Card>
         <CardContent className="p-8">
           <UserSettingsForm
