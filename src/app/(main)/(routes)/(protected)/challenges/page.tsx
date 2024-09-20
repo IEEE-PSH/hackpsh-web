@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function ChallengesPage() {
   return (
-    <div className="container mt-8 max-w-[52rem]">
+    <div className="container my-4">
       <Card className="text-center">
         <CardHeader>
           <CardTitle>Internal Challenges Coming Soon!</CardTitle>
@@ -33,7 +33,7 @@ export default function ChallengesPage() {
             their total points earned in this category. This rule will be
             determined by the event administrators.
           </p>
-          <Button className="w-48" asChild>
+          <Button className="px-4" asChild>
             <Link href={siteConfig.links.hackerrank} target="_blank">
               <span>Software Challenges</span>
             </Link>

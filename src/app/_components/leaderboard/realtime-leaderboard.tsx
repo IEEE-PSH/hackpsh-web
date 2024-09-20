@@ -22,7 +22,7 @@ export default function RealtimeLeaderboard({
         schema: "app_schema",
         table: "app_team",
       },
-      (payload) => {
+      () => {
         //refresh route on app_team changes to update leaderboard ui
         router.refresh();
       },
@@ -34,5 +34,5 @@ export default function RealtimeLeaderboard({
     // }
   }, []);
 
-  return <DataTable data={serverData} className="max-w-4xl" />;
+  return <DataTable data={serverData} />;
 }

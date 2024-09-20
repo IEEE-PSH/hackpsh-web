@@ -25,7 +25,7 @@ import { type LeaderboardStandings } from "@/server/dao/leaderboard";
 
 interface DataTableProps {
   data: LeaderboardStandings;
-  className: string;
+  className?: string;
 }
 
 export default function DataTable({ data, className }: DataTableProps) {

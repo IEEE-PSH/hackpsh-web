@@ -25,22 +25,20 @@ export default async function Page() {
     });
 
   return (
-    <>
-      <div className="container max-w-3xl">
-        <Card className={cn("grid-gap-6 row-span-2")}>
-          <CardContent>
-            <UserSettingsForm
-              userDisplayName={user_display_name!}
-              userEmailAddress={user_email_address!}
-              userSchoolYear={user_school_year!}
-              userMajor={user_major!}
-              userSupportAdministrative={user_support_administrative!}
-              userSupportTechnical={user_support_technical!}
-              userTeamName={user_team_name!}
-            />
-          </CardContent>
-        </Card>
-      </div>
-    </>
+    <div className="container my-4">
+      <Card>
+        <CardContent className="p-8">
+          <UserSettingsForm
+            userDisplayName={user_display_name!}
+            userEmailAddress={user_email_address!}
+            userSchoolYear={user_school_year!}
+            userMajor={user_major!}
+            userSupportAdministrative={user_support_administrative!}
+            userSupportTechnical={user_support_technical!}
+            userTeamName={user_team_name!}
+          />
+        </CardContent>
+      </Card>
+    </div>
   );
 }

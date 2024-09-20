@@ -24,7 +24,7 @@ export default async function DashboardPage() {
     });
 
   return (
-    <div className="container my-8">
+    <div className="container my-4">
       <Card>
         <CardHeader>
           <CardTitle className="text-4xl">Team</CardTitle>

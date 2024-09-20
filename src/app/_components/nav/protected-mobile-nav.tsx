@@ -8,7 +8,6 @@ import Link, { type LinkProps } from "next/link";
 import { cn } from "@/app/_lib/client-utils";
 import { Icons } from "../ui/icons";
 import { siteConfig } from "@/app/_config/site";
-import { SocialMediaMobileNav } from "./social-media-mobile-nav";
 
 export function ProtectedMobileNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,13 +39,23 @@ export function ProtectedMobileNav() {
             href={siteConfig.paths.home}
             onOpenChange={setIsOpen}
             scroll={false}
+            className="hover:underline"
           >
             Home
+          </MobileLink>
+          <MobileLink
+            href={siteConfig.paths.dashboard}
+            onOpenChange={setIsOpen}
+            scroll={false}
+            className="hover:underline"
+          >
+            Dashboard
           </MobileLink>
           <MobileLink
             href={siteConfig.paths.challenges}
             onOpenChange={setIsOpen}
             scroll={false}
+            className="hover:underline"
           >
             Challenges
           </MobileLink>
@@ -54,24 +63,18 @@ export function ProtectedMobileNav() {
             href={siteConfig.paths.leaderboard}
             onOpenChange={setIsOpen}
             scroll={false}
+            className="hover:underline"
           >
             Leaderboard
           </MobileLink>
           <MobileLink
             href={siteConfig.paths.announcements}
             onOpenChange={setIsOpen}
+            scroll={false}
+            className="hover:underline"
           >
             Announcements
           </MobileLink>
-          <MobileLink
-            href={siteConfig.paths.dashboard}
-            onOpenChange={setIsOpen}
-            scroll={false}
-          >
-            Dashboard
-          </MobileLink>
-
-          <SocialMediaMobileNav setIsOpen={setIsOpen} />
         </div>
       </SheetContent>
     </Sheet>

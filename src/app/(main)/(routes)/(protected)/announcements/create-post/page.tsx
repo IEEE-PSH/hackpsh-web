@@ -8,11 +8,9 @@ export const metadata: Metadata = {
 
 export default function CreateAnnouncementPage() {
   return (
-    <>
-      <div className="container relative flex-col items-center justify-center space-y-6">
-        <h1 className="mt-10 text-3xl font-bold">Create Announcement</h1>
-        <CreateAnnouncementPostForm />
-      </div>
-    </>
+    <div className="container my-8 max-w-4xl">
+      <h1 className="mb-6 text-2xl font-semibold">Create Announcement</h1>
+      <CreateAnnouncementPostForm />
+    </div>
   );
 }
