@@ -7,13 +7,13 @@ import { ModeToggle } from "@/app/_components/ui/mode-toggle";
 
 export default function PublicSiteHeader() {
   return (
-      <SiteHeader>
-        <PublicMainNav />
-        <PublicMobileNav />
-        <SiteHeaderActions>
-          <ModeToggle />
-          <SessionButton />
-        </SiteHeaderActions>
-      </SiteHeader>
+    <SiteHeader>
+      <PublicMainNav />
+      <PublicMobileNav />
+      <SiteHeaderActions>
+        <ModeToggle />
+        <SessionButton />
+      </SiteHeaderActions>
+    </SiteHeader>
   );
 }

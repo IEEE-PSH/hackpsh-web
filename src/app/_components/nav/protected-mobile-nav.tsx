@@ -8,7 +8,6 @@ import Link, { type LinkProps } from "next/link";
 import { cn } from "@/app/_lib/client-utils";
 import { Icons } from "../ui/icons";
 import { siteConfig } from "@/app/_config/site";
-import { SocialMediaMobileNav } from "./social-media-mobile-nav";
 
 export function ProtectedMobileNav() {
   const [isOpen, setIsOpen] = useState(false);

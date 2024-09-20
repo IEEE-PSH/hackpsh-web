@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function ChallengesPage() {
   return (
-    <div className="container my-8">
+    <div className="container my-4">
       <Card className="text-center">
         <CardHeader>
           <CardTitle>Internal Challenges Coming Soon!</CardTitle>

@@ -22,7 +22,7 @@ export default function RealtimeLeaderboard({
         schema: "app_schema",
         table: "app_team",
       },
-      (payload) => {
+      () => {
         //refresh route on app_team changes to update leaderboard ui
         router.refresh();
       },
