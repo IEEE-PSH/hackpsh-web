@@ -12,7 +12,7 @@ export function ProtectedSideNav() {
   const pathname = usePathname();
 
   return (
-    <div className="sticky top-0 z-50 hidden min-h-screen min-w-72 self-start border-r bg-background/95 md:block">
+    <div className="fixed hidden min-h-screen min-w-72 border-r bg-background md:block">
       <div className="flex h-16">
         <Button variant="brand" size="navigation" className="mx-4" asChild>
           <Link href={siteConfig.paths.home} scroll={true}>
@@ -23,7 +23,7 @@ export function ProtectedSideNav() {
           </Link>
         </Button>
       </div>
-      <div className="border-t">
+      <div className="relative border-t">
         <nav className="m-4 flex flex-col">
           <Button
             className={cn(

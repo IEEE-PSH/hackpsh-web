@@ -1,8 +1,14 @@
 import { type AnnouncementPost } from "@/server/dao/announcements";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "../ui/card";
 
 interface AnnouncementPostProps {
-  postData: AnnouncementPost
+  postData: AnnouncementPost;
 }
 
 export function AnnouncementPost({ postData }: AnnouncementPostProps) {
@@ -19,12 +25,15 @@ export function AnnouncementPost({ postData }: AnnouncementPostProps) {
     day: "2-digit",
     year: "numeric",
     hour: "2-digit",
-    minute: "2-digit"
+    minute: "2-digit",
   };
 
-  const formatted_announcement_created_at = Intl.DateTimeFormat('en-US', format_time_options).format(announcement_created_at);
+  const formatted_announcement_created_at = Intl.DateTimeFormat(
+    "en-US",
+    format_time_options,
+  ).format(announcement_created_at);
   return (
-    <Card key={announcement_uuid}>
+    <Card key={announcement_uuid} className="">
       <CardHeader>
         <CardTitle>{announcement_title}</CardTitle>
         <CardDescription>
@@ -36,8 +45,8 @@ export function AnnouncementPost({ postData }: AnnouncementPostProps) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <p>{announcement_content}</p>
+        <p className="break-words">{announcement_content}</p>
       </CardContent>
     </Card>
-  )
+  );
 }

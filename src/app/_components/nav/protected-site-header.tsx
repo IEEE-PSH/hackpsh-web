@@ -16,9 +16,8 @@ export default async function ProtectedSiteHeader() {
     });
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-background/95">
+    <header className="sticky top-0 z-50 border-b bg-background">
       <div className="mx-4 flex h-16 items-center">
-        <ProtectedMainNav />
         <ProtectedMobileNav />
         <SiteHeaderActions>
           <AdminCreatePost />
