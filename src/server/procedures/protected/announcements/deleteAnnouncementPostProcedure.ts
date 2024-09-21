@@ -1,16 +1,14 @@
-import { updateAnnouncementPost } from "@/server/dao/announcements";
+import { deleteAnnouncementPost } from "@/server/dao/announcements";
 import { protectedProcedure } from "@/server/trpc";
-import { UpdateAnnouncementPostSchema } from "@/server/zod-schemas/announcements";
+import { DeleteAnnouncementPostSchema } from "@/server/zod-schemas/announcements";
 
 export default protectedProcedure
-  .input(UpdateAnnouncementPostSchema)
+  .input(DeleteAnnouncementPostSchema)
   .mutation(async ({ ctx, input }) => {
-    await updateAnnouncementPost(
+    await deleteAnnouncementPost(
       ctx.db,
       input.user_uuid,
       input.announcement_id,
-      input.title,
-      input.content,
     );
 
     return {

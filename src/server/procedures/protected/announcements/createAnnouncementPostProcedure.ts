@@ -9,10 +9,10 @@ export default protectedProcedure
   .mutation(async ({ ctx, input }) => {
     const user_data = await getUserRole(ctx.db, input.author_uuid);
 
-    if (user_data!.user_role !== "admin") {
+    if (user_data!.user_role === "participant") {
       throw new TRPCError({
         code: "UNAUTHORIZED",
-        message: "User must be an admin to create announcements.",
+        message: "User must be an officer or admin to create announcements.",
       });
     }
 

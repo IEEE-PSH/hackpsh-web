@@ -51,7 +51,7 @@ export default function EditAnnouncementPostForm({
         toast({
           variant: "success",
           title: "Announcement Updated!",
-          description: "Visit the announcements page to see your message.",
+          description: "You have successfully deleted an announcement.",
           duration: 4000,
         });
         form.reset({
@@ -78,7 +78,7 @@ export default function EditAnnouncementPostForm({
       const user = await getUser(supabase);
 
       await announcementMutation.mutateAsync({
-        author_uuid: user.id,
+        user_uuid: user.id,
         announcement_id: postData.announcement_id,
         title: values.title,
         content: values.content,

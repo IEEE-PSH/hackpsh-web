@@ -78,15 +78,15 @@ export async function getAnnouncementPost(db: Database, id: number) {
 
 export async function updateAnnouncementPost(
   db: Database,
-  author_uuid: string,
+  user_uuid: string,
   announcement_id: number,
   announcement_title: string,
   announcement_content: string,
 ) {
-  const result = await getUserRole(db, author_uuid);
+  const result = await getUserRole(db, user_uuid);
   if (result?.user_role === "participant") {
     throw new TRPCError({
-      message: "User must be an officer or admin to create announcements.",
+      message: "User must be an officer or admin to edit announcements.",
       code: "UNAUTHORIZED",
     });
   }
@@ -97,6 +97,28 @@ export async function updateAnnouncementPost(
       announcement_title,
       announcement_content,
     })
+    .where(eq(app_announcement.announcement_id, announcement_id));
+
+  return {
+    update_announcement_post: true,
+  };
+}
+
+export async function deleteAnnouncementPost(
+  db: Database,
+  user_uuid: string,
+  announcement_id: number,
+) {
+  const result = await getUserRole(db, user_uuid);
+  if (result?.user_role === "participant") {
+    throw new TRPCError({
+      message: "User must be an officer or admin to delete announcements.",
+      code: "UNAUTHORIZED",
+    });
+  }
+
+  await db
+    .delete(app_announcement)
     .where(eq(app_announcement.announcement_id, announcement_id));
 
   return {

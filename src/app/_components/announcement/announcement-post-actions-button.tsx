@@ -10,6 +10,10 @@ import { Button } from "../ui/button";
 import { Ellipsis, Pencil, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
+import { toast } from "../ui/use-toast";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { getUser } from "@/shared/supabase/auth";
+import { trpc } from "@/app/_trpc/react";
 
 //fix className declaration
 export default function AnnouncementPostActions({
@@ -20,6 +24,43 @@ export default function AnnouncementPostActions({
   className: string;
 }) {
   const router = useRouter();
+
+  const announcementMutation =
+    trpc.announcements.delete_announcement_post.useMutation({
+      onSuccess: () => {
+        toast({
+          variant: "success",
+          title: "Announcement Deleted!",
+          description: "You have successfully deleted an announcement.",
+          duration: 4000,
+        });
+        router.refresh();
+      },
+      onError: () => {
+        toast({
+          variant: "destructive",
+          title: "Oops, Something Went Wrong!",
+          description:
+            "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
+          duration: 6000,
+        });
+      },
+    });
+
+  //CHANGE TYPE
+  async function deletePost(postID: any) {
+    try {
+      const supabase = createClientComponentClient();
+      const user = await getUser(supabase);
+
+      await announcementMutation.mutateAsync({
+        user_uuid: user.id,
+        announcement_id: postID,
+      });
+    } catch (err: unknown) {
+      console.log(err);
+    }
+  }
 
   return (
     <div className={className}>
@@ -32,7 +73,7 @@ export default function AnnouncementPostActions({
         <DropdownMenuContent>
           <DropdownMenuItem
             onClick={() => {
-              router.push(siteConfig.paths.announcements + "/edit/" + postID);
+              router.push(siteConfig.paths.edit_post + "/" + postID);
             }}
             className="cursor-pointer"
           >
@@ -41,7 +82,12 @@ export default function AnnouncementPostActions({
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="cursor-pointer">
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => {
+              deletePost(postID);
+            }}
+          >
             <Trash className="mr-2 h-4 w-4" type="destructive" />
             <span>Delete</span>
           </DropdownMenuItem>

@@ -15,11 +15,11 @@ export default async function AnnouncementPostActions({
       user_uuid: user.id,
     });
 
-    if (get_user_role === "admin" || get_user_role === "officer") {
+    if (get_user_role !== "participant") {
       return (
         <AnnouncementPostActionsButton
           postID={postID}
-          className="absolute self-end"
+          className="absolute top-4 self-end"
         />
       );
     }

@@ -29,6 +29,7 @@ export const siteConfig = {
     announcements: "/announcements",
     challenges: "/challenges",
     create_post: "/announcements/create-post",
+    edit_post: "/announcements/edit",
     privacy_policy: "/info/privacy-policy",
     terms_of_service: "/info/terms-of-service",
     settings: "/settings",

@@ -41,7 +41,7 @@ export function CreateAnnouncementPostForm({
         toast({
           variant: "success",
           title: "Announcement Created!",
-          description: "Visit the announcements page to see your message.",
+          description: "You have successfully created an announcement.",
           duration: 4000,
         });
         router.replace("/announcements");

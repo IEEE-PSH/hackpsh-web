@@ -39,8 +39,15 @@ export async function middleware(req: NextRequest) {
     }
 
     if (
-      get_user_role !== "admin" &&
+      get_user_role === "participant" &&
       req.nextUrl.pathname.startsWith(siteConfig.paths.create_post)
+    ) {
+      return redirectToPath(req, siteConfig.paths.announcements);
+    }
+
+    if (
+      get_user_role === "participant" &&
+      req.nextUrl.pathname.startsWith(siteConfig.paths.edit_post)
     ) {
       return redirectToPath(req, siteConfig.paths.announcements);
     }
