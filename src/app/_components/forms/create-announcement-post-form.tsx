@@ -68,7 +68,6 @@ export function CreateAnnouncementPostForm({
         title: values.title,
         content: values.content,
       });
-      form.reset();
     } catch (err: unknown) {
       console.log(err);
     }

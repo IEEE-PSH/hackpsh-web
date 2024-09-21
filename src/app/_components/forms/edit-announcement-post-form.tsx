@@ -1,6 +1,5 @@
 "use client";
 
-import { getUser } from "@/shared/supabase/auth";
 import {
   type TCreateAnnouncementForm,
   CreateAnnouncementFormSchema,
@@ -23,11 +22,13 @@ import { useForm } from "react-hook-form";
 import { Icons } from "../ui/icons";
 import { cn } from "@/app/_lib/client-utils";
 import { useRouter } from "next/navigation";
+import { getUser } from "@/shared/supabase/auth";
+// import { AnnouncementPost } from "@/server/dao/announcements";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
 type EditAnnouncementFormProps = { postData: any }; //CHANGE
 
-export function EditAnnouncementPostForm({
+export default function EditAnnouncementPostForm({
   postData,
   className,
   ...props
@@ -41,19 +42,24 @@ export function EditAnnouncementPostForm({
       content: announcement_content,
     },
   });
+
   const router = useRouter();
 
   const announcementMutation =
-    trpc.announcements.create_announcement_post.useMutation({
+    trpc.announcements.update_announcement_post.useMutation({
       onSuccess: () => {
         toast({
           variant: "success",
-          title: "Announcement Created!",
+          title: "Announcement Updated!",
           description: "Visit the announcements page to see your message.",
           duration: 4000,
         });
-        router.replace("/announcements");
+        form.reset({
+          title: "",
+          content: "",
+        });
         router.refresh();
+        router.back();
       },
       onError: () => {
         toast({
@@ -73,6 +79,7 @@ export function EditAnnouncementPostForm({
 
       await announcementMutation.mutateAsync({
         author_uuid: user.id,
+        announcement_id: postData.announcement_id,
         title: values.title,
         content: values.content,
       });
@@ -122,16 +129,27 @@ export function EditAnnouncementPostForm({
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            className="ml-auto px-8"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Save
-          </Button>
+          <div className="flex space-x-4">
+            <Button
+              type="button"
+              onClick={() => router.back()}
+              variant="navigation"
+              className="ml-auto px-8"
+              disabled={form.formState.isSubmitting}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              className="px-8"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Save
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

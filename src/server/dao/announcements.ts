@@ -2,6 +2,7 @@ import { type Database } from "@/db/drizzle";
 import { app_announcement, app_user_profile } from "@/db/drizzle/schema";
 import { TRPCError } from "@trpc/server";
 import { desc, eq } from "drizzle-orm";
+import { getUserRole } from "./user";
 
 export async function getAnnouncements(db: Database) {
   try {
@@ -73,6 +74,34 @@ export async function getAnnouncementPost(db: Database, id: number) {
       code: "INTERNAL_SERVER_ERROR",
     });
   }
+}
+
+export async function updateAnnouncementPost(
+  db: Database,
+  author_uuid: string,
+  announcement_id: number,
+  announcement_title: string,
+  announcement_content: string,
+) {
+  const result = await getUserRole(db, author_uuid);
+  if (result?.user_role === "participant") {
+    throw new TRPCError({
+      message: "User must be an officer or admin to create announcements.",
+      code: "UNAUTHORIZED",
+    });
+  }
+
+  await db
+    .update(app_announcement)
+    .set({
+      announcement_title,
+      announcement_content,
+    })
+    .where(eq(app_announcement.announcement_id, announcement_id));
+
+  return {
+    update_announcement_post: true,
+  };
 }
 
 export type Announcements = Awaited<ReturnType<typeof getAnnouncements>>;

@@ -9,3 +9,10 @@ export const CreateAnnouncementPostSchema = z.object({
 export const LookupAnnouncementPostSchema = z.object({
   announcement_id: z.number(),
 });
+
+export const UpdateAnnouncementPostSchema = z.object({
+  author_uuid: z.string().uuid("Please provide a valid UUID."),
+  announcement_id: z.number(),
+  title: z.string().min(1, "Title must have at least a single character"),
+  content: z.string().min(1, "Content must at least have a single character"),
+});

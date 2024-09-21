@@ -1,4 +1,4 @@
-import { EditAnnouncementPostForm } from "@/app/_components/forms/edit-announcement-post-form";
+import EditAnnouncementPostForm from "@/app/_components/forms/edit-announcement-post-form";
 import { serverTRPC } from "@/app/_trpc/server";
 import { type Metadata } from "next";
 

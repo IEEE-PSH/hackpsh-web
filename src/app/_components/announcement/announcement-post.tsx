@@ -8,9 +8,9 @@ import {
 } from "../ui/card";
 import AnnouncementPostActions from "./announcement-post-actions";
 
-interface AnnouncementPostProps {
+type AnnouncementPostProps = {
   postData: AnnouncementPost;
-}
+};
 
 export async function AnnouncementPost({ postData }: AnnouncementPostProps) {
   const {
