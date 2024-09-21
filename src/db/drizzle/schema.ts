@@ -80,6 +80,7 @@ export const app_announcement = app_schema.table("app_announcement", {
   announcement_author_uuid: uuid("announcement_author_uuid")
     .notNull()
     .references(() => app_user_profile.user_uuid),
+  announcement_id: serial("announcement_id"),
   announcement_title: text("announcement_title").notNull(),
   announcement_content: text("announcement_content").notNull(),
 });

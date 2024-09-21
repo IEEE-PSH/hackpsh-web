@@ -1,13 +1,13 @@
 import { serverTRPC } from "@/app/_trpc/server";
 import { composeServerComponentClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
-import AdminCreatePostButton from "./admin-create-post-button";
+import AnnouncementPostActionsButton from "./announcement-post-actions-button";
 
-type AdminCreatePostLinkProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
-
-export default async function AdminCreatePostLink({
-  className,
-}: AdminCreatePostLinkProps) {
+export default async function AnnouncementPostActions({
+  postID,
+}: {
+  postID: number;
+}) {
   const supabase = composeServerComponentClient();
   try {
     const user = await getUser(supabase);
@@ -15,8 +15,13 @@ export default async function AdminCreatePostLink({
       user_uuid: user.id,
     });
 
-    if (get_user_role === "admin" || get_user_role === "officer") {
-      return <AdminCreatePostButton />;
+    if (get_user_role !== "participant") {
+      return (
+        <AnnouncementPostActionsButton
+          postID={postID}
+          className="absolute top-4 self-end"
+        />
+      );
     }
   } catch (error) {
     console.log(error);

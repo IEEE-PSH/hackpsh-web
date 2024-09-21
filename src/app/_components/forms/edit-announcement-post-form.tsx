@@ -1,6 +1,5 @@
 "use client";
 
-import { getUser } from "@/shared/supabase/auth";
 import {
   type TCreateAnnouncementForm,
   CreateAnnouncementFormSchema,
@@ -23,29 +22,44 @@ import { useForm } from "react-hook-form";
 import { Icons } from "../ui/icons";
 import { cn } from "@/app/_lib/client-utils";
 import { useRouter } from "next/navigation";
+import { getUser } from "@/shared/supabase/auth";
+import { AnnouncementPost } from "@/server/dao/announcements";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
+type EditAnnouncementFormProps = { postData: AnnouncementPost }; //fix type
 
-export function CreateAnnouncementPostForm({
+export default function EditAnnouncementPostForm({
+  postData,
   className,
   ...props
-}: CreateAnouncementFormProps) {
+}: CreateAnouncementFormProps & EditAnnouncementFormProps) {
+  const { announcement_title, announcement_content } = postData;
+
   const form = useForm<TCreateAnnouncementForm>({
     resolver: zodResolver(CreateAnnouncementFormSchema),
+    defaultValues: {
+      title: announcement_title,
+      content: announcement_content,
+    },
   });
+
   const router = useRouter();
 
   const announcementMutation =
-    trpc.announcements.create_announcement_post.useMutation({
+    trpc.announcements.update_announcement_post.useMutation({
       onSuccess: () => {
         toast({
           variant: "success",
-          title: "Announcement Created!",
-          description: "You have successfully created an announcement.",
+          title: "Announcement Updated!",
+          description: "You have successfully deleted an announcement.",
           duration: 4000,
         });
-        router.replace("/announcements");
+        form.reset({
+          title: "",
+          content: "",
+        });
         router.refresh();
+        router.back();
       },
       onError: () => {
         toast({
@@ -64,10 +78,12 @@ export function CreateAnnouncementPostForm({
       const user = await getUser(supabase);
 
       await announcementMutation.mutateAsync({
-        author_uuid: user.id,
+        user_uuid: user.id,
+        announcement_id: postData.announcement_id,
         title: values.title,
         content: values.content,
       });
+      form.reset();
     } catch (err: unknown) {
       console.log(err);
     }
@@ -113,16 +129,27 @@ export function CreateAnnouncementPostForm({
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            className="ml-auto px-8"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Post
-          </Button>
+          <div className="flex space-x-4">
+            <Button
+              type="button"
+              onClick={() => router.back()}
+              variant="navigation"
+              className="ml-auto px-8"
+              disabled={form.formState.isSubmitting}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              className="px-8"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Save
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
