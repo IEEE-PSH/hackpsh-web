@@ -25,13 +25,21 @@ import { cn } from "@/app/_lib/client-utils";
 import { useRouter } from "next/navigation";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
+type EditAnnouncementFormProps = { postData: any }; //CHANGE
 
-export function CreateAnnouncementPostForm({
+export function EditAnnouncementPostForm({
+  postData,
   className,
   ...props
-}: CreateAnouncementFormProps) {
+}: CreateAnouncementFormProps & EditAnnouncementFormProps) {
+  const { announcement_title, announcement_content } = postData;
+
   const form = useForm<TCreateAnnouncementForm>({
     resolver: zodResolver(CreateAnnouncementFormSchema),
+    defaultValues: {
+      title: announcement_title,
+      content: announcement_content,
+    },
   });
   const router = useRouter();
 
@@ -122,7 +130,7 @@ export function CreateAnnouncementPostForm({
             {form.formState.isSubmitting && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Post
+            Save
           </Button>
         </form>
       </Form>

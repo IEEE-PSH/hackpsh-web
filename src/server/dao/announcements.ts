@@ -12,6 +12,7 @@ export async function getAnnouncements(db: Database) {
         announcement_author_display_name: app_user_profile.user_display_name,
         announcement_title: app_announcement.announcement_title,
         announcement_content: app_announcement.announcement_content,
+        announcement_id: app_announcement.announcement_id,
       })
       .from(app_announcement)
       .innerJoin(
@@ -44,6 +45,28 @@ export async function createAnnouncementPost(
       announcement_content: content,
       announcement_title: title,
     });
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function getAnnouncementPost(db: Database, id: number) {
+  try {
+    const announcement_post = await db.query.app_announcement.findFirst({
+      columns: {
+        announcement_uuid: true,
+        announcement_created_at: true,
+        announcement_title: true,
+        announcement_content: true,
+        announcement_id: true,
+      },
+      where: (post_data, { eq }) => eq(post_data.announcement_id, id),
+    });
+
+    return announcement_post;
   } catch (error) {
     throw new TRPCError({
       message: "The database has encountered some issues.",
