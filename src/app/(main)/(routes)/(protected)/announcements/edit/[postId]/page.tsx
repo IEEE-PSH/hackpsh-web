@@ -14,8 +14,9 @@ export default async function EditAnnouncementPage({
 }: {
   params: { postId: number };
 }) {
+  console.log(typeof params.postId);
   const postData = await serverTRPC.announcements.get_announcement_post.query({
-    announcement_id: parseInt(params.postId as unknown as string) as number,
+    announcement_id: parseInt(params.postId as unknown as string),
   });
 
   return (
