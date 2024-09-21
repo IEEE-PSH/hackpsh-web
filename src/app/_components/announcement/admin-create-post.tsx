@@ -15,7 +15,7 @@ export default async function AdminCreatePostLink({
       user_uuid: user.id,
     });
 
-    if (get_user_role === "admin") {
+    if (get_user_role === "admin" || get_user_role === "officer") {
       return <AdminCreatePostButton />;
     }
   } catch (error) {
