@@ -12,7 +12,7 @@ type AnnouncementPostProps = {
   postData: AnnouncementPost;
 };
 
-export async function AnnouncementPost({ postData }: AnnouncementPostProps) {
+export function AnnouncementPost({ postData }: AnnouncementPostProps) {
   const {
     announcement_uuid,
     announcement_created_at,

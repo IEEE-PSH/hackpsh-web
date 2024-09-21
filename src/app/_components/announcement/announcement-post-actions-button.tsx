@@ -15,7 +15,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { trpc } from "@/app/_trpc/react";
 
-export default function AnnouncementPostActions({
+export default function AnnouncementPostActionsButton({
   postID,
   className,
 }: {
@@ -81,8 +81,8 @@ export default function AnnouncementPostActions({
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="cursor-pointer"
-            onClick={() => {
-              deletePost(postID);
+            onClick={async () => {
+              await deletePost(postID);
             }}
           >
             <Trash className="mr-2 h-4 w-4" type="destructive" />
