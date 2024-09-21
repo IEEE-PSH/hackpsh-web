@@ -15,14 +15,12 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { trpc } from "@/app/_trpc/react";
 
-//fix className declaration
 export default function AnnouncementPostActions({
   postID,
   className,
 }: {
   postID: number;
-  className: string;
-}) {
+} & React.HTMLAttributes<HTMLDivElement>) {
   const router = useRouter();
 
   const announcementMutation =
@@ -47,8 +45,7 @@ export default function AnnouncementPostActions({
       },
     });
 
-  //CHANGE TYPE
-  async function deletePost(postID: any) {
+  async function deletePost(postID: number) {
     try {
       const supabase = createClientComponentClient();
       const user = await getUser(supabase);

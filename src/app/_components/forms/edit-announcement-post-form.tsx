@@ -23,10 +23,10 @@ import { Icons } from "../ui/icons";
 import { cn } from "@/app/_lib/client-utils";
 import { useRouter } from "next/navigation";
 import { getUser } from "@/shared/supabase/auth";
-// import { AnnouncementPost } from "@/server/dao/announcements";
+import { AnnouncementPost } from "@/server/dao/announcements";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
-type EditAnnouncementFormProps = { postData: any }; //CHANGE
+type EditAnnouncementFormProps = { postData: AnnouncementPost }; //fix type
 
 export default function EditAnnouncementPostForm({
   postData,

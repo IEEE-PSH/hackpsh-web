@@ -60,6 +60,7 @@ export async function getAnnouncementPost(db: Database, id: number) {
       columns: {
         announcement_uuid: true,
         announcement_created_at: true,
+        announcement_author_uuid: true,
         announcement_title: true,
         announcement_content: true,
         announcement_id: true,

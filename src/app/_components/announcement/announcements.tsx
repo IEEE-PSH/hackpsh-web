@@ -7,14 +7,14 @@ export async function Announcements() {
 
   const postElements: JSX.Element[] = [];
 
-  serverAnnouncementPosts.forEach((announcementPostData) =>
+  serverAnnouncementPosts.forEach((announcementPostData) => {
     postElements.push(
       <AnnouncementPost
         key={announcementPostData.announcement_uuid}
         postData={announcementPostData}
       />,
-    ),
-  );
+    );
+  });
 
   return <div className="space-y-4">{postElements}</div>;
 }
