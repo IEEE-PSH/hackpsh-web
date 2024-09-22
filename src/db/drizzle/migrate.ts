@@ -7,6 +7,7 @@ import {
   dbOnboardingPhases,
   dbRole,
   dbSchoolYear,
+  insertEventDetails,
   insertMajor,
   insertOnboardingPhases,
   insertRole,
@@ -22,7 +23,7 @@ const db = drizzle(pool, { schema: schema });
 const runMigrations = async () => {
   try {
     await migrate(db, { migrationsFolder: "src/db/drizzle" });
-    
+
     for (const role_name of dbRole) {
       await insertRole(db, role_name);
     }
@@ -38,6 +39,8 @@ const runMigrations = async () => {
     for (const major_name of dbMajors) {
       await insertMajor(db, major_name);
     }
+
+    await insertEventDetails(db, "", 0, 0);
     console.log("migration success");
   } catch (error) {
     console.log(error);

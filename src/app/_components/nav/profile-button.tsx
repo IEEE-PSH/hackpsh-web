@@ -1,7 +1,16 @@
 "use client";
 
 import React from "react";
-import { User, Settings, LogOut, Palette, Moon, Sun, Tv2 } from "lucide-react";
+import {
+  User,
+  Settings,
+  LogOut,
+  Palette,
+  Moon,
+  Sun,
+  Tv2,
+  ToggleRight,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import {
   DropdownMenu,
@@ -92,6 +101,15 @@ export default function ProfileDropdown({
         >
           <Settings className="mr-2 h-4 w-4" />
           <span>Settings</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            router.replace(siteConfig.paths.administration);
+          }}
+          className="cursor-pointer"
+        >
+          <ToggleRight className="mr-2 h-4 w-4" />
+          <span>Administration</span>
         </DropdownMenuItem>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className="space-x-2">

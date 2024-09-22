@@ -33,6 +33,7 @@ export const siteConfig = {
     privacy_policy: "/info/privacy-policy",
     terms_of_service: "/info/terms-of-service",
     settings: "/settings",
+    administration: "/administration",
   },
 };
 

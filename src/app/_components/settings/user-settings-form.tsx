@@ -44,10 +44,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { toast } from "@/app/_components/ui/use-toast";
 import { Switch } from "../ui/switch";
-import {
-  SettingsFormSchema,
-  type TSettingsForm,
-} from "@/app/_lib/zod-schemas/forms/settings";
+import { SettingsFormSchema, type TSettingsForm } from "@/app/_lib/settings";
 import { Separator } from "../ui/separator";
 import { type TSupportUsForm } from "@/app/_lib/zod-schemas/forms/onboarding/support-us";
 import { useRouter } from "next/navigation";
@@ -278,10 +275,10 @@ export default function UserSettingsForm({
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="h-[350px] w-[400px] p-0">
+                    <PopoverContent className="h-80 w-96 p-0">
                       <Command>
                         <CommandInput placeholder="Search majors..." />
-                        <ScrollArea className="h-[350px]">
+                        <ScrollArea>
                           <CommandEmpty>
                             Cannot find provided major.
                           </CommandEmpty>

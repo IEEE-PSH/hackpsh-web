@@ -100,3 +100,9 @@ export const app_contact = app_schema.table("app_contact", {
   contact_email: text("contact_email").notNull(),
   contact_content: text("contact_content").notNull(),
 });
+
+export const app_event = app_schema.table("app_event", {
+  event_date: text("event_date").primaryKey().default("aaaa-aaa-aa"),
+  event_start_hour: integer("start_start_time").notNull().default(0),
+  event_end_hour: integer("event_end_time").notNull().default(0),
+});
