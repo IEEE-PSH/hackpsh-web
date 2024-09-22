@@ -91,6 +91,8 @@ export default function EventDetailsForm({
     resolver: zodResolver(EventDetailsFormSchema),
     defaultValues: {
       event_date: new Date(eventDate),
+      event_start_hour: eventStartHour.toString(),
+      event_duration: eventDuration.toString(),
     },
   });
 
@@ -220,10 +222,7 @@ export default function EventDetailsForm({
                       defaultValue={eventStartHour.toString()}
                     >
                       <SelectTrigger className="w-[280px]">
-                        <SelectValue
-                          placeholder="Select a time"
-                          defaultValue={"1".toString()}
-                        />
+                        <SelectValue placeholder="Select a time" />
                       </SelectTrigger>
 
                       <SelectContent>
