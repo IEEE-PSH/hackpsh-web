@@ -16,9 +16,13 @@ import { publicProcedure } from "@/server/trpc";
 export default publicProcedure.query(async ({ ctx }) => {
   const result = await getEventDetails(ctx.db);
 
-  const eventStartTime = new Date(result!.event_start_time);
+  // const eventStartTime = new Date(result!.event_start_time);
+  // const timeRemaining = eventStartTime.valueOf() - Date.now();
+  // const eventFinishTime = new Date(result!.event_end_time);
+
+  const eventStartTime = new Date();
   const timeRemaining = eventStartTime.valueOf() - Date.now();
-  const eventFinishTime = new Date(result!.event_end_time);
+  const eventFinishTime = new Date();
 
   return { eventStartTime, timeRemaining, eventFinishTime };
 });
