@@ -21,9 +21,11 @@ export async function updateEventDetails(
       });
     }
 
-    let eventDate = new Date(event_date);
-    let eventStartTime = new Date(eventDate.setUTCHours(event_start_hour + 4));
-    let eventEndTime = new Date(
+    const eventDate = new Date(event_date);
+    const eventStartTime = new Date(
+      eventDate.setUTCHours(event_start_hour + 4),
+    );
+    const eventEndTime = new Date(
       eventStartTime.getTime() + event_duration * 60 * 60 * 1000,
     );
 

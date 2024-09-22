@@ -1,10 +1,7 @@
 import EventDetailsForm from "@/app/_components/forms/event-details-form";
 import { serverTRPC } from "@/app/_trpc/server";
-import { composeServerComponentClient } from "@/server/lib/supabase/server";
 
 export default async function Page() {
-  const supabase = composeServerComponentClient();
-
   const { event_date, event_start_hour, event_duration } =
     await serverTRPC.event.get_event_details.query();
 
