@@ -1,4 +1,4 @@
-//eslint-disable @typescript-eslint/no-unsafe-assignment
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 //fix type
 
 import { Medal, Scale, Smile, Trophy, User } from "lucide-react";
@@ -61,7 +61,6 @@ function Hero() {
           </Button>
         </div>
 
-        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
         <Image
           src={HomeHeroSvg}
           width={300}
@@ -78,7 +77,6 @@ function HomeInfo() {
     <Section className="border-y bg-background-variant dark:bg-background/60">
       <div className="grid grid-cols-5 gap-8">
         <div className="hidden justify-center md:col-span-2 md:flex">
-          {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
           <Image
             priority={true}
             alt="Graphical Element"
@@ -145,7 +143,6 @@ function HomeInfo() {
           </CardContent>
         </Card>
         <div className="hidden justify-center p-6 md:col-span-2 md:flex">
-          {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
           <Image
             alt="Graphical Element"
             src={HomeInfo2Svg}
