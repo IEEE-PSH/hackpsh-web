@@ -40,7 +40,7 @@ const runMigrations = async () => {
       await insertMajor(db, major_name);
     }
 
-    await insertEventDetails(db, "", 0, 0);
+    await insertEventDetails(db, "", "", "");
     console.log("migration success");
   } catch (error) {
     console.log(error);

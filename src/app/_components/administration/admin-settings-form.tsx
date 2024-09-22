@@ -43,25 +43,49 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/_components/ui/select";
-import { TEventDetailsForm } from "@/app/_lib/event-details";
+import {
+  EventDetailsFormSchema,
+  TEventDetailsFormSchema,
+} from "@/app/_lib/event-details";
 
 const dbTime = [
-  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-  22, 23, 24,
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
+  "19",
+  "20",
+  "21",
+  "22",
+  "23",
+  "24",
 ];
 
-export default function UserSettingsForm() {
+export default function EventDetailsForm() {
   const supabase = createClientComponentClient();
 
   // Form Definition
-  const form = useForm<TEventDetailsForm>({
-    resolver: zodResolver(SettingsFormSchema),
-    // defaultValues: {
-    //   event_date
-    // },
+  const form = useForm<TEventDetailsFormSchema>({
+    resolver: zodResolver(EventDetailsFormSchema),
+    defaultValues: {},
   });
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const updateSettingsMutation = trpc.event.update_event_details.useMutation({
     onSuccess: () => {
@@ -80,15 +104,18 @@ export default function UserSettingsForm() {
     },
   });
 
-  async function onSubmit(values: TEventDetailsForm) {
+  async function onSubmit(values: TEventDetailsFormSchema) {
     try {
       const user = await getUser(supabase);
 
+      //fix types
       await updateSettingsMutation.mutateAsync({
         user_uuid: user.id,
-        event_date: values.event_date,
-        event_start_hour: values.event_start_hour,
-        event_end_hour: values.event_end_hour,
+        event_date: values.event_date.toString(),
+        event_start_hour: parseInt(
+          values.event_start_hour as unknown as string,
+        ),
+        event_duration: parseInt(values.event_duration as unknown as string),
       });
     } catch (err: unknown) {
       console.log(err);
@@ -96,7 +123,14 @@ export default function UserSettingsForm() {
     }
   }
 
-  function getReadableHour(hour: number) {
+  const format_time_options: Intl.DateTimeFormatOptions = {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+  };
+
+  function getReadableHour(strHour: string) {
+    let hour = parseInt(strHour);
     let calc, period;
     if (hour < 13) {
       if (hour == 0) calc = 12;
@@ -118,120 +152,125 @@ export default function UserSettingsForm() {
           </h1>
           <Separator className="my-4" />
           <Form {...form}>
-            <form id="eventDetailsForm" onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="flex flex-col space-y-8">
-                <FormField
-                  control={form.control}
-                  name="event_date"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-col">
-                      <FormLabel>Start Date</FormLabel>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant="outline"
-                              className={cn(
-                                "pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground",
-                              )}
-                            >
-                              {field.value ? (
-                                "test" //change
-                              ) : (
-                                <span>Select a date</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            mode="single"
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      <FormDescription>
-                        This determines the date of the event.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            <form
+              id="eventDetailsForm"
+              className="flex flex-col space-y-8"
+              onSubmit={form.handleSubmit(onSubmit)}
+            >
+              <FormField
+                control={form.control}
+                name="event_date"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[240px] pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground",
+                            )}
+                          >
+                            {field.value ? (
+                              Intl.DateTimeFormat(
+                                "en-US",
+                                format_time_options,
+                              ).format(field.value)
+                            ) : (
+                              <span>Select a date.</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormDescription>
+                      This determines what day the event will start.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                <FormField
-                  control={form.control}
-                  name="event_start_hour"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Start Time</FormLabel>
-                      <Select>
-                        <SelectTrigger className="w-[280px]">
-                          <SelectValue placeholder="Select a time" />
-                        </SelectTrigger>
+              <FormField
+                control={form.control}
+                name="event_start_hour"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Start Time</FormLabel>
+                    <Select onValueChange={field.onChange}>
+                      <SelectTrigger className="w-[280px]">
+                        <SelectValue placeholder="Select a time" />
+                      </SelectTrigger>
 
-                        <SelectContent>
-                          <ScrollArea className="h-80">
-                            <SelectGroup>
-                              {dbTime.map((time) => (
-                                <SelectItem key={time} value={String(time)}>
-                                  {getReadableHour(time)}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          </ScrollArea>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                      <SelectContent>
+                        <ScrollArea className="h-80">
+                          <SelectGroup>
+                            {dbTime.map((time) => (
+                              <SelectItem key={"start-" + time} value={time}>
+                                {getReadableHour(time)}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </ScrollArea>
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                      This determines what time the event will start.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                <FormField
-                  control={form.control}
-                  name="event_end_hour"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>End Time</FormLabel>
-                      <Select>
-                        <SelectTrigger className="w-[280px]">
-                          <SelectValue placeholder="Select a time" />
-                        </SelectTrigger>
+              <FormField
+                control={form.control}
+                name="event_duration"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Duration</FormLabel>
+                    <Select onValueChange={field.onChange}>
+                      <SelectTrigger className="w-[280px]">
+                        <SelectValue placeholder="Select a duration" />
+                      </SelectTrigger>
 
-                        <SelectContent>
-                          <ScrollArea className="h-80">
-                            <SelectGroup>
-                              {dbTime.map((time) => (
-                                <SelectItem key={time} value={String(time)}>
-                                  {getReadableHour(time)}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          </ScrollArea>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="12">12 Hours</SelectItem>
+                          <SelectItem value="24">24 Hours</SelectItem>
+                          <SelectItem value="36">36 Hours</SelectItem>
+                          <SelectItem value="48">48 Hours</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                      This determines how long the event will last.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                <Button
-                  type="submit"
-                  className="ml-auto w-32"
-                  disabled={form.formState.isSubmitting}
-                >
-                  {form.formState.isSubmitting && (
-                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                  )}
-                  Save
-                </Button>
-              </div>
+              <Button
+                type="submit"
+                className="ml-auto w-32"
+                disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Save
+              </Button>
             </form>
           </Form>
         </CardContent>

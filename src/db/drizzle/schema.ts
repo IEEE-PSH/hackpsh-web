@@ -102,7 +102,7 @@ export const app_contact = app_schema.table("app_contact", {
 });
 
 export const app_event = app_schema.table("app_event", {
-  event_date: text("event_date").primaryKey().default("aaaa-aaa-aa"),
-  event_start_hour: integer("start_start_time").notNull().default(0),
-  event_end_hour: integer("event_end_time").notNull().default(0),
+  event_date: text("event_date").primaryKey().notNull(),
+  event_start_time: text("event_start_time").notNull(),
+  event_end_time: text("event_end_time").notNull(),
 });
