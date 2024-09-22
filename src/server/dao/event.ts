@@ -13,7 +13,7 @@ export async function updateEventDetails(
 ) {
   try {
     const user_role = await getUserRole(db, user_uuid);
-    console.log(event_duration);
+
     if (user_role?.user_role === "participant") {
       throw new TRPCError({
         code: "UNAUTHORIZED",
@@ -22,22 +22,45 @@ export async function updateEventDetails(
     }
 
     let eventDate = new Date(event_date);
-    eventDate.setUTCHours(0);
-    let eventStartTime = new Date(eventDate.setUTCHours(event_start_hour + 26));
+    let eventStartTime = new Date(eventDate.setUTCHours(event_start_hour + 4));
     let eventEndTime = new Date(
       eventStartTime.getTime() + event_duration * 60 * 60 * 1000,
     );
-    console.log(eventEndTime);
 
     await db.update(app_event).set({
       event_date,
-      event_start_time: eventStartTime.toString(),
-      event_end_time: eventEndTime.toString(),
+      event_start_time: eventStartTime.toISOString(),
+      event_end_time: eventEndTime.toISOString(),
     });
 
     return {
       update_user_personal_details: true,
     };
+  } catch (error) {
+    if (error instanceof BaseError) {
+      throw new TRPCError({
+        message: error.description!,
+        code: "CONFLICT",
+      });
+    }
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function getEventDetails(db: Database) {
+  try {
+    const result = await db.query.app_event.findFirst({
+      columns: {
+        event_date: true,
+        event_start_time: true,
+        event_end_time: true,
+      },
+    });
+
+    return result;
   } catch (error) {
     if (error instanceof BaseError) {
       throw new TRPCError({

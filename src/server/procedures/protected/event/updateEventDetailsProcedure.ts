@@ -10,7 +10,7 @@ export default protectedProcedure
       input.user_uuid,
       input.event_date,
       input.event_start_hour,
-      input.event_end_hour,
+      input.event_duration,
     );
 
     return {

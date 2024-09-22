@@ -107,11 +107,11 @@ export default function EventDetailsForm() {
   async function onSubmit(values: TEventDetailsFormSchema) {
     try {
       const user = await getUser(supabase);
-
+      console.log(values.event_duration);
       //fix types
       await updateSettingsMutation.mutateAsync({
         user_uuid: user.id,
-        event_date: values.event_date.toString(),
+        event_date: values.event_date.toDateString(),
         event_start_hour: parseInt(
           values.event_start_hour as unknown as string,
         ),
