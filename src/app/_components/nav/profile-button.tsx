@@ -1,7 +1,16 @@
 "use client";
 
 import React from "react";
-import { User, Settings, LogOut, Palette, Moon, Sun, Tv2 } from "lucide-react";
+import {
+  User,
+  Settings,
+  LogOut,
+  Palette,
+  Moon,
+  Sun,
+  Tv2,
+  ToggleRight,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import {
   DropdownMenu,
@@ -24,6 +33,7 @@ import { Skeleton } from "../ui/skeleton";
 type ProfileDropdownProps = {
   userDisplayName: string | null;
   userEmailAddress: string | null;
+  userRole?: string | null;
 };
 
 function createUserProfileElements({
@@ -52,6 +62,7 @@ function createUserProfileElements({
 export default function ProfileDropdown({
   userDisplayName,
   userEmailAddress,
+  userRole,
 }: ProfileDropdownProps) {
   const router = useRouter();
   const supabase = createClientComponentClient();
@@ -93,6 +104,19 @@ export default function ProfileDropdown({
           <Settings className="mr-2 h-4 w-4" />
           <span>Settings</span>
         </DropdownMenuItem>
+        {userRole === "admin" ? (
+          <DropdownMenuItem
+            onClick={() => {
+              router.replace(siteConfig.paths.administration);
+            }}
+            className="cursor-pointer"
+          >
+            <ToggleRight className="mr-2 h-4 w-4" />
+            <span>Administration</span>
+          </DropdownMenuItem>
+        ) : (
+          <></>
+        )}
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className="space-x-2">
             <Palette className="h-4 w-4" />

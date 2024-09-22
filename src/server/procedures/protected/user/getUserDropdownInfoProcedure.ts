@@ -10,5 +10,6 @@ export default protectedProcedure
     return {
       user_display_name: result ? result.user_display_name : null,
       user_email_address: result ? result.user_email_address : null,
+      user_role: result ? result.user_role : null,
     };
   });

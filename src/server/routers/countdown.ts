@@ -1,4 +1,4 @@
-import getTimeRemainingProcedure from "../procedures/public/event-status/getTimeRemainingProcedure";
+import getTimeRemainingProcedure from "../procedures/public/event/getTimeRemainingProcedure";
 import { createTRPCRouter } from "../trpc";
 
 export const countdownRouter = createTRPCRouter({

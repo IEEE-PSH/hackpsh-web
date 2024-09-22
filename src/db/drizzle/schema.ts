@@ -100,3 +100,18 @@ export const app_contact = app_schema.table("app_contact", {
   contact_email: text("contact_email").notNull(),
   contact_content: text("contact_content").notNull(),
 });
+
+export const app_event = app_schema.table("app_event", {
+  event_date: text("event_date")
+    .primaryKey()
+    .notNull()
+    .default("Sun Sep 22 2024"),
+  event_start_time: text("event_start_time")
+    .notNull()
+    .default("2024-09-22T06:00:00.000Z"),
+  event_end_time: text("event_end_time")
+    .notNull()
+    .default("2024-09-23T06:00:00.000Z"),
+  event_start_hour: integer("event_start_hour").notNull().default(10),
+  event_duration: integer("event_duration").notNull().default(12),
+});

@@ -120,6 +120,41 @@
       "when": 1726870511130,
       "tag": "0016_open_smiling_tiger",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1726962962948,
+      "tag": "0017_jazzy_fenris",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1726969906867,
+      "tag": "0018_right_rogue",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1726981518240,
+      "tag": "0019_aspiring_sway",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1726982867223,
+      "tag": "0020_careful_gambit",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1726987309610,
+      "tag": "0021_bright_network",
+      "breakpoints": true
     }
   ]
 }

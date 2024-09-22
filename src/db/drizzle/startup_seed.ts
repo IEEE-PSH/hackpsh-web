@@ -1,5 +1,6 @@
 import { type Database } from ".";
 import {
+  app_event,
   app_major,
   app_onboarding_phase,
   app_role,
@@ -99,5 +100,12 @@ export async function insertOnboardingPhases(db: Database, phase_name: string) {
   await db
     .insert(app_onboarding_phase)
     .values({ phase_name })
+    .onConflictDoNothing();
+}
+
+export async function insertEventDetails(db: Database) {
+  await db
+    .insert(app_event)
+    .values({ event_start_hour: 10 })
     .onConflictDoNothing();
 }
