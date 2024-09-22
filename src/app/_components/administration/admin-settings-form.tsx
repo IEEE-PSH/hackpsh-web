@@ -29,10 +29,7 @@ import { trpc } from "@/app/_trpc/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { toast } from "@/app/_components/ui/use-toast";
-import { Switch } from "../ui/switch";
-import { SettingsFormSchema, type TSettingsForm } from "@/app/_lib/settings";
 import { Separator } from "../ui/separator";
-import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Calendar } from "../ui/calendar";
 import {
@@ -76,16 +73,26 @@ const dbTime = [
   "24",
 ];
 
-export default function EventDetailsForm() {
+type EventDetailsFormProps = {
+  eventDate: string;
+  eventStartHour: number;
+  eventDuration: number;
+};
+
+export default function EventDetailsForm({
+  eventDate,
+  eventStartHour,
+  eventDuration,
+}: EventDetailsFormProps) {
   const supabase = createClientComponentClient();
 
   // Form Definition
   const form = useForm<TEventDetailsFormSchema>({
     resolver: zodResolver(EventDetailsFormSchema),
-    defaultValues: {},
+    defaultValues: {
+      event_date: new Date(eventDate),
+    },
   });
-
-  // const router = useRouter();
 
   const updateSettingsMutation = trpc.event.update_event_details.useMutation({
     onSuccess: () => {
@@ -107,7 +114,7 @@ export default function EventDetailsForm() {
   async function onSubmit(values: TEventDetailsFormSchema) {
     try {
       const user = await getUser(supabase);
-      console.log(values.event_duration);
+
       //fix types
       await updateSettingsMutation.mutateAsync({
         user_uuid: user.id,
@@ -208,9 +215,15 @@ export default function EventDetailsForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Start Time</FormLabel>
-                    <Select onValueChange={field.onChange}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={eventStartHour.toString()}
+                    >
                       <SelectTrigger className="w-[280px]">
-                        <SelectValue placeholder="Select a time" />
+                        <SelectValue
+                          placeholder="Select a time"
+                          defaultValue={"1".toString()}
+                        />
                       </SelectTrigger>
 
                       <SelectContent>
@@ -239,7 +252,10 @@ export default function EventDetailsForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Duration</FormLabel>
-                    <Select onValueChange={field.onChange}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={eventDuration.toString()}
+                    >
                       <SelectTrigger className="w-[280px]">
                         <SelectValue placeholder="Select a duration" />
                       </SelectTrigger>
@@ -282,6 +298,7 @@ export default function EventDetailsForm() {
             Database
           </h1>
           <Separator className="my-4" />
+          <p>This will be implemented soon.</p>
         </CardContent>
       </Card>
     </div>

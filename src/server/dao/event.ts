@@ -31,18 +31,14 @@ export async function updateEventDetails(
       event_date,
       event_start_time: eventStartTime.toISOString(),
       event_end_time: eventEndTime.toISOString(),
+      event_start_hour: event_start_hour,
+      event_duration: event_duration,
     });
 
     return {
       update_user_personal_details: true,
     };
   } catch (error) {
-    if (error instanceof BaseError) {
-      throw new TRPCError({
-        message: error.description!,
-        code: "CONFLICT",
-      });
-    }
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",
@@ -57,6 +53,8 @@ export async function getEventDetails(db: Database) {
         event_date: true,
         event_start_time: true,
         event_end_time: true,
+        event_start_hour: true,
+        event_duration: true,
       },
     });
 

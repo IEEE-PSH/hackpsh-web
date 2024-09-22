@@ -105,4 +105,6 @@ export const app_event = app_schema.table("app_event", {
   event_date: text("event_date").primaryKey().notNull(),
   event_start_time: text("event_start_time").notNull(),
   event_end_time: text("event_end_time").notNull(),
+  event_start_hour: integer("event_start_hour").notNull().default(10),
+  event_duration: integer("event_duration").notNull().default(12),
 });

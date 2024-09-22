@@ -92,6 +92,7 @@ export async function getUserDropdownInfo(db: Database, user_uuid: string) {
       columns: {
         user_display_name: true,
         user_email_address: true,
+        user_role: true,
       },
       where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
     });
