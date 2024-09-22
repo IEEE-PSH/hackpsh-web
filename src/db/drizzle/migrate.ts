@@ -41,12 +41,7 @@ const runMigrations = async () => {
     }
 
     //set default dates
-    await insertEventDetails(
-      db,
-      "Mon Jan 1 2024",
-      "2024-09-22T08:00:00.000Z",
-      "2024-09-22T08:00:00.000Z",
-    );
+    await insertEventDetails(db);
     console.log("migration success");
   } catch (error) {
     console.log(error);
