@@ -104,12 +104,8 @@ export async function insertOnboardingPhases(db: Database, phase_name: string) {
 }
 
 export async function insertEventDetails(db: Database) {
-  const existingEvent = await db.select().from(app_event);
-
-  if (existingEvent.length === 0) {
-    await db
-      .insert(app_event)
-      .values({ event_start_hour: 10 })
-      .onConflictDoNothing();
-  }
+  await db
+    .insert(app_event)
+    .values({ event_start_hour: 10 })
+    .onConflictDoNothing();
 }
