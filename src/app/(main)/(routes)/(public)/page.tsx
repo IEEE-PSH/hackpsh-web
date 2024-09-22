@@ -1,3 +1,6 @@
+//eslint-disable @typescript-eslint/no-unsafe-assignment
+//fix type
+
 import { Medal, Scale, Smile, Trophy, User } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
 import {
@@ -21,9 +24,6 @@ import HomeInfo2Svg from "@/app/../../public/hackpsh-home-info-2.svg";
 import HomeInfo3Svg from "@/app/../../public/hackpsh-home-info-3.svg";
 import HomePrizeSvg from "@/app/../../public/hackpsh-home-prize.svg";
 import { siteConfig } from "@/app/_config/site";
-
-//eslint-disable @typescript-eslint/no-unsafe-assignment
-//fix type
 
 function Hero() {
   return (
