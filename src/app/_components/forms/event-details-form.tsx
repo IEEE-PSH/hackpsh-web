@@ -139,7 +139,7 @@ export default function EventDetailsForm({
   };
 
   function getReadableHour(strHour: string) {
-    let hour = parseInt(strHour);
+    const hour = parseInt(strHour);
     let calc, period;
     if (hour < 13) {
       if (hour == 0) calc = 12;
