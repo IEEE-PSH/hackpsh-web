@@ -22,8 +22,6 @@ import HomeInfo3Svg from "@/app/../../public/hackpsh-home-info-3.svg";
 import HomePrizeSvg from "@/app/../../public/hackpsh-home-prize.svg";
 import { siteConfig } from "@/app/_config/site";
 
-export const dynamic = "force-dynamic";
-
 function Hero() {
   return (
     <Section className="bg-background">
