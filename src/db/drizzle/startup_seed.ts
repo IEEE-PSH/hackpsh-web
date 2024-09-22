@@ -103,17 +103,10 @@ export async function insertOnboardingPhases(db: Database, phase_name: string) {
     .onConflictDoNothing();
 }
 
-export async function insertEventDetails(
-  db: Database,
-  event_date: string,
-  event_start_time: string,
-  event_end_time: string,
-) {
+export async function insertEventDetails(db: Database) {
   const existingEvent = await db.select().from(app_event);
 
   if (existingEvent.length === 0) {
-    await db
-      .insert(app_event)
-      .values({ event_date, event_start_time, event_end_time });
+    await db.insert(app_event);
   }
 }

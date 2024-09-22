@@ -148,6 +148,13 @@
       "when": 1726982867223,
       "tag": "0020_careful_gambit",
       "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1726987309610,
+      "tag": "0021_bright_network",
+      "breakpoints": true
     }
   ]
 }
