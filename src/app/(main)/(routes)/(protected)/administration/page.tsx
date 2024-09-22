@@ -9,8 +9,8 @@ export default async function Page() {
     <div className="container my-4">
       <EventDetailsForm
         eventDate={event_date}
-        eventStartHour={event_start_hour!}
-        eventDuration={event_duration!}
+        eventStartHour={event_start_hour}
+        eventDuration={event_duration}
       />
     </div>
   );
