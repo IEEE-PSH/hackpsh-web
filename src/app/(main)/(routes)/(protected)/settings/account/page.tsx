@@ -2,8 +2,7 @@ import { Card, CardContent } from "@/app/_components/ui/card";
 import { serverTRPC } from "@/app/_trpc/server";
 import { composeServerComponentClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
-import { cn } from "@/app/_lib/client-utils";
-import UserSettingsForm from "@/app/_components/settings/user-settings-form";
+import UserSettingsForm from "@/app/_components/forms/user-settings-form";
 
 export default async function Page() {
   const supabase = composeServerComponentClient();
@@ -25,7 +24,7 @@ export default async function Page() {
     });
 
   return (
-    <div className="container my-4">
+    <div>
       <Card>
         <CardContent className="p-8">
           <UserSettingsForm
