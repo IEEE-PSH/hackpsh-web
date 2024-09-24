@@ -53,6 +53,11 @@ export const UpdateUserSettingsSchema = z.object({
   user_support_technical: z.boolean(),
 });
 
+export const DeleteUserSchema = z.object({
+  user_uuid: z.string().uuid("Please provide a valid UUID."),
+  target_uuid: z.string().uuid("Please provide a valid UUID."),
+});
+
 export const ValidUserProfileAfterOnboardingSchema = z.object({
   user_display_name: z.string(),
   user_team_uuid: z.string().uuid(),

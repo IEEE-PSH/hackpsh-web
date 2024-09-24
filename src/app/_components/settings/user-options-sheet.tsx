@@ -4,6 +4,7 @@ import { Pencil } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -21,7 +22,6 @@ import {
 import { Form, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getUser } from "@/shared/supabase/auth";
 import { toast } from "../ui/use-toast";
 import { Icons } from "../ui/icons";
 import {
@@ -31,14 +31,17 @@ import {
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
 import { useRouter } from "next/navigation";
+import DeleteUserButton from "./delete-user-button";
 
 export default function UserOptionsSheet({
   userDisplayName,
   userUUID,
+  targetUUID,
   userRole,
 }: {
   userDisplayName: string;
   userUUID: string;
+  targetUUID: string;
   userRole: string;
 }) {
   const form = useForm<TUpdateUserRoleFormSchema>({
@@ -56,7 +59,7 @@ export default function UserOptionsSheet({
 
       toast({
         variant: "success",
-        title: "Event Details Updated!",
+        title: "User Role Updated!",
         duration: 4000,
       });
     },
@@ -69,15 +72,11 @@ export default function UserOptionsSheet({
     },
   });
 
-  const supabase = createClientComponentClient();
-
   async function onSubmit(values: TUpdateUserRoleFormSchema) {
     try {
-      const user = await getUser(supabase);
-
       await updateUserRoleMutation.mutateAsync({
-        user_uuid: user.id,
-        target_uuid: userUUID,
+        user_uuid: userUUID,
+        target_uuid: targetUUID,
         target_role: values.user_role,
       });
     } catch (err: unknown) {
@@ -94,7 +93,7 @@ export default function UserOptionsSheet({
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Manage Access for {userDisplayName}</SheetTitle>
+          <SheetTitle>Manage User {userDisplayName}</SheetTitle>
         </SheetHeader>
         <Form {...form}>
           <form
@@ -133,16 +132,21 @@ export default function UserOptionsSheet({
                 </FormItem>
               )}
             />
-            <Button
-              type="submit"
-              className="ml-auto w-32"
-              disabled={form.formState.isSubmitting}
-            >
-              {form.formState.isSubmitting && (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              Save changes
-            </Button>
+            <div className="ml-auto flex space-x-6">
+              <DeleteUserButton userUUID={userUUID} targetUUID={targetUUID} />
+              <SheetClose asChild>
+                <Button
+                  type="submit"
+                  className="ml-auto w-32"
+                  disabled={form.formState.isSubmitting}
+                >
+                  {form.formState.isSubmitting && (
+                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  Save changes
+                </Button>
+              </SheetClose>
+            </div>
           </form>
         </Form>
       </SheetContent>

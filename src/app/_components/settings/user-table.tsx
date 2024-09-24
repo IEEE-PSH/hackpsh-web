@@ -26,10 +26,15 @@ import UserOptionsSheet from "./user-options-sheet";
 
 interface UserTableProps {
   data: AllUsers;
+  userUUID: string;
   className?: string;
 }
 
-export default function UserTable({ data, className }: UserTableProps) {
+export default function UserTable({
+  data,
+  userUUID,
+  className,
+}: UserTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -102,7 +107,8 @@ export default function UserTable({ data, className }: UserTableProps) {
                         {cell.column.id === "user_role" ? (
                           <UserOptionsSheet
                             userDisplayName={row.original.user_display_name!}
-                            userUUID={row.original.user_uuid}
+                            userUUID={userUUID}
+                            targetUUID={row.original.user_uuid}
                             userRole={row.original.user_role}
                           />
                         ) : (

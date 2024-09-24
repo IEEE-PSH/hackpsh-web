@@ -77,9 +77,10 @@ export const app_announcement = app_schema.table("app_announcement", {
   announcement_created_at: timestamp("announcement_created_at")
     .notNull()
     .defaultNow(),
-  announcement_author_uuid: uuid("announcement_author_uuid")
-    .notNull()
-    .references(() => app_user_profile.user_uuid),
+  announcement_author_uuid: uuid("announcement_author_uuid").references(
+    () => app_user_profile.user_uuid,
+    { onDelete: "set null" },
+  ),
   announcement_id: serial("announcement_id"),
   announcement_title: text("announcement_title").notNull(),
   announcement_content: text("announcement_content").notNull(),

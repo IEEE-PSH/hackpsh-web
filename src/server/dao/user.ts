@@ -1,5 +1,5 @@
 import { type Database } from "@/db/drizzle";
-import { app_user_profile } from "@/db/drizzle/schema";
+import { app_announcement, app_user_profile } from "@/db/drizzle/schema";
 import {
   type TUserOnboardingPhase,
   type TUserMajor,
@@ -48,6 +48,24 @@ export async function createUser(
       code: "INTERNAL_SERVER_ERROR",
     });
   }
+}
+
+export async function deleteUser(
+  db: Database,
+  user_uuid: string,
+  target_uuid: string,
+) {
+  const result = await getUserRole(db, user_uuid);
+  if (result?.user_role !== "admin") {
+    throw new TRPCError({
+      message: "User must be an admin to delete users.",
+      code: "UNAUTHORIZED",
+    });
+  }
+
+  await db
+    .delete(app_user_profile)
+    .where(eq(app_user_profile.user_uuid, target_uuid));
 }
 
 export async function doesUserExist(db: Database, user_uuid: string) {
@@ -270,7 +288,7 @@ export async function updateUserRole(
   target_role: string,
 ) {
   const result = await getUserRole(db, user_uuid);
-  if (result?.user_role === "participant") {
+  if (result?.user_role !== "admin") {
     throw new TRPCError({
       message: "User must be an admin to manage user roles.",
       code: "UNAUTHORIZED",

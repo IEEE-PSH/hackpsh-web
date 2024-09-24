@@ -41,7 +41,7 @@ export function AnnouncementPost({ postData }: AnnouncementPostProps) {
         <CardTitle>{announcement_title}</CardTitle>
         <CardDescription>
           <span className="font-semibold">Created By: </span>
-          {announcement_author_display_name!}
+          {announcement_author_display_name ?? "Deleted User"}
           {" | "}
           <span className="font-semibold">Posted On: </span>
           {formatted_announcement_created_at}

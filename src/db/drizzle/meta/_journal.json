@@ -155,6 +155,20 @@
       "when": 1726987309610,
       "tag": "0021_bright_network",
       "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1727161120729,
+      "tag": "0022_free_ironclad",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1727161689428,
+      "tag": "0023_rapid_sentinel",
+      "breakpoints": true
     }
   ]
 }
