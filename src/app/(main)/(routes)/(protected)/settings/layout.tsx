@@ -15,7 +15,7 @@ export default async function Layout({
   });
 
   return (
-    <div className="container max-w-5xl">
+    <div className="container my-4 max-w-5xl">
       <SettingsNav userRole={get_user_role} />
       {children}
     </div>

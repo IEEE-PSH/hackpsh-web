@@ -28,10 +28,10 @@ import {
   type TUpdateUserRoleFormSchema,
   UpdateUserRoleFormSchema,
 } from "@/app/_lib/settings";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
 import { useRouter } from "next/navigation";
 import DeleteUserButton from "./delete-user-button";
+import { useState } from "react";
 
 export default function UserOptionsSheet({
   userDisplayName,
@@ -84,8 +84,10 @@ export default function UserOptionsSheet({
     }
   }
 
+  const [sheetOpen, setSheetOpen] = useState(false);
+
   return (
-    <Sheet>
+    <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="mr-2">
           <Pencil className="h-4 w-4" />
@@ -133,7 +135,11 @@ export default function UserOptionsSheet({
               )}
             />
             <div className="ml-auto flex space-x-6">
-              <DeleteUserButton userUUID={userUUID} targetUUID={targetUUID} />
+              <DeleteUserButton
+                userUUID={userUUID}
+                targetUUID={targetUUID}
+                sheetSetOpen={setSheetOpen}
+              />
               <SheetClose asChild>
                 <Button
                   type="submit"

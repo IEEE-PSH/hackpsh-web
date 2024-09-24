@@ -19,9 +19,5 @@ export default async function UsersPage() {
   //fix propdrilling user
   const user = await getUser(supabase);
 
-  return (
-    <div className="container">
-      <UserTable data={data} userUUID={user.id} />
-    </div>
-  );
+  return <UserTable data={data} userUUID={user.id} />;
 }

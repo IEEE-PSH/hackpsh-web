@@ -18,12 +18,15 @@ import { SheetClose } from "../ui/sheet";
 export default function DeleteUserButton({
   userUUID,
   targetUUID,
+  sheetSetOpen,
 }: {
   userUUID: string;
   targetUUID: string;
+  sheetSetOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   async function deleteUser() {
     try {
+      sheetSetOpen(false);
       await deleteUserMutation.mutateAsync({
         user_uuid: userUUID,
         target_uuid: targetUUID,
