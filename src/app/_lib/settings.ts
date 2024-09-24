@@ -1,4 +1,4 @@
-import { dbMajors, dbSchoolYear } from "@/db/drizzle/startup_seed";
+import { dbMajors, dbRole, dbSchoolYear } from "@/db/drizzle/startup_seed";
 import { z } from "zod";
 
 export const SettingsFormSchema = z.object({
@@ -15,3 +15,11 @@ export const SettingsFormSchema = z.object({
 });
 
 export type TSettingsForm = z.infer<typeof SettingsFormSchema>;
+
+export const UpdateUserRoleFormSchema = z.object({
+  user_role: z.enum(dbRole),
+});
+
+export type TUpdateUserRoleFormSchema = z.infer<
+  typeof UpdateUserRoleFormSchema
+>;

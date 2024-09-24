@@ -8,7 +8,7 @@ import {
 import { BaseError } from "@/shared/error";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
-import { getTeamFromName, getTeamInfo } from "./team";
+import { getTeamInfo } from "./team";
 
 export async function getUserOnboardingStatus(db: Database, user_uuid: string) {
   try {
@@ -263,6 +263,28 @@ export async function updateUserSupport(
   }
 }
 
+export async function updateUserRole(
+  db: Database,
+  user_uuid: string,
+  target_uuid: string,
+  target_role: string,
+) {
+  const result = await getUserRole(db, user_uuid);
+  if (result?.user_role === "participant") {
+    throw new TRPCError({
+      message: "User must be an admin to manage user roles.",
+      code: "UNAUTHORIZED",
+    });
+  }
+
+  await db
+    .update(app_user_profile)
+    .set({
+      user_role: target_role,
+    })
+    .where(eq(app_user_profile.user_uuid, target_uuid));
+}
+
 export async function updateUserSettings(
   db: Database,
   user_uuid: string,
@@ -369,3 +391,26 @@ export async function updateUserOnboardingStatus(
     });
   }
 }
+
+export async function getAllUsers(db: Database) {
+  try {
+    const result = await db
+      .select({
+        user_display_name: app_user_profile.user_display_name,
+        user_email_address: app_user_profile.user_email_address,
+        user_role: app_user_profile.user_role,
+        user_uuid: app_user_profile.user_uuid,
+      })
+      .from(app_user_profile); //ordered?
+
+    return result;
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export type AllUsers = Awaited<ReturnType<typeof getAllUsers>>;
+export type User = AllUsers[number];

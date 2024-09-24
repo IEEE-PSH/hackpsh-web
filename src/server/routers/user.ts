@@ -13,6 +13,8 @@ import getUserSettingsInfoProcedure from "../procedures/protected/user/getUserSe
 import getUserSupportInfoProcedure from "../procedures/protected/user/getUserSupportInfoProcedure";
 import { createTRPCRouter } from "../trpc";
 import updateUserSettingsProcedure from "../procedures/protected/user/updateUserSettingsProcedure";
+import getAllUsersProcedure from "../procedures/protected/user/getAllUsersProcedure";
+import updateUserRoleProcedure from "../procedures/protected/user/updateUserRoleProcedure";
 
 export const userRouter = createTRPCRouter({
   is_onboarding_complete: isOnboardingCompeleteProcedure,
@@ -29,4 +31,6 @@ export const userRouter = createTRPCRouter({
   validate_user_onboarding: validateUserOnboardingProcedure,
   update_onboarding_phase: updateOnboardingPhaseProcedure,
   update_onboarding_status: updateUserOnboardingStatusProcedure,
+  get_all_users: getAllUsersProcedure,
+  update_user_role: updateUserRoleProcedure,
 });

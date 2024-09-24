@@ -5,18 +5,18 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
 import { Button } from "@/app/_components/ui/button";
-import { type TeamStanding } from "@/server/dao/leaderboard";
+import { type User } from "@/server/dao/user";
 
-export const columns: ColumnDef<TeamStanding>[] = [
+export const columns: ColumnDef<User>[] = [
   {
-    accessorKey: "team_name",
+    accessorKey: "user_display_name",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Team Name
+          Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -24,27 +24,48 @@ export const columns: ColumnDef<TeamStanding>[] = [
     cell: ({ row }) => (
       <div>
         <p className="ml-4 overflow-hidden text-ellipsis whitespace-nowrap">
-          {row.getValue("team_name")}
+          {row.getValue("user_display_name")}
         </p>
       </div>
     ),
   },
   {
-    accessorKey: "team_points",
+    accessorKey: "user_email_address",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Points
+          Email
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
       return (
-        <div className="ml-4 font-medium">{row.getValue("team_points")}</div>
+        <div className="ml-4 font-medium">
+          {row.getValue("user_email_address")}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "user_role",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Role
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <div className="ml-4 font-medium">{row.getValue("user_role")}</div>
       );
     },
   },

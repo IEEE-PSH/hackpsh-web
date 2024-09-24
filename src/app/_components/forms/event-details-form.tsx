@@ -36,7 +36,7 @@ import {
 } from "@/app/_components/ui/select";
 import {
   EventDetailsFormSchema,
-  TEventDetailsFormSchema,
+  type TEventDetailsFormSchema,
 } from "@/app/_lib/event-details";
 
 const dbTime = [
