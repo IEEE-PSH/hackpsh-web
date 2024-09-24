@@ -32,8 +32,10 @@ export const siteConfig = {
     edit_post: "/announcements/edit",
     privacy_policy: "/info/privacy-policy",
     terms_of_service: "/info/terms-of-service",
-    settings: "/settings",
-    administration: "/administration",
+    event: "/settings/event",
+    account: "/settings/account",
+    users: "/settings/users",
+    teams: "/settings/teams",
   },
 };
 

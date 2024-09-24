@@ -2,6 +2,7 @@ import {
   dbMajors,
   dbOnboardingPhases,
   dbSchoolYear,
+  dbRole,
 } from "@/db/drizzle/startup_seed";
 import { z } from "zod";
 
@@ -12,6 +13,12 @@ export const CreateUserSchema = z.object({
 
 export const LookupUserSchema = z.object({
   user_uuid: z.string().uuid("Please provide a valid UUID."),
+});
+
+export const UpdateUserRoleSchema = z.object({
+  user_uuid: z.string().uuid("Please provide a valid UUID."),
+  target_uuid: z.string().uuid("Please provide a valid UUID."),
+  target_role: z.enum(dbRole),
 });
 
 export const UpdateUserPersonalDetailsSchema = z.object({
@@ -44,6 +51,11 @@ export const UpdateUserSettingsSchema = z.object({
   user_major: z.enum(dbMajors),
   user_support_administrative: z.boolean(),
   user_support_technical: z.boolean(),
+});
+
+export const DeleteUserSchema = z.object({
+  user_uuid: z.string().uuid("Please provide a valid UUID."),
+  target_uuid: z.string().uuid("Please provide a valid UUID."),
 });
 
 export const ValidUserProfileAfterOnboardingSchema = z.object({

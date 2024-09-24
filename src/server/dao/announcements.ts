@@ -16,7 +16,7 @@ export async function getAnnouncements(db: Database) {
         announcement_id: app_announcement.announcement_id,
       })
       .from(app_announcement)
-      .innerJoin(
+      .leftJoin(
         app_user_profile,
         eq(
           app_announcement.announcement_author_uuid,

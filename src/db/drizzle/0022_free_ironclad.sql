@@ -1,0 +1,1 @@
+ALTER TABLE "app_schema"."app_announcement" ALTER COLUMN "announcement_author_uuid" DROP NOT NULL;

@@ -1,10 +1,6 @@
 "use client";
 
 import { cn } from "@/app/_lib/client-utils";
-import {
-  PersonalDetailsFormSchema,
-  type TPersonalDetailsForm,
-} from "@/app/_lib/zod-schemas/forms/onboarding/personal-details";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -23,14 +19,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/app/_components/ui/combo-scroll-popover";
-import { CalendarIcon, Check, ChevronsUpDown } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import { trpc } from "@/app/_trpc/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { toast } from "@/app/_components/ui/use-toast";
-import { Separator } from "../ui/separator";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Calendar } from "../ui/calendar";
 import {
   Select,
@@ -42,7 +36,7 @@ import {
 } from "@/app/_components/ui/select";
 import {
   EventDetailsFormSchema,
-  TEventDetailsFormSchema,
+  type TEventDetailsFormSchema,
 } from "@/app/_lib/event-details";
 
 const dbTime = [
@@ -153,153 +147,131 @@ export default function EventDetailsForm({
   }
 
   return (
-    <div className="grid gap-4 lg:grid-cols-2">
-      <Card>
-        <CardContent className="p-8">
-          <h1 className="text-2xl font-semibold leading-none tracking-tight">
-            Event Details
-          </h1>
-          <Separator className="my-4" />
-          <Form {...form}>
-            <form
-              id="eventDetailsForm"
-              className="flex flex-col space-y-8"
-              onSubmit={form.handleSubmit(onSubmit)}
-            >
-              <FormField
-                control={form.control}
-                name="event_date"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>Date</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "w-[240px] pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground",
-                            )}
-                          >
-                            {field.value ? (
-                              Intl.DateTimeFormat(
-                                "en-US",
-                                format_time_options,
-                              ).format(field.value)
-                            ) : (
-                              <span>Select a date.</span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormDescription>
-                      This determines what day the event will start.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="event_start_hour"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Start Time</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={eventStartHour.toString()}
+    <Form {...form}>
+      <form
+        id="eventDetailsForm"
+        className="flex flex-col space-y-8"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <FormField
+          control={form.control}
+          name="event_date"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Date</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-[240px] pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground",
+                      )}
                     >
-                      <SelectTrigger className="w-[280px]">
-                        <SelectValue placeholder="Select a time" />
-                      </SelectTrigger>
+                      {field.value ? (
+                        Intl.DateTimeFormat(
+                          "en-US",
+                          format_time_options,
+                        ).format(field.value)
+                      ) : (
+                        <span>Select a date.</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              <FormDescription>Set the day of the event.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-                      <SelectContent>
-                        <ScrollArea className="h-80">
-                          <SelectGroup>
-                            {dbTime.map((time) => (
-                              <SelectItem key={"start-" + time} value={time}>
-                                {getReadableHour(time)}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </ScrollArea>
-                      </SelectContent>
-                    </Select>
-                    <FormDescription>
-                      This determines what time the event will start.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="event_duration"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Duration</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={eventDuration.toString()}
-                    >
-                      <SelectTrigger className="w-[280px]">
-                        <SelectValue placeholder="Select a duration" />
-                      </SelectTrigger>
-
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="12">12 Hours</SelectItem>
-                          <SelectItem value="24">24 Hours</SelectItem>
-                          <SelectItem value="36">36 Hours</SelectItem>
-                          <SelectItem value="48">48 Hours</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <FormDescription>
-                      This determines how long the event will last.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <Button
-                type="submit"
-                className="ml-auto w-32"
-                disabled={form.formState.isSubmitting}
+        <FormField
+          control={form.control}
+          name="event_start_hour"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Start Time</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={eventStartHour.toString()}
               >
-                {form.formState.isSubmitting && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                Save
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+                <SelectTrigger className="w-[280px]">
+                  <SelectValue placeholder="Select a time" />
+                </SelectTrigger>
 
-      <Card>
-        <CardContent className="p-8">
-          <h1 className="text-2xl font-semibold leading-none tracking-tight">
-            Database
-          </h1>
-          <Separator className="my-4" />
-          <p>This will be implemented soon.</p>
-        </CardContent>
-      </Card>
-    </div>
+                <SelectContent>
+                  <ScrollArea className="h-80">
+                    <SelectGroup>
+                      {dbTime.map((time) => (
+                        <SelectItem key={"start-" + time} value={time}>
+                          {getReadableHour(time)}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </ScrollArea>
+                </SelectContent>
+              </Select>
+              <FormDescription>
+                Set a time for when the event will start.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="event_duration"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Duration</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={eventDuration.toString()}
+              >
+                <SelectTrigger className="w-[280px]">
+                  <SelectValue placeholder="Select a duration" />
+                </SelectTrigger>
+
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="12">12 Hours</SelectItem>
+                    <SelectItem value="24">24 Hours</SelectItem>
+                    <SelectItem value="36">36 Hours</SelectItem>
+                    <SelectItem value="48">48 Hours</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <FormDescription>
+                Set how long the event will last.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button
+          type="submit"
+          className="ml-auto w-32"
+          disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting && (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          )}
+          Save
+        </Button>
+      </form>
+    </Form>
   );
 }

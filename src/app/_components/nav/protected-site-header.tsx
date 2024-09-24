@@ -9,7 +9,7 @@ import AdminCreatePost from "../announcement/admin-create-post";
 export default async function ProtectedSiteHeader() {
   const supabase = composeServerComponentClient();
   const user = await getUser(supabase);
-  const { user_display_name, user_email_address, user_role } =
+  const { user_display_name, user_email_address } =
     await serverTRPC.user.get_user_dropdown_info.query({
       user_uuid: user.id,
     });
@@ -23,7 +23,6 @@ export default async function ProtectedSiteHeader() {
           <ProfileButton
             userDisplayName={user_display_name}
             userEmailAddress={user_email_address}
-            userRole={user_role}
           />
         </SiteHeaderActions>
       </div>
