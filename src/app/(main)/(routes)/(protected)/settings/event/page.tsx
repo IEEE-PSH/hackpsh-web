@@ -1,4 +1,3 @@
-import AdminControls from "@/app/_components/administration/admin-controls";
 import EventDetailsForm from "@/app/_components/forms/event-details-form";
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { Separator } from "@/app/_components/ui/separator";
