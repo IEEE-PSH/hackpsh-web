@@ -85,11 +85,23 @@ export default function UserOptionsSheet({
   }
 
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [active, setActive] = useState(false);
 
   return (
-    <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+    <Sheet
+      open={sheetOpen}
+      onOpenChange={() => {
+        setSheetOpen(!sheetOpen);
+        setActive(!active);
+      }}
+    >
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="mr-2">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="mr-2"
+          onClick={() => setActive(!active)}
+        >
           <Pencil className="h-4 w-4" />
         </Button>
       </SheetTrigger>
@@ -97,64 +109,68 @@ export default function UserOptionsSheet({
         <SheetHeader>
           <SheetTitle>Manage User {userDisplayName}</SheetTitle>
         </SheetHeader>
-        <Form {...form}>
-          <form
-            id="manageAccessForm"
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="mt-6 flex flex-col space-y-6"
-          >
-            <FormField
-              control={form.control}
-              name="user_role"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="grid grid-cols-4 items-center">
-                    <FormLabel>Role</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={userRole}
-                    >
-                      <SelectTrigger className="col-span-3">
-                        <SelectValue placeholder="Select a role" />
-                      </SelectTrigger>
+        {active ? (
+          <Form {...form}>
+            <form
+              id="manageAccessForm"
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="mt-6 flex flex-col space-y-6"
+            >
+              <FormField
+                control={form.control}
+                name="user_role"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="grid grid-cols-4 items-center">
+                      <FormLabel>Role</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={userRole}
+                      >
+                        <SelectTrigger className="col-span-3">
+                          <SelectValue placeholder="Select a role" />
+                        </SelectTrigger>
 
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="participant">
-                            participant
-                          </SelectItem>
-                          <SelectItem value="officer">officer</SelectItem>
-                          <SelectItem value="admin">admin</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="participant">
+                              Participant
+                            </SelectItem>
+                            <SelectItem value="officer">Officer</SelectItem>
+                            <SelectItem value="admin">Admin</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="ml-auto flex space-x-6">
-              <DeleteUserButton
-                userUUID={userUUID}
-                targetUUID={targetUUID}
-                sheetSetOpen={setSheetOpen}
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              <SheetClose asChild>
-                <Button
-                  type="submit"
-                  className="ml-auto w-32"
-                  disabled={form.formState.isSubmitting}
-                >
-                  {form.formState.isSubmitting && (
-                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                  )}
-                  Save changes
-                </Button>
-              </SheetClose>
-            </div>
-          </form>
-        </Form>
+              <div className="ml-auto flex space-x-6">
+                <DeleteUserButton
+                  userUUID={userUUID}
+                  targetUUID={targetUUID}
+                  sheetSetOpen={setSheetOpen}
+                />
+                <SheetClose asChild>
+                  <Button
+                    type="submit"
+                    className="ml-auto w-32"
+                    disabled={form.formState.isSubmitting}
+                  >
+                    {form.formState.isSubmitting && (
+                      <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                    )}
+                    Save changes
+                  </Button>
+                </SheetClose>
+              </div>
+            </form>
+          </Form>
+        ) : (
+          <></>
+        )}
       </SheetContent>
     </Sheet>
   );

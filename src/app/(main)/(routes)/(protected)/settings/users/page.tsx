@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function UsersPage() {
-  const data = await serverTRPC.user.get_all_users.query();
+  const data = await serverTRPC.user.get_users.query({ role: "participant" });
 
   const supabase = composeServerComponentClient();
   //fix propdrilling user
