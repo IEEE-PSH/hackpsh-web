@@ -4,6 +4,7 @@ import {
   type TUserOnboardingPhase,
   type TUserMajor,
   type TUserSchoolYear,
+  TUserRole,
 } from "@/db/drizzle/startup_seed";
 import { BaseError } from "@/shared/error";
 import { TRPCError } from "@trpc/server";
@@ -410,7 +411,7 @@ export async function updateUserOnboardingStatus(
   }
 }
 
-export async function getAllUsers(db: Database) {
+export async function getUsers(db: Database, role: TUserRole) {
   try {
     const result = await db
       .select({
@@ -419,7 +420,8 @@ export async function getAllUsers(db: Database) {
         user_role: app_user_profile.user_role,
         user_uuid: app_user_profile.user_uuid,
       })
-      .from(app_user_profile); //ordered?
+      .from(app_user_profile)
+      .where(eq(app_user_profile.user_role, role)); //ordered?
 
     return result;
   } catch (error) {
@@ -430,5 +432,5 @@ export async function getAllUsers(db: Database) {
   }
 }
 
-export type AllUsers = Awaited<ReturnType<typeof getAllUsers>>;
+export type AllUsers = Awaited<ReturnType<typeof getUsers>>;
 export type User = AllUsers[number];

@@ -23,7 +23,15 @@ import { useState } from "react";
 import { type AllUsers } from "@/server/dao/user";
 import { columns } from "@/app/_components/settings/user-columns";
 import UserOptionsSheet from "./user-options-sheet";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/_components/ui/select";
+import { trpc } from "@/app/_trpc/react";
+import { type TUserRole } from "@/db/drizzle/startup_seed";
 interface UserTableProps {
   data: AllUsers;
   userUUID: string;
@@ -37,9 +45,14 @@ export default function UserTable({
 }: UserTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [currRole, setCurrRole] = useState<TUserRole>("participant");
+
+  const { data: currData = data } = trpc.user.get_users.useQuery({
+    role: currRole,
+  });
 
   const table = useReactTable({
-    data,
+    data: currData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -54,7 +67,7 @@ export default function UserTable({
 
   return (
     <div className={cn("w-full", className)}>
-      <div className="flex items-center py-4">
+      <div className="my-4 flex items-center justify-between space-x-4">
         <Input
           placeholder="Search a user"
           value={
@@ -69,6 +82,20 @@ export default function UserTable({
           }
           className="max-w-sm"
         />
+        <Select
+          onValueChange={(value) => {
+            setCurrRole(String(value) as TUserRole);
+          }}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Participant" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="participant">Participant</SelectItem>
+            <SelectItem value="officer">Officer</SelectItem>
+            <SelectItem value="admin">Admin</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
       <div className="rounded-md border">
         <Table>
@@ -96,7 +123,7 @@ export default function UserTable({
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      <div className="flex justify-between">
+                      <div className="flex h-6 items-center justify-between">
                         <div className="my-auto">
                           {flexRender(
                             cell.column.columnDef.cell,
@@ -104,7 +131,7 @@ export default function UserTable({
                           )}
                         </div>
 
-                        {cell.column.id === "user_role" ? (
+                        {cell.column.id === "user_email_address" ? (
                           <UserOptionsSheet
                             userDisplayName={row.original.user_display_name!}
                             userUUID={userUUID}

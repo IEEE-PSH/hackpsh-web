@@ -15,6 +15,10 @@ export const LookupUserSchema = z.object({
   user_uuid: z.string().uuid("Please provide a valid UUID."),
 });
 
+export const LookupUsersFromRoleSchema = z.object({
+  role: z.enum(dbRole),
+});
+
 export const UpdateUserRoleSchema = z.object({
   user_uuid: z.string().uuid("Please provide a valid UUID."),
   target_uuid: z.string().uuid("Please provide a valid UUID."),

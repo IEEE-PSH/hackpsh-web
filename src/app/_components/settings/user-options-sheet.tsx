@@ -4,7 +4,6 @@ import { Pencil } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -29,9 +28,9 @@ import {
   UpdateUserRoleFormSchema,
 } from "@/app/_lib/settings";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
-import { useRouter } from "next/navigation";
 import DeleteUserButton from "./delete-user-button";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function UserOptionsSheet({
   userDisplayName,
@@ -52,11 +51,13 @@ export default function UserOptionsSheet({
   });
 
   const router = useRouter();
+  const utils = trpc.useContext();
 
   const updateUserRoleMutation = trpc.user.update_user_role.useMutation({
     onSuccess: () => {
+      setSheetOpen(false);
       router.refresh();
-
+      void utils.user.get_users.invalidate();
       toast({
         variant: "success",
         title: "User Role Updated!",
@@ -87,60 +88,65 @@ export default function UserOptionsSheet({
   const [sheetOpen, setSheetOpen] = useState(false);
 
   return (
-    <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+    <Sheet
+      open={sheetOpen}
+      onOpenChange={() => {
+        setSheetOpen(!sheetOpen);
+      }}
+    >
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="mr-2">
-          <Pencil className="h-4 w-4" />
+        <Button variant="ghost" size="icon">
+          <Pencil className="h-4 w-4 " />
         </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Manage User {userDisplayName}</SheetTitle>
         </SheetHeader>
-        <Form {...form}>
-          <form
-            id="manageAccessForm"
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="mt-6 flex flex-col space-y-6"
-          >
-            <FormField
-              control={form.control}
-              name="user_role"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="grid grid-cols-4 items-center">
-                    <FormLabel>Role</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={userRole}
-                    >
-                      <SelectTrigger className="col-span-3">
-                        <SelectValue placeholder="Select a role" />
-                      </SelectTrigger>
+        {sheetOpen ? (
+          <Form {...form}>
+            <form
+              id="manageAccessForm"
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="mt-6 flex flex-col space-y-6"
+            >
+              <FormField
+                control={form.control}
+                name="user_role"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="grid grid-cols-4 items-center">
+                      <FormLabel>Role</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={userRole}
+                      >
+                        <SelectTrigger className="col-span-3">
+                          <SelectValue placeholder="Select a role" />
+                        </SelectTrigger>
 
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="participant">
-                            participant
-                          </SelectItem>
-                          <SelectItem value="officer">officer</SelectItem>
-                          <SelectItem value="admin">admin</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="participant">
+                              Participant
+                            </SelectItem>
+                            <SelectItem value="officer">Officer</SelectItem>
+                            <SelectItem value="admin">Admin</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="ml-auto flex space-x-6">
-              <DeleteUserButton
-                userUUID={userUUID}
-                targetUUID={targetUUID}
-                sheetSetOpen={setSheetOpen}
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              <SheetClose asChild>
+              <div className="ml-auto flex space-x-6">
+                <DeleteUserButton
+                  userUUID={userUUID}
+                  targetUUID={targetUUID}
+                  setSheetOpen={setSheetOpen}
+                />
                 <Button
                   type="submit"
                   className="ml-auto w-32"
@@ -151,10 +157,12 @@ export default function UserOptionsSheet({
                   )}
                   Save changes
                 </Button>
-              </SheetClose>
-            </div>
-          </form>
-        </Form>
+              </div>
+            </form>
+          </Form>
+        ) : (
+          <></>
+        )}
       </SheetContent>
     </Sheet>
   );
