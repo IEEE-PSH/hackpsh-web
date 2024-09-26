@@ -4,7 +4,6 @@ import { Pencil } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -29,7 +28,6 @@ import {
   UpdateUserRoleFormSchema,
 } from "@/app/_lib/settings";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
-import { useRouter } from "next/navigation";
 import DeleteUserButton from "./delete-user-button";
 import { useState } from "react";
 
@@ -51,12 +49,12 @@ export default function UserOptionsSheet({
     },
   });
 
-  const router = useRouter();
+  const utils = trpc.useContext();
 
   const updateUserRoleMutation = trpc.user.update_user_role.useMutation({
     onSuccess: () => {
-      router.refresh();
-
+      setSheetOpen(false);
+      void utils.user.get_users.invalidate();
       toast({
         variant: "success",
         title: "User Role Updated!",
@@ -85,24 +83,16 @@ export default function UserOptionsSheet({
   }
 
   const [sheetOpen, setSheetOpen] = useState(false);
-  //active state to determine whether to render form, limiting browser memory usage
-  const [active, setActive] = useState(false);
 
   return (
     <Sheet
       open={sheetOpen}
       onOpenChange={() => {
         setSheetOpen(!sheetOpen);
-        setActive(!active);
       }}
     >
       <SheetTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="mr-2"
-          onClick={() => setActive(!active)}
-        >
+        <Button variant="ghost" size="icon" className="mr-2">
           <Pencil className="h-4 w-4" />
         </Button>
       </SheetTrigger>
@@ -110,7 +100,7 @@ export default function UserOptionsSheet({
         <SheetHeader>
           <SheetTitle>Manage User {userDisplayName}</SheetTitle>
         </SheetHeader>
-        {active ? (
+        {sheetOpen ? (
           <Form {...form}>
             <form
               id="manageAccessForm"
@@ -154,18 +144,16 @@ export default function UserOptionsSheet({
                   targetUUID={targetUUID}
                   sheetSetOpen={setSheetOpen}
                 />
-                <SheetClose asChild>
-                  <Button
-                    type="submit"
-                    className="ml-auto w-32"
-                    disabled={form.formState.isSubmitting}
-                  >
-                    {form.formState.isSubmitting && (
-                      <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                    )}
-                    Save changes
-                  </Button>
-                </SheetClose>
+                <Button
+                  type="submit"
+                  className="ml-auto w-32"
+                  disabled={form.formState.isSubmitting}
+                >
+                  {form.formState.isSubmitting && (
+                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  Save changes
+                </Button>
               </div>
             </form>
           </Form>

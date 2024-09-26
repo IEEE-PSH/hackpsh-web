@@ -32,6 +32,7 @@ import {
 } from "@/app/_components/ui/select";
 import { trpc } from "@/app/_trpc/react";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface UserTableProps {
   data: AllUsers;
