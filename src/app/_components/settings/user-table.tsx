@@ -32,8 +32,6 @@ import {
 } from "@/app/_components/ui/select";
 import { trpc } from "@/app/_trpc/react";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
-import { ScrollArea } from "../ui/scroll-area";
-
 interface UserTableProps {
   data: AllUsers;
   userUUID: string;
@@ -125,7 +123,7 @@ export default function UserTable({
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      <div className="flex justify-between">
+                      <div className="flex h-6 items-center justify-between">
                         <div className="my-auto">
                           {flexRender(
                             cell.column.columnDef.cell,

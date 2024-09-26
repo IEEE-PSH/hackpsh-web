@@ -30,6 +30,7 @@ import {
 import { type TUserRole } from "@/db/drizzle/startup_seed";
 import DeleteUserButton from "./delete-user-button";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function UserOptionsSheet({
   userDisplayName,
@@ -49,11 +50,13 @@ export default function UserOptionsSheet({
     },
   });
 
+  const router = useRouter();
   const utils = trpc.useContext();
 
   const updateUserRoleMutation = trpc.user.update_user_role.useMutation({
     onSuccess: () => {
       setSheetOpen(false);
+      router.refresh();
       void utils.user.get_users.invalidate();
       toast({
         variant: "success",
@@ -92,8 +95,8 @@ export default function UserOptionsSheet({
       }}
     >
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="mr-2">
-          <Pencil className="h-4 w-4" />
+        <Button variant="ghost" size="icon">
+          <Pencil className="h-4 w-4 " />
         </Button>
       </SheetTrigger>
       <SheetContent>
@@ -142,7 +145,7 @@ export default function UserOptionsSheet({
                 <DeleteUserButton
                   userUUID={userUUID}
                   targetUUID={targetUUID}
-                  sheetSetOpen={setSheetOpen}
+                  setSheetOpen={setSheetOpen}
                 />
                 <Button
                   type="submit"

@@ -12,21 +12,21 @@ import {
 } from "../ui/dialog";
 import { trpc } from "@/app/_trpc/react";
 import { toast } from "../ui/use-toast";
-import { useRouter } from "next/navigation";
 import { SheetClose } from "../ui/sheet";
+import { useRouter } from "next/navigation";
 
 export default function DeleteUserButton({
   userUUID,
   targetUUID,
-  sheetSetOpen,
+  setSheetOpen,
 }: {
   userUUID: string;
   targetUUID: string;
-  sheetSetOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setSheetOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   async function deleteUser() {
     try {
-      sheetSetOpen(false);
+      setSheetOpen(false);
       await deleteUserMutation.mutateAsync({
         user_uuid: userUUID,
         target_uuid: targetUUID,
@@ -37,10 +37,12 @@ export default function DeleteUserButton({
   }
 
   const router = useRouter();
+  const utils = trpc.useContext();
 
   const deleteUserMutation = trpc.user.delete_user.useMutation({
     onSuccess: () => {
       router.refresh();
+      void utils.user.get_users.invalidate();
       toast({
         variant: "success",
         title: "User Deleted!",
