@@ -78,7 +78,6 @@ export default function AnnouncementPostActionsButton({
             <span>Edit</span>
           </DropdownMenuItem>
 
-          <DropdownMenuSeparator />
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={async () => {

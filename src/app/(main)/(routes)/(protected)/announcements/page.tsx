@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function AnnouncementsPage() {
   return (
-    <div className="container my-4">
+    <div className="container my-4 max-w-5xl">
       <Announcements />
     </div>
   );

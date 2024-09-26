@@ -125,6 +125,29 @@ export async function getUserDropdownInfo(db: Database, user_uuid: string) {
   }
 }
 
+export async function getUserInfo(db: Database, user_uuid: string) {
+  try {
+    const result = await db.query.app_user_profile.findFirst({
+      columns: {
+        user_display_name: true,
+        user_email_address: true,
+        user_role: true,
+        user_uuid: true,
+      },
+      where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
+    });
+
+    return result;
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export type TUserInfo = Awaited<ReturnType<typeof getUserInfo>>;
+
 export async function getUserSettingsInfo(db: Database, user_uuid: string) {
   try {
     const userInfo = await db.query.app_user_profile.findFirst({

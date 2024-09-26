@@ -5,11 +5,14 @@ import DataTable from "./data-table";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { TUserInfo } from "@/server/dao/user";
 
 export default function RealtimeLeaderboard({
   serverData,
+  userData,
 }: {
   serverData: LeaderboardStandings;
+  userData: TUserInfo;
 }) {
   const supabase = createClientComponentClient();
   const router = useRouter();
@@ -34,5 +37,5 @@ export default function RealtimeLeaderboard({
     // }
   }, []);
 
-  return <DataTable data={serverData} />;
+  return <DataTable data={serverData} userData={userData} />;
 }

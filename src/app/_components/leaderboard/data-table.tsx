@@ -22,13 +22,23 @@ import {
 import { cn } from "@/app/_lib/client-utils";
 import { useState } from "react";
 import { type LeaderboardStandings } from "@/server/dao/leaderboard";
+import TeamOptionsSheet from "./team-options-sheet";
+import { EllipsisVertical } from "lucide-react";
+import { type TUserRole } from "@/db/drizzle/startup_seed";
+import TeamActions from "./team-actions";
+import { TUserInfo } from "@/server/dao/user";
 
 interface DataTableProps {
   data: LeaderboardStandings;
   className?: string;
+  userData: TUserInfo;
 }
 
-export default function DataTable({ data, className }: DataTableProps) {
+export default function DataTable({
+  data,
+  className,
+  userData,
+}: DataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -86,10 +96,23 @@ export default function DataTable({ data, className }: DataTableProps) {
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
+                      <div className="flex h-6 items-center justify-between">
+                        <div className="my-auto">
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </div>
+
+                        {cell.column.id === "team_points" ? (
+                          <TeamActions
+                            teamUUID={row.original.team_id}
+                            userData={userData}
+                          />
+                        ) : (
+                          <></>
+                        )}
+                      </div>
                     </TableCell>
                   ))}
                 </TableRow>
