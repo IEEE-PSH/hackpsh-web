@@ -85,6 +85,7 @@ export default function UserOptionsSheet({
   }
 
   const [sheetOpen, setSheetOpen] = useState(false);
+  //active state to determine whether to render form, limiting browser memory usage
   const [active, setActive] = useState(false);
 
   return (
