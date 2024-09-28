@@ -95,62 +95,67 @@ export default function TeamOptionsSheet({
   return (
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetContent>
-        <SheetHeader className="text-xl">
-          {isSuccess ? (
-            <h1>Edit Team {teamData?.team_name}</h1>
-          ) : (
-            <Skeleton className="my-1 h-5 w-52" />
-          )}
-        </SheetHeader>
-        <Form {...form}>
-          <form
-            id="manageAccessForm"
-            className="mt-6 flex flex-col space-y-6"
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
-            <FormField
-              control={form.control}
-              name="team_points_additive"
-              render={({ field }) => (
-                <FormItem>
-                  <div className="grid grid-cols-2 items-center">
-                    <FormLabel className="col-span-1">
-                      Points Additive
-                    </FormLabel>
-                    {isSuccess ? (
-                      <Input
-                        className="col-span-1 [&::-webkit-inner-spin-button]:appearance-none"
-                        placeholder="0"
-                        type="number"
-                        {...field}
-                        value={field.value}
-                        defaultValue={teamData?.team_points_additive}
-                      />
-                    ) : (
-                      <Skeleton className="col-span-1 h-10" />
-                    )}
-                  </div>
-                  <FormDescription>
-                    Add more points on top of Challenges scores.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="ml-auto flex space-x-6">
-              <Button
-                type="submit"
-                className="ml-auto w-32"
-                disabled={form.formState.isSubmitting}
+        {isSuccess ? (
+          <>
+            <SheetHeader className="text-xl">
+              <h1>Edit Team {teamData?.team_name}</h1>
+            </SheetHeader>
+            <Form {...form}>
+              <form
+                id="manageAccessForm"
+                className="mt-6 flex flex-col space-y-6"
+                onSubmit={form.handleSubmit(onSubmit)}
               >
-                {form.formState.isSubmitting && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                Save changes
-              </Button>
+                <FormField
+                  control={form.control}
+                  name="team_points_additive"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="grid grid-cols-2 items-center">
+                        <FormLabel className="col-span-1">
+                          Points Additive
+                        </FormLabel>
+                        <Input
+                          className="col-span-1 [&::-webkit-inner-spin-button]:appearance-none"
+                          placeholder="0"
+                          type="number"
+                          {...field}
+                          value={field.value}
+                          defaultValue={teamData?.team_points_additive}
+                        />
+                      </div>
+                      <FormDescription>
+                        Add more points on top of Challenges scores.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="submit"
+                  className="ml-auto w-32"
+                  disabled={form.formState.isSubmitting}
+                >
+                  {form.formState.isSubmitting && (
+                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  Save changes
+                </Button>
+              </form>
+            </Form>
+          </>
+        ) : (
+          <div>
+            <SheetHeader className="grid grid-cols-3 text-xl">
+              <Skeleton className="col-span-2 my-1 h-5" />
+            </SheetHeader>
+            <div className="mt-6 flex flex-col">
+              <Skeleton className="h-10" />
+              <Skeleton className="mt-2 h-5" />
+              <Skeleton className="ml-auto mt-6 h-10 w-32" />
             </div>
-          </form>
-        </Form>
+          </div>
+        )}
       </SheetContent>
     </Sheet>
   );

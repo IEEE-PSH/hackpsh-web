@@ -59,8 +59,16 @@ export default function TeamActions({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => setInfoSheetOpen(!infoSheetOpen)}
+          >
+            <Info className="mr-2 h-4 w-4" type="destructive" />
+            <span>Info</span>
+          </DropdownMenuItem>
           {userData!.user_role !== "participant" ? (
             <>
+              <DropdownMenuSeparator />
               <DropdownMenuItem
                 className="cursor-pointer"
                 onClick={() => setEditSheetOpen(!editSheetOpen)}
@@ -75,18 +83,10 @@ export default function TeamActions({
                 <Trash className="mr-2 h-4 w-4" />
                 <span>Delete</span>
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
             </>
           ) : (
             <></>
           )}
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onClick={() => setInfoSheetOpen(!infoSheetOpen)}
-          >
-            <Info className="mr-2 h-4 w-4" type="destructive" />
-            <span>Info</span>
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>
