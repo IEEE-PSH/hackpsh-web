@@ -132,6 +132,11 @@ export async function getUserInfo(db: Database, user_uuid: string) {
         user_email_address: true,
         user_role: true,
         user_uuid: true,
+        user_major: true,
+        user_school_year: true,
+        user_support_administrative: true,
+        user_support_technical: true,
+        user_team_uuid: true,
       },
       where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
     });

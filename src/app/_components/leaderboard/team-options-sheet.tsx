@@ -45,18 +45,16 @@ export default function TeamOptionsSheet({
   const form = useForm<TUpdateTeamFormSchema>({
     resolver: zodResolver(UpdateTeamFormSchema),
     defaultValues: {
-      team_points_additive: teamData?.team_points_additive ?? 0,
+      team_points_additive: teamData?.team_points_additive,
     },
   });
 
   const router = useRouter();
-  // const utils = trpc.useContext();
 
   const updateTeamMutation = trpc.team.update_team.useMutation({
     onSuccess: () => {
       setSheetOpen(false);
       router.refresh();
-      // void utils.user.get_users.invalidate();
       toast({
         variant: "success",
         title: "Team Points Updated!",
@@ -87,7 +85,7 @@ export default function TeamOptionsSheet({
   useEffect(() => {
     if (isSuccess) {
       form.reset({
-        team_points_additive: teamData?.team_points_additive ?? 0, // Reset to new data
+        team_points_additive: teamData?.team_points_additive,
       });
     }
   }, [isSuccess, teamData, form]);

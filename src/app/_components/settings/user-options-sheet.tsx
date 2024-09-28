@@ -28,35 +28,37 @@ import {
   UpdateUserRoleFormSchema,
 } from "@/app/_lib/settings";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
-import DeleteUserButton from "./delete-user-button";
-import { useState } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 import { useRouter } from "next/navigation";
+import { type TUserInfo } from "@/server/dao/user";
+import { Skeleton } from "../ui/skeleton";
 
 export default function UserOptionsSheet({
-  userDisplayName,
-  userUUID,
-  targetUUID,
-  userRole,
+  sheetOpen,
+  setSheetOpen,
+  targetUserUUID,
+  userData,
 }: {
-  userDisplayName: string;
-  userUUID: string;
-  targetUUID: string;
-  userRole: string;
+  sheetOpen: boolean;
+  setSheetOpen: Dispatch<SetStateAction<boolean>>;
+  targetUserUUID: string;
+  userData: TUserInfo;
 }) {
+  const { data: targetUserData, isSuccess } = trpc.user.get_user_info.useQuery({
+    user_uuid: targetUserUUID,
+  });
   const form = useForm<TUpdateUserRoleFormSchema>({
     resolver: zodResolver(UpdateUserRoleFormSchema),
     defaultValues: {
-      user_role: userRole as TUserRole,
+      user_role: targetUserData?.user_role as TUserRole,
     },
   });
 
-  const router = useRouter();
   const utils = trpc.useContext();
 
   const updateUserRoleMutation = trpc.user.update_user_role.useMutation({
     onSuccess: () => {
       setSheetOpen(false);
-      router.refresh();
       void utils.user.get_users.invalidate();
       toast({
         variant: "success",
@@ -76,8 +78,8 @@ export default function UserOptionsSheet({
   async function onSubmit(values: TUpdateUserRoleFormSchema) {
     try {
       await updateUserRoleMutation.mutateAsync({
-        user_uuid: userUUID,
-        target_uuid: targetUUID,
+        user_uuid: userData?.user_uuid as unknown as string,
+        target_uuid: targetUserUUID,
         target_role: values.user_role,
       });
     } catch (err: unknown) {
@@ -85,67 +87,58 @@ export default function UserOptionsSheet({
     }
   }
 
-  const [sheetOpen, setSheetOpen] = useState(false);
+  useEffect(() => {
+    if (isSuccess) {
+      form.reset({
+        user_role: targetUserData?.user_role as unknown as TUserRole,
+      });
+    }
+  }, [isSuccess, targetUserData, form]);
 
   return (
-    <Sheet
-      open={sheetOpen}
-      onOpenChange={() => {
-        setSheetOpen(!sheetOpen);
-      }}
-    >
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Pencil className="h-4 w-4 " />
-        </Button>
-      </SheetTrigger>
+    <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Manage User {userDisplayName}</SheetTitle>
-        </SheetHeader>
-        {sheetOpen ? (
-          <Form {...form}>
-            <form
-              id="manageAccessForm"
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="mt-6 flex flex-col space-y-6"
-            >
-              <FormField
-                control={form.control}
-                name="user_role"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="grid grid-cols-4 items-center">
-                      <FormLabel>Role</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={userRole}
-                      >
-                        <SelectTrigger className="col-span-3">
-                          <SelectValue placeholder="Select a role" />
-                        </SelectTrigger>
+        {isSuccess ? (
+          <>
+            <SheetHeader>
+              <h1>Edit User {targetUserData?.user_display_name}</h1>
+            </SheetHeader>
+            <Form {...form}>
+              <form
+                id="manageAccessForm"
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="mt-6 flex flex-col space-y-6"
+              >
+                <FormField
+                  control={form.control}
+                  name="user_role"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="grid grid-cols-4 items-center">
+                        <FormLabel>Role</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={targetUserData.user_role}
+                        >
+                          <SelectTrigger className="col-span-3">
+                            <SelectValue placeholder="Select a role" />
+                          </SelectTrigger>
 
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value="participant">
-                              Participant
-                            </SelectItem>
-                            <SelectItem value="officer">Officer</SelectItem>
-                            <SelectItem value="admin">Admin</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectItem value="participant">
+                                Participant
+                              </SelectItem>
+                              <SelectItem value="officer">Officer</SelectItem>
+                              <SelectItem value="admin">Admin</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="ml-auto flex space-x-6">
-                <DeleteUserButton
-                  userUUID={userUUID}
-                  targetUUID={targetUUID}
-                  setSheetOpen={setSheetOpen}
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
                 <Button
                   type="submit"
@@ -157,11 +150,19 @@ export default function UserOptionsSheet({
                   )}
                   Save changes
                 </Button>
-              </div>
-            </form>
-          </Form>
+              </form>
+            </Form>
+          </>
         ) : (
-          <></>
+          <div>
+            <SheetHeader className="grid grid-cols-3 text-xl">
+              <Skeleton className="col-span-2 my-1 h-5" />
+            </SheetHeader>
+            <div className="mt-6 flex flex-col">
+              <Skeleton className="h-10" />
+              <Skeleton className="ml-auto mt-6 h-10 w-32" />
+            </div>
+          </div>
         )}
       </SheetContent>
     </Sheet>

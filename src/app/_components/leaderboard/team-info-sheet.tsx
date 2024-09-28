@@ -1,11 +1,11 @@
 "use client";
 
 import { trpc } from "@/app/_trpc/react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { Sheet, SheetContent, SheetHeader } from "../ui/sheet";
+import { type Dispatch, type SetStateAction } from "react";
 import { Skeleton } from "../ui/skeleton";
 
-type TeamInfoSheet = {
+type TeamInfoSheetProps = {
   sheetOpen: boolean;
   setSheetOpen: Dispatch<SetStateAction<boolean>>;
   teamUUID: string;
@@ -15,7 +15,7 @@ export default function TeamInfoSheet({
   sheetOpen,
   setSheetOpen,
   teamUUID,
-}: TeamInfoSheet) {
+}: TeamInfoSheetProps) {
   const { data: teamData, isSuccess } = trpc.team.get_team_info.useQuery({
     team_uuid: teamUUID,
   });
