@@ -169,6 +169,20 @@
       "when": 1727161689428,
       "tag": "0023_rapid_sentinel",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1727532455595,
+      "tag": "0024_harsh_richard_fisk",
+      "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1727543206659,
+      "tag": "0025_crazy_scream",
+      "breakpoints": true
     }
   ]
 }

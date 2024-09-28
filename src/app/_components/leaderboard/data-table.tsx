@@ -104,7 +104,7 @@ export default function DataTable({
                           )}
                         </div>
 
-                        {cell.column.id === "team_points" ? (
+                        {cell.column.id === "team_total_points" ? (
                           <TeamActions
                             teamUUID={row.original.team_id}
                             userData={userData}

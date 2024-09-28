@@ -11,6 +11,6 @@ export default protectedProcedure
       user_display_name: result ? result.user_display_name : null,
       user_email_address: result ? result.user_email_address : null,
       user_role: result ? result.user_role : null,
-      user_uuid: result?.user_uuid,
+      user_uuid: result ? result.user_uuid : null,
     };
   });

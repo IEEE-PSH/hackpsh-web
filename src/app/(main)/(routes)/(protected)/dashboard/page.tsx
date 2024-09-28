@@ -19,7 +19,7 @@ export default async function DashboardPage() {
 
   const user = await getUser(supabase);
   const { team_name, team_join_code, team_points, team_members } =
-    await serverTRPC.team.get_team_info.query({
+    await serverTRPC.user.get_user_team_info.query({
       user_uuid: user.id,
     });
 

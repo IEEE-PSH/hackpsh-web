@@ -3,6 +3,7 @@ import { app_team, app_user_profile } from "@/db/drizzle/schema";
 import { BaseError } from "@/shared/error";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
+import { getUserRole } from "./user";
 
 function generateRandomCode() {
   const code = [];
@@ -63,6 +64,64 @@ export async function createTeam(
         code: "CONFLICT",
       });
     }
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function updateTeam(
+  db: Database,
+  user_uuid: string,
+  target_team_uuid: string,
+  target_team_points_additive: number,
+) {
+  const role = await getUserRole(db, user_uuid);
+  if (role?.user_role === "participant") {
+    throw new TRPCError({
+      message: "User must be an officer or admin to edit teams.",
+      code: "UNAUTHORIZED",
+    });
+  }
+
+  try {
+    const result = await db
+      .update(app_team)
+      .set({
+        team_points_additive: target_team_points_additive,
+      })
+      .where(eq(app_team.team_uuid, target_team_uuid));
+
+    return result;
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function deleteTeam(
+  db: Database,
+  user_uuid: string,
+  target_team_uuid: string,
+) {
+  const role = await getUserRole(db, user_uuid);
+  if (role?.user_role === "participant") {
+    throw new TRPCError({
+      message: "User must be an officer or admin to delete teams.",
+      code: "UNAUTHORIZED",
+    });
+  }
+
+  try {
+    const result = await db
+      .delete(app_team)
+      .where(eq(app_team.team_uuid, target_team_uuid));
+
+    return result;
+  } catch (error) {
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",
@@ -143,29 +202,23 @@ export async function joinTeam(
   }
 }
 
-export async function getTeamInfo(db: Database, user_uuid: string) {
+export async function getTeamInfo(db: Database, team_uuid: string) {
   try {
-    const teamUUID = await db.query.app_user_profile.findFirst({
-      columns: { user_team_uuid: true },
-      where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
-    });
-
     const teamGeneralInfo = await db.query.app_team.findFirst({
       columns: {
         team_name: true,
         team_join_code: true,
         team_points: true,
+        team_points_additive: true,
       },
-      where: (team_data, { eq }) =>
-        eq(team_data.team_uuid, teamUUID!.user_team_uuid!),
+      where: (team_data, { eq }) => eq(team_data.team_uuid, team_uuid),
     });
 
     const teamMembers = await db.query.app_user_profile.findMany({
       columns: {
         user_display_name: true,
       },
-      where: (user_data, { eq }) =>
-        eq(user_data.user_team_uuid, teamUUID!.user_team_uuid!),
+      where: (user_data, { eq }) => eq(user_data.user_team_uuid, team_uuid),
     });
 
     return { teamGeneralInfo, teamMembers };

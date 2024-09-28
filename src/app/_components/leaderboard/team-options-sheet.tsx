@@ -1,56 +1,63 @@
 "use client";
 
-import { Pencil } from "lucide-react";
 import { Button } from "../ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/sheet";
-import { trpc } from "@/app/_trpc/react";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
-import { Form, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+  Form,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "../ui/use-toast";
 import { Icons } from "../ui/icons";
-import {
-  type TUpdateUserRoleFormSchema,
-  UpdateUserRoleFormSchema,
-} from "@/app/_lib/settings";
-import { type TUserRole } from "@/db/drizzle/startup_seed";
-import { useState } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 import { useRouter } from "next/navigation";
-import DeleteUserButton from "../settings/delete-user-button";
+import { Input } from "../ui/input";
+import {
+  UpdateTeamFormSchema,
+  type TUpdateTeamFormSchema,
+} from "@/app/_lib/team";
+import { trpc } from "@/app/_trpc/react";
+import { type TUserInfo } from "@/server/dao/user";
+import { Skeleton } from "../ui/skeleton";
 
-export default function TeamOptionsSheet() {
-  const form = useForm<TUpdateUserRoleFormSchema>({
-    resolver: zodResolver(UpdateUserRoleFormSchema),
-    defaultValues: {
-      user_role: userRole as TUserRole,
-    },
+type TeamOptionsSheet = {
+  sheetOpen: boolean;
+  setSheetOpen: Dispatch<SetStateAction<boolean>>;
+  teamUUID: string;
+  userData: TUserInfo;
+};
+
+export default function TeamOptionsSheet({
+  sheetOpen,
+  setSheetOpen,
+  teamUUID,
+  userData,
+}: TeamOptionsSheet) {
+  const { data: teamData, isSuccess } = trpc.team.get_team_info.useQuery({
+    team_uuid: teamUUID,
+  });
+
+  const form = useForm<TUpdateTeamFormSchema>({
+    resolver: zodResolver(UpdateTeamFormSchema),
+    defaultValues: { team_points_additive: teamData?.team_points_additive },
   });
 
   const router = useRouter();
-  const utils = trpc.useContext();
+  // const utils = trpc.useContext();
 
-  const updateUserRoleMutation = trpc.user.update_user_role.useMutation({
+  const updateTeamMutation = trpc.team.update_team.useMutation({
     onSuccess: () => {
       setSheetOpen(false);
       router.refresh();
-      void utils.user.get_users.invalidate();
+      // void utils.user.get_users.invalidate();
       toast({
         variant: "success",
-        title: "User Role Updated!",
+        title: "Team Points Updated!",
         duration: 4000,
       });
     },
@@ -63,96 +70,74 @@ export default function TeamOptionsSheet() {
     },
   });
 
-  async function onSubmit(values: TUpdateUserRoleFormSchema) {
+  async function onSubmit(values: TUpdateTeamFormSchema) {
     try {
-      await updateUserRoleMutation.mutateAsync({
-        user_uuid: userUUID,
-        target_uuid: targetUUID,
-        target_role: values.user_role,
+      await updateTeamMutation.mutateAsync({
+        user_uuid: userData!.user_uuid,
+        team_uuid: teamUUID,
+        team_points_additive: values.team_points_additive,
       });
     } catch (err: unknown) {
       console.log(err);
     }
   }
 
-  const [sheetOpen, setSheetOpen] = useState(false);
-
   return (
-    <Sheet
-      open={sheetOpen}
-      onOpenChange={() => {
-        setSheetOpen(!sheetOpen);
-      }}
-    >
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Pencil className="h-4 w-4 " />
-        </Button>
-      </SheetTrigger>
+    <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Manage User {userDisplayName}</SheetTitle>
+        <SheetHeader className="text-xl">
+          <SheetTitle>
+            {isSuccess ? (
+              <h1>Edit Team {teamData?.team_name}</h1>
+            ) : (
+              <Skeleton className="my-1 h-5 w-52" />
+            )}
+          </SheetTitle>
         </SheetHeader>
-        {sheetOpen ? (
-          <Form {...form}>
-            <form
-              id="manageAccessForm"
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="mt-6 flex flex-col space-y-6"
-            >
-              <FormField
-                control={form.control}
-                name="user_role"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="grid grid-cols-4 items-center">
-                      <FormLabel>Role</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={userRole}
-                      >
-                        <SelectTrigger className="col-span-3">
-                          <SelectValue placeholder="Select a role" />
-                        </SelectTrigger>
-
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value="participant">
-                              Participant
-                            </SelectItem>
-                            <SelectItem value="officer">Officer</SelectItem>
-                            <SelectItem value="admin">Admin</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <FormMessage />
-                  </FormItem>
+        <Form {...form}>
+          <form
+            id="manageAccessForm"
+            className="mt-6 flex flex-col space-y-6"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <FormField
+              control={form.control}
+              name="team_points_additive"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="grid grid-cols-4 items-center">
+                    <FormLabel className="col-span-2">
+                      Points Additive
+                    </FormLabel>
+                    <Input
+                      className="col-span-2 [&::-webkit-inner-spin-button]:appearance-none"
+                      placeholder="0"
+                      type="number"
+                      {...field}
+                      value={field.value}
+                    />
+                  </div>
+                  <FormDescription>
+                    Add more points on top of Challenges scores.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="ml-auto flex space-x-6">
+              <Button
+                type="submit"
+                className="ml-auto w-32"
+                disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
-              />
-              <div className="ml-auto flex space-x-6">
-                <DeleteUserButton
-                  userUUID={userUUID}
-                  targetUUID={targetUUID}
-                  setSheetOpen={setSheetOpen}
-                />
-                <Button
-                  type="submit"
-                  className="ml-auto w-32"
-                  disabled={form.formState.isSubmitting}
-                >
-                  {form.formState.isSubmitting && (
-                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                  )}
-                  Save changes
-                </Button>
-              </div>
-            </form>
-          </Form>
-        ) : (
-          <></>
-        )}
+                Save changes
+              </Button>
+            </div>
+          </form>
+        </Form>
       </SheetContent>
     </Sheet>
   );

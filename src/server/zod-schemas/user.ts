@@ -80,3 +80,7 @@ export const UpdateUserOnboardingStatusSchema = z.object({
   user_uuid: z.string().uuid("Please provide a valid UUID."),
   user_onboarding_complete: z.boolean(),
 });
+
+export const LookupTeamSchema = z.object({
+  team_uuid: z.string().uuid("Please provide a valid UUID."),
+});

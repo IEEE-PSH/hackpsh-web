@@ -13,3 +13,9 @@ export const CreateTeamSchema = z.object({
     .string()
     .min(5, "Please provide a team name of at least 5 characters."),
 });
+
+export const UpdateTeamSchema = z.object({
+  user_uuid: z.string().uuid("Please provide a valid UUID."),
+  team_uuid: z.string().uuid("Please provide a valid UUID."),
+  team_points_additive: z.number().default(0),
+});

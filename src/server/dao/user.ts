@@ -9,7 +9,6 @@ import {
 import { BaseError } from "@/shared/error";
 import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
-import { getTeamInfo } from "./team";
 
 export async function getUserOnboardingStatus(db: Database, user_uuid: string) {
   try {
@@ -160,7 +159,7 @@ export async function getUserSettingsInfo(db: Database, user_uuid: string) {
       where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
     });
 
-    const teamInfo = await getTeamInfo(db, user_uuid);
+    const teamInfo = await getUserTeamInfo(db, user_uuid);
 
     //explicity list variables in result to maintain consistency with other procedures
     const result = {
@@ -457,3 +456,37 @@ export async function getUsers(db: Database, role: TUserRole) {
 
 export type AllUsers = Awaited<ReturnType<typeof getUsers>>;
 export type User = AllUsers[number];
+
+export async function getUserTeamInfo(db: Database, user_uuid: string) {
+  try {
+    const teamUUID = await db.query.app_user_profile.findFirst({
+      columns: { user_team_uuid: true },
+      where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
+    });
+
+    const teamGeneralInfo = await db.query.app_team.findFirst({
+      columns: {
+        team_name: true,
+        team_join_code: true,
+        team_points: true,
+      },
+      where: (team_data, { eq }) =>
+        eq(team_data.team_uuid, teamUUID!.user_team_uuid!),
+    });
+
+    const teamMembers = await db.query.app_user_profile.findMany({
+      columns: {
+        user_display_name: true,
+      },
+      where: (user_data, { eq }) =>
+        eq(user_data.user_team_uuid, teamUUID!.user_team_uuid!),
+    });
+
+    return { teamGeneralInfo, teamMembers };
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
