@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "../ui/use-toast";
 import { Icons } from "../ui/icons";
-import { type Dispatch, type SetStateAction } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "../ui/input";
 import {
@@ -44,7 +44,9 @@ export default function TeamOptionsSheet({
 
   const form = useForm<TUpdateTeamFormSchema>({
     resolver: zodResolver(UpdateTeamFormSchema),
-    defaultValues: { team_points_additive: teamData?.team_points_additive },
+    defaultValues: {
+      team_points_additive: teamData?.team_points_additive ?? 0,
+    },
   });
 
   const router = useRouter();
@@ -82,6 +84,14 @@ export default function TeamOptionsSheet({
     }
   }
 
+  useEffect(() => {
+    if (isSuccess) {
+      form.reset({
+        team_points_additive: teamData?.team_points_additive ?? 0, // Reset to new data
+      });
+    }
+  }, [isSuccess, teamData, form]);
+
   return (
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetContent>
@@ -103,17 +113,22 @@ export default function TeamOptionsSheet({
               name="team_points_additive"
               render={({ field }) => (
                 <FormItem>
-                  <div className="grid grid-cols-4 items-center">
-                    <FormLabel className="col-span-2">
+                  <div className="grid grid-cols-2 items-center">
+                    <FormLabel className="col-span-1">
                       Points Additive
                     </FormLabel>
-                    <Input
-                      className="col-span-2 [&::-webkit-inner-spin-button]:appearance-none"
-                      placeholder="0"
-                      type="number"
-                      {...field}
-                      value={field.value}
-                    />
+                    {isSuccess ? (
+                      <Input
+                        className="col-span-1 [&::-webkit-inner-spin-button]:appearance-none"
+                        placeholder="0"
+                        type="number"
+                        {...field}
+                        value={field.value}
+                        defaultValue={teamData?.team_points_additive}
+                      />
+                    ) : (
+                      <Skeleton className="col-span-1 h-10" />
+                    )}
                   </div>
                   <FormDescription>
                     Add more points on top of Challenges scores.

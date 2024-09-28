@@ -17,22 +17,34 @@ export default function RealtimeLeaderboard({
   const supabase = createClientComponentClient();
   const router = useRouter();
 
-  //we have to refetch data when a team is deleted, otherwise we'll
-  //ger errors with the leaderboard
-
+  //refresh route on app_team changes to update leaderboard ui
+  //leaderboard does NOT subscribe to DELETE events because there
+  //is currently an unknown error
   useEffect(() => {
-    const channel = supabase.channel("leaderboard").on(
-      "postgres_changes",
-      {
-        event: "DELETE",
-        schema: "app_schema",
-        table: "app_team",
-      },
-      () => {
-        //refresh route on app_team changes to update leaderboard ui
-        router.refresh();
-      },
-    );
+    const channel = supabase
+      .channel("leaderboard")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "app_schema",
+          table: "app_team",
+        },
+        () => {
+          router.refresh();
+        },
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "app_schema",
+          table: "app_team",
+        },
+        () => {
+          router.refresh();
+        },
+      );
 
     channel.subscribe();
     return () => {
