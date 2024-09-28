@@ -86,13 +86,11 @@ export default function TeamOptionsSheet({
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetContent>
         <SheetHeader className="text-xl">
-          <SheetTitle>
-            {isSuccess ? (
-              <h1>Edit Team {teamData?.team_name}</h1>
-            ) : (
-              <Skeleton className="my-1 h-5 w-52" />
-            )}
-          </SheetTitle>
+          {isSuccess ? (
+            <h1>Edit Team {teamData?.team_name}</h1>
+          ) : (
+            <Skeleton className="my-1 h-5 w-52" />
+          )}
         </SheetHeader>
         <Form {...form}>
           <form

@@ -13,6 +13,7 @@ import { toast } from "../ui/use-toast";
 import { type Dispatch, type SetStateAction } from "react";
 import { trpc } from "@/app/_trpc/react";
 import { type TUserInfo } from "@/server/dao/user";
+import { useRouter } from "next/navigation";
 
 type TeamOptionsSheet = {
   dialogOpen: boolean;
@@ -27,9 +28,11 @@ export default function TeamDeleteDialog({
   teamUUID,
   userData,
 }: TeamOptionsSheet) {
+  const router = useRouter();
   const deleteTeamMutation = trpc.team.delete_team.useMutation({
     onSuccess: () => {
       setDialogOpen(false);
+      router.refresh();
       toast({
         variant: "success",
         title: "Team Deleted!",

@@ -5,7 +5,7 @@ import DataTable from "./data-table";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { TUserInfo } from "@/server/dao/user";
+import { type TUserInfo } from "@/server/dao/user";
 
 export default function RealtimeLeaderboard({
   serverData,

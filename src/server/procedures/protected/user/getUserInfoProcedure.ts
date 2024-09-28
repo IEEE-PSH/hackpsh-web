@@ -8,9 +8,9 @@ export default protectedProcedure
     const result = await getUserInfo(ctx.db, input.user_uuid);
 
     return {
-      user_display_name: result ? result.user_display_name : null,
-      user_email_address: result ? result.user_email_address : null,
-      user_role: result ? result.user_role : null,
-      user_uuid: result ? result.user_uuid : null,
+      user_display_name: result!.user_display_name,
+      user_email_address: result!.user_email_address,
+      user_role: result!.user_role,
+      user_uuid: result!.user_uuid,
     };
   });
