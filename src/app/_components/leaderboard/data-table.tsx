@@ -22,11 +22,8 @@ import {
 import { cn } from "@/app/_lib/client-utils";
 import { useState } from "react";
 import { type LeaderboardStandings } from "@/server/dao/leaderboard";
-import TeamOptionsSheet from "./team-options-sheet";
-import { EllipsisVertical } from "lucide-react";
-import { type TUserRole } from "@/db/drizzle/startup_seed";
 import TeamActions from "./team-actions";
-import { TUserInfo } from "@/server/dao/user";
+import { type TUserInfo } from "@/server/dao/user";
 
 interface DataTableProps {
   data: LeaderboardStandings;

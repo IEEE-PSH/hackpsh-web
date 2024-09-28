@@ -59,7 +59,7 @@ export default function TeamActions({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          {userData?.user_role !== "participant" ? (
+          {userData!.user_role !== "participant" ? (
             <>
               <DropdownMenuItem
                 className="cursor-pointer"

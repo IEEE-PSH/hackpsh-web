@@ -17,11 +17,14 @@ export default function RealtimeLeaderboard({
   const supabase = createClientComponentClient();
   const router = useRouter();
 
+  //we have to refetch data when a team is deleted, otherwise we'll
+  //ger errors with the leaderboard
+
   useEffect(() => {
     const channel = supabase.channel("leaderboard").on(
       "postgres_changes",
       {
-        event: "*",
+        event: "DELETE",
         schema: "app_schema",
         table: "app_team",
       },
@@ -32,9 +35,10 @@ export default function RealtimeLeaderboard({
     );
 
     channel.subscribe();
-    // return () => {
-    //   supabase.removeChannel(channel)
-    // }
+    return () => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   return <DataTable data={serverData} userData={userData} />;
