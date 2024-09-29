@@ -13,6 +13,7 @@ export async function middleware(req: NextRequest) {
     const res = NextResponse.next();
     const supabase = composeMiddlewareClient(req, res);
     const session = await getSession(supabase);
+    console.log(`Middleware called for: ${req.nextUrl.pathname}`); // Log the request path
 
     // If the user has not completed onboarding, then
     // redirect the user to the onboarding forms.
@@ -40,6 +41,14 @@ export async function middleware(req: NextRequest) {
 
     if (
       (get_user_role === "participant" &&
+        req.nextUrl.pathname.startsWith(siteConfig.paths.users)) ||
+      req.nextUrl.pathname.startsWith(siteConfig.paths.event)
+    ) {
+      return redirectToPath(req, siteConfig.paths.account);
+    }
+
+    if (
+      (get_user_role === "participant" &&
         req.nextUrl.pathname.startsWith(siteConfig.paths.create_post)) ||
       req.nextUrl.pathname.startsWith(siteConfig.paths.edit_post)
     ) {
@@ -56,13 +65,10 @@ export const config = {
   matcher: [
     "/sign-in",
     "/dashboard",
-    "/onboarding",
-    "/onboarding/personal-details",
-    "/onboarding/team-creation",
-    "/onboarding/support-us",
-    "/announcements",
-    "/announcements/create-post",
+    "/onboarding/(.*)",
+    "/announcements(.*)",
     "/leaderboard",
     "/challenges",
+    "/settings(.*)",
   ],
 };
