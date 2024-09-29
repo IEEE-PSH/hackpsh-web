@@ -39,17 +39,17 @@ export async function middleware(req: NextRequest) {
     }
 
     if (
-      (get_user_role === "participant" &&
-        req.nextUrl.pathname.startsWith(siteConfig.paths.users)) ||
-      req.nextUrl.pathname.startsWith(siteConfig.paths.event)
+      get_user_role === "participant" &&
+      (req.nextUrl.pathname.startsWith(siteConfig.paths.users) ||
+        req.nextUrl.pathname.startsWith(siteConfig.paths.event))
     ) {
       return redirectToPath(req, siteConfig.paths.account);
     }
 
     if (
-      (get_user_role === "participant" &&
-        req.nextUrl.pathname.startsWith(siteConfig.paths.create_post)) ||
-      req.nextUrl.pathname.startsWith(siteConfig.paths.edit_post)
+      get_user_role === "participant" &&
+      (req.nextUrl.pathname.startsWith(siteConfig.paths.create_post) ||
+        req.nextUrl.pathname.startsWith(siteConfig.paths.edit_post))
     ) {
       return redirectToPath(req, siteConfig.paths.announcements);
     }
