@@ -13,7 +13,6 @@ export async function middleware(req: NextRequest) {
     const res = NextResponse.next();
     const supabase = composeMiddlewareClient(req, res);
     const session = await getSession(supabase);
-    console.log(`Middleware called for: ${req.nextUrl.pathname}`); // Log the request path
 
     // If the user has not completed onboarding, then
     // redirect the user to the onboarding forms.
