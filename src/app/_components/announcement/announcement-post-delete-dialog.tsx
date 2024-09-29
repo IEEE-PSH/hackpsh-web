@@ -1,35 +1,39 @@
 "use client";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
 import { Button } from "../ui/button";
-import { Ellipsis, Pencil, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { siteConfig } from "@/app/_config/site";
 import { toast } from "../ui/use-toast";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { trpc } from "@/app/_trpc/react";
+import { Dispatch, SetStateAction } from "react";
 
-export default function AnnouncementPostActionsButton({
+export default function AnnouncementPostDeleteDialog({
   postID,
+  dialogOpen,
+  setDialogOpen,
   className,
 }: {
   postID: number;
+  dialogOpen: boolean;
+  setDialogOpen: Dispatch<SetStateAction<boolean>>;
 } & React.HTMLAttributes<HTMLDivElement>) {
   const router = useRouter();
 
   const announcementMutation =
     trpc.announcements.delete_announcement_post.useMutation({
       onSuccess: () => {
+        setDialogOpen(false);
         toast({
           variant: "success",
           title: "Announcement Deleted!",
-          description: "You have successfully deleted an announcement.",
           duration: 4000,
         });
         router.refresh();
@@ -60,35 +64,25 @@ export default function AnnouncementPostActionsButton({
   }
 
   return (
-    <div className={className}>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon">
-            <Ellipsis />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem
-            onClick={() => {
-              router.push(siteConfig.paths.edit_post + "/" + postID);
-            }}
-            className="cursor-pointer"
-          >
-            <Pencil className="mr-2 h-4 w-4" />
-            <span>Edit</span>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem
-            className="cursor-pointer"
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Are you sure?</DialogTitle>
+          <DialogDescription>
+            This action cannot be undone. This will permanently delete the post.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button
+            variant="destructive"
             onClick={async () => {
               await deletePost(postID);
             }}
           >
-            <Trash className="mr-2 h-4 w-4" type="destructive" />
-            <span>Delete</span>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+            Delete Post
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

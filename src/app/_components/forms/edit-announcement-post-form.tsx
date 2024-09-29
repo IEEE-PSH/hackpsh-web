@@ -51,7 +51,7 @@ export default function EditAnnouncementPostForm({
         toast({
           variant: "success",
           title: "Announcement Updated!",
-          description: "You have successfully deleted an announcement.",
+          description: "You have successfully updated an announcement.",
           duration: 4000,
         });
         form.reset({

@@ -7,12 +7,17 @@ import {
   CardContent,
 } from "../ui/card";
 import AnnouncementPostActions from "./announcement-post-actions";
+import { type TUserRole } from "@/db/drizzle/startup_seed";
 
 type AnnouncementPostProps = {
   postData: AnnouncementPost;
+  userRole: TUserRole;
 };
 
-export function AnnouncementPost({ postData }: AnnouncementPostProps) {
+export function AnnouncementPost({
+  postData,
+  userRole,
+}: AnnouncementPostProps) {
   const {
     announcement_uuid,
     announcement_created_at,
@@ -39,6 +44,14 @@ export function AnnouncementPost({ postData }: AnnouncementPostProps) {
     <Card key={announcement_uuid} className="">
       <CardHeader className="relative">
         <CardTitle>{announcement_title}</CardTitle>
+        {userRole !== "participant" ? (
+          <AnnouncementPostActions
+            postID={announcement_id}
+            userRole={userRole}
+          />
+        ) : (
+          <></>
+        )}
         <CardDescription>
           <span className="font-semibold">Created By: </span>
           {announcement_author_display_name ?? "Deleted User"}
@@ -46,7 +59,6 @@ export function AnnouncementPost({ postData }: AnnouncementPostProps) {
           <span className="font-semibold">Posted On: </span>
           {formatted_announcement_created_at}
         </CardDescription>
-        <AnnouncementPostActions postID={announcement_id} />
       </CardHeader>
       <CardContent>
         <p className="break-words">{announcement_content}</p>

@@ -43,12 +43,13 @@ export default function UserInfoSheet({
             </p>
             <p className="col-span-1">Major</p>
             <p className="col-span-4 capitalize text-muted-foreground">
-              {userData.user_major?.replace("_", " ").toLocaleLowerCase() ?? ""}
+              {userData.user_major?.replaceAll("_", " ").toLocaleLowerCase() ??
+                ""}
             </p>
             <p className="col-span-1">Year</p>
             <p className="col-span-4 capitalize text-muted-foreground">
               {userData.user_school_year
-                ?.replace("_", " ")
+                ?.replaceAll("_", " ")
                 .toLocaleLowerCase() ?? ""}
             </p>
           </div>
