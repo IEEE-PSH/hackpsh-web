@@ -58,7 +58,7 @@ export default function DeleteAllAnnouncementsDialog() {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="ml-auto w-full sm:w-auto">
+        <Button variant="secondary" className="ml-auto mt-6 w-full sm:w-auto">
           Delete All Announcements
         </Button>
       </DialogTrigger>
