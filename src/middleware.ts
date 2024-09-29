@@ -40,6 +40,14 @@ export async function middleware(req: NextRequest) {
 
     if (
       (get_user_role === "participant" &&
+        req.nextUrl.pathname.startsWith(siteConfig.paths.users)) ||
+      req.nextUrl.pathname.startsWith(siteConfig.paths.event)
+    ) {
+      return redirectToPath(req, siteConfig.paths.account);
+    }
+
+    if (
+      (get_user_role === "participant" &&
         req.nextUrl.pathname.startsWith(siteConfig.paths.create_post)) ||
       req.nextUrl.pathname.startsWith(siteConfig.paths.edit_post)
     ) {
@@ -56,13 +64,10 @@ export const config = {
   matcher: [
     "/sign-in",
     "/dashboard",
-    "/onboarding",
-    "/onboarding/personal-details",
-    "/onboarding/team-creation",
-    "/onboarding/support-us",
-    "/announcements",
-    "/announcements/create-post",
+    "/onboarding/(.*)",
+    "/announcements(.*)",
     "/leaderboard",
     "/challenges",
+    "/settings(.*)",
   ],
 };

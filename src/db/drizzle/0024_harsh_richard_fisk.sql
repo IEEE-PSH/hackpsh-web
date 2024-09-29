@@ -1,0 +1,1 @@
+ALTER TABLE "app_schema"."app_team" ADD COLUMN "team_points_additive" integer DEFAULT 0 NOT NULL;

@@ -18,5 +18,9 @@ export default async function UsersPage() {
   const supabase = composeServerComponentClient();
   const user = await getUser(supabase);
 
-  return <UserTable data={data} userUUID={user.id} />;
+  const userData = await serverTRPC.user.get_user_info.query({
+    user_uuid: user.id,
+  });
+
+  return <UserTable data={data} userData={userData} />;
 }

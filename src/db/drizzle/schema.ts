@@ -21,7 +21,10 @@ export const app_user_profile = app_schema.table(
     user_onboarding_complete: boolean("user_onboarding_complete"),
     user_display_name: text("user_display_name").unique(),
     user_resume_url: text("user_resume_url"),
-    user_team_uuid: uuid("user_team_uuid").references(() => app_team.team_uuid),
+    user_team_uuid: uuid("user_team_uuid").references(
+      () => app_team.team_uuid,
+      { onDelete: "cascade" },
+    ),
     user_school_year: text("user_school_year").references(
       () => app_school_year.school_year_name,
     ),
@@ -68,6 +71,7 @@ export const app_team = app_schema.table("app_team", {
   team_name: text("team_name").notNull().unique(),
   team_join_code: text("team_code").notNull().unique(),
   team_points: integer("team_points").notNull().default(0),
+  team_points_additive: integer("team_points_additive").notNull().default(0),
 });
 
 export const app_announcement = app_schema.table("app_announcement", {

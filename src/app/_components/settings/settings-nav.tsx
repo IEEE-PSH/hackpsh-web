@@ -43,21 +43,6 @@ export default function SettingsNav({ userRole }: { userRole: string }) {
           </Button>
           <Button
             className={cn(
-              pathname === siteConfig.paths.teams
-                ? "rounded-full bg-accent text-accent-foreground"
-                : "text-foreground/60 hover:bg-accent/50",
-              "rounded-full",
-            )}
-            variant="ghost"
-            size="default"
-            asChild
-          >
-            <Link href={siteConfig.paths.teams} scroll={true}>
-              <span>Teams</span>
-            </Link>
-          </Button>
-          <Button
-            className={cn(
               pathname === siteConfig.paths.event
                 ? "bg-accent text-accent-foreground"
                 : "text-foreground/60 hover:bg-accent/50",

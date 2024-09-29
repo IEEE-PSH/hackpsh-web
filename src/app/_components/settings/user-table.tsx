@@ -20,7 +20,7 @@ import {
 } from "@/app/_components/ui/table";
 import { cn } from "@/app/_lib/client-utils";
 import { useState } from "react";
-import { type AllUsers } from "@/server/dao/user";
+import { TUserInfo, type AllUsers } from "@/server/dao/user";
 import { columns } from "@/app/_components/settings/user-columns";
 import UserOptionsSheet from "./user-options-sheet";
 import {
@@ -32,15 +32,16 @@ import {
 } from "@/app/_components/ui/select";
 import { trpc } from "@/app/_trpc/react";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
+import UserActions from "./user-actions";
 interface UserTableProps {
   data: AllUsers;
-  userUUID: string;
+  userData: TUserInfo;
   className?: string;
 }
 
 export default function UserTable({
   data,
-  userUUID,
+  userData,
   className,
 }: UserTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -87,7 +88,7 @@ export default function UserTable({
             setCurrRole(String(value) as TUserRole);
           }}
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-48">
             <SelectValue placeholder="Participant" />
           </SelectTrigger>
           <SelectContent>
@@ -132,11 +133,9 @@ export default function UserTable({
                         </div>
 
                         {cell.column.id === "user_email_address" ? (
-                          <UserOptionsSheet
-                            userDisplayName={row.original.user_display_name!}
-                            userUUID={userUUID}
-                            targetUUID={row.original.user_uuid}
-                            userRole={row.original.user_role}
+                          <UserActions
+                            userData={userData}
+                            targetUserUUID={row.original.user_uuid}
                           />
                         ) : (
                           <></>

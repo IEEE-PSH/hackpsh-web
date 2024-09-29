@@ -39,34 +39,6 @@ import {
   type TEventDetailsFormSchema,
 } from "@/app/_lib/event-details";
 
-const dbTime = [
-  "0",
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-  "11",
-  "12",
-  "13",
-  "14",
-  "15",
-  "16",
-  "17",
-  "18",
-  "19",
-  "20",
-  "21",
-  "22",
-  "23",
-  "24",
-];
-
 type EventDetailsFormProps = {
   eventDate: string;
   eventStartHour: number;
@@ -131,20 +103,6 @@ export default function EventDetailsForm({
     day: "2-digit",
     year: "numeric",
   };
-
-  function getReadableHour(strHour: string) {
-    const hour = parseInt(strHour);
-    let calc, period;
-    if (hour < 13) {
-      if (hour == 0) calc = 12;
-      else calc = hour;
-      period = "AM";
-    } else {
-      calc = hour - 12;
-      period = "PM";
-    }
-    return calc + ":00 " + period;
-  }
 
   return (
     <Form {...form}>
@@ -213,11 +171,31 @@ export default function EventDetailsForm({
                 <SelectContent>
                   <ScrollArea className="h-80">
                     <SelectGroup>
-                      {dbTime.map((time) => (
-                        <SelectItem key={"start-" + time} value={time}>
-                          {getReadableHour(time)}
-                        </SelectItem>
-                      ))}
+                      <SelectItem value="0">12:00 AM</SelectItem>
+                      <SelectItem value="1">1:00 AM</SelectItem>
+                      <SelectItem value="2">2:00 AM</SelectItem>
+                      <SelectItem value="3">3:00 AM</SelectItem>
+                      <SelectItem value="4">4:00 AM</SelectItem>
+                      <SelectItem value="5">5:00 AM</SelectItem>
+                      <SelectItem value="6">6:00 AM</SelectItem>
+                      <SelectItem value="7">7:00 AM</SelectItem>
+                      <SelectItem value="8">8:00 AM</SelectItem>
+                      <SelectItem value="9">9:00 AM</SelectItem>
+                      <SelectItem value="10">10:00 AM</SelectItem>
+                      <SelectItem value="11">11:00 AM</SelectItem>
+                      <SelectItem value="12">12:00 PM</SelectItem>
+                      <SelectItem value="13">1:00 PM</SelectItem>
+                      <SelectItem value="14">2:00 PM</SelectItem>
+                      <SelectItem value="15">3:00 PM</SelectItem>
+                      <SelectItem value="16">4:00 PM</SelectItem>
+                      <SelectItem value="17">5:00 PM</SelectItem>
+                      <SelectItem value="18">6:00 PM</SelectItem>
+                      <SelectItem value="19">7:00 PM</SelectItem>
+                      <SelectItem value="20">8:00 PM</SelectItem>
+                      <SelectItem value="21">9:00 PM</SelectItem>
+                      <SelectItem value="22">10:00 PM</SelectItem>
+                      <SelectItem value="23">11:00 PM</SelectItem>
+                      <SelectItem value="24">12:00 PM</SelectItem>
                     </SelectGroup>
                   </ScrollArea>
                 </SelectContent>
@@ -263,7 +241,7 @@ export default function EventDetailsForm({
 
         <Button
           type="submit"
-          className="ml-auto w-32"
+          className="ml-auto w-full sm:w-32"
           disabled={form.formState.isSubmitting}
         >
           {form.formState.isSubmitting && (

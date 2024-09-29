@@ -263,14 +263,17 @@ export default function UserSettingsForm({
                             !field.value && "text-muted-foreground",
                           )}
                         >
-                          {field.value
-                            ? dbMajors
-                                .find(
-                                  (major_name) => major_name === field.value,
-                                )
-                                ?.replaceAll("_", " ")
-                                .toLocaleUpperCase()
-                            : "Select major"}
+                          <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+                            {field.value
+                              ? dbMajors
+                                  .find(
+                                    (major_name) => major_name === field.value,
+                                  )
+                                  ?.replaceAll("_", " ")
+                                  .toLocaleUpperCase()
+                              : "Select major"}
+                          </span>
+
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -319,12 +322,12 @@ export default function UserSettingsForm({
             />
           </div>
         </div>
-        <div>
+        <div className="flex flex-col">
           <h1 className="text-2xl font-semibold leading-none tracking-tight">
             Support Preferences
           </h1>
           <Separator className="my-4" />
-          <div>
+          <div className="flex flex-grow flex-col">
             <div className="space-y-8">
               <FormField
                 control={form.control}
@@ -344,6 +347,7 @@ export default function UserSettingsForm({
                       <Switch
                         checked={field.value}
                         onCheckedChange={field.onChange}
+                        className="ml-4"
                       />
                     </FormControl>
                   </FormItem>
@@ -365,6 +369,7 @@ export default function UserSettingsForm({
                       <Switch
                         checked={field.value}
                         onCheckedChange={field.onChange}
+                        className="ml-4"
                       />
                     </FormControl>
                   </FormItem>
@@ -375,7 +380,7 @@ export default function UserSettingsForm({
               Team Details
             </h1>
             <Separator className="my-4" />
-            <div className="flex flex-col space-y-8">
+            <div className="flex h-full flex-grow flex-col space-y-8">
               <FormItem>
                 <FormLabel>Team</FormLabel>
                 <FormControl>
@@ -391,17 +396,17 @@ export default function UserSettingsForm({
                 </FormDescription>
                 <FormMessage />
               </FormItem>
-              <Button
-                type="submit"
-                className="ml-auto w-32"
-                disabled={form.formState.isSubmitting}
-              >
-                {form.formState.isSubmitting && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                Save
-              </Button>
             </div>
+            <Button
+              type="submit"
+              className="ml-auto mt-6 w-full sm:w-32"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Save
+            </Button>
           </div>
         </div>
       </form>

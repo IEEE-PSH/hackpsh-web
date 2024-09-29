@@ -1,16 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  User,
-  Settings,
-  LogOut,
-  Palette,
-  Moon,
-  Sun,
-  Tv2,
-  ToggleRight,
-} from "lucide-react";
+import { User, Settings, LogOut, Palette, Moon, Sun, Tv2 } from "lucide-react";
 import { useTheme } from "next-themes";
 import {
   DropdownMenu,
@@ -34,29 +25,6 @@ type ProfileDropdownProps = {
   userDisplayName: string | null;
   userEmailAddress: string | null;
 };
-
-function createUserProfileElements({
-  userDisplayName,
-  userEmailAddress,
-}: ProfileDropdownProps) {
-  if (userDisplayName && userEmailAddress) {
-    return (
-      <>
-        <p className="font-medium">{userDisplayName}</p>
-        <p className="truncate text-sm text-muted-foreground">
-          {userEmailAddress}
-        </p>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Skeleton className="h-4 w-48" />
-        <Skeleton className="h-4 w-48" />
-      </>
-    );
-  }
-}
 
 export default function ProfileDropdown({
   userDisplayName,
@@ -89,7 +57,19 @@ export default function ProfileDropdown({
       <DropdownMenuContent>
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            {createUserProfileElements({ userDisplayName, userEmailAddress })}
+            {userDisplayName && userEmailAddress ? (
+              <>
+                <p className="font-medium">{userDisplayName}</p>
+                <p className="truncate text-sm text-muted-foreground">
+                  {userEmailAddress}
+                </p>
+              </>
+            ) : (
+              <>
+                <Skeleton className="h-4 w-48" />
+                <Skeleton className="h-4 w-48" />
+              </>
+            )}
           </div>
         </div>
         <DropdownMenuSeparator />

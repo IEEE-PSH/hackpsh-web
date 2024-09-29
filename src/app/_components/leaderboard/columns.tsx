@@ -30,7 +30,7 @@ export const columns: ColumnDef<TeamStanding>[] = [
     ),
   },
   {
-    accessorKey: "team_points",
+    accessorKey: "team_total_points",
     header: ({ column }) => {
       return (
         <Button
@@ -44,7 +44,9 @@ export const columns: ColumnDef<TeamStanding>[] = [
     },
     cell: ({ row }) => {
       return (
-        <div className="ml-4 font-medium">{row.getValue("team_points")}</div>
+        <div className="ml-4 font-medium">
+          {row.getValue("team_total_points")}
+        </div>
       );
     },
   },
