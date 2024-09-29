@@ -29,7 +29,7 @@ export default async function Page() {
 
   return (
     <div className="space-y-4">
-      <Card>
+      <Card className="border-0 sm:border">
         <CardContent className="p-8">
           <UserSettingsForm
             userDisplayName={user_display_name!}
@@ -42,13 +42,13 @@ export default async function Page() {
           />
         </CardContent>
       </Card>
-      <Card>
+      <Card className="border-0 sm:border">
         <CardContent className="p-8">
           <h1 className="text-2xl font-semibold leading-none tracking-tight">
             Account Actions
           </h1>
           <Separator className="my-4" />
-          <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-x-4">
+          <div className="flex flex-col justify-between space-y-4 sm:flex-row md:space-x-4">
             <div className="flex flex-col space-y-2">
               <Label>Delete Your Account</Label>
               <p className="text-sm text-muted-foreground">

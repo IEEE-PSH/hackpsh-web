@@ -396,17 +396,17 @@ export default function UserSettingsForm({
                 </FormDescription>
                 <FormMessage />
               </FormItem>
-              <Button
-                type="submit"
-                className="ml-auto mt-auto w-full md:w-32"
-                disabled={form.formState.isSubmitting}
-              >
-                {form.formState.isSubmitting && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                Save
-              </Button>
             </div>
+            <Button
+              type="submit"
+              className="ml-auto mt-6 w-full sm:w-32"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Save
+            </Button>
           </div>
         </div>
       </form>

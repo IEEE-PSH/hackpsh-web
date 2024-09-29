@@ -13,7 +13,7 @@ export default async function Page() {
 
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-      <Card>
+      <Card className="border-0 sm:border">
         <CardContent className="p-8">
           <h1 className="text-2xl font-semibold leading-none tracking-tight">
             Event Details
@@ -26,7 +26,7 @@ export default async function Page() {
           />
         </CardContent>
       </Card>
-      <Card>
+      <Card className="border-0 sm:border">
         <CardContent className="flex h-full flex-col p-8">
           <h1 className="text-2xl font-semibold leading-none tracking-tight">
             Danger Zone

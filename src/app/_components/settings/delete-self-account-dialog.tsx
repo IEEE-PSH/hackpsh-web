@@ -58,7 +58,7 @@ export default function DeleteSelfAccountDialog() {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="flex-shrink-0">
+        <Button variant="secondary" className="w-full flex-shrink-0 sm:w-auto">
           Delete Account
         </Button>
       </DialogTrigger>
