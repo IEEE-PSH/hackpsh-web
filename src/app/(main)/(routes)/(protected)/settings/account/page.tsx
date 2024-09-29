@@ -3,6 +3,10 @@ import { serverTRPC } from "@/app/_trpc/server";
 import { composeServerComponentClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import UserSettingsForm from "@/app/_components/forms/user-settings-form";
+import { Separator } from "@/app/_components/ui/separator";
+import { Label } from "@/app/_components/ui/label";
+import { Button } from "@/app/_components/ui/button";
+import DeleteSelfAccountDialog from "@/app/_components/settings/delete-self-account-dialog";
 
 export default async function Page() {
   const supabase = composeServerComponentClient();
@@ -24,7 +28,7 @@ export default async function Page() {
     });
 
   return (
-    <div>
+    <div className="space-y-4">
       <Card>
         <CardContent className="p-8">
           <UserSettingsForm
@@ -36,6 +40,23 @@ export default async function Page() {
             userSupportTechnical={user_support_technical!}
             userTeamName={user_team_name!}
           />
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent className="p-8">
+          <h1 className="text-2xl font-semibold leading-none tracking-tight">
+            Account Actions
+          </h1>
+          <Separator className="my-4" />
+          <div className="flex flex-col justify-between space-y-4 md:flex-row md:space-x-4">
+            <div className="flex flex-col space-y-2">
+              <Label>Delete Your Account</Label>
+              <p className="text-sm text-muted-foreground">
+                No longer using your account? You can delete your account here.
+              </p>
+            </div>
+            <DeleteSelfAccountDialog />
+          </div>
         </CardContent>
       </Card>
     </div>

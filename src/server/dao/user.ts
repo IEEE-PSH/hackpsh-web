@@ -68,6 +68,12 @@ export async function deleteUser(
     .where(eq(app_user_profile.user_uuid, target_uuid));
 }
 
+export async function deleteUserSelf(db: Database, user_uuid: string) {
+  await db
+    .delete(app_user_profile)
+    .where(eq(app_user_profile.user_uuid, user_uuid));
+}
+
 export async function doesUserExist(db: Database, user_uuid: string) {
   try {
     const result = await db.query.app_user_profile.findFirst({

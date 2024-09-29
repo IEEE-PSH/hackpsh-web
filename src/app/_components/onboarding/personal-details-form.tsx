@@ -140,7 +140,7 @@ export default function OnboardingPersonalDetailsForm({
                               ?.replace("_", " ")
                               .toLocaleUpperCase()
                           : "Select school year"}
-                        <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -199,13 +199,17 @@ export default function OnboardingPersonalDetailsForm({
                           !field.value && "text-muted-foreground",
                         )}
                       >
-                        {field.value
-                          ? dbMajors
-                              .find((major_name) => major_name === field.value)
-                              ?.replaceAll("_", " ")
-                              .toLocaleUpperCase()
-                          : "Select major"}
-                        <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
+                        <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+                          {field.value
+                            ? dbMajors
+                                .find(
+                                  (major_name) => major_name === field.value,
+                                )
+                                ?.replaceAll("_", " ")
+                                .toLocaleUpperCase()
+                            : "Select major"}
+                        </span>
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
@@ -256,7 +260,7 @@ export default function OnboardingPersonalDetailsForm({
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting && (
-              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
             Next
           </Button>

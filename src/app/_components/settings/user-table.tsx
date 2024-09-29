@@ -88,7 +88,7 @@ export default function UserTable({
             setCurrRole(String(value) as TUserRole);
           }}
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-48">
             <SelectValue placeholder="Participant" />
           </SelectTrigger>
           <SelectContent>

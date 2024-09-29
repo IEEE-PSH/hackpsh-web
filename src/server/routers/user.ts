@@ -18,6 +18,7 @@ import updateUserRoleProcedure from "../procedures/protected/user/updateUserRole
 import deleteUserProcedure from "../procedures/protected/user/deleteUserProcedure";
 import getUserInfoProcedure from "../procedures/protected/user/getUserInfoProcedure";
 import getUserTeamInfoProcedure from "../procedures/protected/user/getUserTeamInfoProcedure";
+import deleteUserSelfProcedure from "../procedures/protected/user/deleteUserSelfProcedure";
 
 export const userRouter = createTRPCRouter({
   is_onboarding_complete: isOnboardingCompeleteProcedure,
@@ -39,4 +40,5 @@ export const userRouter = createTRPCRouter({
   update_user_role: updateUserRoleProcedure,
   delete_user: deleteUserProcedure,
   get_user_team_info: getUserTeamInfoProcedure,
+  delete_user_self: deleteUserSelfProcedure,
 });

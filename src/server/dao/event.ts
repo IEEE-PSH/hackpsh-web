@@ -1,8 +1,13 @@
 import { type Database } from "@/db/drizzle";
-import { app_event } from "@/db/drizzle/schema";
+import {
+  app_announcement,
+  app_event,
+  app_user_profile,
+} from "@/db/drizzle/schema";
 import { BaseError } from "@/shared/error";
 import { TRPCError } from "@trpc/server";
 import { getUserRole } from "./user";
+import { eq } from "drizzle-orm";
 
 export async function updateEventDetails(
   db: Database,
@@ -29,8 +34,10 @@ export async function updateEventDetails(
       eventStartTime.getTime() + event_duration * 60 * 60 * 1000,
     );
 
-    await db.update(app_event).set({
-      event_date,
+    await db.delete(app_event).execute();
+
+    await db.insert(app_event).values({
+      event_date: eventDate.toDateString(),
       event_start_time: eventStartTime.toISOString(),
       event_end_time: eventEndTime.toISOString(),
       event_start_hour: event_start_hour,
@@ -38,7 +45,7 @@ export async function updateEventDetails(
     });
 
     return {
-      update_user_personal_details: true,
+      update_event_details: true,
     };
   } catch (error) {
     throw new TRPCError({
@@ -61,6 +68,65 @@ export async function getEventDetails(db: Database) {
     });
 
     return result;
+  } catch (error) {
+    if (error instanceof BaseError) {
+      throw new TRPCError({
+        message: error.description!,
+        code: "CONFLICT",
+      });
+    }
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function deleteAllParticipants(db: Database, user_uuid: string) {
+  const result = await getUserRole(db, user_uuid);
+  if (result?.user_role === "participant") {
+    throw new TRPCError({
+      message: "User must be an admin to delete all participants.",
+      code: "UNAUTHORIZED",
+    });
+  }
+
+  try {
+    await db
+      .delete(app_user_profile)
+      .where(eq(app_user_profile.user_role, "participant"))
+      .execute();
+    return {
+      delete_all_participants: true,
+    };
+  } catch (error) {
+    if (error instanceof BaseError) {
+      throw new TRPCError({
+        message: error.description!,
+        code: "CONFLICT",
+      });
+    }
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function deleteAllAnnouncements(db: Database, user_uuid: string) {
+  const result = await getUserRole(db, user_uuid);
+  if (result?.user_role === "participant") {
+    throw new TRPCError({
+      message: "User must be an admin to delete all announcements.",
+      code: "UNAUTHORIZED",
+    });
+  }
+
+  try {
+    await db.delete(app_announcement).execute();
+    return {
+      delete_all_announcements: true,
+    };
   } catch (error) {
     if (error instanceof BaseError) {
       throw new TRPCError({

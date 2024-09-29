@@ -26,5 +26,12 @@ export async function Announcements() {
     );
   });
 
-  return <div className="space-y-4">{postElements}</div>;
+  if (postElements.length > 0)
+    return <div className="space-y-4">{postElements}</div>;
+  else
+    return (
+      <p className="mx-auto text-center text-muted-foreground">
+        No announcements yet.
+      </p>
+    );
 }

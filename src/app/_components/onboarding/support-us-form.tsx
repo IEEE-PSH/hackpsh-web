@@ -84,7 +84,7 @@ export default function SupportUsForm({
               control={form.control}
               name="user_support_administrative"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between p-4 border rounded-lg">
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
                     <FormLabel className="text-base">Administrative</FormLabel>
                     <FormDescription>
@@ -96,6 +96,7 @@ export default function SupportUsForm({
                     <Switch
                       checked={field.value}
                       onCheckedChange={field.onChange}
+                      className="ml-4"
                     />
                   </FormControl>
                 </FormItem>
@@ -106,7 +107,7 @@ export default function SupportUsForm({
               control={form.control}
               name="user_support_technical"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between p-4 border rounded-lg">
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
                     <FormLabel className="text-base">Technical</FormLabel>
                     <FormDescription>
@@ -118,6 +119,7 @@ export default function SupportUsForm({
                     <Switch
                       checked={field.value}
                       onCheckedChange={field.onChange}
+                      className="ml-4"
                     />
                   </FormControl>
                 </FormItem>
@@ -130,7 +132,7 @@ export default function SupportUsForm({
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting && (
-              <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
             Next
           </Button>

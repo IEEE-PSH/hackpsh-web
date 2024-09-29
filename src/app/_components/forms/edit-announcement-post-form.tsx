@@ -129,19 +129,19 @@ export default function EditAnnouncementPostForm({
               </FormItem>
             )}
           />
-          <div className="flex space-x-4">
+          <div className="grid grid-cols-2 gap-x-4 sm:flex sm:space-x-4">
             <Button
               type="button"
               onClick={() => router.back()}
               variant="navigation"
-              className="ml-auto px-8"
+              className="ml-auto w-full justify-end px-8 sm:w-auto"
               disabled={form.formState.isSubmitting}
             >
               Cancel
             </Button>
             <Button
               type="submit"
-              className="px-8"
+              className="ml-auto w-full px-8 sm:w-auto"
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting && (
