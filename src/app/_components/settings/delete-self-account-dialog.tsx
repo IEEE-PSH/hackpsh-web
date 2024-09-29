@@ -15,13 +15,17 @@ import { trpc } from "@/app/_trpc/react";
 import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { siteConfig } from "@/app/_config/site";
 
 export default function DeleteSelfAccountDialog() {
   const router = useRouter();
+  const supabase = createClientComponentClient();
 
   const deleteSelfAccountMutation = trpc.user.delete_user_self.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       setDialogOpen(false);
+      await supabase.auth.signOut();
+      router.push(siteConfig.paths.home);
       router.refresh();
       toast({
         variant: "success",
@@ -42,7 +46,6 @@ export default function DeleteSelfAccountDialog() {
 
   async function deleteSelfAccount() {
     try {
-      const supabase = createClientComponentClient();
       const user = await getUser(supabase);
 
       await deleteSelfAccountMutation.mutateAsync({
