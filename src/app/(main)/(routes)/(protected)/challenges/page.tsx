@@ -8,6 +8,7 @@ import {
 import { siteConfig } from "@/app/_config/site";
 import { type Metadata } from "next";
 import Link from "next/link";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Challenges | HackPSH",
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function ChallengesPage() {
   return (
-    <div className="container my-4">
+    <div className="">
       <Card className="text-center">
         <CardHeader>
           <CardTitle>Internal Challenges Coming Soon!</CardTitle>

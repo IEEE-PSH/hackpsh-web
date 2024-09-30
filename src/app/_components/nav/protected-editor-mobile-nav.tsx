@@ -9,7 +9,7 @@ import { cn } from "@/app/_lib/client-utils";
 import { Icons } from "../ui/icons";
 import { siteConfig } from "@/app/_config/site";
 
-export function ProtectedMobileNav() {
+export function ProtectedEditorMobileNav() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
