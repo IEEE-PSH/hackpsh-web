@@ -7,6 +7,7 @@ import { teamRouter } from "./routers/team";
 import { userRouter } from "./routers/user";
 import { eventRouter } from "./routers/event";
 import { createTRPCRouter } from "./trpc";
+import { challengesRouter } from "./routers/challenges";
 
 export const appRouter = createTRPCRouter({
   auth: authRouter,
@@ -17,6 +18,7 @@ export const appRouter = createTRPCRouter({
   contact: contactRouter,
   countdown: countdownRouter,
   event: eventRouter,
+  challenges: challengesRouter,
 });
 
 export type AppRouter = typeof appRouter;
