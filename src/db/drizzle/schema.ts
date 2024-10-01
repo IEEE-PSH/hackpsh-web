@@ -123,6 +123,7 @@ export const app_event = app_schema.table("app_event", {
 
 export const app_challenges = app_schema.table("app_challenges",{
   challenge_uuid: uuid("challenge_uuid").primaryKey().default(sql`uuid_generate_v4()`),
+  challenge_id: serial("challenge_id"),
   challenge_title: text("challenge_title").notNull(),
   challenge_difficulty: text("challenge_difficulty").notNull(),
   challenge_description: text("challenge_description").notNull(),

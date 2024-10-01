@@ -39,6 +39,7 @@ import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
 import { useState } from "react";
 import { CreateChallengeFormSchema, type TCreateChallengeFormSchema } from "@/app/_lib/zod-schemas/forms/challenges";
+import { siteConfig } from "@/app/_config/site";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -60,7 +61,7 @@ export function CreateChallengeForm({
           description: "You have successfully created a challenge.",
           duration: 4000,
         });
-        router.replace("/challenges");
+        router.replace(siteConfig.paths.challenges);
         router.refresh();
       },
       onError: () => {
@@ -75,7 +76,6 @@ export function CreateChallengeForm({
     });
 
   async function onSubmit(values: TCreateChallengeFormSchema) {
-    console.log(values.example_input)
     try {
       const supabase = createClientComponentClient();
       const user = await getUser(supabase);
