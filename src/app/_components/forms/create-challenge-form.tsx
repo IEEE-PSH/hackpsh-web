@@ -41,6 +41,8 @@ import {
 } from "../ui/select";
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
+import { useState } from "react";
+import { TCreateChallengeFormSchema } from "@/app/_lib/zod-schemas/forms/challenges";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -48,8 +50,8 @@ export function CreateChallengeForm({
   className,
   ...props
 }: CreateAnouncementFormProps) {
-  const form = useForm<TCreateAnnouncementForm>({
-    resolver: zodResolver(CreateAnnouncementFormSchema),
+  const form = useForm<TCreateChallengeFormSchema>({
+    resolver: zodResolver(CreateChallengeForm),
   });
   const router = useRouter();
 
@@ -91,6 +93,20 @@ export function CreateChallengeForm({
     }
   }
 
+  const [isExample, setIsExample] = useState(false)
+  const exampleFields = {
+    title: "Sum of Array",
+    description: "Add all integers of the array given its size.",
+    function_header: "arraySum(int n, intArr nums)",
+    example_input: `4\n1 4 3 2`,
+    example_output: "10",
+    explanation: "The array has 4 integers. 1+4+3+2=10, so the output is 10.",
+    testcase_input_1: `2\n2 3`,
+    testcase_output_1: "5",
+    testcase_input_2: `5\n1 1 1 1 10`,
+    testcase_output_2: "14"
+  }
+
   return (
     <div className={cn("grid-gap-6", className)} {...props}>
       <Form {...form}>
@@ -99,10 +115,10 @@ export function CreateChallengeForm({
           className="flex flex-col space-y-6"
         >
           <div className="flex justify-between">
-            <h1 className="text-2xl font-semibold">Challenge Info</h1>{" "}
+            <h1 className="text-2xl font-semibold">Challenge Info</h1>
             <div className="flex items-center space-x-2">
-              <Label htmlFor="airplane-mode">Fill fields with example</Label>
-              <Switch id="airplane-mode" />
+              <Label>Example placeholders</Label>
+              <Switch checked={isExample} onCheckedChange={setIsExample} />
             </div>
           </div>
 
@@ -115,7 +131,7 @@ export function CreateChallengeForm({
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Sum of Array"
+                      placeholder={isExample?exampleFields.title : ""}
                       {...field}
                       value={field.value ?? ""}
                     />
@@ -126,7 +142,7 @@ export function CreateChallengeForm({
             />
             <FormField
               control={form.control}
-              name="user_role"
+              name="difficulty"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Difficulty</FormLabel>
@@ -152,13 +168,13 @@ export function CreateChallengeForm({
 
           <FormField
             control={form.control}
-            name="content"
+            name="description"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Add all integers of the array given its size."
+                    placeholder={isExample?exampleFields.description:""}
                     className="h-36 resize-none"
                     {...field}
                     value={field.value ?? ""}
@@ -170,7 +186,7 @@ export function CreateChallengeForm({
           />
           <FormField
             control={form.control}
-            name="title"
+            name="function_header"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="flex">
@@ -179,7 +195,11 @@ export function CreateChallengeForm({
                     <HoverCardTrigger asChild>
                       <Info className="ml-2 h-4 w-4" />
                     </HoverCardTrigger>
-                    <HoverCardContent className="space-y-2 font-normal">
+                    <HoverCardContent className="space-y-2 font-normal flex flex-col">
+                    <p className="underline">Format:</p>
+                      <p>
+                        functionName(string paramName1, int paramName2)
+                      </p>
                       <p className="underline">Valid parameter types:</p>
                       <p>
                         int, intArr, double, doubleArr, string, stringArr, char,
@@ -190,7 +210,7 @@ export function CreateChallengeForm({
                 </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="arraySum(int n, intArr nums)"
+                    placeholder={isExample? exampleFields.function_header:""}
                     {...field}
                     value={field.value ?? ""}
                   />
@@ -201,13 +221,13 @@ export function CreateChallengeForm({
           />
           <FormField
             control={form.control}
-            name="content"
+            name="example_input"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Example Input</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder={`4\n1 4 3 2`}
+                    placeholder={isExample?exampleFields.example_input:""}
                     className="resize-none"
                     {...field}
                     value={field.value ?? ""}
@@ -219,13 +239,13 @@ export function CreateChallengeForm({
           />
           <FormField
             control={form.control}
-            name="title"
+            name="example_output"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Example Output</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="10"
+                    placeholder={isExample?exampleFields.example_output:""}
                     {...field}
                     value={field.value ?? ""}
                   />
@@ -236,13 +256,13 @@ export function CreateChallengeForm({
           />
           <FormField
             control={form.control}
-            name="content"
+            name="explanation"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Explanation</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="The array has 4 integers. 1+4+3+2=10, so the output is 10."
+                    placeholder={isExample?exampleFields.explanation:""}
                     className="resize-none"
                     {...field}
                     value={field.value ?? ""}
@@ -258,13 +278,13 @@ export function CreateChallengeForm({
             <div className="grid gap-y-4">
               <FormField
                 control={form.control}
-                name="content"
+                name="testcase_input_1"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Input #1</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder={`2\n2 3`}
+                        placeholder={isExample?exampleFields.testcase_input_1:""}
                         className="resize-none"
                         {...field}
                         value={field.value ?? ""}
@@ -276,13 +296,13 @@ export function CreateChallengeForm({
               />
               <FormField
                 control={form.control}
-                name="content"
+                name="testcase_output_1"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Output #1</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="5"
+                        placeholder={isExample?exampleFields.testcase_output_1:""}
                         {...field}
                         value={field.value ?? ""}
                       />
@@ -295,13 +315,13 @@ export function CreateChallengeForm({
             <div className="grid gap-y-4">
               <FormField
                 control={form.control}
-                name="content"
+                name="testcase_input_2"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Input #2</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder={`5\n1 1 1 1 10`}
+                        placeholder={isExample?exampleFields.testcase_input_2:""}
                         className="resize-none"
                         {...field}
                         value={field.value ?? ""}
@@ -313,13 +333,13 @@ export function CreateChallengeForm({
               />
               <FormField
                 control={form.control}
-                name="content"
+                name="testcase_output_2"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Output #2</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="14"
+                        placeholder={isExample?exampleFields.testcase_output_2:""}
                         {...field}
                         value={field.value ?? ""}
                       />
