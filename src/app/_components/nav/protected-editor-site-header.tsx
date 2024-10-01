@@ -5,7 +5,7 @@ import { getUser } from "@/shared/supabase/auth";
 import { serverTRPC } from "@/app/_trpc/server";
 import { ProtectedEditorMobileNav } from "./protected-editor-mobile-nav";
 import { Button } from "../ui/button";
-import { ArrowLeft, Play } from "lucide-react";
+import { ArrowLeft, Play, Send } from "lucide-react";
 
 export default async function ProtectedEditorSiteHeader() {
   const supabase = composeServerComponentClient();
@@ -27,6 +27,10 @@ export default async function ProtectedEditorSiteHeader() {
           <Button>
             <Play className="mr-4" />
             <span>Run</span>
+          </Button>
+          <Button variant="secondary">
+            <Send className="mr-4" />
+            <span>Submit</span>
           </Button>
           <ProfileButton
             userDisplayName={user_display_name}

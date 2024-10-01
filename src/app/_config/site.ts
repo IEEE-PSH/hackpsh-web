@@ -37,6 +37,7 @@ export const siteConfig = {
     account: "/settings/account",
     users: "/settings/users",
     teams: "/settings/teams",
+    solve: "/challenges/solve"
   },
 };
 

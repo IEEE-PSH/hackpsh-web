@@ -26,9 +26,9 @@ export async function Challenges() {
     );
   });
 
-  if (challengeElements.length > 0)
-    return <div className="space-y-4">{challengeElements}</div>;
-  else
+  if (challengeElements.length > 0){
+    return <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">{challengeElements}</div>;
+  }else
     return (
       <p className="mx-auto text-center text-muted-foreground">
         No challenges yet.

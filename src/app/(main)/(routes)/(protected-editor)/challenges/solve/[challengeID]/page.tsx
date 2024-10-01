@@ -1,11 +1,12 @@
 "use client";
 
 import { Button } from "@/app/_components/ui/button";
-import { Label } from "@/app/_components/ui/label";
 import { toast } from "@/app/_components/ui/use-toast";
 import { cn } from "@/app/_lib/client-utils";
 import { trpc } from "@/app/_trpc/react";
 import Editor from "@monaco-editor/react";
+import { Label } from "@radix-ui/react-label";
+import React from "react";
 import { useState } from "react";
 
 export default function CodingEditor() {
@@ -22,8 +23,8 @@ export default function CodingEditor() {
     { codeString: value },
     {
       enabled,
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       onSuccess: async (data) => {
-        // Wait for a short delay before processing the data
         await new Promise((resolve) => setTimeout(resolve, 500));
         formatOutput(data as TData);
         setEnabled(false);
@@ -106,3 +107,4 @@ export default function CodingEditor() {
     </div>
   );
 }
+

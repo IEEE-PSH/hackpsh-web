@@ -3,6 +3,7 @@ import { app_challenges } from "@/db/drizzle/schema";
 import { TRPCError } from "@trpc/server";
 import { desc, eq } from "drizzle-orm";
 import { getUserRole } from "./user";
+import { TDifficulties } from "@/db/drizzle/startup_seed";
 
 export async function getChallenges(db: Database) {
   try {
@@ -31,7 +32,7 @@ export async function createChallenge(
   db: Database,
   user_uuid: string,
   title: string,
-  difficulty:string,
+  difficulty: TDifficulties,
   description: string,
   function_header: string,
   example_input: string,
