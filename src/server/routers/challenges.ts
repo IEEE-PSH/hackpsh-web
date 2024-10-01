@@ -1,7 +1,7 @@
-import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { spawn } from "child_process";
 import { z } from "zod";
+import createChallengeProcedure from "../procedures/protected/challenges/createChallengeProcedure";
 
 const testCodeSchema = z.object({
   codeString: z.string(),
@@ -49,6 +49,9 @@ const testCodeProcedure = publicProcedure
     });
   });
 
+
+
 export const challengesRouter = createTRPCRouter({
   test_code: testCodeProcedure,
+  create_challenge: createChallengeProcedure,
 });

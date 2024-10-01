@@ -51,43 +51,52 @@ export function CreateChallengeForm({
   });
   const router = useRouter();
 
-  // const announcementMutation =
-  //   trpc.announcements.create_announcement_post.useMutation({
-  //     onSuccess: () => {
-  //       toast({
-  //         variant: "success",
-  //         title: "Challenge Created!",
-  //         description: "You have successfully created a challenge.",
-  //         duration: 4000,
-  //       });
-  //       router.replace("/challenges");
-  //       router.refresh();
-  //     },
-  //     onError: () => {
-  //       toast({
-  //         variant: "destructive",
-  //         title: "Oops, Something Went Wrong!",
-  //         description:
-  //           "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
-  //         duration: 6000,
-  //       });
-  //     },
-  //   });
+  const challengeMutation =
+    trpc.challenges.create_challenge.useMutation({
+      onSuccess: () => {
+        toast({
+          variant: "success",
+          title: "Challenge Created!",
+          description: "You have successfully created a challenge.",
+          duration: 4000,
+        });
+        router.replace("/challenges");
+        router.refresh();
+      },
+      onError: () => {
+        toast({
+          variant: "destructive",
+          title: "Oops, Something Went Wrong!",
+          description:
+            "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
+          duration: 6000,
+        });
+      },
+    });
 
-  function onSubmit(values: TCreateChallengeFormSchema) {
+  async function onSubmit(values: TCreateChallengeFormSchema) {
     console.log(values.example_input)
-    // try {
-    //   const supabase = createClientComponentClient();
-    //   const user = await getUser(supabase);
+    try {
+      const supabase = createClientComponentClient();
+      const user = await getUser(supabase);
 
-    //   await announcementMutation.mutateAsync({
-    //     author_uuid: user.id,
-    //     title: values.title,
-    //     content: values.content,
-    //   });
-    // } catch (err: unknown) {
-    //   console.log(err);
-    // }
+      await challengeMutation.mutateAsync({
+        user_uuid: user.id,
+        title: values.title,
+        difficulty: values.difficulty,
+        description: values.description,
+        function_header: values.function_header,
+        example_input: values.example_input,
+        example_output: values.example_output,
+        explanation: values.explanation,
+        testcase_input_1: values.testcase_input_1,
+        testcase_output_1: values.testcase_output_1,
+        testcase_input_2: values.testcase_input_2,
+        testcase_output_2: values.testcase_output_2
+      });
+    } catch (err: unknown) {
+      console.log(err);
+    }
   }
 
   const [isExample, setIsExample] = useState(false)

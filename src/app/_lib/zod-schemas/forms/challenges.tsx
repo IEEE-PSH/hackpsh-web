@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const difficulty = ["easy","medium","hard"] as const
+export const difficulty = ["easy","medium","hard"] as const
 export type TDifficulty = (typeof difficulty)[number]
 
 // Form Schema
