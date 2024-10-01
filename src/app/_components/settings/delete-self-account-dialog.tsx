@@ -69,8 +69,8 @@ export default function DeleteSelfAccountDialog() {
         <DialogHeader>
           <DialogTitle>Are you sure?</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete all users
-            with the participants role.
+            This action cannot be undone. This will permanently delete your
+            account and data from the platform.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

@@ -28,6 +28,7 @@ export const siteConfig = {
     leaderboard: "/leaderboard",
     announcements: "/announcements",
     challenges: "/challenges",
+    create_challenge: "/challenges/create",
     create_post: "/announcements/create-post",
     edit_post: "/announcements/edit",
     privacy_policy: "/info/privacy-policy",
