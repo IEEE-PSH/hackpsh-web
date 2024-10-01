@@ -197,6 +197,20 @@
       "when": 1727819754799,
       "tag": "0027_lame_mister_fear",
       "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1727823262382,
+      "tag": "0028_silent_peter_quill",
+      "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "7",
+      "when": 1727823354027,
+      "tag": "0029_purple_nicolaos",
+      "breakpoints": true
     }
   ]
 }

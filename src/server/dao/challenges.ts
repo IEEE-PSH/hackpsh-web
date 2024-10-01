@@ -1,38 +1,31 @@
 import { type Database } from "@/db/drizzle";
-import { app_announcement, app_challenges, app_user_profile } from "@/db/drizzle/schema";
+import { app_challenges } from "@/db/drizzle/schema";
 import { TRPCError } from "@trpc/server";
 import { desc, eq } from "drizzle-orm";
 import { getUserRole } from "./user";
 
-// export async function getAnnouncements(db: Database) {
-//   try {
-//     const announcement_posts = await db
-//       .select({
-//         announcement_uuid: app_announcement.announcement_uuid,
-//         announcement_created_at: app_announcement.announcement_created_at,
-//         announcement_author_display_name: app_user_profile.user_display_name,
-//         announcement_title: app_announcement.announcement_title,
-//         announcement_content: app_announcement.announcement_content,
-//         announcement_id: app_announcement.announcement_id,
-//       })
-//       .from(app_announcement)
-//       .leftJoin(
-//         app_user_profile,
-//         eq(
-//           app_announcement.announcement_author_uuid,
-//           app_user_profile.user_uuid,
-//         ),
-//       )
-//       .orderBy(desc(app_announcement.announcement_created_at));
+export async function getChallenges(db: Database) {
+  try {
+    const challenges = await db
+      .select({
+        challenge_uuid: app_challenges.challenge_uuid,
+        challenge_id: app_challenges.challenge_id,
+        challenge_title: app_challenges.challenge_title,
+        challenge_difficulty: app_challenges.challenge_difficulty
+      })
+      .from(app_challenges)
 
-//     return announcement_posts;
-//   } catch (error) {
-//     throw new TRPCError({
-//       message: "The database has encountered some issues.",
-//       code: "INTERNAL_SERVER_ERROR",
-//     });
-//   }
-// }
+    return challenges;
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export type Challenges = Awaited<ReturnType<typeof getChallenges>>;
+export type Challenge = Challenges[number];
 
 export async function createChallenge(
   db: Database,

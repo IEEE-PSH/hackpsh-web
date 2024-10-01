@@ -1,5 +1,6 @@
 import { type Database } from ".";
 import {
+  app_difficulty,
   app_event,
   app_major,
   app_onboarding_phase,
@@ -108,4 +109,10 @@ export async function insertEventDetails(db: Database) {
     .insert(app_event)
     .values({ event_start_hour: 10 })
     .onConflictDoNothing();
+}
+
+export const dbDifficulties = ["easy","medium","hard"] as const
+export type TDifficulties = (typeof dbDifficulties)[number]
+export async function insertDifficulties(db: Database, difficulty_name: string){
+  await db.insert(app_difficulty).values({difficulty_name}).onConflictDoNothing()
 }
