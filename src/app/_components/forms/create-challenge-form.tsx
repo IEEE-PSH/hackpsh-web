@@ -1,10 +1,6 @@
 "use client";
 
 import { getUser } from "@/shared/supabase/auth";
-import {
-  type TCreateAnnouncementForm,
-  CreateAnnouncementFormSchema,
-} from "@/app/_lib/zod-schemas/forms/announcements";
 import { trpc } from "@/app/_trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -42,7 +38,7 @@ import {
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
 import { useState } from "react";
-import { TCreateChallengeFormSchema } from "@/app/_lib/zod-schemas/forms/challenges";
+import { CreateChallengeFormSchema, type TCreateChallengeFormSchema } from "@/app/_lib/zod-schemas/forms/challenges";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -51,46 +47,47 @@ export function CreateChallengeForm({
   ...props
 }: CreateAnouncementFormProps) {
   const form = useForm<TCreateChallengeFormSchema>({
-    resolver: zodResolver(CreateChallengeForm),
+    resolver: zodResolver(CreateChallengeFormSchema),
   });
   const router = useRouter();
 
-  const announcementMutation =
-    trpc.announcements.create_announcement_post.useMutation({
-      onSuccess: () => {
-        toast({
-          variant: "success",
-          title: "Announcement Created!",
-          description: "You have successfully created an announcement.",
-          duration: 4000,
-        });
-        router.replace("/announcements");
-        router.refresh();
-      },
-      onError: () => {
-        toast({
-          variant: "destructive",
-          title: "Oops, Something Went Wrong!",
-          description:
-            "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
-          duration: 6000,
-        });
-      },
-    });
+  // const announcementMutation =
+  //   trpc.announcements.create_announcement_post.useMutation({
+  //     onSuccess: () => {
+  //       toast({
+  //         variant: "success",
+  //         title: "Challenge Created!",
+  //         description: "You have successfully created a challenge.",
+  //         duration: 4000,
+  //       });
+  //       router.replace("/challenges");
+  //       router.refresh();
+  //     },
+  //     onError: () => {
+  //       toast({
+  //         variant: "destructive",
+  //         title: "Oops, Something Went Wrong!",
+  //         description:
+  //           "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
+  //         duration: 6000,
+  //       });
+  //     },
+  //   });
 
-  async function onSubmit(values: TCreateAnnouncementForm) {
-    try {
-      const supabase = createClientComponentClient();
-      const user = await getUser(supabase);
+  function onSubmit(values: TCreateChallengeFormSchema) {
+    console.log(values.example_input)
+    // try {
+    //   const supabase = createClientComponentClient();
+    //   const user = await getUser(supabase);
 
-      await announcementMutation.mutateAsync({
-        author_uuid: user.id,
-        title: values.title,
-        content: values.content,
-      });
-    } catch (err: unknown) {
-      console.log(err);
-    }
+    //   await announcementMutation.mutateAsync({
+    //     author_uuid: user.id,
+    //     title: values.title,
+    //     content: values.content,
+    //   });
+    // } catch (err: unknown) {
+    //   console.log(err);
+    // }
   }
 
   const [isExample, setIsExample] = useState(false)
@@ -148,7 +145,7 @@ export function CreateChallengeForm({
                   <FormLabel>Difficulty</FormLabel>
                   <Select onValueChange={field.onChange}>
                     <SelectTrigger className="col-span-3">
-                      <SelectValue placeholder="Select a difficulty" />
+                      <SelectValue />
                     </SelectTrigger>
 
                     <SelectContent>
@@ -369,7 +366,7 @@ export function CreateChallengeForm({
               {form.formState.isSubmitting && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}
-              Save
+              Create
             </Button>
           </div>
         </form>

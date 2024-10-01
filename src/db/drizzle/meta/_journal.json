@@ -183,6 +183,13 @@
       "when": 1727543206659,
       "tag": "0025_crazy_scream",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1727816308421,
+      "tag": "0026_daffy_sleeper",
+      "breakpoints": true
     }
   ]
 }
