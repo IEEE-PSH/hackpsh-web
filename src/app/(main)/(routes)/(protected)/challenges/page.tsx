@@ -1,3 +1,4 @@
+import { Badge } from "@/app/_components/ui/badge";
 import { Button } from "@/app/_components/ui/button";
 import {
   Card,
@@ -6,6 +7,8 @@ import {
   CardTitle,
 } from "@/app/_components/ui/card";
 import { siteConfig } from "@/app/_config/site";
+import { cn } from "@/app/_lib/client-utils";
+import { Check } from "lucide-react";
 import { type Metadata } from "next";
 import Link from "next/link";
 import React from "react";
@@ -17,30 +20,54 @@ export const metadata: Metadata = {
 
 export default function ChallengesPage() {
   return (
-    <div className="">
-      <Card className="text-center">
-        <CardHeader>
-          <CardTitle>Internal Challenges Coming Soon!</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col items-center space-y-4">
-          <p>
-            For this event, we will be using Hackerrank to host software
-            challenges. We are currently working on hosting our own coding
-            problems for future events!
-          </p>
-          <p className="text-muted-foreground">
-            Teams can use online resources to help them complete challenges.
-            Teams are able to use AI (ex: ChatGPT), but may only receive half
-            their total points earned in this category. This rule will be
-            determined by the event administrators.
-          </p>
-          <Button className="px-4" asChild>
-            <Link href={siteConfig.links.hackerrank} target="_blank">
-              <span>Software Challenges</span>
-            </Link>
-          </Button>
-        </CardContent>
-      </Card>
+    <div className="container my-4">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <ChallengeCard title={"Sum of Array"} difficulty={"Easy"} />
+        <ChallengeCard title={"Fibonacci"} difficulty={"Easy"} />
+        <ChallengeCard title={"Sum of Array"} difficulty={"Easy"} />
+        <ChallengeCard title={"Sum of Array"} difficulty={"Easy"} />
+        <ChallengeCard title={"Sum of Array"} difficulty={"Easy"} />
+        <ChallengeCard title={"Sum of Array"} difficulty={"Easy"} />
+        <ChallengeCard title={"Sum of Array"} difficulty={"Medium"} />
+        <ChallengeCard title={"Sum of Array"} difficulty={"Medium"} />
+        <ChallengeCard title={"Sum of Array"} difficulty={"Medium"} />
+        <ChallengeCard title={"Sum of Array"} difficulty={"Medium"} />
+        <ChallengeCard title={"Sum of Array"} difficulty={"Hard"} />
+        <ChallengeCard title={"Sum of Array"} difficulty={"Hard"} />
+      </div>
     </div>
   );
 }
+
+function ChallengeCard({ title, difficulty }: challengeCardProps) {
+  return (
+    <Card className="cursor-pointer">
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle>{title}</CardTitle>
+        {true ? (
+          <Badge
+            className={cn(
+              "w-16 justify-center",
+              difficulty == "Easy"
+                ? "bg-green-500 hover:bg-green-500/90"
+                : difficulty == "Medium"
+                  ? "bg-primary hover:bg-primary/90"
+                  : difficulty == "Hard"
+                    ? "bg-red-500 hover:bg-red-500/90"
+                    : "",
+            )}
+          >
+            {difficulty}
+          </Badge>
+        ) : (
+          <Check />
+        )}
+      </CardHeader>
+    </Card>
+  );
+}
+
+type challengeCardProps = {
+  title: string;
+  difficulty: "Easy" | "Medium" | "Hard";
+};
