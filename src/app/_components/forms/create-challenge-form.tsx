@@ -38,7 +38,10 @@ import {
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
 import { useState } from "react";
-import { CreateChallengeFormSchema, type TCreateChallengeFormSchema } from "@/app/_lib/zod-schemas/forms/challenges";
+import {
+  CreateChallengeFormSchema,
+  type TCreateChallengeFormSchema,
+} from "@/app/_lib/zod-schemas/forms/challenges";
 import { siteConfig } from "@/app/_config/site";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
@@ -52,28 +55,27 @@ export function CreateChallengeForm({
   });
   const router = useRouter();
 
-  const challengeMutation =
-    trpc.challenges.create_challenge.useMutation({
-      onSuccess: () => {
-        toast({
-          variant: "success",
-          title: "Challenge Created!",
-          description: "You have successfully created a challenge.",
-          duration: 4000,
-        });
-        router.replace(siteConfig.paths.challenges);
-        router.refresh();
-      },
-      onError: () => {
-        toast({
-          variant: "destructive",
-          title: "Oops, Something Went Wrong!",
-          description:
-            "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
-          duration: 6000,
-        });
-      },
-    });
+  const challengeMutation = trpc.challenges.create_challenge.useMutation({
+    onSuccess: () => {
+      toast({
+        variant: "success",
+        title: "Challenge Created!",
+        description: "You have successfully created a challenge.",
+        duration: 4000,
+      });
+      router.replace(siteConfig.paths.challenges);
+      router.refresh();
+    },
+    onError: () => {
+      toast({
+        variant: "destructive",
+        title: "Oops, Something Went Wrong!",
+        description:
+          "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
+        duration: 6000,
+      });
+    },
+  });
 
   async function onSubmit(values: TCreateChallengeFormSchema) {
     try {
@@ -92,14 +94,14 @@ export function CreateChallengeForm({
         testcase_input_1: values.testcase_input_1,
         testcase_output_1: values.testcase_output_1,
         testcase_input_2: values.testcase_input_2,
-        testcase_output_2: values.testcase_output_2
+        testcase_output_2: values.testcase_output_2,
       });
     } catch (err: unknown) {
       console.log(err);
     }
   }
 
-  const [isExample, setIsExample] = useState(false)
+  const [isExample, setIsExample] = useState(false);
   const exampleFields = {
     title: "Sum of Array",
     description: "Add all integers of the array given its size.",
@@ -110,8 +112,8 @@ export function CreateChallengeForm({
     testcase_input_1: `2\n2 3`,
     testcase_output_1: "5",
     testcase_input_2: `5\n1 1 1 1 10`,
-    testcase_output_2: "14"
-  }
+    testcase_output_2: "14",
+  };
 
   return (
     <div className={cn("grid-gap-6", className)} {...props}>
@@ -137,7 +139,7 @@ export function CreateChallengeForm({
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={isExample?exampleFields.title : ""}
+                      placeholder={isExample ? exampleFields.title : ""}
                       {...field}
                       value={field.value ?? ""}
                     />
@@ -180,7 +182,7 @@ export function CreateChallengeForm({
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder={isExample?exampleFields.description:""}
+                    placeholder={isExample ? exampleFields.description : ""}
                     className="h-36 resize-none"
                     {...field}
                     value={field.value ?? ""}
@@ -201,11 +203,9 @@ export function CreateChallengeForm({
                     <HoverCardTrigger asChild>
                       <Info className="ml-2 h-4 w-4" />
                     </HoverCardTrigger>
-                    <HoverCardContent className="space-y-2 font-normal flex flex-col">
-                    <p className="underline">Format:</p>
-                      <p>
-                        functionName(string paramName1, int paramName2)
-                      </p>
+                    <HoverCardContent className="flex flex-col space-y-2 font-normal">
+                      <p className="underline">Format:</p>
+                      <p>functionName(string paramName1, int paramName2)</p>
                       <p className="underline">Valid parameter types:</p>
                       <p>
                         int, intArr, double, doubleArr, string, stringArr, char,
@@ -216,7 +216,7 @@ export function CreateChallengeForm({
                 </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder={isExample? exampleFields.function_header:""}
+                    placeholder={isExample ? exampleFields.function_header : ""}
                     {...field}
                     value={field.value ?? ""}
                   />
@@ -233,7 +233,7 @@ export function CreateChallengeForm({
                 <FormLabel>Example Input</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder={isExample?exampleFields.example_input:""}
+                    placeholder={isExample ? exampleFields.example_input : ""}
                     className="resize-none"
                     {...field}
                     value={field.value ?? ""}
@@ -250,8 +250,9 @@ export function CreateChallengeForm({
               <FormItem>
                 <FormLabel>Example Output</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder={isExample?exampleFields.example_output:""}
+                  <Textarea
+                    className="resize-none"
+                    placeholder={isExample ? exampleFields.example_output : ""}
                     {...field}
                     value={field.value ?? ""}
                   />
@@ -268,7 +269,7 @@ export function CreateChallengeForm({
                 <FormLabel>Explanation</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder={isExample?exampleFields.explanation:""}
+                    placeholder={isExample ? exampleFields.explanation : ""}
                     className="resize-none"
                     {...field}
                     value={field.value ?? ""}
@@ -290,7 +291,9 @@ export function CreateChallengeForm({
                     <FormLabel>Input #1</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder={isExample?exampleFields.testcase_input_1:""}
+                        placeholder={
+                          isExample ? exampleFields.testcase_input_1 : ""
+                        }
                         className="resize-none"
                         {...field}
                         value={field.value ?? ""}
@@ -307,8 +310,11 @@ export function CreateChallengeForm({
                   <FormItem>
                     <FormLabel>Output #1</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder={isExample?exampleFields.testcase_output_1:""}
+                      <Textarea
+                        className="resize-none"
+                        placeholder={
+                          isExample ? exampleFields.testcase_output_1 : ""
+                        }
                         {...field}
                         value={field.value ?? ""}
                       />
@@ -327,7 +333,9 @@ export function CreateChallengeForm({
                     <FormLabel>Input #2</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder={isExample?exampleFields.testcase_input_2:""}
+                        placeholder={
+                          isExample ? exampleFields.testcase_input_2 : ""
+                        }
                         className="resize-none"
                         {...field}
                         value={field.value ?? ""}
@@ -344,8 +352,11 @@ export function CreateChallengeForm({
                   <FormItem>
                     <FormLabel>Output #2</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder={isExample?exampleFields.testcase_output_2:""}
+                      <Textarea
+                        className="resize-none"
+                        placeholder={
+                          isExample ? exampleFields.testcase_output_2 : ""
+                        }
                         {...field}
                         value={field.value ?? ""}
                       />

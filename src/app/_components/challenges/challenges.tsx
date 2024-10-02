@@ -2,11 +2,11 @@ import { serverTRPC } from "@/app/_trpc/server";
 import { composeServerComponentClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
-import ChallengeCard from "@/app/_components/challenges/challenge-card"
+import ChallengeCard from "@/app/_components/challenges/challenge-card";
 
 export async function Challenges() {
-  const serverChallenges =
-    await serverTRPC.challenges.get_challenges.query();
+  const serverChallenges = await serverTRPC.challenges.get_challenges.query();
+  console.log(serverChallenges);
 
   const supabase = composeServerComponentClient();
   const user = await getUser(supabase);
@@ -26,9 +26,13 @@ export async function Challenges() {
     );
   });
 
-  if (challengeElements.length > 0){
-    return <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">{challengeElements}</div>;
-  }else
+  if (challengeElements.length > 0) {
+    return (
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        {challengeElements}
+      </div>
+    );
+  } else
     return (
       <p className="mx-auto text-center text-muted-foreground">
         No challenges yet.

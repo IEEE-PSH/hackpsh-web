@@ -22,5 +22,9 @@ export default async function UsersPage() {
     user_uuid: user.id,
   });
 
-  return <UserTable data={data} userData={userData} />;
+  return (
+    <div className="container">
+      <UserTable data={data} userData={userData} />
+    </div>
+  );
 }

@@ -12,9 +12,9 @@ export async function getChallenges(db: Database) {
         challenge_uuid: app_challenges.challenge_uuid,
         challenge_id: app_challenges.challenge_id,
         challenge_title: app_challenges.challenge_title,
-        challenge_difficulty: app_challenges.challenge_difficulty
+        challenge_difficulty: app_challenges.challenge_difficulty,
       })
-      .from(app_challenges)
+      .from(app_challenges);
 
     return challenges;
   } catch (error) {
@@ -28,6 +28,37 @@ export async function getChallenges(db: Database) {
 export type Challenges = Awaited<ReturnType<typeof getChallenges>>;
 export type Challenge = Challenges[number];
 
+export async function getChallenge(db: Database, challengeID: number) {
+  try {
+    const result = await db.query.app_challenges.findFirst({
+      columns: {
+        challenge_uuid: true,
+        challenge_id: true,
+        challenge_title: true,
+        challenge_difficulty: true,
+        challenge_description: true,
+        challenge_function_header: true,
+        challenge_example_input: true,
+        challenge_example_output: true,
+        challenge_explanation: true,
+        challenge_testcase_input_1: true,
+        challenge_testcase_output_1: true,
+        challenge_testcase_input_2: true,
+        challenge_testcase_output_2: true,
+      },
+      where: (challenge_data, { eq }) =>
+        eq(challenge_data.challenge_id, challengeID),
+    });
+
+    return result;
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
 export async function createChallenge(
   db: Database,
   user_uuid: string,
@@ -36,12 +67,12 @@ export async function createChallenge(
   description: string,
   function_header: string,
   example_input: string,
-  example_output:string,
-  explanation:string,
-  testcase_input_1:string,
-  testcase_output_1:string,
-  testcase_input_2:string,
-  testcase_output_2:string
+  example_output: string,
+  explanation: string,
+  testcase_input_1: string,
+  testcase_output_1: string,
+  testcase_input_2: string,
+  testcase_output_2: string,
 ) {
   const result = await getUserRole(db, user_uuid);
   if (result?.user_role === "participant") {
@@ -63,7 +94,7 @@ export async function createChallenge(
       challenge_testcase_input_1: testcase_input_1,
       challenge_testcase_output_1: testcase_output_1,
       challenge_testcase_input_2: testcase_input_2,
-      challenge_testcase_output_2: testcase_output_2
+      challenge_testcase_output_2: testcase_output_2,
     });
   } catch (error) {
     throw new TRPCError({

@@ -12,7 +12,7 @@ export default async function Page() {
     await serverTRPC.event.get_event_details.query();
 
   return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+    <div className="grid grid-cols-1 gap-4 sm:container lg:grid-cols-2">
       <Card className="border-0 sm:border">
         <CardContent className="p-8">
           <h1 className="text-2xl font-semibold leading-none tracking-tight">

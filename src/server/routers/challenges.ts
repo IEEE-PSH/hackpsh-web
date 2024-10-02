@@ -3,7 +3,7 @@ import { spawn } from "child_process";
 import { z } from "zod";
 import createChallengeProcedure from "../procedures/protected/challenges/createChallengeProcedure";
 import getChallengesProcedure from "../procedures/protected/challenges/getChallengesProcedure";
-
+import getChallengeProcedure from "../procedures/protected/challenges/getChallengeProcedure";
 
 const testCodeSchema = z.object({
   codeString: z.string(),
@@ -51,10 +51,9 @@ const testCodeProcedure = publicProcedure
     });
   });
 
-
-
 export const challengesRouter = createTRPCRouter({
   test_code: testCodeProcedure,
   create_challenge: createChallengeProcedure,
-  get_challenges: getChallengesProcedure
+  get_challenges: getChallengesProcedure,
+  get_challenge: getChallengeProcedure,
 });

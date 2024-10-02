@@ -9,7 +9,8 @@ export const metadata: Metadata = {
 
 export default function ChallengesPage() {
   return (
-    <div className="my-4 container"><Challenges/></div>
-    
-  )
+    <div className="container my-4">
+      <Challenges />
+    </div>
+  );
 }

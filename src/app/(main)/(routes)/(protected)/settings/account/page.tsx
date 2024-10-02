@@ -28,7 +28,7 @@ export default async function Page() {
     });
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 sm:container">
       <Card className="border-0 sm:border">
         <CardContent className="p-8">
           <UserSettingsForm
