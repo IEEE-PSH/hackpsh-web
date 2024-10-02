@@ -22,7 +22,7 @@ export default async function LeaderboardPage() {
   });
 
   return (
-    <div className="container max-w-5xl">
+    <div className="container mb-4 max-w-5xl">
       <RealtimeLeaderboard serverData={data} userData={userData} />
     </div>
   );

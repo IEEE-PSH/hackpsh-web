@@ -32,6 +32,7 @@ export default function ChallengePageContent({
   const [value, setValue] = useState("");
   const [enabled, setEnabled] = useState(false);
   const [output, setOutput] = useState("");
+  const [language, setLanguage] = useState("python");
 
   type TData = {
     type: "valid" | "error";
@@ -81,7 +82,12 @@ export default function ChallengePageContent({
           <ArrowLeft className="mr-4" />
           <span>Challenges</span>
         </Button>
-        <Select>
+        <Select
+          onValueChange={(value: string) => {
+            setLanguage(value);
+            console.log(language);
+          }}
+        >
           <SelectTrigger className="m-4 ml-auto w-[180px]">
             <SelectValue defaultValue="python" />
           </SelectTrigger>
