@@ -3,50 +3,69 @@ import { z } from "zod";
 export const difficulty = ["easy", "medium", "hard"] as const;
 export type TDifficulty = (typeof difficulty)[number];
 
+export const paramTypes = [
+  "int",
+  "intArr",
+  "string",
+  "stringArr",
+  "double",
+  "doubleArr",
+  "char",
+  "charArr",
+] as const;
+
+export type TParamTypes = (typeof paramTypes)[number];
+
+export const paramTypeMapping: Record<(typeof paramTypes)[number], string> = {
+  int: "int",
+  intArr: "vector<int>",
+  string: "string",
+  stringArr: "vector<string>",
+  double: "double",
+  doubleArr: "vector<double>",
+  char: "char",
+  charArr: "vector<char>",
+} as const;
+
+export type TParamTypeMapping = typeof paramTypeMapping;
+
 function isValidHeader(header: string) {
-  const match = header.match(/(\w+)\((.*)\)/);
-  const validParams = [
-    "int",
-    "intArr",
-    "string",
-    "stringArr",
-    "double",
-    "doubleArr",
-    "char",
-    "charArr",
-  ];
+  const match = header.match(/(\w+)\s+(\w+)\((.*)\)/);
 
   if (match) {
-    const title = match[1];
-    const params = match[2];
+    const functionType = match[1] as TParamTypes;
+    const functionTitle = match[2];
+    const params = match[3];
 
-    if (title && !params) return true;
-    if (params!.split(" ").length % 2 != 0) return false;
+    if (!paramTypes.includes(functionType)) return false;
+
+    if (functionType && functionTitle && !params) return true;
+    // if (params!.split(" ").length % 2 != 0) return false; //??
 
     // eslint-disable-next-line prefer-const
-    let paramTypes: string[] = [];
+    let types: string[] = [];
     // eslint-disable-next-line prefer-const
-    let paramNames: string[] = [];
+    let names: string[] = [];
 
     params?.split(", ").forEach((param) => {
       const [type, name] = param.split(" ");
-      paramTypes.push(type!);
-      paramNames.push(name!);
+      types.push(type!);
+      names.push(name!);
     });
 
-    // check title and param names unique
-    if (paramNames.includes(title!)) return false;
+    // check functionTitle and param names unique
+    if (names.includes(functionTitle!)) return false;
 
     // check valid params
-    if (paramTypes.length !== paramNames.length) return false;
+    if (types.length !== names.length) return false;
 
     // eslint-disable-next-line @typescript-eslint/prefer-for-of
-    for (let i = 0; i < paramTypes.length; i++) {
+    for (let i = 0; i < types.length; i++) {
       // check valid param types
-      if (!validParams.includes(paramTypes[i]!)) {
+      if (!paramTypes.includes(types[i]! as TParamTypes)) {
         return false;
         // check unique param names
-      } else if (new Set(paramNames).size !== paramNames.length) {
+      } else if (new Set(names).size !== names.length) {
         return false;
       }
     }
