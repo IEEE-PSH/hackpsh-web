@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function CreateAnnouncementPage() {
   return (
-    <div className="container my-8 max-w-4xl">
+    <div className="container my-4 mt-8 max-w-4xl">
       <CreateChallengeForm />
     </div>
   );

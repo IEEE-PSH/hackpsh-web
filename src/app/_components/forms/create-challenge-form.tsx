@@ -16,12 +16,12 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { toast } from "../ui/use-toast";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { Icons } from "../ui/icons";
 import { cn } from "@/app/_lib/client-utils";
 import { useRouter } from "next/navigation";
 import { Separator } from "../ui/separator";
-import { Info } from "lucide-react";
+import { CirclePlus, Info, Trash } from "lucide-react";
 import {
   HoverCard,
   HoverCardContent,
@@ -43,6 +43,7 @@ import {
   type TCreateChallengeFormSchema,
 } from "@/app/_lib/zod-schemas/forms/challenges";
 import { siteConfig } from "@/app/_config/site";
+import { Card } from "../ui/card";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -91,10 +92,7 @@ export function CreateChallengeForm({
         example_input: values.example_input,
         example_output: values.example_output,
         explanation: values.explanation,
-        testcase_input_1: values.testcase_input_1,
-        testcase_output_1: values.testcase_output_1,
-        testcase_input_2: values.testcase_input_2,
-        testcase_output_2: values.testcase_output_2,
+        test_cases: values.test_cases,
       });
     } catch (err: unknown) {
       console.log(err);
@@ -115,6 +113,44 @@ export function CreateChallengeForm({
     testcase_output_2: "14",
   };
 
+  const initialTestCases = [
+    {
+      input: "",
+      output: "",
+    },
+    {
+      input: "",
+      output: "",
+    },
+  ];
+
+  const [testCases, setTestCases] = useState(initialTestCases);
+
+  function addTestcase() {
+    const newTestcases = [...testCases, { input: "", output: "" }];
+    setTestCases(newTestcases);
+  }
+
+  function removeTestcase(i: number) {
+    if (testCases.length <= 2) {
+      toast({
+        variant: "destructive",
+        description: "Minimum of two testcases required.",
+        duration: 4000,
+      });
+      return;
+    }
+    const newTestcases = [...testCases];
+    newTestcases.splice(i, 1);
+    setTestCases(newTestcases);
+  }
+
+  const { control, handleSubmit } = form;
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "test_cases",
+  });
+
   return (
     <div className={cn("grid-gap-6", className)} {...props}>
       <Form {...form}>
@@ -123,19 +159,19 @@ export function CreateChallengeForm({
           className="flex flex-col space-y-6"
         >
           <div className="flex justify-between">
-            <h1 className="text-2xl font-semibold">Challenge Info</h1>
+            <h1 className="text-lg font-semibold">Challenge Info</h1>
             <div className="flex items-center space-x-2">
               <Label>Example placeholders</Label>
               <Switch checked={isExample} onCheckedChange={setIsExample} />
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="flex space-x-4">
             <FormField
               control={form.control}
               name="title"
               render={({ field }) => (
-                <FormItem className="col-span-2">
+                <FormItem className="col-span-2 flex-grow">
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input
@@ -155,7 +191,7 @@ export function CreateChallengeForm({
                 <FormItem>
                   <FormLabel>Difficulty</FormLabel>
                   <Select onValueChange={field.onChange}>
-                    <SelectTrigger className="col-span-3">
+                    <SelectTrigger className="w-40">
                       <SelectValue />
                     </SelectTrigger>
 
@@ -225,42 +261,47 @@ export function CreateChallengeForm({
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="example_input"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Example Input</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder={isExample ? exampleFields.example_input : ""}
-                    className="resize-none"
-                    {...field}
-                    value={field.value ?? ""}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="example_output"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Example Output</FormLabel>
-                <FormControl>
-                  <Textarea
-                    className="resize-none"
-                    placeholder={isExample ? exampleFields.example_output : ""}
-                    {...field}
-                    value={field.value ?? ""}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="grid grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="example_input"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Example Input</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder={isExample ? exampleFields.example_input : ""}
+                      className="resize-none"
+                      {...field}
+                      value={field.value ?? ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="example_output"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Example Output</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className="resize-none"
+                      placeholder={
+                        isExample ? exampleFields.example_output : ""
+                      }
+                      {...field}
+                      value={field.value ?? ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
           <FormField
             control={form.control}
             name="explanation"
@@ -280,93 +321,93 @@ export function CreateChallengeForm({
             )}
           />
           <Separator />
-          <h1 className="mb-6 text-2xl font-semibold">Testcases</h1>
-          <div className="grid grid-cols-2 gap-x-4">
-            <div className="grid gap-y-4">
-              <FormField
-                control={form.control}
-                name="testcase_input_1"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Input #1</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder={
-                          isExample ? exampleFields.testcase_input_1 : ""
-                        }
-                        className="resize-none"
-                        {...field}
-                        value={field.value ?? ""}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="testcase_output_1"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Output #1</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        className="resize-none"
-                        placeholder={
-                          isExample ? exampleFields.testcase_output_1 : ""
-                        }
-                        {...field}
-                        value={field.value ?? ""}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="grid gap-y-4">
-              <FormField
-                control={form.control}
-                name="testcase_input_2"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Input #2</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder={
-                          isExample ? exampleFields.testcase_input_2 : ""
-                        }
-                        className="resize-none"
-                        {...field}
-                        value={field.value ?? ""}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="testcase_output_2"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Output #2</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        className="resize-none"
-                        placeholder={
-                          isExample ? exampleFields.testcase_output_2 : ""
-                        }
-                        {...field}
-                        value={field.value ?? ""}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+
+          <div className="mb-6 flex flex-row items-center">
+            <h1 className=" text-lg font-semibold">Test cases</h1>
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <Info className="ml-2 h-4 w-4" />
+              </HoverCardTrigger>
+              <HoverCardContent className="flex flex-col space-y-2 text-sm font-normal">
+                <p>
+                  These are hidden test cases. The application will use the
+                  example input and example output as test cases.
+                </p>
+              </HoverCardContent>
+            </HoverCard>
           </div>
+
+          <div className="grid gap-4">
+            {testCases.map((testCase, i) => (
+              <div
+                key={`testcase-${i + 1}`}
+                className="flex items-center space-x-4"
+              >
+                <FormField
+                  control={form.control}
+                  name={`test_cases.${i}.input`}
+                  render={({ field }) => (
+                    <FormItem className="flex-grow">
+                      <FormLabel>Input #{i + 1}</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder={
+                            isExample ? exampleFields.testcase_input_1 : ""
+                          }
+                          className="resize-none"
+                          {...field}
+                          value={field.value ?? ""}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`test_cases.${i}.output`}
+                  render={({ field }) => (
+                    <FormItem className="flex-grow">
+                      <FormLabel>Output #{i + 1}</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          className="resize-none"
+                          placeholder={
+                            isExample ? exampleFields.testcase_output_1 : ""
+                          }
+                          {...field}
+                          value={field.value ?? ""}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  type="button"
+                  onClick={() => removeTestcase(i - 1)}
+                  className="mt-8"
+                >
+                  <Trash className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+
+          <Button
+            onClick={() => addTestcase()}
+            variant="ghost"
+            asChild
+            className="flex h-20 cursor-pointer items-center justify-center p-0"
+          >
+            <Card className="flex items-center p-0">
+              <CirclePlus className="mr-4" />
+              <span>Add testcase</span>
+            </Card>
+          </Button>
 
           <div className="grid grid-cols-2 gap-x-4 sm:flex sm:space-x-4">
             <Button

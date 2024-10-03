@@ -121,23 +121,35 @@ export const app_event = app_schema.table("app_event", {
   event_duration: integer("event_duration").notNull().default(12),
 });
 
-export const app_challenges = app_schema.table("app_challenges",{
-  challenge_uuid: uuid("challenge_uuid").primaryKey().default(sql`uuid_generate_v4()`),
+export const app_challenges = app_schema.table("app_challenges", {
+  challenge_uuid: uuid("challenge_uuid")
+    .primaryKey()
+    .default(sql`uuid_generate_v4()`),
   challenge_id: serial("challenge_id"),
   challenge_title: text("challenge_title").notNull(),
-  challenge_difficulty: text("challenge_difficulty").references(()=>app_difficulty.difficulty_name),
+  challenge_difficulty: text("challenge_difficulty").references(
+    () => app_difficulty.difficulty_name,
+  ),
   challenge_description: text("challenge_description").notNull(),
   challenge_function_header: text("challenge_function_header").notNull(),
   challenge_example_input: text("challenge_example_input").notNull(),
   challenge_example_output: text("challenge_example_output").notNull(),
   challenge_explanation: text("challenge_explanation"),
-  challenge_testcase_input_1: text("challenge_testcase_input_1").notNull(),
-  challenge_testcase_output_1: text("challenge_testcase_output_1").notNull(),
-  challenge_testcase_input_2: text("challenge_testcase_input_2").notNull(),
-  challenge_testcase_output_2: text("challenge_testcase_output_2").notNull(),
-})
+});
 
-export const app_difficulty = app_schema.table("app_difficulty",{
+export const app_difficulty = app_schema.table("app_difficulty", {
   difficulty_id: serial("difficulty_id").primaryKey(),
   difficulty_name: text("difficulty_name").unique().notNull(),
-})
+});
+
+export const app_test_cases = app_schema.table("app_test_cases", {
+  test_case_uuid: uuid("test_case_uuid")
+    .primaryKey()
+    .default(sql`uuid_generate_v4()`),
+  test_case_input: text("test_case_input").notNull(),
+  test_case_output: text("test_case_output").notNull(),
+  test_case_challenge_uuid: uuid("test_case_challenge_uuid").references(
+    () => app_challenges.challenge_uuid,
+    { onDelete: "cascade" },
+  ),
+});

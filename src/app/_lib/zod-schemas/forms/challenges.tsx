@@ -34,7 +34,7 @@ function isValidHeader(header: string) {
       paramNames.push(name!);
     });
 
-    //check title and param names unique
+    // check title and param names unique
     if (paramNames.includes(title!)) return false;
 
     // check valid params
@@ -58,19 +58,21 @@ function isValidHeader(header: string) {
 
 // Form Schema
 export const CreateChallengeFormSchema = z.object({
-  title: z.string().min(1, "A title is required."),
+  title: z.string().min(1, "Cannot leave field empty."),
   difficulty: z.enum(difficulty),
   description: z.string().min(1, "Cannot leave field empty."),
-  function_header: z.string().refine((val) => isValidHeader(val), {
+  function_header: z.string().refine((value) => isValidHeader(value), {
     message: "Function header not valid.",
   }),
   example_input: z.string().min(1, "Cannot leave field empty."),
   example_output: z.string().min(1, "Cannot leave field empty."),
   explanation: z.string().min(1, "Cannot leave field empty."),
-  testcase_input_1: z.string().min(1, "Cannot leave field empty."),
-  testcase_output_1: z.string().min(1, "Cannot leave field empty."),
-  testcase_input_2: z.string().min(1, "Cannot leave field empty."),
-  testcase_output_2: z.string().min(1, "Cannot leave field empty."),
+  test_cases: z.array(
+    z.object({
+      input: z.string().min(1, "Cannot leave field empty."),
+      output: z.string().min(1, "Cannot leave field empty."),
+    }),
+  ),
 });
 
 export type TCreateChallengeFormSchema = z.infer<

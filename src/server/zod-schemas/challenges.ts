@@ -10,10 +10,12 @@ export const createChallengeSchema = z.object({
   example_input: z.string().min(1, "Cannot leave field empty."),
   example_output: z.string().min(1, "Cannot leave field empty."),
   explanation: z.string().min(1, "Cannot leave field empty."),
-  testcase_input_1: z.string().min(1, "Cannot leave field empty."),
-  testcase_output_1: z.string().min(1, "Cannot leave field empty."),
-  testcase_input_2: z.string().min(1, "Cannot leave field empty."),
-  testcase_output_2: z.string().min(1, "Cannot leave field empty."),
+  test_cases: z.array(
+    z.object({
+      input: z.string().min(1, "Cannot leave field empty."),
+      output: z.string().min(1, "Cannot leave field empty."),
+    }),
+  ),
 });
 
 export const LookupChallengeSchema = z.object({

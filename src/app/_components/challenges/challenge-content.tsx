@@ -76,11 +76,11 @@ export default function ChallengePageContent({
       >
         <Button
           variant="secondary"
-          className="ml-4 mr-auto"
+          className="ml-4 mr-auto hidden sm:flex"
           onClick={() => router.back()}
         >
-          <ArrowLeft className="mr-4" />
-          <span>Challenges</span>
+          <ArrowLeft />
+          <span className="ml-4">Challenges</span>
         </Button>
         <Select
           onValueChange={(value: string) => {
@@ -88,7 +88,7 @@ export default function ChallengePageContent({
             console.log(language);
           }}
         >
-          <SelectTrigger className="m-4 ml-auto w-[180px]">
+          <SelectTrigger className="m-4 ml-auto w-32">
             <SelectValue defaultValue="python" />
           </SelectTrigger>
           <SelectContent>
@@ -105,12 +105,12 @@ export default function ChallengePageContent({
           }}
           disabled={enabled}
         >
-          <Play className="mr-4" />
-          Run
+          <Play />
+          <span className="ml-4 hidden md:block">Run</span>
         </Button>
         <Button variant="secondary">
-          <Send className="mr-4" />
-          <span>Submit</span>
+          <Send />
+          <span className="ml-4 hidden md:block">Submit</span>
         </Button>
       </ProtectedEditorSiteHeader>
       <div className="grid grid-cols-1 md:grid-cols-2">

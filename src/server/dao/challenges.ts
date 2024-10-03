@@ -1,5 +1,5 @@
 import { type Database } from "@/db/drizzle";
-import { app_challenges } from "@/db/drizzle/schema";
+import { app_challenges, app_test_cases } from "@/db/drizzle/schema";
 import { TRPCError } from "@trpc/server";
 import { desc, eq } from "drizzle-orm";
 import { getUserRole } from "./user";
@@ -41,14 +41,11 @@ export async function getChallenge(db: Database, challengeID: number) {
         challenge_example_input: true,
         challenge_example_output: true,
         challenge_explanation: true,
-        challenge_testcase_input_1: true,
-        challenge_testcase_output_1: true,
-        challenge_testcase_input_2: true,
-        challenge_testcase_output_2: true,
       },
       where: (challenge_data, { eq }) =>
         eq(challenge_data.challenge_id, challengeID),
     });
+    //add testcases
 
     return result;
   } catch (error) {
@@ -69,10 +66,7 @@ export async function createChallenge(
   example_input: string,
   example_output: string,
   explanation: string,
-  testcase_input_1: string,
-  testcase_output_1: string,
-  testcase_input_2: string,
-  testcase_output_2: string,
+  test_cases: Array<{ input: string; output: string }>,
 ) {
   const result = await getUserRole(db, user_uuid);
   if (result?.user_role === "participant") {
@@ -83,19 +77,28 @@ export async function createChallenge(
   }
 
   try {
-    await db.insert(app_challenges).values({
-      challenge_title: title,
-      challenge_difficulty: difficulty,
-      challenge_description: description,
-      challenge_function_header: function_header,
-      challenge_example_input: example_input,
-      challenge_example_output: example_output,
-      challenge_explanation: explanation,
-      challenge_testcase_input_1: testcase_input_1,
-      challenge_testcase_output_1: testcase_output_1,
-      challenge_testcase_input_2: testcase_input_2,
-      challenge_testcase_output_2: testcase_output_2,
-    });
+    const challengeResult = await db
+      .insert(app_challenges)
+      .values({
+        challenge_title: title,
+        challenge_difficulty: difficulty,
+        challenge_description: description,
+        challenge_function_header: function_header,
+        challenge_example_input: example_input,
+        challenge_example_output: example_output,
+        challenge_explanation: explanation,
+      })
+      .returning({ uuid: app_challenges.challenge_uuid });
+
+    const challengeUUID = challengeResult[0]?.uuid;
+
+    for (const test_case of test_cases) {
+      await db.insert(app_test_cases).values({
+        test_case_input: test_case.input,
+        test_case_output: test_case.output,
+        test_case_challenge_uuid: challengeUUID,
+      });
+    }
   } catch (error) {
     throw new TRPCError({
       message: "The database has encountered some issues.",
