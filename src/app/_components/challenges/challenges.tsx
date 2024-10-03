@@ -6,7 +6,6 @@ import ChallengeCard from "@/app/_components/challenges/challenge-card";
 
 export async function Challenges() {
   const serverChallenges = await serverTRPC.challenges.get_challenges.query();
-  console.log(serverChallenges);
 
   const supabase = composeServerComponentClient();
   const user = await getUser(supabase);

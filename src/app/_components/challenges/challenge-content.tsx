@@ -94,21 +94,26 @@ export default function ChallengePageContent({
       const match = newHeader?.match(/(\w+)\s+(\w+)\((.*)\)/);
 
       const functionType = match![1];
-      const functionTitle = match![2];
       const params = match![3];
 
       const mappedFunctionType =
-        paramTypeMapping[functionType as keyof TParamTypeMapping];
+        paramTypeMapping[functionType as keyof typeof paramTypeMapping];
 
       newHeader = newHeader?.replace(functionType!, mappedFunctionType);
 
-      paramTypes.forEach((type) => {
-        const regex = new RegExp(`\\b${type}\\s+`, "g");
-        newHeader = newHeader?.replace(regex, paramTypeMapping[type] + " ");
+      const paramList = params!.split(",").map((param) => param.trim());
+
+      paramList.forEach((param) => {
+        const [type, name] = param.split(" ");
+        const mappedType =
+          paramTypeMapping[type as keyof typeof paramTypeMapping];
+
+        if (mappedType) {
+          newHeader = newHeader?.replace(param, `${mappedType} ${name}`);
+        }
       });
 
-      const formattedHeader =
-        mappedFunctionType + " " + functionTitle + "(" + params + ") {\n\t\n}";
+      const formattedHeader = `${newHeader} {\n\t\n}`;
       setHeader(formattedHeader);
     }
   }

@@ -40,7 +40,7 @@ function isValidHeader(header: string) {
     if (!paramTypes.includes(functionType)) return false;
 
     if (functionType && functionTitle && !params) return true;
-    // if (params!.split(" ").length % 2 != 0) return false; //??
+    if (params!.split(" ").length % 2 != 0) return false;
 
     // eslint-disable-next-line prefer-const
     let types: string[] = [];
