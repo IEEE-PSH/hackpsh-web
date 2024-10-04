@@ -23,8 +23,8 @@ import { Skeleton } from "../ui/skeleton";
 import {
   paramTypeMapping,
   paramTypes,
-  TParamTypeMapping,
 } from "@/app/_lib/zod-schemas/forms/challenges";
+import { TLanguages } from "@/server/procedures/protected/challenges/testCodeProcedure";
 
 export default function ChallengePageContent({
   userDisplayName,
@@ -52,12 +52,16 @@ export default function ChallengePageContent({
     });
 
   const { data: outputData } = trpc.challenges.test_code.useQuery(
-    { codeString: value },
+    {
+      code_string: value,
+      challenge_id: parseInt(challengeId as unknown as string),
+      challenge_header: header,
+      language: language as TLanguages,
+    },
     {
       enabled,
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      onSuccess: async (outputData: TData) => {
-        await new Promise((resolve) => setTimeout(resolve, 500));
+      onSuccess: (outputData: TData) => {
         setOutput(outputData.output);
         setEnabled(false);
       },
@@ -84,11 +88,9 @@ export default function ChallengePageContent({
         newHeader = newHeader?.replace(regex, "");
       });
       if (language == "python") {
-        const formattedHeader = "def " + newHeader + ":\n\t";
-        setHeader(formattedHeader);
+        setHeader("def " + newHeader);
       } else {
-        const formattedHeader = "function " + newHeader + "{\n\t\n}";
-        setHeader(formattedHeader);
+        setHeader("function " + newHeader);
       }
     } else if (language == "cpp") {
       const match = newHeader?.match(/(\w+)\s+(\w+)\((.*)\)/);
@@ -113,8 +115,7 @@ export default function ChallengePageContent({
         }
       });
 
-      const formattedHeader = `${newHeader} {\n\t\n}`;
-      setHeader(formattedHeader);
+      setHeader(newHeader!);
     }
   }
 
@@ -124,13 +125,14 @@ export default function ChallengePageContent({
     if (challengeData) {
       formatHeader();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [challengeData, language]);
 
   useEffect(() => {
     const defaultValue =
       language === "python"
-        ? `# Implement this function. \n${header}`
-        : `// Implement this function. \n${header}`;
+        ? `# Implement this function. \n${header}:\n\t`
+        : `// Implement this function. \n${header}{\n\t\n}`;
 
     if (editorRef.current) {
       editorRef.current.setValue(defaultValue);
@@ -154,6 +156,7 @@ export default function ChallengePageContent({
           <span className="ml-4">Challenges</span>
         </Button>
         <Select
+          value={language}
           onValueChange={(value: string) => {
             setLanguage(value);
           }}
@@ -201,16 +204,15 @@ export default function ChallengePageContent({
               }}
             />
           </div>
-          <div className="flex-grow bg-background-variant p-4 font-mono">
-            <pre
-              className={cn(
-                "h-[160px] text-wrap",
-                outputData?.type == "error" ? "text-red-400" : "",
-              )}
-            >
-              {output}
-            </pre>
-          </div>
+
+          <pre
+            className={cn(
+              "w-full whitespace-pre-wrap text-wrap break-words bg-background-variant p-4 font-mono",
+              outputData?.type == "error" ? "text-red-400" : "",
+            )}
+          >
+            {output}
+          </pre>
         </div>
       </div>
     </>
@@ -234,19 +236,21 @@ export default function ChallengePageContent({
           {challengeData?.challenge_difficulty}
         </Badge>
         <h1 className="text-2xl">{challengeData?.challenge_title}</h1>
-        <pre className="text-wrap text-sm font-light">
+        <p className="whitespace-pre-line text-sm font-light">
           {challengeData?.challenge_description}
-        </pre>
+        </p>
         <Label>Input</Label>
         <pre className="text-wrap bg-background-variant font-mono">
           {challengeData?.challenge_example_input}
         </pre>
         <Label>Output</Label>
-        <pre className="text-wrap bg-background-variant font-mono">63</pre>
-        <Label>Explanation</Label>
-        <pre className="text-wrap text-sm font-light">
-          {challengeData?.challenge_explanation}
+        <pre className="text-wrap bg-background-variant font-mono">
+          {challengeData?.challenge_example_output}
         </pre>
+        <Label>Explanation</Label>
+        <p className="whitespace-pre-line text-sm font-light">
+          {challengeData?.challenge_explanation}
+        </p>
       </div>
     );
   }

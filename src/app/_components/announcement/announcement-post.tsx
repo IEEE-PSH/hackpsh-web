@@ -61,7 +61,9 @@ export function AnnouncementPost({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="break-words">{announcement_content}</p>
+        <p className="word-break w-full max-w-full whitespace-pre-line break-words">
+          {announcement_content}
+        </p>
       </CardContent>
     </Card>
   );

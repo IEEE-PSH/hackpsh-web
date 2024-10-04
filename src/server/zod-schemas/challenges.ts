@@ -21,3 +21,14 @@ export const createChallengeSchema = z.object({
 export const LookupChallengeSchema = z.object({
   challenge_id: z.number(),
 });
+
+export const LookupTestCasesSchema = z.object({
+  challenge_uuid: z.string().uuid("Please provide a valid UUID."),
+});
+
+export const testCodeSchema = z.object({
+  code_string: z.string(),
+  challenge_id: z.number(),
+  challenge_header: z.string(),
+  language: z.string(),
+});

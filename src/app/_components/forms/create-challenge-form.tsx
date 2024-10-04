@@ -45,14 +45,26 @@ import {
 import { siteConfig } from "@/app/_config/site";
 import { Card } from "../ui/card";
 
-type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
+type CreateChallengeFormProps = React.HTMLAttributes<HTMLDivElement>;
 
 export function CreateChallengeForm({
   className,
   ...props
-}: CreateAnouncementFormProps) {
+}: CreateChallengeFormProps) {
   const form = useForm<TCreateChallengeFormSchema>({
     resolver: zodResolver(CreateChallengeFormSchema),
+    defaultValues: {
+      test_cases: [
+        {
+          input: "",
+          output: "",
+        },
+        {
+          input: "",
+          output: "",
+        },
+      ],
+    },
   });
   const router = useRouter();
 
@@ -103,7 +115,7 @@ export function CreateChallengeForm({
   const exampleFields = {
     title: "Sum of Array",
     description: "Add all integers of the array given its size.",
-    function_header: "arraySum(int n, intArr nums)",
+    function_header: "int arraySum(int n, intArr nums)",
     example_input: `4\n1 4 3 2`,
     example_output: "10",
     explanation: "The array has 4 integers. 1+4+3+2=10, so the output is 10.",
@@ -113,43 +125,28 @@ export function CreateChallengeForm({
     testcase_output_2: "14",
   };
 
-  const initialTestCases = [
-    {
-      input: "",
-      output: "",
-    },
-    {
-      input: "",
-      output: "",
-    },
-  ];
+  const { control } = form;
 
-  const [testCases, setTestCases] = useState(initialTestCases);
-
-  function addTestcase() {
-    const newTestcases = [...testCases, { input: "", output: "" }];
-    setTestCases(newTestcases);
-  }
-
-  function removeTestcase(i: number) {
-    if (testCases.length <= 2) {
-      toast({
-        variant: "destructive",
-        description: "Minimum of two testcases required.",
-        duration: 4000,
-      });
-      return;
-    }
-    const newTestcases = [...testCases];
-    newTestcases.splice(i, 1);
-    setTestCases(newTestcases);
-  }
-
-  const { control, handleSubmit } = form;
   const { fields, append, remove } = useFieldArray({
     control,
     name: "test_cases",
   });
+
+  function addTestcase() {
+    append({ input: "", output: "" });
+  }
+
+  function removeTestcase(i: number) {
+    if (fields.length <= 2) {
+      toast({
+        variant: "destructive",
+        description: "Minimum of two test cases required.",
+        duration: 4000,
+      });
+      return;
+    }
+    remove(i);
+  }
 
   return (
     <div className={cn("grid-gap-6", className)} {...props}>
@@ -241,11 +238,11 @@ export function CreateChallengeForm({
                     </HoverCardTrigger>
                     <HoverCardContent className="flex flex-col space-y-2 font-normal">
                       <p className="underline">Format:</p>
-                      <p>functionName(string paramName1, int paramName2)</p>
+                      <p>type functionName(type param1, type param2)</p>
                       <p className="underline">Valid parameter types:</p>
                       <p>
-                        int, intArr, double, doubleArr, string, stringArr, char,
-                        charArr
+                        void, int, intArr, double, doubleArr, string, stringArr,
+                        char, charArr
                       </p>
                     </HoverCardContent>
                   </HoverCard>
@@ -331,18 +328,16 @@ export function CreateChallengeForm({
               <HoverCardContent className="flex flex-col space-y-2 text-sm font-normal">
                 <p>
                   These are hidden test cases. The application will use the
-                  example input and example output as test cases.
+                  example test case and hidden test cases to check users{"'"}{" "}
+                  programs.
                 </p>
               </HoverCardContent>
             </HoverCard>
           </div>
 
           <div className="grid gap-4">
-            {testCases.map((testCase, i) => (
-              <div
-                key={`testcase-${i + 1}`}
-                className="flex items-center space-x-4"
-              >
+            {fields.map((testCase, i) => (
+              <div key={testCase.id} className="flex items-center space-x-4">
                 <FormField
                   control={form.control}
                   name={`test_cases.${i}.input`}
@@ -388,7 +383,7 @@ export function CreateChallengeForm({
                   variant="ghost"
                   size="icon"
                   type="button"
-                  onClick={() => removeTestcase(i - 1)}
+                  onClick={() => removeTestcase(i)}
                   className="mt-8"
                 >
                   <Trash className="h-4 w-4" />
