@@ -1,6 +1,7 @@
 import { getUserTeamInfo } from "@/server/dao/user";
 import { protectedProcedure } from "@/server/trpc";
 import { LookupUserSchema } from "@/server/zod-schemas/user";
+import { sql } from "drizzle-orm";
 
 export default protectedProcedure
   .input(LookupUserSchema)
@@ -11,9 +12,7 @@ export default protectedProcedure
       team_name: result.teamGeneralInfo?.team_name,
       team_join_code: result.teamGeneralInfo?.team_join_code,
       team_points: result.teamGeneralInfo?.team_points,
-      team_total_points:
-        result.teamGeneralInfo?.team_points! +
-        result.teamGeneralInfo?.team_points_additive!,
+      team_total_points: sql`${result.teamGeneralInfo?.team_points} + ${result.teamGeneralInfo?.team_points_additive}`,
       team_members: result.teamMembers,
     };
   });

@@ -51,7 +51,7 @@ export default function ChallengePageContent({
       const newHeader = formatHeader(header, language);
       setHeader(newHeader!);
       const preset = getPresetHeader(newHeader!, language);
-      setPresetHeader(preset!);
+      setPresetHeader(preset);
     }
   }, [challengeData, language]);
 
