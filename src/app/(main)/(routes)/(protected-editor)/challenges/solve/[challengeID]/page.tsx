@@ -22,6 +22,7 @@ export default async function ChallengePage({
         userDisplayName={user_display_name!}
         userEmailAddress={user_email_address!}
         challengeId={params.challengeId}
+        userUUID={user.id}
       />
     </div>
   );

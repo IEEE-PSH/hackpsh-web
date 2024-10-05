@@ -218,6 +218,34 @@
       "when": 1727944540260,
       "tag": "0030_tense_susan_delgado",
       "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1728081434402,
+      "tag": "0031_last_hannibal_king",
+      "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1728084386375,
+      "tag": "0032_far_morlocks",
+      "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1728086429566,
+      "tag": "0033_broad_stephen_strange",
+      "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "7",
+      "when": 1728089839591,
+      "tag": "0034_jittery_lady_vermin",
+      "breakpoints": true
     }
   ]
 }

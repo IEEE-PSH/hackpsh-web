@@ -11,6 +11,9 @@ export default protectedProcedure
       team_name: result.teamGeneralInfo?.team_name,
       team_join_code: result.teamGeneralInfo?.team_join_code,
       team_points: result.teamGeneralInfo?.team_points,
+      team_total_points:
+        result.teamGeneralInfo?.team_points! +
+        result.teamGeneralInfo?.team_points_additive!,
       team_members: result.teamMembers,
     };
   });

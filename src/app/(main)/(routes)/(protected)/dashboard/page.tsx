@@ -18,7 +18,7 @@ export default async function DashboardPage() {
   const supabase = composeServerComponentClient();
 
   const user = await getUser(supabase);
-  const { team_name, team_join_code, team_points, team_members } =
+  const { team_name, team_join_code, team_total_points, team_members } =
     await serverTRPC.user.get_user_team_info.query({
       user_uuid: user.id,
     });
@@ -34,7 +34,7 @@ export default async function DashboardPage() {
             <p className="text-xl text-foreground">General Information</p>
             <p>Team Name: {team_name}</p>
             <p>Team Code: {team_join_code}</p>
-            <p>Points: {team_points}</p>
+            <p>Points: {team_total_points}</p>
           </div>
 
           <div>

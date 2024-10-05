@@ -24,22 +24,26 @@ import {
   paramTypeMapping,
   paramTypes,
 } from "@/app/_lib/zod-schemas/forms/challenges";
-import { TLanguages } from "@/server/procedures/protected/challenges/testCodeProcedure";
+import { type TLanguages } from "@/server/procedures/protected/challenges/runCodeProcedure";
 
 export default function ChallengePageContent({
   userDisplayName,
   userEmailAddress,
   challengeId,
+  userUUID,
 }: {
   userDisplayName: string;
   userEmailAddress: string;
   challengeId: number;
+  userUUID: string;
 }) {
   const [value, setValue] = useState("");
-  const [enabled, setEnabled] = useState(false);
+  const [runEnabled, setRunEnabled] = useState(false);
+  const [submitEnabled, setSubmitEnabled] = useState(false);
   const [output, setOutput] = useState("");
   const [language, setLanguage] = useState("python");
   const [header, setHeader] = useState("");
+  const [solved, setSolved] = useState(false);
 
   type TData = {
     type: "valid" | "error";
@@ -51,7 +55,7 @@ export default function ChallengePageContent({
       challenge_id: parseInt(challengeId as unknown as string),
     });
 
-  const { data: outputData } = trpc.challenges.test_code.useQuery(
+  const { data: outputData } = trpc.challenges.run_code.useQuery(
     {
       code_string: value,
       challenge_id: parseInt(challengeId as unknown as string),
@@ -59,14 +63,55 @@ export default function ChallengePageContent({
       language: language as TLanguages,
     },
     {
-      enabled,
+      enabled: runEnabled,
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       onSuccess: (outputData: TData) => {
         setOutput(outputData.output);
-        setEnabled(false);
+        setRunEnabled(false);
       },
       onError: () => {
-        setEnabled(false);
+        setRunEnabled(false);
+        toast({
+          variant: "destructive",
+          title: "Oops, Something Went Wrong!",
+          description:
+            "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
+          duration: 6000,
+        });
+      },
+    },
+  );
+
+  const { data: isSolvedChallenge } =
+    trpc.challenges.is_solved_challenge.useQuery(
+      {
+        challenge_id: parseInt(challengeId as unknown as string),
+        user_uuid: userUUID,
+      },
+      {
+        onSuccess: (isSolved: boolean) => {
+          setSolved(isSolved);
+        },
+      },
+    );
+
+  const { data: submitData } = trpc.challenges.submit_code.useQuery(
+    {
+      code_string: value,
+      challenge_id: parseInt(challengeId as unknown as string),
+      challenge_header: header,
+      language: language as TLanguages,
+      user_uuid: userUUID,
+    },
+    {
+      enabled: submitEnabled,
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      onSuccess: (submitData: TData) => {
+        setOutput(submitData.output);
+        setSubmitEnabled(false);
+      },
+      onError: () => {
+        setSubmitEnabled(false);
         toast({
           variant: "destructive",
           title: "Oops, Something Went Wrong!",
@@ -139,6 +184,12 @@ export default function ChallengePageContent({
     }
   }, [language, header]);
 
+  useEffect(() => {
+    if (isSolvedChallenge) {
+      setSolved(isSolvedChallenge);
+    }
+  }, [isSolvedChallenge]);
+
   const router = useRouter();
 
   return (
@@ -173,18 +224,30 @@ export default function ChallengePageContent({
           </SelectContent>
         </Select>
         <Button
+          variant="secondary"
           onClick={() => {
-            setEnabled(true);
+            setRunEnabled(true);
           }}
-          disabled={enabled}
+          disabled={runEnabled}
         >
           <Play />
           <span className="ml-4 hidden md:block">Run</span>
         </Button>
-        <Button variant="secondary">
-          <Send />
-          <span className="ml-4 hidden md:block">Submit</span>
-        </Button>
+        {solved ? (
+          <Button disabled={true}>
+            <span>Solved</span>
+          </Button>
+        ) : (
+          <Button
+            onClick={() => {
+              setSubmitEnabled(true);
+            }}
+            disabled={submitEnabled}
+          >
+            <Send />
+            <span className="ml-4 hidden md:block">Submit</span>
+          </Button>
+        )}
       </ProtectedEditorSiteHeader>
 
       <div className="grid grid-cols-1 md:grid-cols-2">

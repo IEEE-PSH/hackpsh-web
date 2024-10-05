@@ -1,0 +1,1 @@
+ALTER TABLE "app_schema"."app_challenges" ADD COLUMN "challenge_points" integer DEFAULT 0 NOT NULL;

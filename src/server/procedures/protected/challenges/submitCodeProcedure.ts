@@ -1,13 +1,17 @@
 /* eslint-disable prefer-const */
-import { getChallenge } from "@/server/dao/challenges";
-import { publicProcedure } from "@/server/trpc";
-import { testCodeSchema } from "@/server/zod-schemas/challenges";
+import {
+  getChallenge,
+  getTestCases,
+  solveChallenge,
+} from "@/server/dao/challenges";
+import { protectedProcedure } from "@/server/trpc";
+import { submitCodeSchema } from "@/server/zod-schemas/challenges";
 import { spawn } from "child_process";
 
 export const languages = ["python", "cpp", "javascript"] as const;
 export type TLanguages = (typeof languages)[number];
 
-//python header
+//format header to execute properly; same header for all used languages
 function formatHeader(header: string) {
   const match = header.match(/^\s*def\s+(\w+)\s*\((.*)\)\s*$/);
   const functionName = match![1];
@@ -15,34 +19,19 @@ function formatHeader(header: string) {
 
   const replacedParams = params!
     .split(",")
-    .map(() => "p")
+    .map(() => ".")
     .join(", ");
 
   return `${functionName}(${replacedParams})`;
 }
 
-// const testCases: TestCases = await getTestCases(
-//   ctx.db,
-//   challengeData!.challenge_uuid,
-// );
-// let headersToExecute = [];
-// if (input.language == "python") {
-//   const formattedHeader = formatPythonHeader(input.challenge_header);
-//   for (const testCase of testCases) {
-//     const inputs = testCase.test_case_input.split("\n");
-//     let tempHeader = formattedHeader;
-//     for (const input of inputs) tempHeader = tempHeader.replace("p", input);
-//     headersToExecute.push(tempHeader);
-//   }
-//   console.log(headersToExecute);
-// }
-
-export const testCodeProcedure = publicProcedure
-  .input(testCodeSchema)
+export default protectedProcedure
+  .input(submitCodeSchema)
   .query(async ({ ctx, input }) => {
     //get header to execute
     const challengeData = await getChallenge(ctx.db, input.challenge_id);
     const exampleInputs = challengeData?.challenge_example_input;
+    const testCases = await getTestCases(ctx.db, challengeData!.challenge_uuid);
 
     let tempHeader = formatHeader(input.challenge_header);
     let headerToExecute = "";
@@ -62,12 +51,24 @@ export const testCodeProcedure = publicProcedure
       }
       headerToExecute = tempHeader;
     }
-    console.log(headerToExecute);
 
-    let result = {};
+    let headers = [];
+    let outputs = [];
+    for (const testCase of testCases) {
+      let inputs = testCase.test_case_input.split("\n");
+      outputs.push(testCase.test_case_output);
+      let tempHeader = headerToExecute;
+      for (const input of inputs) {
+        tempHeader = tempHeader.replace(".", input);
+      }
+      headers.push(`print(${tempHeader})`);
+    }
+
+    let headersToExecute = headers.join("\n");
 
     //only supports python for now
-    const boilerPlate = `\nprint(${headerToExecute})`;
+    const boilerPlate = `\n${headersToExecute}`;
+
     return new Promise((resolve, reject) => {
       const pythonProcess = spawn("python", [
         "-u",
@@ -75,28 +76,39 @@ export const testCodeProcedure = publicProcedure
         input.code_string + boilerPlate,
       ]);
 
+      let stdData = "";
       pythonProcess.stdout.on("data", (data: Buffer) => {
-        result = {
-          type: "valid",
-          output: data.toString().trim(),
-        };
+        stdData = data.toString().trim();
       });
 
       pythonProcess.stderr.on("data", (data: Buffer) => {
-        result = {
-          type: "error",
-          output: data.toString().trim(),
-        };
+        stdData = data.toString().trim();
       });
 
-      // resolve Promise with result
       pythonProcess.on("close", (code) => {
-        resolve(result);
-        // if (code === 0) {
-        //   resolve(result);
-        // } else {
-        //   reject(new Error(`Python process exited with code ${code}`));
-        // }
+        const stdOutputs = stdData.split("\r\n");
+        let count = 0;
+        for (let i = 0; i < outputs.length; i++) {
+          if (outputs[i] == stdOutputs[i]) count++;
+        }
+
+        let output;
+        if (count == outputs.length) {
+          output = `Passed ${count}/${outputs.length} test cases. ✔️`;
+        } else output = `Passed ${count}/${outputs.length} test cases. ❌`;
+
+        if (code === 0) {
+          solveChallenge(ctx.db, input.challenge_id, input.user_uuid);
+          resolve({
+            type: "valid",
+            output: output,
+          });
+        } else {
+          resolve({
+            type: "error",
+            output: output,
+          });
+        }
       });
     });
   });

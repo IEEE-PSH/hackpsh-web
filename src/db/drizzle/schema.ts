@@ -127,9 +127,10 @@ export const app_challenges = app_schema.table("app_challenges", {
     .default(sql`uuid_generate_v4()`),
   challenge_id: serial("challenge_id"),
   challenge_title: text("challenge_title").notNull(),
-  challenge_difficulty: text("challenge_difficulty").references(
-    () => app_difficulty.difficulty_name,
-  ),
+  challenge_difficulty: text("challenge_difficulty")
+    .references(() => app_difficulty.difficulty_name)
+    .notNull(),
+  challenge_points: integer("challenge_points").notNull().default(0),
   challenge_description: text("challenge_description").notNull(),
   challenge_function_header: text("challenge_function_header").notNull(),
   challenge_example_input: text("challenge_example_input").notNull(),
@@ -148,8 +149,17 @@ export const app_test_cases = app_schema.table("app_test_cases", {
     .default(sql`uuid_generate_v4()`),
   test_case_input: text("test_case_input").notNull(),
   test_case_output: text("test_case_output").notNull(),
-  test_case_challenge_uuid: uuid("test_case_challenge_uuid").references(
-    () => app_challenges.challenge_uuid,
-    { onDelete: "cascade" },
-  ),
+  test_case_challenge_uuid: uuid("test_case_challenge_uuid")
+    .references(() => app_challenges.challenge_uuid, { onDelete: "cascade" })
+    .notNull(),
+});
+
+export const app_solved_challenges = app_schema.table("app_solved_challenges", {
+  solved_challenge_uuid: uuid("solved_challenge_uuid")
+    .primaryKey()
+    .default(sql`uuid_generate_v4()`)
+    .references(() => app_challenges.challenge_uuid, { onDelete: "cascade" }),
+  solved_challenge_team_uuid: uuid("solved_challenge_team_uuid")
+    .references(() => app_team.team_uuid, { onDelete: "cascade" })
+    .notNull(),
 });

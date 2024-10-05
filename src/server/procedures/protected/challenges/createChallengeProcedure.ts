@@ -10,6 +10,7 @@ export default protectedProcedure
       input.user_uuid,
       input.title,
       input.difficulty,
+      input.points,
       input.description,
       input.function_header,
       input.example_input,

@@ -79,6 +79,7 @@ function isValidHeader(header: string) {
 export const CreateChallengeFormSchema = z.object({
   title: z.string().min(1, "Cannot leave field empty."),
   difficulty: z.enum(difficulty),
+  points: z.coerce.number().min(1, "Cannot leave field empty."),
   description: z.string().min(1, "Cannot leave field empty."),
   function_header: z.string().refine((value) => isValidHeader(value), {
     message: "Function header not valid.",

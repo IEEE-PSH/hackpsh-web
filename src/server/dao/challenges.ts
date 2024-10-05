@@ -1,7 +1,13 @@
 import { type Database } from "@/db/drizzle";
-import { app_challenges, app_test_cases } from "@/db/drizzle/schema";
+import {
+  app_challenges,
+  app_solved_challenges,
+  app_team,
+  app_test_cases,
+  app_user_profile,
+} from "@/db/drizzle/schema";
 import { TRPCError } from "@trpc/server";
-import { desc, eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { getUserRole } from "./user";
 import { TDifficulties } from "@/db/drizzle/startup_seed";
 
@@ -13,6 +19,7 @@ export async function getChallenges(db: Database) {
         challenge_id: app_challenges.challenge_id,
         challenge_title: app_challenges.challenge_title,
         challenge_difficulty: app_challenges.challenge_difficulty,
+        challenge_points: app_challenges.challenge_points,
       })
       .from(app_challenges);
 
@@ -45,9 +52,58 @@ export async function getChallenge(db: Database, challengeID: number) {
       where: (challenge_data, { eq }) =>
         eq(challenge_data.challenge_id, challengeID),
     });
-    //add testcases
 
     return result;
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function isSolvedChallenge(
+  db: Database,
+  challenge_id: number,
+  user_uuid: string,
+) {
+  try {
+    const challengeUUID = await db.query.app_challenges.findFirst({
+      columns: {
+        challenge_uuid: true,
+      },
+      where: eq(app_challenges.challenge_id, challenge_id),
+    });
+
+    const teamUUID = await db.query.app_user_profile.findFirst({
+      columns: {
+        user_team_uuid: true,
+      },
+      where: eq(app_user_profile.user_uuid, user_uuid),
+    });
+
+    try {
+      const result = await db
+        .select()
+        .from(app_solved_challenges)
+        .where(
+          and(
+            eq(
+              app_solved_challenges.solved_challenge_uuid,
+              challengeUUID!.challenge_uuid,
+            ),
+            eq(
+              app_solved_challenges.solved_challenge_team_uuid,
+              teamUUID!.user_team_uuid!,
+            ),
+          ),
+        )
+        .limit(1)
+        .execute();
+      return result.length > 0;
+    } catch (error) {
+      return false;
+    }
   } catch (error) {
     throw new TRPCError({
       message: "The database has encountered some issues.",
@@ -84,6 +140,7 @@ export async function createChallenge(
   user_uuid: string,
   title: string,
   difficulty: TDifficulties,
+  points: number,
   description: string,
   function_header: string,
   example_input: string,
@@ -105,6 +162,7 @@ export async function createChallenge(
       .values({
         challenge_title: title,
         challenge_difficulty: difficulty,
+        challenge_points: points,
         challenge_description: description,
         challenge_function_header: function_header,
         challenge_example_input: example_input,
@@ -113,7 +171,7 @@ export async function createChallenge(
       })
       .returning({ uuid: app_challenges.challenge_uuid });
 
-    const challengeUUID = challengeResult[0]?.uuid;
+    const challengeUUID = challengeResult[0]!.uuid;
 
     for (const test_case of test_cases) {
       await db.insert(app_test_cases).values({
@@ -122,6 +180,53 @@ export async function createChallenge(
         test_case_challenge_uuid: challengeUUID,
       });
     }
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function solveChallenge(
+  db: Database,
+  challenge_id: number,
+  user_uuid: string,
+) {
+  try {
+    const challenge = await db.query.app_challenges.findFirst({
+      columns: {
+        challenge_uuid: true,
+        challenge_points: true,
+      },
+      where: eq(app_challenges.challenge_id, challenge_id),
+    });
+
+    const teamUUID = await db.query.app_user_profile.findFirst({
+      columns: {
+        user_team_uuid: true,
+      },
+      where: eq(app_user_profile.user_uuid, user_uuid),
+    });
+
+    await db.insert(app_solved_challenges).values({
+      solved_challenge_uuid: challenge?.challenge_uuid!,
+      solved_challenge_team_uuid: teamUUID?.user_team_uuid!,
+    });
+
+    const teamPoints = await db.query.app_team.findFirst({
+      columns: {
+        team_points: true,
+      },
+      where: eq(app_team.team_uuid, teamUUID?.user_team_uuid!),
+    });
+
+    await db
+      .update(app_team)
+      .set({
+        team_points: teamPoints?.team_points! + challenge!.challenge_points,
+      })
+      .where(eq(app_team.team_uuid, teamUUID?.user_team_uuid!));
   } catch (error) {
     throw new TRPCError({
       message: "The database has encountered some issues.",

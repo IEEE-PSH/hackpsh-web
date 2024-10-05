@@ -99,6 +99,7 @@ export function CreateChallengeForm({
         user_uuid: user.id,
         title: values.title,
         difficulty: values.difficulty,
+        points: values.points,
         description: values.description,
         function_header: values.function_header,
         example_input: values.example_input,
@@ -113,16 +114,16 @@ export function CreateChallengeForm({
 
   const [isExample, setIsExample] = useState(false);
   const exampleFields = {
-    title: "Sum of Array",
+    title: "Sum of Arrays",
     description: "Add all integers of the array given its size.",
-    function_header: "int arraySum(int n, intArr nums)",
-    example_input: `4\n1 4 3 2`,
-    example_output: "10",
-    explanation: "The array has 4 integers. 1+4+3+2=10, so the output is 10.",
-    testcase_input_1: `2\n2 3`,
-    testcase_output_1: "5",
-    testcase_input_2: `5\n1 1 1 1 10`,
-    testcase_output_2: "14",
+    function_header: "int arraysSum(intArr nums)",
+    example_input: `[1, 3]\n[5, 5]`,
+    example_output: "14",
+    explanation:
+      "If you add up all the integers in the arrays, you get 1+3+5+5=14, so the return is 14.",
+    testcase_input: `[1]\n[1]`,
+    testcase_output: "2",
+    points: "200",
   };
 
   const { control } = form;
@@ -163,12 +164,12 @@ export function CreateChallengeForm({
             </div>
           </div>
 
-          <div className="flex space-x-4">
+          <div className="grid grid-cols-4 grid-rows-2 gap-x-4 gap-y-6 lg:grid-rows-1">
             <FormField
               control={form.control}
               name="title"
               render={({ field }) => (
-                <FormItem className="col-span-2 flex-grow">
+                <FormItem className="col-span-4 row-span-1 flex-grow lg:col-span-2">
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input
@@ -185,10 +186,10 @@ export function CreateChallengeForm({
               control={form.control}
               name="difficulty"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="col-span-2 lg:col-span-1">
                   <FormLabel>Difficulty</FormLabel>
                   <Select onValueChange={field.onChange}>
-                    <SelectTrigger className="w-40">
+                    <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
 
@@ -201,6 +202,23 @@ export function CreateChallengeForm({
                     </SelectContent>
                   </Select>
 
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="points"
+              render={({ field }) => (
+                <FormItem className="col-span-2 lg:col-span-1">
+                  <FormLabel>Points</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={isExample ? exampleFields.points : ""}
+                      {...field}
+                      value={field.value ?? ""}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -239,7 +257,7 @@ export function CreateChallengeForm({
                     <HoverCardContent className="flex flex-col space-y-2 font-normal">
                       <p className="underline">Format:</p>
                       <p>type functionName(type param1, type param2)</p>
-                      <p className="underline">Valid parameter types:</p>
+                      <p className="underline">Valid types:</p>
                       <p>
                         void, int, intArr, double, doubleArr, string, stringArr,
                         char, charArr
@@ -347,7 +365,7 @@ export function CreateChallengeForm({
                       <FormControl>
                         <Textarea
                           placeholder={
-                            isExample ? exampleFields.testcase_input_1 : ""
+                            isExample ? exampleFields.testcase_input : ""
                           }
                           className="resize-none"
                           {...field}
@@ -368,7 +386,7 @@ export function CreateChallengeForm({
                         <Textarea
                           className="resize-none"
                           placeholder={
-                            isExample ? exampleFields.testcase_output_1 : ""
+                            isExample ? exampleFields.testcase_output : ""
                           }
                           {...field}
                           value={field.value ?? ""}
