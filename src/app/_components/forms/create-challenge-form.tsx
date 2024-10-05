@@ -364,9 +364,6 @@ export function CreateChallengeForm({
                       <FormLabel>Input #{i + 1}</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder={
-                            isExample ? exampleFields.testcase_input : ""
-                          }
                           className="resize-none"
                           {...field}
                           value={field.value ?? ""}
@@ -385,9 +382,6 @@ export function CreateChallengeForm({
                       <FormControl>
                         <Textarea
                           className="resize-none"
-                          placeholder={
-                            isExample ? exampleFields.testcase_output : ""
-                          }
                           {...field}
                           value={field.value ?? ""}
                         />

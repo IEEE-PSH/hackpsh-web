@@ -7,9 +7,9 @@ import {
   app_user_profile,
 } from "@/db/drizzle/schema";
 import { TRPCError } from "@trpc/server";
-import { eq, and } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 import { getUserRole } from "./user";
-import { TDifficulties } from "@/db/drizzle/startup_seed";
+import { type TDifficulties } from "@/db/drizzle/startup_seed";
 
 export async function getChallenges(db: Database) {
   try {
@@ -48,6 +48,7 @@ export async function getChallenge(db: Database, challengeID: number) {
         challenge_example_input: true,
         challenge_example_output: true,
         challenge_explanation: true,
+        challenge_points: true,
       },
       where: (challenge_data, { eq }) =>
         eq(challenge_data.challenge_id, challengeID),
@@ -61,6 +62,8 @@ export async function getChallenge(db: Database, challengeID: number) {
     });
   }
 }
+
+export type TChallengeData = Awaited<ReturnType<typeof getChallenge>>;
 
 export async function isSolvedChallenge(
   db: Database,
@@ -121,7 +124,6 @@ export async function getTestCases(db: Database, challengeUUID: string) {
       },
       where: eq(app_test_cases.test_case_challenge_uuid, challengeUUID),
     });
-    //add testcases
 
     return result;
   } catch (error) {
@@ -210,23 +212,16 @@ export async function solveChallenge(
     });
 
     await db.insert(app_solved_challenges).values({
-      solved_challenge_uuid: challenge?.challenge_uuid!,
-      solved_challenge_team_uuid: teamUUID?.user_team_uuid!,
-    });
-
-    const teamPoints = await db.query.app_team.findFirst({
-      columns: {
-        team_points: true,
-      },
-      where: eq(app_team.team_uuid, teamUUID?.user_team_uuid!),
+      solved_challenge_uuid: challenge?.challenge_uuid,
+      solved_challenge_team_uuid: teamUUID!.user_team_uuid!,
     });
 
     await db
       .update(app_team)
       .set({
-        team_points: teamPoints?.team_points! + challenge!.challenge_points,
+        team_points: sql`${app_team.team_points} + ${challenge!.challenge_points}`,
       })
-      .where(eq(app_team.team_uuid, teamUUID?.user_team_uuid!));
+      .where(eq(app_team.team_uuid, teamUUID!.user_team_uuid!));
   } catch (error) {
     throw new TRPCError({
       message: "The database has encountered some issues.",
@@ -234,6 +229,3 @@ export async function solveChallenge(
     });
   }
 }
-
-// export type Announcements = Awaited<ReturnType<typeof getAnnouncements>>;
-// export type AnnouncementPost = Announcements[number];

@@ -21,6 +21,11 @@ function formatHeader(header: string) {
   return `${functionName}(${replacedParams})`;
 }
 
+export type TData = {
+  type: "valid" | "error" | "success";
+  output: string;
+};
+
 export default protectedProcedure
   .input(testCodeSchema)
   .query(async ({ ctx, input }) => {

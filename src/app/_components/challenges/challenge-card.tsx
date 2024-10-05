@@ -32,11 +32,14 @@ export default function ChallengeCard({
       }}
     >
       <CardHeader className="flex flex-row items-center">
-        <CardTitle>{challenge_title}</CardTitle>
-        <div className="ml-auto flex items-center justify-center space-y-4">
+        <CardTitle className="mr-4 text-lg">{challenge_title}</CardTitle>
+        <div className="ml-auto flex items-center justify-center space-x-2">
+          <Badge className="w-16 justify-center bg-foreground text-background hover:bg-foreground/90">
+            {challenge_points}
+          </Badge>
           <Badge
             className={cn(
-              "w-16 justify-center bg-foreground capitalize text-background",
+              "w-16 justify-center bg-foreground capitalize text-background ",
               challenge_difficulty == "easy"
                 ? "bg-green-500 hover:bg-green-500/90"
                 : challenge_difficulty == "medium"
@@ -47,9 +50,6 @@ export default function ChallengeCard({
             )}
           >
             {challenge_difficulty}
-          </Badge>
-          <Badge className="w-16 justify-center bg-foreground text-background">
-            {challenge_points}
           </Badge>
         </div>
       </CardHeader>

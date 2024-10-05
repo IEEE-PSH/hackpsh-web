@@ -94,21 +94,18 @@ export default protectedProcedure
 
         let output;
         if (count == outputs.length) {
-          output = `Passed ${count}/${outputs.length} test cases. ✔️`;
-        } else output = `Passed ${count}/${outputs.length} test cases. ❌`;
-
-        if (code === 0) {
-          solveChallenge(ctx.db, input.challenge_id, input.user_uuid);
+          output = `Passed ${count}/${outputs.length} hidden test cases. ✔️`;
+          void solveChallenge(ctx.db, input.challenge_id, input.user_uuid);
           resolve({
-            type: "valid",
+            type: "success",
             output: output,
           });
-        } else {
-          resolve({
-            type: "error",
-            output: output,
-          });
-        }
+        } else
+          output = `Passed ${count}/${outputs.length} hidden test cases. ❌`;
+        resolve({
+          type: "error",
+          output: output,
+        });
       });
     });
   });

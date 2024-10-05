@@ -26,11 +26,7 @@ export async function Challenges() {
   });
 
   if (challengeElements.length > 0) {
-    return (
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-        {challengeElements}
-      </div>
-    );
+    return <div className="grid grid-cols-1 gap-4">{challengeElements}</div>;
   } else
     return (
       <p className="mx-auto text-center text-muted-foreground">
