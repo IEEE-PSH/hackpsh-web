@@ -2,13 +2,11 @@
 import { Button } from "@/app/_components/ui/button";
 import { cn } from "@/app/_lib/client-utils";
 import { trpc } from "@/app/_trpc/react";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import ProtectedEditorSiteHeader from "../nav/protected-editor-site-header";
 import { ArrowLeft } from "lucide-react";
-import { Editor } from "@monaco-editor/react";
 import { useRouter } from "next/navigation";
-import { Skeleton } from "../ui/skeleton";
 import {
   paramTypeMapping,
   paramTypes,
@@ -19,6 +17,7 @@ import {
 } from "@/server/procedures/protected/challenges/runCodeProcedure";
 import ChallengeNavActions from "./challenge-nav-actions";
 import ChallengeContentInfo from "./challenge-content-info";
+import ChallengeEditor from "./challenge-editor";
 
 export default function ChallengePageContent({
   userDisplayName,
@@ -38,6 +37,7 @@ export default function ChallengePageContent({
   });
   const [language, setLanguage] = useState<TLanguages>("python");
   const [header, setHeader] = useState("");
+  const [presetHeader, setPresetHeader] = useState("");
   const [solved, setSolved] = useState(false);
 
   const { data: challengeData, isSuccess } =
@@ -45,32 +45,15 @@ export default function ChallengePageContent({
       challenge_id: parseInt(challengeId as unknown as string),
     });
 
-  //checks if solved on mount
-  const { isFetchedAfterMount } = trpc.challenges.is_solved_challenge.useQuery(
-    {
-      challenge_id: parseInt(challengeId as unknown as string),
-      user_uuid: userUUID,
-    },
-    {
-      onSuccess: (isSolved: boolean) => {
-        setSolved(isSolved);
-      },
-    },
-  );
-
-  const editorRef = useRef<unknown>(null);
-
   useEffect(() => {
     if (challengeData) {
       const header = challengeData?.challenge_function_header;
       const newHeader = formatHeader(header, language);
       setHeader(newHeader!);
+      const preset = getPresetHeader(newHeader!, language);
+      setPresetHeader(preset!);
     }
   }, [challengeData, language]);
-
-  useEffect(() => {
-    editorRef?.current?.setValue(header);
-  }, [language, setHeader, header]);
 
   const router = useRouter();
 
@@ -88,21 +71,17 @@ export default function ChallengePageContent({
           <ArrowLeft />
           <span className="ml-4">Challenges</span>
         </Button>
-        {isFetchedAfterMount ? (
-          <ChallengeNavActions
-            value={value}
-            challengeId={challengeId}
-            header={header}
-            language={language}
-            userUUID={userUUID}
-            setLanguage={setLanguage}
-            solved={solved}
-            setSolved={setSolved}
-            setOutputData={setOutputData}
-          />
-        ) : (
-          <Skeleton className="h-10 w-full md:w-96" />
-        )}
+        <ChallengeNavActions
+          value={value}
+          challengeId={challengeId}
+          header={header}
+          language={language}
+          userUUID={userUUID}
+          setLanguage={setLanguage}
+          solved={solved}
+          setSolved={setSolved}
+          setOutputData={setOutputData}
+        />
       </ProtectedEditorSiteHeader>
 
       <div className="grid grid-cols-1 md:grid-cols-2">
@@ -112,17 +91,11 @@ export default function ChallengePageContent({
         />
         <div className="flex flex-col">
           <div className="h-[320px]">
-            <Editor
-              height="100%"
-              theme="vs-dark"
-              language={language}
-              defaultLanguage="python"
-              defaultValue={header}
+            <ChallengeEditor
               value={value}
-              onChange={(value) => setValue(value!)}
-              onMount={(editor) => {
-                editorRef.current = editor;
-              }}
+              setValue={setValue}
+              language={language}
+              header={presetHeader}
             />
           </div>
 
@@ -149,9 +122,10 @@ function formatHeader(header: string, language: TLanguages) {
       newHeader = newHeader?.replace(regex, "");
     });
     if (language == "python") {
-      newHeader = `# Implement this function. \ndef ${newHeader}:\n\t`;
+      // newHeader = `# Implement this function. \ndef ${newHeader}:\n\t\n`;
+      newHeader = `def ${newHeader}`;
     } else {
-      newHeader = `// Implement this function. \nfunction ${newHeader}{\n\t\n}`;
+      newHeader = `function ${newHeader}`;
     }
     return newHeader;
   } else if (language == "cpp") {
@@ -176,6 +150,12 @@ function formatHeader(header: string, language: TLanguages) {
         newHeader = newHeader?.replace(param, `${mappedType} ${name}`);
       }
     });
-    return `// Implement this function. \nfunction ${newHeader}{\n\t\n}`;
+    return `function ${newHeader}`;
   }
+}
+
+function getPresetHeader(header: string, language: TLanguages) {
+  if (language === "python")
+    return `# Implement this function\n${header}:\n\t\n`;
+  else return `// Implement this function\n${header}{\n\t\n}\n`;
 }

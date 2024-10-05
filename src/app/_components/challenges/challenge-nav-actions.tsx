@@ -17,6 +17,7 @@ import {
   type TLanguages,
 } from "@/server/procedures/protected/challenges/runCodeProcedure";
 import { Play, Send } from "lucide-react";
+import { Skeleton } from "../ui/skeleton";
 
 type ChallengeNavActionsProps = {
   value: string;
@@ -43,6 +44,18 @@ export default function ChallengeNavActions({
 }: ChallengeNavActionsProps) {
   const [runEnabled, setRunEnabled] = useState(false);
   const [submitEnabled, setSubmitEnabled] = useState(false);
+
+  const { isFetchedAfterMount } = trpc.challenges.is_solved_challenge.useQuery(
+    {
+      challenge_id: parseInt(challengeId as unknown as string),
+      user_uuid: userUUID,
+    },
+    {
+      onSuccess: (isSolved: boolean) => {
+        setSolved(isSolved);
+      },
+    },
+  );
 
   //submits code
   trpc.challenges.submit_code.useQuery(
@@ -107,54 +120,58 @@ export default function ChallengeNavActions({
     },
   );
 
-  return (
-    <div className="ml-auto flex space-x-4">
-      {solved ? (
-        <Button disabled={true}>
-          <span>Solved</span>
-        </Button>
-      ) : (
-        <>
-          <Select
-            value={language}
-            onValueChange={(value: TLanguages) => {
-              setLanguage(value);
-            }}
-          >
-            <SelectTrigger className="w-32">
-              <SelectValue defaultValue="python" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="python">Python</SelectItem>
-                <SelectItem value="cpp">C++</SelectItem>
-                <SelectItem value="javascript">JavaScript</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Button
-            className="p-2 md:p-4"
-            variant="secondary"
-            onClick={() => {
-              setRunEnabled(true);
-            }}
-            disabled={runEnabled}
-          >
-            <Play />
-            <span className="ml-4 hidden md:block">Run</span>
+  if (isFetchedAfterMount) {
+    return (
+      <div className="ml-auto flex space-x-4">
+        {solved ? (
+          <Button disabled={true}>
+            <span>Solved</span>
           </Button>
-          <Button
-            className="p-2 md:p-4"
-            onClick={() => {
-              setSubmitEnabled(true);
-            }}
-            disabled={submitEnabled}
-          >
-            <Send />
-            <span className="ml-4 hidden md:block">Submit</span>
-          </Button>
-        </>
-      )}
-    </div>
-  );
+        ) : (
+          <>
+            <Select
+              value={language}
+              onValueChange={(value: TLanguages) => {
+                setLanguage(value);
+              }}
+            >
+              <SelectTrigger className="w-32">
+                <SelectValue defaultValue="python" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="python">Python</SelectItem>
+                  <SelectItem value="cpp">C++</SelectItem>
+                  <SelectItem value="javascript">JavaScript</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Button
+              className="p-2 md:p-4"
+              variant="secondary"
+              disabled={runEnabled}
+              onClick={() => {
+                setRunEnabled(true);
+              }}
+            >
+              <Play />
+              <span className="ml-4 hidden md:block">Run</span>
+            </Button>
+            <Button
+              className="p-2 md:p-4"
+              disabled={submitEnabled}
+              onClick={() => {
+                setSubmitEnabled(true);
+              }}
+            >
+              <Send />
+              <span className="ml-4 hidden md:block">Submit</span>
+            </Button>
+          </>
+        )}
+      </div>
+    );
+  }
+
+  return <Skeleton className="h-10 w-full md:w-96" />;
 }

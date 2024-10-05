@@ -28,12 +28,14 @@ export type TData = {
 
 export default protectedProcedure
   .input(testCodeSchema)
+  // eslint-disable-next-line @typescript-eslint/require-await
   .query(async ({ ctx, input }) => {
     //get header to execute
     const challengeData = await getChallenge(ctx.db, input.challenge_id);
     const exampleInputs = challengeData?.challenge_example_input;
 
     let tempHeader = formatHeader(input.challenge_header);
+
     let headerToExecute = "";
     for (const exampleInput of exampleInputs!.split("\n")) {
       if (input.language == "cpp") {
