@@ -23,7 +23,7 @@ export default async function UsersPage() {
   });
 
   return (
-    <div className="container">
+    <div className="container max-w-5xl">
       <UserTable data={data} userData={userData} />
     </div>
   );

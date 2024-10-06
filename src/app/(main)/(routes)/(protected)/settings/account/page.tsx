@@ -5,7 +5,6 @@ import { getUser } from "@/shared/supabase/auth";
 import UserSettingsForm from "@/app/_components/forms/user-settings-form";
 import { Separator } from "@/app/_components/ui/separator";
 import { Label } from "@/app/_components/ui/label";
-import { Button } from "@/app/_components/ui/button";
 import DeleteSelfAccountDialog from "@/app/_components/settings/delete-self-account-dialog";
 
 export default async function Page() {
@@ -28,7 +27,7 @@ export default async function Page() {
     });
 
   return (
-    <div className="space-y-4 sm:container">
+    <div className="max-w-5xl space-y-4 sm:container">
       <Card className="border-0 sm:border">
         <CardContent className="p-8">
           <UserSettingsForm
