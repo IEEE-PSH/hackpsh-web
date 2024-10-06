@@ -1,7 +1,7 @@
 "use client";
 import React, { type Dispatch, type SetStateAction, useEffect } from "react";
 import { Editor } from "@monaco-editor/react";
-import { type TLanguages } from "@/server/procedures/protected/challenges/runCodeProcedure";
+import { type TLanguages } from "@/server/zod-schemas/challenges";
 
 type ChallengeEditor = {
   value: string;

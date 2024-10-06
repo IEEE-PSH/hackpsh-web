@@ -1,6 +1,5 @@
 import { difficulty } from "@/app/_lib/zod-schemas/forms/challenges";
 import { z } from "zod";
-import { languages } from "../procedures/protected/challenges/runCodeProcedure";
 
 export const createChallengeSchema = z.object({
   user_uuid: z.string().uuid("Please provide a valid UUID."),
@@ -33,11 +32,14 @@ export const isSolvedChallengeSchema = z.object({
   user_uuid: z.string().uuid("Please provide a valid UUID."),
 });
 
+export const languages = ["python", "cpp", "javascript"] as const;
+export type TLanguages = (typeof languages)[number];
+
 export const runCodeSchema = z.object({
   code_string: z.string(),
   challenge_id: z.number(),
   challenge_header: z.string(),
-  language: z.string(),
+  language: z.enum(languages),
 });
 
 export const submitCodeSchema = z.object({

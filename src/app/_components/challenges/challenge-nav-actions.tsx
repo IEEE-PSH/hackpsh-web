@@ -12,12 +12,10 @@ import {
   SelectItem,
   SelectTrigger,
 } from "../ui/select";
-import {
-  type TData,
-  type TLanguages,
-} from "@/server/procedures/protected/challenges/runCodeProcedure";
+import { type TSubmitData } from "@/server/procedures/protected/challenges/runCodeProcedure";
 import { Play, Send } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
+import { type TLanguages } from "@/server/zod-schemas/challenges";
 
 type ChallengeNavActionsProps = {
   value: string;
@@ -28,7 +26,7 @@ type ChallengeNavActionsProps = {
   setLanguage: Dispatch<SetStateAction<TLanguages>>;
   solved: boolean;
   setSolved: Dispatch<SetStateAction<boolean>>;
-  setOutputData: Dispatch<SetStateAction<TData>>;
+  setOutputData: Dispatch<SetStateAction<TSubmitData>>;
 };
 
 export default function ChallengeNavActions({
@@ -68,7 +66,7 @@ export default function ChallengeNavActions({
     },
     {
       enabled: submitEnabled,
-      onSuccess: (submitData: TData) => {
+      onSuccess: (submitData: TSubmitData) => {
         setOutputData(submitData);
         if (submitData.type == "success") {
           setSolved(true);
@@ -103,7 +101,7 @@ export default function ChallengeNavActions({
     },
     {
       enabled: runEnabled,
-      onSuccess: (outputData: TData) => {
+      onSuccess: (outputData: TSubmitData) => {
         setOutputData(outputData);
         setRunEnabled(false);
       },

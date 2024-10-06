@@ -1,10 +1,11 @@
 import { getChallenge } from "@/server/dao/challenges";
 import { protectedProcedure } from "@/server/trpc";
-import { runCodeSchema } from "@/server/zod-schemas/challenges";
+import {
+  runCodeSchema,
+  type TLanguages,
+} from "@/server/zod-schemas/challenges";
 import { TRPCError } from "@trpc/server";
 
-export const languages = ["python", "cpp", "javascript"] as const;
-export type TLanguages = (typeof languages)[number];
 export type TSubmitData = {
   type: "valid" | "success" | "error";
   output: string;
@@ -27,7 +28,7 @@ export function formatFunctionCall(header: string) {
 // FILL
 export function fillFunctionCall(
   header: string,
-  language: string,
+  language: TLanguages,
   inputs: string,
 ) {
   for (const input of inputs.split("\n")) {

@@ -11,13 +11,11 @@ import {
   paramTypeMapping,
   paramTypes,
 } from "@/app/_lib/zod-schemas/forms/challenges";
-import {
-  type TSubmitData,
-  type TLanguages,
-} from "@/server/procedures/protected/challenges/runCodeProcedure";
+import { type TSubmitData } from "@/server/procedures/protected/challenges/runCodeProcedure";
 import ChallengeNavActions from "./challenge-nav-actions";
 import ChallengeContentInfo from "./challenge-content-info";
 import ChallengeEditor from "./challenge-editor";
+import { type TLanguages } from "@/server/zod-schemas/challenges";
 
 export default function ChallengeContentPage({
   userDisplayName,
@@ -90,14 +88,12 @@ export default function ChallengeContentPage({
           isSuccess={isSuccess}
         />
         <div className="flex flex-col">
-          <div className="h-[320px]">
-            <ChallengeEditor
-              value={value}
-              setValue={setValue}
-              language={language}
-              header={presetHeader}
-            />
-          </div>
+          <ChallengeEditor
+            value={value}
+            setValue={setValue}
+            language={language}
+            header={presetHeader}
+          />
 
           <pre
             className={cn(
