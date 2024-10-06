@@ -12,14 +12,14 @@ import {
   paramTypes,
 } from "@/app/_lib/zod-schemas/forms/challenges";
 import {
-  type TData,
+  type TSubmitData,
   type TLanguages,
 } from "@/server/procedures/protected/challenges/runCodeProcedure";
 import ChallengeNavActions from "./challenge-nav-actions";
 import ChallengeContentInfo from "./challenge-content-info";
 import ChallengeEditor from "./challenge-editor";
 
-export default function ChallengePageContent({
+export default function ChallengeContentPage({
   userDisplayName,
   userEmailAddress,
   challengeId,
@@ -31,7 +31,7 @@ export default function ChallengePageContent({
   userUUID: string;
 }) {
   const [value, setValue] = useState("");
-  const [outputData, setOutputData] = useState<TData>({
+  const [outputData, setOutputData] = useState<TSubmitData>({
     type: "valid",
     output: "",
   });
@@ -122,7 +122,6 @@ function formatHeader(header: string, language: TLanguages) {
       newHeader = newHeader?.replace(regex, "");
     });
     if (language == "python") {
-      // newHeader = `# Implement this function. \ndef ${newHeader}:\n\t\n`;
       newHeader = `def ${newHeader}`;
     } else {
       newHeader = `function ${newHeader}`;
@@ -150,7 +149,7 @@ function formatHeader(header: string, language: TLanguages) {
         newHeader = newHeader?.replace(param, `${mappedType} ${name}`);
       }
     });
-    return `function ${newHeader}`;
+    return `${newHeader}`;
   }
 }
 

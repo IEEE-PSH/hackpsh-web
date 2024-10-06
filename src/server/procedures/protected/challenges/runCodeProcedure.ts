@@ -5,6 +5,10 @@ import { TRPCError } from "@trpc/server";
 
 export const languages = ["python", "cpp", "javascript"] as const;
 export type TLanguages = (typeof languages)[number];
+export type TSubmitData = {
+  type: "valid" | "success" | "error";
+  output: string;
+};
 
 // FORMAT
 export function formatFunctionCall(header: string) {

@@ -1,4 +1,4 @@
-import ChallengePageContent from "@/app/_components/challenges/challenge-content";
+import ChallengeContentPage from "@/app/_components/challenges/challenge-content";
 import { serverTRPC } from "@/app/_trpc/server";
 import { composeServerComponentClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
@@ -18,7 +18,7 @@ export default async function ChallengePage({
     });
   return (
     <div className="min-h-screen bg-background">
-      <ChallengePageContent
+      <ChallengeContentPage
         userDisplayName={user_display_name!}
         userEmailAddress={user_email_address!}
         challengeId={params.challengeId}
