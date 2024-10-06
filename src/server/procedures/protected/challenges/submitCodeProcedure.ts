@@ -1,4 +1,3 @@
-/* eslint-disable prefer-const */
 import {
   getChallenge,
   getTestCases,
@@ -6,106 +5,113 @@ import {
 } from "@/server/dao/challenges";
 import { protectedProcedure } from "@/server/trpc";
 import { submitCodeSchema } from "@/server/zod-schemas/challenges";
-import { spawn } from "child_process";
+import {
+  type ExecutionResponse,
+  formatFunctionCall,
+  formatInput,
+} from "./runCodeProcedure";
+import { TRPCError } from "@trpc/server";
 
-export const languages = ["python", "cpp", "javascript"] as const;
-export type TLanguages = (typeof languages)[number];
+// FILL
+export function fillFunctionCall(
+  header: string,
+  language: string,
+  inputs: string,
+) {
+  for (const input of inputs.split("\n")) {
+    if (language == "cpp") {
+      let newInput = input;
 
-//format header to execute properly; same header for all used languages
-function formatHeader(header: string) {
-  const match = header.match(/^\s*def\s+(\w+)\s*\((.*)\)\s*$/);
-  const functionName = match![1];
-  const params = match![2];
-
-  const replacedParams = params!
-    .split(",")
-    .map(() => ".")
-    .join(", ");
-
-  return `${functionName}(${replacedParams})`;
+      //change python/javascript array to cpp array
+      const regex = /^\[\s*(-?\d+(\s*,\s*-?\d+)*)?\s*\]$/;
+      if (regex.test(input)) {
+        const temp = input.slice(1, -1).split(",");
+        newInput = `{${temp.join(", ")}}`;
+      }
+      header = header.replace(".", newInput);
+    } else {
+      header = header.replace(".", formatInput(input));
+    }
+  }
+  return header;
 }
 
 export default protectedProcedure
   .input(submitCodeSchema)
   .query(async ({ ctx, input }) => {
-    //get header to execute
     const challengeData = await getChallenge(ctx.db, input.challenge_id);
-    const exampleInputs = challengeData?.challenge_example_input;
     const testCases = await getTestCases(ctx.db, challengeData!.challenge_uuid);
+    const exampleTestCase = {
+      test_case_input: challengeData!.challenge_example_input,
+      test_case_output: challengeData!.challenge_example_output,
+    };
+    testCases.push(exampleTestCase);
 
-    let tempHeader = formatHeader(input.challenge_header);
-    let headerToExecute = "";
-    for (const exampleInput of exampleInputs!.split("\n")) {
-      if (input.language == "cpp") {
-        let newExampleInput = exampleInput;
-
-        //change python/javascript array to cpp array
-        const regex = /^\[\s*(-?\d+(\s*,\s*-?\d+)*)?\s*\]$/;
-        if (regex.test(exampleInput)) {
-          const temp = exampleInput.slice(1, -1).split(",");
-          newExampleInput = `{${temp.join(", ")}}`;
-        }
-        tempHeader = tempHeader.replace("p", newExampleInput);
-      } else {
-        tempHeader = tempHeader.replace("p", exampleInput);
-      }
-      headerToExecute = tempHeader;
-    }
-
-    let headers = [];
-    let outputs = [];
+    const tempHeader = formatFunctionCall(input.challenge_header);
+    const functionsToExecute = [];
     for (const testCase of testCases) {
-      let inputs = testCase.test_case_input.split("\n");
-      outputs.push(testCase.test_case_output);
-      let tempHeader = headerToExecute;
-      for (const input of inputs) {
-        tempHeader = tempHeader.replace(".", input);
-      }
-      headers.push(`print(${tempHeader})`);
+      const func = fillFunctionCall(
+        tempHeader,
+        input.language,
+        testCase.test_case_input,
+      );
+      functionsToExecute.push(`print(${func})`);
     }
 
-    let headersToExecute = headers.join("\n");
+    const boilerPlate = "\n" + functionsToExecute.join("\n");
 
-    //only supports python for now
-    const boilerPlate = `\n${headersToExecute}`;
-
-    return new Promise((resolve, reject) => {
-      const pythonProcess = spawn("python", [
-        "-u",
-        "-c",
-        input.code_string + boilerPlate,
-      ]);
-
-      let stdData = "";
-      pythonProcess.stdout.on("data", (data: Buffer) => {
-        stdData = data.toString().trim();
+    try {
+      const response = await fetch("https://emkc.org/api/v2/piston/execute", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          language: "python",
+          version: "3.10.0",
+          files: [
+            {
+              content: input.code_string + boilerPlate,
+            },
+          ],
+        }),
       });
 
-      pythonProcess.stderr.on("data", (data: Buffer) => {
-        stdData = data.toString().trim();
-      });
-
-      pythonProcess.on("close", (code) => {
-        const stdOutputs = stdData.split("\r\n");
-        let count = 0;
-        for (let i = 0; i < outputs.length; i++) {
-          if (outputs[i] == stdOutputs[i]) count++;
+      const data = (await response.json()) as ExecutionResponse;
+      if (data.run.code == 0) {
+        const expectedOutputs = [];
+        for (const testCase of testCases) {
+          const out = testCase.test_case_output;
+          expectedOutputs.push(out);
         }
 
-        let output;
-        if (count == outputs.length) {
-          output = `Passed ${count}/${outputs.length} hidden test cases. ✔️`;
-          void solveChallenge(ctx.db, input.challenge_id, input.user_uuid);
-          resolve({
+        const stdOutputs = data.run.stdout.split("\n");
+
+        let passCount = 0;
+        for (let i = 0; i < expectedOutputs.length; i++)
+          if (expectedOutputs[i] == stdOutputs[i]) passCount++;
+
+        if (data.run.code === 0 && passCount === expectedOutputs.length) {
+          await solveChallenge(ctx.db, input.challenge_id, input.user_uuid);
+          return {
             type: "success",
-            output: output,
-          });
+            output: `Passed ${passCount}/${expectedOutputs.length} hidden testcases. ✔️`,
+          };
         } else
-          output = `Passed ${count}/${outputs.length} hidden test cases. ❌`;
-        resolve({
+          return {
+            type: "error",
+            output: `Passed ${passCount}/${expectedOutputs.length} hidden testcases. ❌`,
+          };
+      } else {
+        return {
           type: "error",
-          output: output,
-        });
+          output: "Did you even test your code? 🤡",
+        };
+      }
+    } catch (error) {
+      throw new TRPCError({
+        message: "The executor has encountered some issues.",
+        code: "INTERNAL_SERVER_ERROR",
       });
-    });
+    }
   });

@@ -1,14 +1,13 @@
-/* eslint-disable prefer-const */
 import { getChallenge } from "@/server/dao/challenges";
 import { protectedProcedure } from "@/server/trpc";
-import { testCodeSchema } from "@/server/zod-schemas/challenges";
-import { spawn } from "child_process";
+import { runCodeSchema } from "@/server/zod-schemas/challenges";
+import { TRPCError } from "@trpc/server";
 
 export const languages = ["python", "cpp", "javascript"] as const;
 export type TLanguages = (typeof languages)[number];
 
-//format header to execute properly; same header for all used languages
-function formatHeader(header: string) {
+// FORMAT
+export function formatFunctionCall(header: string) {
   const match = header.match(/^\s*def\s+(\w+)\s*\((.*)\)\s*$/);
   const functionName = match![1];
   const params = match![2];
@@ -21,78 +20,96 @@ function formatHeader(header: string) {
   return `${functionName}(${replacedParams})`;
 }
 
-export type TData = {
-  type: "valid" | "error" | "success";
-  output: string;
-};
+// FILL
+export function fillFunctionCall(
+  header: string,
+  language: string,
+  inputs: string,
+) {
+  for (const input of inputs.split("\n")) {
+    if (language == "cpp") {
+      let newInput = input;
+
+      //change python/javascript array to cpp array
+      const regex = /^\[\s*(-?\d+(\s*,\s*-?\d+)*)?\s*\]$/;
+      if (regex.test(input)) {
+        const temp = input.slice(1, -1).split(",");
+        newInput = `{${temp.join(", ")}}`;
+      }
+      header = header.replace(".", newInput);
+    } else {
+      header = header.replace(".", formatInput(input));
+    }
+  }
+  return header;
+}
+
+export function formatInput(input: string): string {
+  const regex = /^[a-zA-Z\s]+$/;
+  const isString = regex.test(input);
+  if (isString) return `"${input}"`;
+  else return input;
+}
 
 export default protectedProcedure
-  .input(testCodeSchema)
-  // eslint-disable-next-line @typescript-eslint/require-await
+  .input(runCodeSchema)
   .query(async ({ ctx, input }) => {
-    //get header to execute
     const challengeData = await getChallenge(ctx.db, input.challenge_id);
     const exampleInputs = challengeData?.challenge_example_input;
 
-    let tempHeader = formatHeader(input.challenge_header);
+    const tempHeader = formatFunctionCall(input.challenge_header);
+    const headerToExecute = fillFunctionCall(
+      tempHeader,
+      input.language,
+      exampleInputs!,
+    );
 
-    let headerToExecute = "";
-    for (const exampleInput of exampleInputs!.split("\n")) {
-      if (input.language == "cpp") {
-        let newExampleInput = exampleInput;
-
-        //change python/javascript array to cpp array
-        const regex = /^\[\s*(-?\d+(\s*,\s*-?\d+)*)?\s*\]$/;
-        if (regex.test(exampleInput)) {
-          const temp = exampleInput.slice(1, -1).split(",");
-          newExampleInput = `{${temp.join(", ")}}`;
-        }
-        tempHeader = tempHeader.replace(".", newExampleInput);
-      } else {
-        tempHeader = tempHeader.replace(".", exampleInput);
-      }
-      headerToExecute = tempHeader;
-    }
-
-    //only supports python for now
     const boilerPlate = `\nprint(${headerToExecute})`;
 
-    return new Promise((resolve, reject) => {
-      const pythonProcess = spawn("python", [
-        "-u",
-        "-c",
-        input.code_string + boilerPlate,
-      ]);
-
-      let stdData = "";
-
-      pythonProcess.stdout.on("data", (data: Buffer) => {
-        stdData = data.toString().trim();
+    try {
+      const response = await fetch("https://emkc.org/api/v2/piston/execute", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          language: "python",
+          version: "3.10.0",
+          files: [
+            {
+              content: input.code_string + boilerPlate,
+            },
+          ],
+        }),
       });
 
-      pythonProcess.stderr.on("data", (data: Buffer) => {
-        stdData = data.toString().trim();
+      const data = (await response.json()) as ExecutionResponse;
+      if (data.run.code == 0)
+        return {
+          type: "valid",
+          output: data.run.stdout,
+        };
+      else
+        return {
+          type: "error",
+          output: data.run.stderr,
+        };
+    } catch (error) {
+      throw new TRPCError({
+        message: "The executor has encountered some issues.",
+        code: "INTERNAL_SERVER_ERROR",
       });
-
-      pythonProcess.on("close", (code) => {
-        if (code === 0) {
-          resolve({
-            type: "valid",
-            output: stdData,
-          });
-        } else {
-          resolve({
-            type: "error",
-            output: stdData,
-          });
-        }
-      });
-
-      pythonProcess.on("error", (err) => {
-        reject({
-          type: "system_error",
-          output: `Failed to run Python process: ${err.message}`,
-        });
-      });
-    });
+    }
   });
+
+export type ExecutionResponse = {
+  language: string;
+  version: string;
+  run: {
+    stdout: string;
+    stderr: string;
+    code: number;
+    signal: string | null;
+    output: string;
+  };
+};
