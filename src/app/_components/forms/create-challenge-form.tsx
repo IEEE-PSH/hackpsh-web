@@ -79,12 +79,10 @@ export function CreateChallengeForm({
       router.replace(siteConfig.paths.challenges);
       router.refresh();
     },
-    onError: () => {
+    onError: (error) => {
       toast({
         variant: "destructive",
-        title: "Oops, Something Went Wrong!",
-        description:
-          "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
+        description: error.message,
         duration: 6000,
       });
     },
@@ -257,10 +255,15 @@ export function CreateChallengeForm({
                     <HoverCardContent className="flex flex-col space-y-2 font-normal">
                       <p className="underline">Format:</p>
                       <p>type functionName(type param1, type param2)</p>
-                      <p className="underline">Valid types:</p>
+                      <p className="underline">Function types:</p>
                       <p>
-                        void, int, intArr, double, doubleArr, string, stringArr,
-                        char, charArr
+                        void, boolean, int, intArr, double, doubleArr, string,
+                        stringArr, char, charArr
+                      </p>
+                      <p className="underline">Param types:</p>
+                      <p>
+                        int, intArr, double, doubleArr, string, stringArr, char,
+                        charArr
                       </p>
                     </HoverCardContent>
                   </HoverCard>

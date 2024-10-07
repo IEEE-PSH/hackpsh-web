@@ -8,8 +8,10 @@ import ProtectedEditorSiteHeader from "../nav/protected-editor-site-header";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
-  paramTypeMapping,
+  functionTypeMapping,
   paramTypes,
+  type TFunctionTypeMapping,
+  type TParamTypes,
 } from "@/app/_lib/zod-schemas/forms/challenges";
 import { type TSubmitData } from "@/server/procedures/protected/challenges/runCodeProcedure";
 import ChallengeNavActions from "./challenge-nav-actions";
@@ -126,20 +128,19 @@ function formatHeader(header: string, language: TLanguages) {
   } else if (language == "cpp") {
     const match = newHeader?.match(/(\w+)\s+(\w+)\((.*)\)/);
 
-    const functionType = match![1];
+    const functionType = match![1] as keyof typeof functionTypeMapping;
     const params = match![3];
 
-    const mappedFunctionType =
-      paramTypeMapping[functionType as keyof typeof paramTypeMapping];
+    const mappedFunctionType = functionTypeMapping[functionType];
 
-    newHeader = newHeader?.replace(functionType!, mappedFunctionType);
+    newHeader = newHeader?.replace(functionType, mappedFunctionType);
 
     const paramList = params!.split(",").map((param) => param.trim());
 
     paramList.forEach((param) => {
       const [type, name] = param.split(" ");
       const mappedType =
-        paramTypeMapping[type as keyof typeof paramTypeMapping];
+        functionTypeMapping[type as keyof typeof functionTypeMapping];
 
       if (mappedType) {
         newHeader = newHeader?.replace(param, `${mappedType} ${name}`);

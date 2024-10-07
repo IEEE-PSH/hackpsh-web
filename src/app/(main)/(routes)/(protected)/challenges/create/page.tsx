@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Create an announcement for everyone at the event.",
 };
 
-export default function CreateAnnouncementPage() {
+export default function CreateChallengePage() {
   return (
     <div className="container my-4 mt-8 max-w-4xl">
       <CreateChallengeForm />
