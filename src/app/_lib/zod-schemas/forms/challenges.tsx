@@ -163,12 +163,12 @@ function isValidInput(data: TCreateChallengeFormSchema, input: string) {
 }
 
 // get param types in the form ["string", "intArr"]
-function getParamTypes(header: string) {
+export function getParamTypes(header: string):string[] {
   const regex = /\(([^)]*)\)/;
   const match = header.match(regex);
   if (!match) return [];
   const params = match[1]!.split(",").map((param) => param.trim());
-  return params.map((param) => param.split(" ")[0]);
+  return params.map((param) => param.split(" ")[0]!);
 }
 
 // check valid header

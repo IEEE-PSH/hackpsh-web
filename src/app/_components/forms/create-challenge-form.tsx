@@ -114,7 +114,7 @@ export function CreateChallengeForm({
   const exampleFields = {
     title: "Sum of Arrays",
     description: "Add all integers of the array given its size.",
-    function_header: "int arraysSum(intArr nums)",
+    function_header: "int arraysSum(intArr a, intArr b)",
     example_input: `[1, 3]\n[5, 5]`,
     example_output: "14",
     explanation:
