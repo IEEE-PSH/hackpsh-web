@@ -7,34 +7,11 @@ import { protectedProcedure } from "@/server/trpc";
 import { submitCodeSchema } from "@/server/zod-schemas/challenges";
 import {
   type ExecutionResponse,
+  fillFunctionCall,
   formatFunctionCall,
-  formatInput,
 } from "./runCodeProcedure";
 import { TRPCError } from "@trpc/server";
-
-// FILL
-export function fillFunctionCall(
-  header: string,
-  language: string,
-  inputs: string,
-) {
-  for (const input of inputs.split("\n")) {
-    if (language == "cpp") {
-      let newInput = input;
-
-      //change python/javascript array to cpp array
-      const regex = /^\[\s*(-?\d+(\s*,\s*-?\d+)*)?\s*\]$/;
-      if (regex.test(input)) {
-        const temp = input.slice(1, -1).split(",");
-        newInput = `{${temp.join(", ")}}`;
-      }
-      header = header.replace(".", newInput);
-    } else {
-      header = header.replace(".", formatInput(input));
-    }
-  }
-  return header;
-}
+import getParamTypes from "@/app/_lib/zod-schemas/forms/challenges";
 
 export default protectedProcedure
   .input(submitCodeSchema)
@@ -47,17 +24,24 @@ export default protectedProcedure
     };
     testCases.push(exampleTestCase);
 
-    const tempHeader = formatFunctionCall(input.challenge_header);
+    const tempHeader = formatFunctionCall(
+      challengeData!.challenge_function_header,
+    );
     const functionsToExecute = [];
+    const paramTypes = getParamTypes(challengeData!.challenge_function_header);
+    const headerType = challengeData!.challenge_function_header.split(" ")[0];
+
     for (const testCase of testCases) {
       const func = fillFunctionCall(
         tempHeader,
         input.language,
         testCase.test_case_input,
+        paramTypes as string[],
       );
-      functionsToExecute.push(`print(${func})`);
+      if (headerType === "void") {
+        functionsToExecute.push(`${func}`);
+      } else functionsToExecute.push(`print(${func})`);
     }
-
     const boilerPlate = "\n" + functionsToExecute.join("\n");
 
     try {
@@ -87,9 +71,25 @@ export default protectedProcedure
 
         const stdOutputs = data.run.stdout.split("\n");
 
+        //tomfoolery goin on ere; not actually
+        const outputLengths: number[] = [];
+        for (const testCase of testCases) {
+          const outputs = testCase.test_case_output.split("\n");
+          outputLengths.push(outputs.length);
+        }
+
+        const stdOuts: string[] = [];
+        for (const n of outputLengths) {
+          const temp: string[] = [];
+          for (let i = 0; i < n; i++) {
+            temp.push(stdOutputs.shift()!);
+          }
+          stdOuts.push(temp.join("\n"));
+        }
+
         let passCount = 0;
         for (let i = 0; i < expectedOutputs.length; i++)
-          if (expectedOutputs[i] == stdOutputs[i]) passCount++;
+          if (expectedOutputs[i] === stdOuts[i]) passCount++;
 
         if (data.run.code === 0 && passCount === expectedOutputs.length) {
           await solveChallenge(ctx.db, input.challenge_id, input.user_uuid);
@@ -97,11 +97,12 @@ export default protectedProcedure
             type: "success",
             output: `Passed ${passCount}/${expectedOutputs.length} hidden testcases. ✔️`,
           };
-        } else
+        } else {
           return {
             type: "error",
             output: `Passed ${passCount}/${expectedOutputs.length} hidden testcases. ❌`,
           };
+        }
       } else {
         return {
           type: "error",

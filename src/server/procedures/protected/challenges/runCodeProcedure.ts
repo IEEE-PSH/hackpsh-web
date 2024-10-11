@@ -1,3 +1,4 @@
+import getParamTypes from "@/app/_lib/zod-schemas/forms/challenges";
 import { getChallenge } from "@/server/dao/challenges";
 import { protectedProcedure } from "@/server/trpc";
 import {
@@ -13,9 +14,9 @@ export type TSubmitData = {
 
 // FORMAT
 export function formatFunctionCall(header: string) {
-  const match = header.match(/^\s*def\s+(\w+)\s*\((.*)\)\s*$/);
-  const functionName = match![1];
-  const params = match![2];
+  const match = header.match(/^\s*(\w+)\s+(\w+)\s*\((.*)\)\s*$/);
+  const functionName = match![2];
+  const params = match![3];
 
   const replacedParams = params!
     .split(",")
@@ -26,12 +27,16 @@ export function formatFunctionCall(header: string) {
 }
 
 // FILL
+// addSum(a, n)
 export function fillFunctionCall(
   header: string,
   language: TLanguages,
-  inputs: string,
+  exampleInputs: string,
+  paramTypes: string[],
 ) {
-  for (const input of inputs.split("\n")) {
+  const inputs = exampleInputs.split("\n");
+  for (let i = 0; i < inputs.length; i++) {
+    const input = inputs[i]!;
     if (language == "cpp") {
       let newInput = input;
 
@@ -43,17 +48,18 @@ export function fillFunctionCall(
       }
       header = header.replace(".", newInput);
     } else {
-      header = header.replace(".", formatInput(input));
+      header = header.replace(".", formatInput(input, paramTypes[i]!));
     }
   }
+
   return header;
 }
 
-export function formatInput(input: string): string {
-  const regex = /^[a-zA-Z\s]+$/;
-  const isString = regex.test(input);
-  if (isString) return `"${input}"`;
-  else return input;
+export function formatInput(input: string, type: string): string {
+  if (type === "string") {
+    return `"${input}"`;
+  }
+  return input;
 }
 
 export default protectedProcedure
@@ -61,15 +67,23 @@ export default protectedProcedure
   .query(async ({ ctx, input }) => {
     const challengeData = await getChallenge(ctx.db, input.challenge_id);
     const exampleInputs = challengeData?.challenge_example_input;
+    const headerType = challengeData!.challenge_function_header.split(" ")[0];
+    const tempHeader = formatFunctionCall(
+      challengeData!.challenge_function_header,
+    );
 
-    const tempHeader = formatFunctionCall(input.challenge_header);
+    const paramTypes = getParamTypes(challengeData!.challenge_function_header);
     const headerToExecute = fillFunctionCall(
       tempHeader,
       input.language,
       exampleInputs!,
+      paramTypes as string[],
     );
 
-    const boilerPlate = `\nprint(${headerToExecute})`;
+    let boilerPlate = `\nprint(${headerToExecute})`;
+    if (headerType === "void") {
+      boilerPlate = `\n${headerToExecute}`;
+    }
 
     try {
       const response = await fetch("https://emkc.org/api/v2/piston/execute", {

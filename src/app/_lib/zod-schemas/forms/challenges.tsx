@@ -163,7 +163,7 @@ function isValidInput(data: TCreateChallengeFormSchema, input: string) {
 }
 
 // get param types in the form ["string", "intArr"]
-function getParamTypes(header: string) {
+export default function getParamTypes(header: string) {
   const regex = /\(([^)]*)\)/;
   const match = header.match(regex);
   if (!match) return [];

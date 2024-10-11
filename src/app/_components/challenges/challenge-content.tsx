@@ -9,9 +9,8 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
   functionTypeMapping,
+  functionTypes,
   paramTypes,
-  type TFunctionTypeMapping,
-  type TParamTypes,
 } from "@/app/_lib/zod-schemas/forms/challenges";
 import { type TSubmitData } from "@/server/procedures/protected/challenges/runCodeProcedure";
 import ChallengeNavActions from "./challenge-nav-actions";
@@ -115,14 +114,14 @@ function formatHeader(header: string, language: TLanguages) {
   let newHeader = header;
 
   if (language == "python" || language == "javascript") {
-    paramTypes.forEach((type) => {
+    functionTypes.forEach((type) => {
       const regex = new RegExp(`\\b${type}\\s+`, "g");
       newHeader = newHeader?.replace(regex, "");
     });
     if (language == "python") {
-      newHeader = `def ${newHeader}`;
+      newHeader = `${newHeader}`;
     } else {
-      newHeader = `function ${newHeader}`;
+      newHeader = `${newHeader}`;
     }
     return newHeader;
   } else if (language == "cpp") {
@@ -152,6 +151,8 @@ function formatHeader(header: string, language: TLanguages) {
 
 function getPresetHeader(header: string, language: TLanguages) {
   if (language === "python")
-    return `# Implement this function\n${header}:\n\t\n`;
-  else return `// Implement this function\n${header}{\n\t\n}\n`;
+    return `# Implement this function\ndef ${header}:\n\t`;
+  else if (language === "cpp")
+    return `// Implement this function\n${header}{\n\t\n}\n`;
+  else return `// Implement this function\nfunction ${header}{\n\t\n}\n`;
 }

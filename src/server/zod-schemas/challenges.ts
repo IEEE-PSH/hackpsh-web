@@ -46,6 +46,6 @@ export const submitCodeSchema = z.object({
   code_string: z.string(),
   challenge_id: z.number(),
   challenge_header: z.string(),
-  language: z.string(),
+  language: z.enum(languages),
   user_uuid: z.string().uuid("Please provide a valid UUID."),
 });
