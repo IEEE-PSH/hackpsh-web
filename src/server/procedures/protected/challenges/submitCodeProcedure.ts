@@ -11,7 +11,7 @@ import {
   formatFunctionCall,
 } from "./runCodeProcedure";
 import { TRPCError } from "@trpc/server";
-import getParamTypes from "@/app/_lib/zod-schemas/forms/challenges";
+import { getParamTypes } from "@/app/_lib/zod-schemas/forms/challenges";
 
 export default protectedProcedure
   .input(submitCodeSchema)
@@ -36,7 +36,7 @@ export default protectedProcedure
         tempHeader,
         input.language,
         testCase.test_case_input,
-        paramTypes as string[],
+        paramTypes,
       );
       if (headerType === "void") {
         functionsToExecute.push(`${func}`);

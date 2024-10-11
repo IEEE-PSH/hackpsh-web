@@ -1,4 +1,4 @@
-import getParamTypes from "@/app/_lib/zod-schemas/forms/challenges";
+import { getParamTypes } from "@/app/_lib/zod-schemas/forms/challenges";
 import { getChallenge } from "@/server/dao/challenges";
 import { protectedProcedure } from "@/server/trpc";
 import {
@@ -77,7 +77,7 @@ export default protectedProcedure
       tempHeader,
       input.language,
       exampleInputs!,
-      paramTypes as string[],
+      paramTypes,
     );
 
     let boilerPlate = `\nprint(${headerToExecute})`;
