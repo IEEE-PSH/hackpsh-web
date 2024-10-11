@@ -41,7 +41,7 @@ export default function ChallengeContentPage({
 
   const { data: challengeData, isSuccess } =
     trpc.challenges.get_challenge.useQuery({
-      challenge_id: parseInt(challengeId as unknown as string),
+      challenge_id: challengeId,
     });
 
   useEffect(() => {
@@ -94,6 +94,9 @@ export default function ChallengeContentPage({
             setValue={setValue}
             language={language}
             header={presetHeader}
+            solved={solved}
+            userUUID={userUUID}
+            challengeId={challengeId}
           />
 
           <pre

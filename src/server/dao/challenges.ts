@@ -63,6 +63,55 @@ export async function getChallenge(db: Database, challengeID: number) {
   }
 }
 
+export async function getCodeSubmission(
+  db: Database,
+  challenge_id: number,
+  user_uuid: string,
+) {
+  try {
+    const solved = await isSolvedChallenge(db, challenge_id, user_uuid);
+    if (solved) {
+      const challengeUUID = await db.query.app_challenges.findFirst({
+        columns: {
+          challenge_uuid: true,
+        },
+        where: eq(app_challenges.challenge_id, challenge_id),
+      });
+
+      const teamUUID = await db.query.app_user_profile.findFirst({
+        columns: {
+          user_team_uuid: true,
+        },
+        where: eq(app_user_profile.user_uuid, user_uuid),
+      });
+
+      const result = db.query.app_solved_challenges.findFirst({
+        columns: {
+          solved_challenge_code_submission: true,
+        },
+        where: and(
+          eq(
+            app_solved_challenges.solved_challenge_uuid,
+            challengeUUID!.challenge_uuid,
+          ),
+          eq(
+            app_solved_challenges.solved_challenge_team_uuid,
+            teamUUID!.user_team_uuid!,
+          ),
+        ),
+      });
+      return result;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
 export type TChallengeData = Awaited<ReturnType<typeof getChallenge>>;
 
 export async function isSolvedChallenge(
@@ -194,6 +243,7 @@ export async function solveChallenge(
   db: Database,
   challenge_id: number,
   user_uuid: string,
+  code_submission: string,
 ) {
   try {
     const challenge = await db.query.app_challenges.findFirst({
@@ -214,6 +264,7 @@ export async function solveChallenge(
     await db.insert(app_solved_challenges).values({
       solved_challenge_uuid: challenge?.challenge_uuid,
       solved_challenge_team_uuid: teamUUID!.user_team_uuid!,
+      solved_challenge_code_submission: code_submission,
     });
 
     await db

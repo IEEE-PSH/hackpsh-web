@@ -86,15 +86,18 @@ export default protectedProcedure
           }
           stdOuts.push(temp.join("\n"));
         }
-        console.log(stdOuts);
-        console.log(expectedOutputs);
 
         let passCount = 0;
         for (let i = 0; i < expectedOutputs.length; i++)
           if (expectedOutputs[i] === stdOuts[i]) passCount++;
 
         if (data.run.code === 0 && passCount === expectedOutputs.length) {
-          await solveChallenge(ctx.db, input.challenge_id, input.user_uuid);
+          await solveChallenge(
+            ctx.db,
+            input.challenge_id,
+            input.user_uuid,
+            input.code_string,
+          );
           return {
             type: "success",
             output: `Passed ${passCount}/${expectedOutputs.length} hidden testcases. ✔️`,

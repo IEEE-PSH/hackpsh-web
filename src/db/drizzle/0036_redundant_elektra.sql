@@ -1,0 +1,1 @@
+ALTER TABLE "app_schema"."app_solved_challenges" ALTER COLUMN "solved_challenge_code_submission" DROP NOT NULL;

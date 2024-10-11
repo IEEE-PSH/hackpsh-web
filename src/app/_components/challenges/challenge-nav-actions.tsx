@@ -45,7 +45,7 @@ export default function ChallengeNavActions({
 
   const { isFetchedAfterMount } = trpc.challenges.is_solved_challenge.useQuery(
     {
-      challenge_id: parseInt(challengeId as unknown as string),
+      challenge_id: challengeId,
       user_uuid: userUUID,
     },
     {
@@ -59,7 +59,7 @@ export default function ChallengeNavActions({
   trpc.challenges.submit_code.useQuery(
     {
       code_string: value,
-      challenge_id: parseInt(challengeId as unknown as string),
+      challenge_id: challengeId,
       challenge_header: header,
       language: language,
       user_uuid: userUUID,
@@ -95,7 +95,7 @@ export default function ChallengeNavActions({
   trpc.challenges.run_code.useQuery(
     {
       code_string: value,
-      challenge_id: parseInt(challengeId as unknown as string),
+      challenge_id: challengeId,
       challenge_header: header,
       language: language,
     },

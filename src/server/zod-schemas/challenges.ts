@@ -20,7 +20,7 @@ export const createChallengeSchema = z.object({
 });
 
 export const LookupChallengeSchema = z.object({
-  challenge_id: z.number(),
+  challenge_id: z.coerce.number(),
 });
 
 export const LookupTestCasesSchema = z.object({
@@ -28,7 +28,7 @@ export const LookupTestCasesSchema = z.object({
 });
 
 export const isSolvedChallengeSchema = z.object({
-  challenge_id: z.number(),
+  challenge_id: z.coerce.number(),
   user_uuid: z.string().uuid("Please provide a valid UUID."),
 });
 
@@ -37,14 +37,14 @@ export type TLanguages = (typeof languages)[number];
 
 export const runCodeSchema = z.object({
   code_string: z.string(),
-  challenge_id: z.number(),
+  challenge_id: z.coerce.number(),
   challenge_header: z.string(),
   language: z.enum(languages),
 });
 
 export const submitCodeSchema = z.object({
   code_string: z.string(),
-  challenge_id: z.number(),
+  challenge_id: z.coerce.number(),
   challenge_header: z.string(),
   language: z.enum(languages),
   user_uuid: z.string().uuid("Please provide a valid UUID."),

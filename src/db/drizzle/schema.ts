@@ -162,4 +162,5 @@ export const app_solved_challenges = app_schema.table("app_solved_challenges", {
   solved_challenge_team_uuid: uuid("solved_challenge_team_uuid")
     .references(() => app_team.team_uuid, { onDelete: "cascade" })
     .notNull(),
+  solved_challenge_code_submission: text("solved_challenge_code_submission"),
 });
