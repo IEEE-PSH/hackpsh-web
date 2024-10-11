@@ -112,8 +112,11 @@ function isValidOutput(data: TCreateChallengeFormSchema, output: string) {
 
   // this is return type
   const type = match[1]!.trim();
+
   if (type === "void") return true;
   if (output.split("\n").length > 1) return false;
+
+  output = output.trim();
   // check arrays
   if (
     type === "stringArr" ||
@@ -128,8 +131,8 @@ function isValidOutput(data: TCreateChallengeFormSchema, output: string) {
   } else if (type === "int" || type === "double") {
     if (isNaN(Number(output))) return false;
     // check strings
-  } else if (type === "boolean" && (output === "true" || output === "false"))
-    return true;
+  } else if (type === "boolean" && !(output === "true" || output === "false"))
+    return false;
   return true;
 }
 
@@ -141,7 +144,7 @@ function isValidInput(data: TCreateChallengeFormSchema, input: string) {
 
   for (let i = 0; i < paramTypes.length; i++) {
     const type = paramTypes[i];
-    const input = inputs[i];
+    const input = inputs[i]?.trim();
     //check arrays
     if (
       type === "stringArr" ||
@@ -194,21 +197,20 @@ function isValidHeader(header: string) {
     names.push(name!);
   });
 
-  // check functionTitle and param names unique
+  // check param names
   if (names.includes(functionTitle!)) return false;
-
-  // check valid params
   if (types.length !== names.length) return false;
+  if (new Set(names).size !== names.length) return false;
+  for (const name of names) if (!isValidName(name)) return false;
 
-  // eslint-disable-next-line @typescript-eslint/prefer-for-of
-  for (let i = 0; i < types.length; i++) {
-    // check valid param types
-    if (!paramTypes.includes(types[i]! as TParamTypes)) {
-      return false;
-      // check unique param names
-    } else if (new Set(names).size !== names.length) {
-      return false;
-    }
-  }
+  // check param types
+  for (const type of types)
+    if (!paramTypes.includes(type as TParamTypes)) return false;
+
   return true;
+}
+
+function isValidName(name: string): boolean {
+  const regex = /^[a-zA-Z]+$/;
+  return regex.test(name);
 }

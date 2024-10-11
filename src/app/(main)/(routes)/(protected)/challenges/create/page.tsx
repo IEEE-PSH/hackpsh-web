@@ -2,8 +2,8 @@ import { CreateChallengeForm } from "@/app/_components/forms/create-challenge-fo
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Create Announcement | HackPSH",
-  description: "Create an announcement for everyone at the event.",
+  title: "Create Challenge | HackPSH",
+  description: "Create a challenge for the event.",
 };
 
 export default function CreateChallengePage() {

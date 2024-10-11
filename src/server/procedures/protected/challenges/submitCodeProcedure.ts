@@ -86,6 +86,8 @@ export default protectedProcedure
           }
           stdOuts.push(temp.join("\n"));
         }
+        console.log(stdOuts);
+        console.log(expectedOutputs);
 
         let passCount = 0;
         for (let i = 0; i < expectedOutputs.length; i++)
