@@ -1,6 +1,6 @@
 import EditAnnouncementPostForm from "@/app/_components/forms/edit-announcement-post-form";
 import { serverTRPC } from "@/app/_trpc/server";
-import { AnnouncementPost } from "@/server/dao/announcements";
+import { type AnnouncementPost } from "@/server/dao/announcements";
 import { type Metadata } from "next";
 
 //fix types
@@ -14,7 +14,6 @@ export default async function EditAnnouncementPage({
 }: {
   params: { postId: number };
 }) {
-  console.log(typeof params.postId);
   const postData = await serverTRPC.announcements.get_announcement_post.query({
     announcement_id: parseInt(params.postId as unknown as string),
   });

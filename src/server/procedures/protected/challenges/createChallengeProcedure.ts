@@ -2,10 +2,8 @@ import { getParamTypes } from "@/app/_lib/zod-schemas/forms/challenges";
 import { createChallenge } from "@/server/dao/challenges";
 import { protectedProcedure } from "@/server/trpc";
 import { createChallengeSchema } from "@/server/zod-schemas/challenges";
-import { TRPCClientError } from "@trpc/client";
-import { TRPCError } from "@trpc/server";
 
-function formatInputs(input: string, types: string[]): string {
+export function formatInputs(input: string, types: string[]): string {
   let newInput = "";
 
   const inputsArray = input.split("\n");
@@ -32,7 +30,7 @@ function formatInputs(input: string, types: string[]): string {
   return newInput.trim();
 }
 
-function formatOutputs(output: string, header: string): string {
+export function formatOutputs(output: string, header: string): string {
   const regex = /^\s*(\w+|\w+\[\])\s+\w+\s*\(/;
   const match = header.match(regex);
 

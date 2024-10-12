@@ -64,7 +64,7 @@ export const CreateChallengeFormSchema = z
     explanation: z.string().min(1, "Cannot leave field empty."),
     test_cases: z.array(
       z.object({
-        input: z.string(),
+        input: z.string().min(1, "Cannot leave field empty."),
         output: z.string().min(1, "Cannot leave field empty."),
       }),
     ),

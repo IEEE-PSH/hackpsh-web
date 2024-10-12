@@ -63,6 +63,46 @@ export async function getChallenge(db: Database, challengeID: number) {
   }
 }
 
+export async function getEditChallengeInfo(db: Database, challengeId: number) {
+  try {
+    const challengeUUID = await db.query.app_challenges.findFirst({
+      columns: {
+        challenge_uuid: true,
+      },
+      where: eq(app_challenges.challenge_id, challengeId),
+    });
+
+    const testcases = await getTestCases(db, challengeUUID!.challenge_uuid);
+
+    const challenge = await db.query.app_challenges.findFirst({
+      columns: {
+        challenge_uuid: true,
+        challenge_id: true,
+        challenge_title: true,
+        challenge_difficulty: true,
+        challenge_description: true,
+        challenge_function_header: true,
+        challenge_example_input: true,
+        challenge_example_output: true,
+        challenge_explanation: true,
+        challenge_points: true,
+      },
+      where: (challenge_data, { eq }) =>
+        eq(challenge_data.challenge_id, challengeId),
+    });
+    return { challenge: challenge, testcases: testcases };
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export type TEditChallengeData = Awaited<
+  ReturnType<typeof getEditChallengeInfo>
+>;
+
 export async function getCodeSubmission(
   db: Database,
   challenge_id: number,
@@ -202,7 +242,7 @@ export async function createChallenge(
   const result = await getUserRole(db, user_uuid);
   if (result?.user_role === "participant") {
     throw new TRPCError({
-      message: "User must be an officer or admin to delete announcements.",
+      message: "User must be an officer or admin to create challenges.",
       code: "UNAUTHORIZED",
     });
   }
@@ -239,6 +279,66 @@ export async function createChallenge(
   }
 }
 
+export async function updateChallenge(
+  db: Database,
+  user_uuid: string,
+  title: string,
+  difficulty: TDifficulties,
+  points: number,
+  description: string,
+  function_header: string,
+  example_input: string,
+  example_output: string,
+  explanation: string,
+  test_cases: Array<{
+    input: string;
+    output: string;
+  }>,
+  challengeId: number,
+) {
+  const result = await getUserRole(db, user_uuid);
+  if (result?.user_role === "participant") {
+    throw new TRPCError({
+      message: "User must be an officer or admin to update challenges.",
+      code: "UNAUTHORIZED",
+    });
+  }
+
+  try {
+    const challenge = await db
+      .update(app_challenges)
+      .set({
+        challenge_title: title,
+        challenge_difficulty: difficulty,
+        challenge_points: points,
+        challenge_description: description,
+        challenge_function_header: function_header,
+        challenge_example_input: example_input,
+        challenge_example_output: example_output,
+        challenge_explanation: explanation,
+      })
+      .where(eq(app_challenges.challenge_id, challengeId))
+      .returning({ uuid: app_challenges.challenge_uuid });
+
+    const challengeUUID = challenge[0]!.uuid;
+
+    for (const test_case of test_cases) {
+      await db
+        .update(app_test_cases)
+        .set({
+          test_case_input: test_case.input,
+          test_case_output: test_case.output,
+        })
+        .where(eq(app_test_cases.test_case_challenge_uuid, challengeUUID));
+    }
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
 export async function solveChallenge(
   db: Database,
   challenge_id: number,
@@ -261,18 +361,37 @@ export async function solveChallenge(
       where: eq(app_user_profile.user_uuid, user_uuid),
     });
 
-    await db.insert(app_solved_challenges).values({
-      solved_challenge_uuid: challenge?.challenge_uuid,
-      solved_challenge_team_uuid: teamUUID!.user_team_uuid!,
-      solved_challenge_code_submission: code_submission,
+    const isSolvedAlready = await db.query.app_solved_challenges.findFirst({
+      columns: {
+        solved_challenge_uuid: true,
+        solved_challenge_team_uuid: true,
+      },
+      where: and(
+        eq(
+          app_solved_challenges.solved_challenge_uuid,
+          challenge!.challenge_uuid,
+        ),
+        eq(
+          app_solved_challenges.solved_challenge_team_uuid,
+          teamUUID!.user_team_uuid!,
+        ),
+      ),
     });
 
-    await db
-      .update(app_team)
-      .set({
-        team_points: sql`${app_team.team_points} + ${challenge!.challenge_points}`,
-      })
-      .where(eq(app_team.team_uuid, teamUUID!.user_team_uuid!));
+    if (!isSolvedAlready) {
+      await db.insert(app_solved_challenges).values({
+        solved_challenge_uuid: challenge?.challenge_uuid,
+        solved_challenge_team_uuid: teamUUID!.user_team_uuid!,
+        solved_challenge_code_submission: code_submission,
+      });
+
+      await db
+        .update(app_team)
+        .set({
+          team_points: sql`${app_team.team_points} + ${challenge!.challenge_points}`,
+        })
+        .where(eq(app_team.team_uuid, teamUUID!.user_team_uuid!));
+    }
   } catch (error) {
     throw new TRPCError({
       message: "The database has encountered some issues.",

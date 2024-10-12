@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 import {
   functionTypeMapping,
   functionTypes,
-  paramTypes,
 } from "@/app/_lib/zod-schemas/forms/challenges";
 import { type TSubmitData } from "@/server/procedures/protected/challenges/runCodeProcedure";
 import ChallengeNavActions from "./challenge-nav-actions";
@@ -64,11 +63,11 @@ export default function ChallengeContentPage({
       >
         <Button
           variant="secondary"
-          className="ml-4 mr-auto hidden sm:flex"
+          className="ml-4 mr-auto p-2 sm:flex md:p-4"
           onClick={() => router.back()}
         >
           <ArrowLeft />
-          <span className="ml-4">Challenges</span>
+          <span className="ml-4 hidden md:block">Challenges</span>
         </Button>
         <ChallengeNavActions
           value={value}

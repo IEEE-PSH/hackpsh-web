@@ -1,0 +1,1 @@
+ALTER TABLE "app_schema"."app_challenges" ALTER COLUMN "challenge_explanation" SET NOT NULL;

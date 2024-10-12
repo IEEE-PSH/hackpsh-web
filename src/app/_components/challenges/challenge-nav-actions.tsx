@@ -13,9 +13,11 @@ import {
   SelectTrigger,
 } from "../ui/select";
 import { type TSubmitData } from "@/server/procedures/protected/challenges/runCodeProcedure";
-import { Play, Send } from "lucide-react";
+import { Check, Edit, Play, Send } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 import { type TLanguages } from "@/server/zod-schemas/challenges";
+import { useRouter } from "next/navigation";
+import { siteConfig } from "@/app/_config/site";
 
 type ChallengeNavActionsProps = {
   value: string;
@@ -118,12 +120,31 @@ export default function ChallengeNavActions({
     },
   );
 
+  const { data: role } = trpc.user.get_user_role.useQuery({
+    user_uuid: userUUID,
+  });
+  const router = useRouter();
+
   if (isFetchedAfterMount) {
     return (
       <div className="ml-auto flex space-x-4">
+        {role?.get_user_role !== "participant" && (
+          <Button
+            className="p-2 md:p-4"
+            variant="secondary"
+            onClick={() =>
+              router.push(siteConfig.paths.edit_challenge + "/" + challengeId)
+            }
+          >
+            <Edit />
+            <span className="ml-4 hidden md:block">Edit</span>
+          </Button>
+        )}
+
         {solved ? (
           <Button disabled={true}>
-            <span>Solved</span>
+            <Check className="mr-2" />
+            <span>Solved </span>
           </Button>
         ) : (
           <>

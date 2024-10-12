@@ -32,9 +32,8 @@ export default function ChallengeEditor({
   useEffect(() => {
     setValue(submission?.solved_challenge_code_submission ?? header);
   }, [language, header, setValue, submission]);
-
   return (
-    <div className="h-[320px]">
+    <div className="h-[320px] cursor-not-allowed">
       <Editor
         className={cn(solved && "pointer-events-none")}
         height="100%"
@@ -42,6 +41,7 @@ export default function ChallengeEditor({
         language={language}
         defaultLanguage="python"
         value={value}
+        loading={""}
         onChange={(value) => setValue(value!)}
         options={{ readOnly: solved }}
       />

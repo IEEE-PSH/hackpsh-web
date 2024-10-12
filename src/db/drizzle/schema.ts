@@ -135,7 +135,7 @@ export const app_challenges = app_schema.table("app_challenges", {
   challenge_function_header: text("challenge_function_header").notNull(),
   challenge_example_input: text("challenge_example_input").notNull(),
   challenge_example_output: text("challenge_example_output").notNull(),
-  challenge_explanation: text("challenge_explanation"),
+  challenge_explanation: text("challenge_explanation").notNull(),
 });
 
 export const app_difficulty = app_schema.table("app_difficulty", {

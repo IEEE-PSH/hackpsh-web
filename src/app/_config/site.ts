@@ -29,6 +29,7 @@ export const siteConfig = {
     announcements: "/announcements",
     challenges: "/challenges",
     create_challenge: "/challenges/create",
+    edit_challenge: "/challenges/edit",
     create_post: "/announcements/create-post",
     edit_post: "/announcements/edit",
     privacy_policy: "/info/privacy-policy",
@@ -37,7 +38,7 @@ export const siteConfig = {
     account: "/settings/account",
     users: "/settings/users",
     teams: "/settings/teams",
-    solve: "/challenges/solve"
+    solve: "/challenges/solve",
   },
 };
 

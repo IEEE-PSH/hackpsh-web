@@ -100,12 +100,12 @@ export default protectedProcedure
           );
           return {
             type: "success",
-            output: `Passed ${passCount}/${expectedOutputs.length} hidden testcases. ✔️`,
+            output: `Passed ${passCount}/${expectedOutputs.length} testcases. ✔️`,
           };
         } else {
           return {
             type: "error",
-            output: `Passed ${passCount}/${expectedOutputs.length} hidden testcases. ❌`,
+            output: `Passed ${passCount}/${expectedOutputs.length} testcases. ❌`,
           };
         }
       } else {
