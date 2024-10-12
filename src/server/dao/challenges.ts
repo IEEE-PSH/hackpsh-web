@@ -37,8 +37,8 @@ export async function getChallenges(db: Database, user_uuid: string) {
             .where(
               and(
                 eq(
+                  app_solved_challenges.solved_challenge_foreign_uuid,
                   app_challenges.challenge_uuid,
-                  app_solved_challenges.solved_challenge_uuid,
                 ),
                 eq(
                   app_solved_challenges.solved_challenge_team_uuid!,
@@ -61,8 +61,8 @@ export async function getChallenges(db: Database, user_uuid: string) {
       .innerJoin(
         app_solved_challenges,
         eq(
+          app_solved_challenges.solved_challenge_foreign_uuid,
           app_challenges.challenge_uuid,
-          app_solved_challenges.solved_challenge_uuid,
         ),
       )
       .where(
@@ -233,7 +233,7 @@ export async function isSolvedChallenge(
         .where(
           and(
             eq(
-              app_solved_challenges.solved_challenge_uuid,
+              app_solved_challenges.solved_challenge_foreign_uuid,
               challengeUUID!.challenge_uuid,
             ),
             eq(
@@ -432,7 +432,7 @@ export async function solveChallenge(
 
     if (!isSolvedAlready) {
       await db.insert(app_solved_challenges).values({
-        solved_challenge_uuid: challenge?.challenge_uuid,
+        solved_challenge_foreign_uuid: challenge!.challenge_uuid,
         solved_challenge_team_uuid: teamUUID!.user_team_uuid!,
         solved_challenge_code_submission: code_submission,
       });
@@ -445,6 +445,7 @@ export async function solveChallenge(
         .where(eq(app_team.team_uuid, teamUUID!.user_team_uuid!));
     }
   } catch (error) {
+    console.log(error);
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",

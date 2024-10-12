@@ -267,6 +267,13 @@
       "when": 1728696719690,
       "tag": "0037_eminent_nitro",
       "breakpoints": true
+    },
+    {
+      "idx": 38,
+      "version": "7",
+      "when": 1728722486116,
+      "tag": "0038_burly_gamma_corps",
+      "breakpoints": true
     }
   ]
 }

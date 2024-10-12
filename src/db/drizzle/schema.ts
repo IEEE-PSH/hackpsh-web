@@ -157,8 +157,10 @@ export const app_test_cases = app_schema.table("app_test_cases", {
 export const app_solved_challenges = app_schema.table("app_solved_challenges", {
   solved_challenge_uuid: uuid("solved_challenge_uuid")
     .primaryKey()
-    .default(sql`uuid_generate_v4()`)
-    .references(() => app_challenges.challenge_uuid, { onDelete: "cascade" }),
+    .default(sql`uuid_generate_v4()`),
+  solved_challenge_foreign_uuid: uuid(
+    "solved_challenge_foreign_uuid",
+  ).references(() => app_challenges.challenge_uuid, { onDelete: "cascade" }),
   solved_challenge_team_uuid: uuid("solved_challenge_team_uuid")
     .references(() => app_team.team_uuid, { onDelete: "cascade" })
     .notNull(),

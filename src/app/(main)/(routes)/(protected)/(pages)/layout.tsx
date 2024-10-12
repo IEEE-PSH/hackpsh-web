@@ -4,13 +4,11 @@ import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background">
-      <div className="flex">
-        <ProtectedSideNav />
+      <ProtectedSideNav />
 
-        <div className="flex-grow md:ml-72">
-          <ProtectedSiteHeader />
-          <div>{children}</div>
-        </div>
+      <div className="flex-grow md:ml-72">
+        <ProtectedSiteHeader />
+        <div>{children}</div>
       </div>
     </div>
   );
