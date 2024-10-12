@@ -8,12 +8,12 @@ export const createChallengeSchema = z.object({
   difficulty: z.enum(difficulty),
   description: z.string().min(1, "Cannot leave field empty."),
   function_header: z.string().min(1, "Cannot leave field empty."),
-  example_input: z.string().min(1, "Cannot leave field empty."),
+  example_input: z.string().default(""),
   example_output: z.string().min(1, "Cannot leave field empty."),
   explanation: z.string().min(1, "Cannot leave field empty."),
   test_cases: z.array(
     z.object({
-      input: z.string().min(1, "Cannot leave field empty."),
+      input: z.string().default(""),
       output: z.string().min(1, "Cannot leave field empty."),
     }),
   ),
@@ -26,12 +26,12 @@ export const updateChallengeSchema = z.object({
   difficulty: z.enum(difficulty),
   description: z.string().min(1, "Cannot leave field empty."),
   function_header: z.string().min(1, "Cannot leave field empty."),
-  example_input: z.string().min(1, "Cannot leave field empty."),
+  example_input: z.string().default(""),
   example_output: z.string().min(1, "Cannot leave field empty."),
   explanation: z.string().min(1, "Cannot leave field empty."),
   test_cases: z.array(
     z.object({
-      input: z.string().min(1, "Cannot leave field empty."),
+      input: z.string().default(""),
       output: z.string().min(1, "Cannot leave field empty."),
     }),
   ),

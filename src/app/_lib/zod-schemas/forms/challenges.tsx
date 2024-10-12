@@ -59,12 +59,12 @@ export const CreateChallengeFormSchema = z
     function_header: z.string().refine((value) => isValidHeader(value), {
       message: "Function header not valid.",
     }),
-    example_input: z.string().default(""),
+    example_input: z.string(),
     example_output: z.string().min(1, "Cannot leave field empty."),
     explanation: z.string().min(1, "Cannot leave field empty."),
     test_cases: z.array(
       z.object({
-        input: z.string().default(""),
+        input: z.string(),
         output: z.string().min(1, "Cannot leave field empty."),
       }),
     ),
@@ -140,6 +140,8 @@ function isValidOutput(data: TCreateChallengeFormSchema, output: string) {
 function isValidInput(data: TCreateChallengeFormSchema, input: string) {
   const paramTypes = getParamTypes(data.function_header);
   if (paramTypes.length === 0 && input.trim() === "") return true;
+  if (paramTypes.length === 0 && input.trim() !== "") return false;
+  if (paramTypes.length > 0 && input.trim() === "") return false;
   const inputs = input.split("\n");
   if (paramTypes.length !== inputs.length) return false;
 
@@ -166,11 +168,11 @@ function isValidInput(data: TCreateChallengeFormSchema, input: string) {
   return true;
 }
 
-// get param types in the form ["string", "intArr"]
+// get param types in the form of ["string", "intArr"]
 export function getParamTypes(header: string) {
   const regex = /\(([^)]*)\)/;
   const match = header.match(regex);
-  if (!match) return [];
+  if (!match || match[1] === "") return [];
   const params = match[1]!.split(",").map((param) => param.trim());
   return params.map((param) => param.split(" ")[0]!);
 }
