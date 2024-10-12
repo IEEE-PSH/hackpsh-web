@@ -193,5 +193,5 @@ export default function ChallengeNavActions({
     );
   }
 
-  return <Skeleton className="h-10 w-full md:w-96" />;
+  return <Skeleton className="h-10 w-full md:w-56" />;
 }

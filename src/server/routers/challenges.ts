@@ -8,6 +8,7 @@ import getCodeSubmissionProcedure from "../procedures/protected/challenges/getCo
 import getEditChallengeInfoProcedure from "../procedures/protected/challenges/getEditChallengeInfoProcedure";
 import updateChallengeProcedure from "../procedures/protected/challenges/updateChallengeProcedure";
 import getChallengesProcedure from "../procedures/protected/challenges/getChallengesProcedure";
+import deleteChallengeProcedure from "../procedures/protected/challenges/deleteChallengeProcedure";
 
 export const challengesRouter = createTRPCRouter({
   run_code: runCodeProcedure,
@@ -19,4 +20,5 @@ export const challengesRouter = createTRPCRouter({
   get_code_submission: getCodeSubmissionProcedure,
   get_edit_challenge_info: getEditChallengeInfoProcedure,
   update_challenge: updateChallengeProcedure,
+  delete_challenge: deleteChallengeProcedure,
 });

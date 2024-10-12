@@ -115,6 +115,32 @@ export async function getChallenge(db: Database, challengeID: number) {
   }
 }
 
+export async function deleteChallenge(
+  db: Database,
+  userUUID: string,
+  challengeID: number,
+) {
+  try {
+    const result = await getUserRole(db, userUUID);
+    if (result?.user_role === "participant") {
+      throw new TRPCError({
+        message: "User must be an officer or admin to create challenges.",
+        code: "UNAUTHORIZED",
+      });
+    }
+    await db
+      .delete(app_challenges)
+      .where(eq(app_challenges.challenge_id, challengeID));
+
+    return { delete_challenge: true };
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
 export async function getEditChallengeInfo(db: Database, challengeId: number) {
   try {
     const challengeUUID = await db.query.app_challenges.findFirst({
@@ -183,7 +209,7 @@ export async function getCodeSubmission(
         },
         where: and(
           eq(
-            app_solved_challenges.solved_challenge_uuid,
+            app_solved_challenges.solved_challenge_foreign_uuid,
             challengeUUID!.challenge_uuid,
           ),
           eq(
@@ -192,6 +218,7 @@ export async function getCodeSubmission(
           ),
         ),
       });
+
       return result;
     } else {
       return null;

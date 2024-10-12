@@ -46,6 +46,7 @@ import { siteConfig } from "@/app/_config/site";
 import { Card } from "../ui/card";
 import { TEditChallengeData } from "@/server/dao/challenges";
 import { TDifficulties } from "@/db/drizzle/startup_seed";
+import ChallengeDeleteDialog from "../challenges/challenge-delete-dialog";
 
 type CreateChallengeFormProps = React.HTMLAttributes<HTMLDivElement>;
 type EditChallengeFormProps = {
@@ -433,25 +434,28 @@ export function EditChallengeForm({
             </Card>
           </Button>
 
-          <div className="grid grid-cols-2 gap-x-4 sm:flex sm:space-x-4">
+          <div className="grid grid-cols-3 gap-x-4 sm:flex">
             <Button
               type="button"
               onClick={() => router.back()}
               variant="navigation"
-              className="ml-auto w-full justify-end px-8 sm:w-auto"
+              className="ml-auto flex w-full justify-items-end px-8 text-end sm:w-auto"
               disabled={form.formState.isSubmitting}
             >
               Cancel
             </Button>
+            <ChallengeDeleteDialog
+              challengeId={challengeData.challenge!.challenge_id}
+            />
             <Button
               type="submit"
-              className="ml-auto w-full px-8 sm:w-auto"
+              className="w-full px-8 sm:w-auto"
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}
-              Save changes
+              Save
             </Button>
           </div>
         </form>
