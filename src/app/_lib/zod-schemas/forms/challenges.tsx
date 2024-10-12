@@ -59,12 +59,12 @@ export const CreateChallengeFormSchema = z
     function_header: z.string().refine((value) => isValidHeader(value), {
       message: "Function header not valid.",
     }),
-    example_input: z.string().min(1, "Cannot leave field empty."),
+    example_input: z.string().default(""),
     example_output: z.string().min(1, "Cannot leave field empty."),
     explanation: z.string().min(1, "Cannot leave field empty."),
     test_cases: z.array(
       z.object({
-        input: z.string().min(1, "Cannot leave field empty."),
+        input: z.string().default(""),
         output: z.string().min(1, "Cannot leave field empty."),
       }),
     ),
@@ -139,6 +139,7 @@ function isValidOutput(data: TCreateChallengeFormSchema, output: string) {
 //check is input matches param types
 function isValidInput(data: TCreateChallengeFormSchema, input: string) {
   const paramTypes = getParamTypes(data.function_header);
+  if (paramTypes.length === 0 && input.trim() === "") return true;
   const inputs = input.split("\n");
   if (paramTypes.length !== inputs.length) return false;
 

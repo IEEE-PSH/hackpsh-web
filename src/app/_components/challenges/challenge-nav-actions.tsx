@@ -72,6 +72,7 @@ export default function ChallengeNavActions({
         setOutputData(submitData);
         if (submitData.type == "success") {
           setSolved(true);
+          router.refresh();
           toast({
             variant: "success",
             title: "Challenge solved!",

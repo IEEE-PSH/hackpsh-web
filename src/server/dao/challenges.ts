@@ -7,13 +7,20 @@ import {
   app_user_profile,
 } from "@/db/drizzle/schema";
 import { TRPCError } from "@trpc/server";
-import { eq, and, sql } from "drizzle-orm";
+import { eq, and, sql, notExists } from "drizzle-orm";
 import { getUserRole } from "./user";
 import { type TDifficulties } from "@/db/drizzle/startup_seed";
 
-export async function getChallenges(db: Database) {
+export async function getChallenges(db: Database, user_uuid: string) {
   try {
-    const challenges = await db
+    const teamUUID = await db.query.app_user_profile.findFirst({
+      columns: {
+        user_team_uuid: true,
+      },
+      where: eq(app_user_profile.user_uuid, user_uuid),
+    });
+
+    const unsolvedChallenges = await db
       .select({
         challenge_uuid: app_challenges.challenge_uuid,
         challenge_id: app_challenges.challenge_id,
@@ -21,9 +28,54 @@ export async function getChallenges(db: Database) {
         challenge_difficulty: app_challenges.challenge_difficulty,
         challenge_points: app_challenges.challenge_points,
       })
-      .from(app_challenges);
+      .from(app_challenges)
+      .where(
+        notExists(
+          db
+            .select()
+            .from(app_solved_challenges)
+            .where(
+              and(
+                eq(
+                  app_challenges.challenge_uuid,
+                  app_solved_challenges.solved_challenge_uuid,
+                ),
+                eq(
+                  app_solved_challenges.solved_challenge_team_uuid!,
+                  teamUUID!.user_team_uuid!,
+                ),
+              ),
+            ),
+        ),
+      );
 
-    return challenges;
+    const solvedChallenges = await db
+      .select({
+        challenge_uuid: app_challenges.challenge_uuid,
+        challenge_id: app_challenges.challenge_id,
+        challenge_title: app_challenges.challenge_title,
+        challenge_difficulty: app_challenges.challenge_difficulty,
+        challenge_points: app_challenges.challenge_points,
+      })
+      .from(app_challenges)
+      .innerJoin(
+        app_solved_challenges,
+        eq(
+          app_challenges.challenge_uuid,
+          app_solved_challenges.solved_challenge_uuid,
+        ),
+      )
+      .where(
+        eq(
+          app_solved_challenges.solved_challenge_team_uuid!,
+          teamUUID!.user_team_uuid!,
+        ),
+      );
+
+    return {
+      unsolvedChallenges,
+      solvedChallenges,
+    };
   } catch (error) {
     throw new TRPCError({
       message: "The database has encountered some issues.",
@@ -33,7 +85,7 @@ export async function getChallenges(db: Database) {
 }
 
 export type Challenges = Awaited<ReturnType<typeof getChallenges>>;
-export type Challenge = Challenges[number];
+export type Challenge = Challenges["unsolvedChallenges"][number];
 
 export async function getChallenge(db: Database, challengeID: number) {
   try {

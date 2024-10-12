@@ -1,6 +1,5 @@
 import { createTRPCRouter } from "../trpc";
 import createChallengeProcedure from "../procedures/protected/challenges/createChallengeProcedure";
-import getChallengesProcedure from "../procedures/protected/challenges/getChallengesProcedure";
 import getChallengeProcedure from "../procedures/protected/challenges/getChallengeProcedure";
 import runCodeProcedure from "../procedures/protected/challenges/runCodeProcedure";
 import submitCodeProcedure from "../procedures/protected/challenges/submitCodeProcedure";
@@ -8,6 +7,7 @@ import isSolvedChallengeProcedure from "../procedures/protected/challenges/isSol
 import getCodeSubmissionProcedure from "../procedures/protected/challenges/getCodeSubmissionProcedure";
 import getEditChallengeInfoProcedure from "../procedures/protected/challenges/getEditChallengeInfoProcedure";
 import updateChallengeProcedure from "../procedures/protected/challenges/updateChallengeProcedure";
+import getChallengesProcedure from "../procedures/protected/challenges/getChallengesProcedure";
 
 export const challengesRouter = createTRPCRouter({
   run_code: runCodeProcedure,
