@@ -87,13 +87,12 @@ export async function getEventDetails(db: Database) {
 
 export async function isChallengesEnabled(db: Database) {
   try {
-    const result = await db.query.app_event.findFirst({
-      columns: {
-        event_challenges_enabled: true,
-      },
-    });
+    const result = await db
+      .select({ event_challenges_enabled: app_event.event_challenges_enabled })
+      .from(app_event)
+      .limit(1);
 
-    if (result?.event_challenges_enabled) return true;
+    if (result.length > 0 && result[0]?.event_challenges_enabled) return true;
     return false;
   } catch (error) {
     throw new TRPCError({

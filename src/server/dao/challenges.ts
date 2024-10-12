@@ -10,6 +10,7 @@ import { TRPCError } from "@trpc/server";
 import { eq, and, sql, notExists } from "drizzle-orm";
 import { getUserRole } from "./user";
 import { type TDifficulties } from "@/db/drizzle/startup_seed";
+import { isChallengesEnabled } from "./event";
 
 export async function getChallenges(db: Database, user_uuid: string) {
   try {

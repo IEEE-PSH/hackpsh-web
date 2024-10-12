@@ -94,7 +94,7 @@ export async function Challenges({
             </div>
           </Card>
         ) : (
-          <p className="text-muted-foreground">All challenges solved!</p>
+          <p className="ml-6 text-muted-foreground">All challenges solved!</p>
         )}
       </div>
 

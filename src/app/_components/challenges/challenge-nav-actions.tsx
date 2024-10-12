@@ -81,13 +81,12 @@ export default function ChallengeNavActions({
         }
         setSubmitEnabled(false);
       },
-      onError: () => {
+      onError: (error) => {
         setSubmitEnabled(false);
         toast({
           variant: "destructive",
-          title: "Oops, something went wrong!",
-          description:
-            "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
+          title: error.data?.code,
+          description: error.message,
           duration: 6000,
         });
       },

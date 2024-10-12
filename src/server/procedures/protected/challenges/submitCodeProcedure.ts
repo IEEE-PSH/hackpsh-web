@@ -115,7 +115,7 @@ export default protectedProcedure
       }
     } catch (error) {
       throw new TRPCError({
-        message: "The executor has encountered some issues.",
+        message: "The compiler has encountered some issues.",
         code: "INTERNAL_SERVER_ERROR",
       });
     }
