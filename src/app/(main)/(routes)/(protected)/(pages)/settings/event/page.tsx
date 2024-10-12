@@ -8,8 +8,12 @@ import { Separator } from "@/app/_components/ui/separator";
 import { serverTRPC } from "@/app/_trpc/server";
 
 export default async function Page() {
-  const { event_date, event_start_hour, event_duration } =
-    await serverTRPC.event.get_event_details.query();
+  const {
+    event_date,
+    event_start_hour,
+    event_duration,
+    event_challenges_enabled,
+  } = await serverTRPC.event.get_event_details.query();
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:container lg:grid-cols-2">
@@ -23,6 +27,7 @@ export default async function Page() {
             eventDate={event_date}
             eventStartHour={event_start_hour}
             eventDuration={event_duration}
+            eventChallengesEnabled={event_challenges_enabled}
           />
         </CardContent>
       </Card>

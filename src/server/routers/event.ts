@@ -1,6 +1,7 @@
 import deleteAllAnnouncementsProcedure from "../procedures/protected/event/deleteAllAnnouncementsProcedure";
 import deleteAllParticipantsProcedure from "../procedures/protected/event/deleteAllParticipantsProcedure";
 import getEventDetailsProcedure from "../procedures/protected/event/getEventDetailsProcedure";
+import isChallengesEnabledProcedure from "../procedures/protected/event/isChallengesEnabledProcedure";
 import updateEventDetailsProcedure from "../procedures/protected/event/updateEventDetailsProcedure";
 import { createTRPCRouter } from "../trpc";
 
@@ -9,4 +10,5 @@ export const eventRouter = createTRPCRouter({
   get_event_details: getEventDetailsProcedure,
   delete_all_announcements: deleteAllAnnouncementsProcedure,
   delete_all_participants: deleteAllParticipantsProcedure,
+  is_challenges_enabled: isChallengesEnabledProcedure,
 });

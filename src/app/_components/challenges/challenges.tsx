@@ -1,13 +1,19 @@
-import { serverTRPC } from "@/app/_trpc/server";
-import { composeServerComponentClient } from "@/server/lib/supabase/server";
-import { getUser } from "@/shared/supabase/auth";
-import { type TUserRole } from "@/db/drizzle/startup_seed";
 import ChallengeCard from "@/app/_components/challenges/challenge-card";
-import { Separator } from "../ui/separator";
 import { type Challenges as TChallenges } from "@/server/dao/challenges";
 import { Card } from "../ui/card";
+import { TUserRole } from "@/db/drizzle/startup_seed";
+import { cn } from "@/app/_lib/client-utils";
+import { isChallengesEnabled } from "@/server/dao/event";
 
-export async function Challenges({ challenges }: { challenges: TChallenges }) {
+export async function Challenges({
+  challenges,
+  challengesEnabled,
+  userRole,
+}: {
+  challenges: TChallenges;
+  challengesEnabled: boolean;
+  userRole: TUserRole;
+}) {
   let { unsolvedChallenges, solvedChallenges } = challenges;
 
   //sort challenges
@@ -36,6 +42,8 @@ export async function Challenges({ challenges }: { challenges: TChallenges }) {
       <ChallengeCard
         key={challengeData.challenge_id}
         challengeData={challengeData}
+        challengesEnabled={challengesEnabled}
+        userRole={userRole}
       />,
     );
   });
@@ -44,6 +52,8 @@ export async function Challenges({ challenges }: { challenges: TChallenges }) {
       <ChallengeCard
         key={challengeData.challenge_id}
         challengeData={challengeData}
+        challengesEnabled={challengesEnabled}
+        userRole={userRole}
       />,
     );
   });
@@ -60,8 +70,28 @@ export async function Challenges({ challenges }: { challenges: TChallenges }) {
           </span>
         </p>
         {unsolvedChallenges.length > 0 ? (
-          <Card className="mt-2 grid grid-cols-1">
-            {unsolvedChallengeElements}
+          <Card className="relative mt-2">
+            {!challengesEnabled && (
+              <div
+                className={cn(
+                  userRole !== "participant" && "pointer-events-none",
+                  "absolute z-[50] flex h-full w-full items-center justify-center bg-background/80",
+                )}
+              >
+                {userRole === "participant" ? (
+                  <p>Wait for the administrator to enable challenges.</p>
+                ) : (
+                  <p>
+                    Challenges are currently disabled for participants, but you
+                    can still edit them.
+                  </p>
+                )}
+              </div>
+            )}
+
+            <div className={cn("grid grid-cols-1")}>
+              {unsolvedChallengeElements}
+            </div>
           </Card>
         ) : (
           <p className="text-muted-foreground">All challenges solved!</p>
@@ -76,11 +106,19 @@ export async function Challenges({ challenges }: { challenges: TChallenges }) {
           </span>
         </p>
         {solvedChallenges.length > 0 ? (
-          <div className="grid grid-cols-1 gap-4">
-            <Card className="mt-2 grid grid-cols-1">
+          <Card className="relative mt-2">
+            {!challengesEnabled && (
+              <div
+                className={cn(
+                  userRole !== "participant" && "pointer-events-none",
+                  "absolute z-[50] flex h-full w-full items-center justify-center bg-background/80",
+                )}
+              ></div>
+            )}
+            <div className={cn("grid grid-cols-1")}>
               {solvedChallengeElements}
-            </Card>
-          </div>
+            </div>
+          </Card>
         ) : (
           <p className="ml-6 text-muted-foreground">
             No challenges solved yet.

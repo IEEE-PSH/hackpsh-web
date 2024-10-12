@@ -1,9 +1,8 @@
-import ChallengeCard from "@/app/_components/challenges/challenge-card";
 import { Challenges } from "@/app/_components/challenges/challenges";
 import ChallengesProgress from "@/app/_components/challenges/challenges-progress";
 import { Card, CardContent, CardTitle } from "@/app/_components/ui/card";
-import { Progress } from "@/app/_components/ui/progress";
 import { serverTRPC } from "@/app/_trpc/server";
+import { TUserRole } from "@/db/drizzle/startup_seed";
 import { composeServerComponentClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import { type Metadata } from "next";
@@ -21,10 +20,15 @@ export default async function ChallengesPage() {
   let challenges = await serverTRPC.challenges.get_challenges.query({
     user_uuid: user.id,
   });
-  let { team_name, team_total_points } =
+  const { team_name, team_total_points } =
     await serverTRPC.user.get_user_team_info.query({
       user_uuid: user.id,
     });
+  const is_challenges_enabled =
+    await serverTRPC.event.is_challenges_enabled.query();
+  const { get_user_role } = await serverTRPC.user.get_user_role.query({
+    user_uuid: user.id,
+  });
 
   return (
     <div className="container my-4 grid max-w-5xl grid-cols-1 gap-y-8">
@@ -42,7 +46,11 @@ export default async function ChallengesPage() {
         <ChallengesProgress challenges={challenges} />
       </div>
 
-      <Challenges challenges={challenges} />
+      <Challenges
+        challenges={challenges}
+        challengesEnabled={is_challenges_enabled}
+        userRole={get_user_role as TUserRole}
+      />
     </div>
   );
 }

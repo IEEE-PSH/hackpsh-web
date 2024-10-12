@@ -274,6 +274,20 @@
       "when": 1728722486116,
       "tag": "0038_burly_gamma_corps",
       "breakpoints": true
+    },
+    {
+      "idx": 39,
+      "version": "7",
+      "when": 1728728904485,
+      "tag": "0039_wooden_killmonger",
+      "breakpoints": true
+    },
+    {
+      "idx": 40,
+      "version": "7",
+      "when": 1728730048262,
+      "tag": "0040_famous_landau",
+      "breakpoints": true
     }
   ]
 }

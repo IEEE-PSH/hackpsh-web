@@ -38,17 +38,21 @@ import {
   EventDetailsFormSchema,
   type TEventDetailsFormSchema,
 } from "@/app/_lib/event-details";
+import { Switch } from "../ui/switch";
+import { useRouter } from "next/navigation";
 
 type EventDetailsFormProps = {
   eventDate: string;
   eventStartHour: number;
   eventDuration: number;
+  eventChallengesEnabled: boolean;
 };
 
 export default function EventDetailsForm({
   eventDate,
   eventStartHour,
   eventDuration,
+  eventChallengesEnabled,
 }: EventDetailsFormProps) {
   const supabase = createClientComponentClient();
 
@@ -59,11 +63,15 @@ export default function EventDetailsForm({
       event_date: new Date(eventDate),
       event_start_hour: eventStartHour.toString(),
       event_duration: eventDuration.toString(),
+      event_challenges_enabled: eventChallengesEnabled,
     },
   });
 
+  const router = useRouter();
+
   const updateSettingsMutation = trpc.event.update_event_details.useMutation({
     onSuccess: () => {
+      router.refresh();
       toast({
         variant: "success",
         title: "Event Details Updated!",
@@ -91,6 +99,7 @@ export default function EventDetailsForm({
           values.event_start_hour as unknown as string,
         ),
         event_duration: parseInt(values.event_duration as unknown as string),
+        event_challenges_enabled: values.event_challenges_enabled,
       });
     } catch (err: unknown) {
       console.log(err);
@@ -201,7 +210,7 @@ export default function EventDetailsForm({
                 </SelectContent>
               </Select>
               <FormDescription>
-                Set a time for when the event will start.
+                Set the time for when the event will start.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -235,6 +244,28 @@ export default function EventDetailsForm({
                 Set how long the event will last.
               </FormDescription>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="event_challenges_enabled"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+              <div className="space-y-0.5">
+                <FormLabel className="text-base">Enable challenges</FormLabel>
+                <FormDescription>
+                  Toggle to enable or disable challenges for participants.
+                </FormDescription>
+              </div>
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  className="ml-4"
+                />
+              </FormControl>
             </FormItem>
           )}
         />

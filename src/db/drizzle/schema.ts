@@ -119,6 +119,9 @@ export const app_event = app_schema.table("app_event", {
     .default("2024-09-23T06:00:00.000Z"),
   event_start_hour: integer("event_start_hour").notNull().default(10),
   event_duration: integer("event_duration").notNull().default(12),
+  event_challenges_enabled: boolean("event_challenges_enabled")
+    .default(false)
+    .notNull(),
 });
 
 export const app_challenges = app_schema.table("app_challenges", {

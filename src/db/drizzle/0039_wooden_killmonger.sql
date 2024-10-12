@@ -1,0 +1,1 @@
+ALTER TABLE "app_schema"."app_event" ADD COLUMN "event_challenges_enabled" boolean DEFAULT false;

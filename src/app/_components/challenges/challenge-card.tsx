@@ -4,12 +4,19 @@ import { Badge } from "../ui/badge";
 import { type Challenge } from "@/server/dao/challenges";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
+import { TUserRole } from "@/db/drizzle/startup_seed";
 
 type ChallengeCardProps = {
   challengeData: Challenge;
+  challengesEnabled: boolean;
+  userRole: TUserRole;
 };
 
-export default function ChallengeCard({ challengeData }: ChallengeCardProps) {
+export default function ChallengeCard({
+  challengeData,
+  challengesEnabled,
+  userRole,
+}: ChallengeCardProps) {
   const {
     challenge_title,
     challenge_difficulty,
@@ -22,7 +29,8 @@ export default function ChallengeCard({ challengeData }: ChallengeCardProps) {
     <div
       className="cursor-pointer border-b transition-colors last:border-0 hover:bg-accent/50"
       onClick={() => {
-        router.push(siteConfig.paths.solve + "/" + challenge_id);
+        if (challengesEnabled || userRole !== "participant")
+          router.push(siteConfig.paths.solve + "/" + challenge_id);
       }}
     >
       <div className="flex flex-row items-center px-6 py-4">

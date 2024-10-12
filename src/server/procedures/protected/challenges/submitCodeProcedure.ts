@@ -68,7 +68,6 @@ export default protectedProcedure
           const out = testCase.test_case_output;
           expectedOutputs.push(out);
         }
-
         const stdOutputs = data.run.stdout.split("\n");
 
         //tomfoolery goin on ere; not actually
