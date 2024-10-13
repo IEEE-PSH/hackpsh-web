@@ -12,6 +12,7 @@ import {
 } from "./runCodeProcedure";
 import { TRPCError } from "@trpc/server";
 import { getParamTypes } from "@/app/_lib/zod-schemas/forms/challenges";
+import { isChallengesEnabled } from "@/server/dao/event";
 
 export default protectedProcedure
   .input(submitCodeSchema)
@@ -91,12 +92,17 @@ export default protectedProcedure
           if (expectedOutputs[i] === stdOuts[i]) passCount++;
 
         if (data.run.code === 0 && passCount === expectedOutputs.length) {
-          await solveChallenge(
-            ctx.db,
-            input.challenge_id,
-            input.user_uuid,
-            input.code_string,
-          );
+          //only solveChallenge if challenges are disabled; officers and admins can still check test cases
+          const is_challenges_enabled = await isChallengesEnabled(ctx.db);
+          if (is_challenges_enabled) {
+            await solveChallenge(
+              ctx.db,
+              input.challenge_id,
+              input.user_uuid,
+              input.code_string,
+            );
+          }
+
           return {
             type: "success",
             output: `Passed ${passCount}/${expectedOutputs.length} testcases. ✔️`,

@@ -26,7 +26,7 @@ export default function DeleteChallengeDialog({
   const supabase = createClientComponentClient();
 
   const deleteChallengeMutation = trpc.challenges.delete_challenge.useMutation({
-    onSuccess: async () => {
+    onSuccess: () => {
       setDialogOpen(false);
       router.replace(siteConfig.paths.challenges);
       router.refresh();

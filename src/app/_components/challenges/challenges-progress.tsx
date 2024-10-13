@@ -3,7 +3,7 @@ import { Progress } from "@/app/_components/ui/progress";
 import { type Challenges } from "@/server/dao/challenges";
 import React from "react";
 
-export default async function ChallengesProgress({
+export default function ChallengesProgress({
   challenges,
 }: {
   challenges: Challenges;

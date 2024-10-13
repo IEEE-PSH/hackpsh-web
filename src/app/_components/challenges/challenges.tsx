@@ -1,11 +1,10 @@
 import ChallengeCard from "@/app/_components/challenges/challenge-card";
 import { type Challenges as TChallenges } from "@/server/dao/challenges";
 import { Card } from "../ui/card";
-import { TUserRole } from "@/db/drizzle/startup_seed";
+import { type TUserRole } from "@/db/drizzle/startup_seed";
 import { cn } from "@/app/_lib/client-utils";
-import { isChallengesEnabled } from "@/server/dao/event";
 
-export async function Challenges({
+export function Challenges({
   challenges,
   challengesEnabled,
   userRole,
@@ -79,11 +78,12 @@ export async function Challenges({
                 )}
               >
                 {userRole === "participant" ? (
-                  <p>Wait for the administrator to enable challenges.</p>
+                  <p className="mx-16 text-center">
+                    Wait for the administrator to enable challenges.
+                  </p>
                 ) : (
-                  <p>
-                    Challenges are currently disabled for participants, but you
-                    can still edit them.
+                  <p className="mx-16 text-center">
+                    You can edit and test challenges while they are disabled.
                   </p>
                 )}
               </div>

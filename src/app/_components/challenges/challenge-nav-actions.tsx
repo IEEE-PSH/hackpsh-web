@@ -29,6 +29,7 @@ type ChallengeNavActionsProps = {
   solved: boolean;
   setSolved: Dispatch<SetStateAction<boolean>>;
   setOutputData: Dispatch<SetStateAction<TSubmitData>>;
+  challengePoints: number;
 };
 
 export default function ChallengeNavActions({
@@ -41,7 +42,9 @@ export default function ChallengeNavActions({
   solved,
   setSolved,
   setOutputData,
+  challengePoints,
 }: ChallengeNavActionsProps) {
+  const router = useRouter();
   const [runEnabled, setRunEnabled] = useState(false);
   const [submitEnabled, setSubmitEnabled] = useState(false);
 
@@ -67,6 +70,7 @@ export default function ChallengeNavActions({
       user_uuid: userUUID,
     },
     {
+      retry: false,
       enabled: submitEnabled,
       onSuccess: (submitData: TSubmitData) => {
         setOutputData(submitData);
@@ -75,8 +79,8 @@ export default function ChallengeNavActions({
           router.refresh();
           toast({
             variant: "success",
-            title: "Challenge solved!",
-            duration: 6000,
+            title: `+ ${challengePoints} points!`,
+            duration: 4000,
           });
         }
         setSubmitEnabled(false);
@@ -87,7 +91,7 @@ export default function ChallengeNavActions({
           variant: "destructive",
           title: error.data?.code,
           description: error.message,
-          duration: 6000,
+          duration: 4000,
         });
       },
     },
@@ -123,7 +127,6 @@ export default function ChallengeNavActions({
   const { data: role } = trpc.user.get_user_role.useQuery({
     user_uuid: userUUID,
   });
-  const router = useRouter();
 
   if (isFetchedAfterMount) {
     return (

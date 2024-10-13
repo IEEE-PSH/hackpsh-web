@@ -17,7 +17,7 @@ export default async function ChallengesPage() {
   const supabase = composeServerComponentClient();
   const user = await getUser(supabase);
 
-  let challenges = await serverTRPC.challenges.get_challenges.query({
+  const challenges = await serverTRPC.challenges.get_challenges.query({
     user_uuid: user.id,
   });
   const { team_name, team_total_points } =
