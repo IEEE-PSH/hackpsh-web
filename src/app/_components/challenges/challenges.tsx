@@ -3,7 +3,7 @@ import { type Challenges as TChallenges } from "@/server/dao/challenges";
 import { Card } from "../ui/card";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
 import { cn } from "@/app/_lib/client-utils";
-import ChallengeBooter from "./challenge-booter";
+
 import {
   HoverCard,
   HoverCardContent,
@@ -75,20 +75,32 @@ export function Challenges({
           </span>
         </p>
         {unsolvedChallenges.length > 0 ? (
-          <Card className="relative mt-2">
-            {!challengesEnabled && (
-              <div
-                className={cn(
-                  userRole !== "participant" && "pointer-events-none",
-                  "absolute z-[50] flex h-full w-full items-center justify-center bg-background/80",
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <Card className="relative mt-2">
+                {!challengesEnabled && (
+                  <div
+                    className={cn(
+                      userRole !== "participant" && "pointer-events-none",
+                      "absolute z-[50] flex h-full w-full items-center justify-center bg-background/80",
+                    )}
+                  ></div>
                 )}
-              />
+                <div className={cn("grid grid-cols-1")}>
+                  {unsolvedChallengeElements}
+                </div>
+              </Card>
+            </HoverCardTrigger>
+            {!challengesEnabled && (
+              <HoverCardContent className="mr-4 w-auto p-2" side="top">
+                <p className="text-sm">
+                  {userRole === "participant"
+                    ? "Challenges are currently disabled."
+                    : "Challenges are currently disabled, but you can still view and edit them."}
+                </p>
+              </HoverCardContent>
             )}
-
-            <div className={cn("grid grid-cols-1")}>
-              {unsolvedChallengeElements}
-            </div>
-          </Card>
+          </HoverCard>
         ) : (
           <p className="ml-6 text-muted-foreground">All challenges solved!</p>
         )}
@@ -118,9 +130,15 @@ export function Challenges({
                 </div>
               </Card>
             </HoverCardTrigger>
-            <HoverCardContent className="mr-4 w-auto p-2">
-              <p className="text-sm">Challenges are currently disabled.</p>
-            </HoverCardContent>
+            {!challengesEnabled && (
+              <HoverCardContent className="mr-4 w-auto p-2" side="top">
+                <p className="text-sm">
+                  {userRole === "participant"
+                    ? "Challenges are currently disabled."
+                    : "Challenges are currently disabled, but you can still view and edit them."}
+                </p>
+              </HoverCardContent>
+            )}
           </HoverCard>
         ) : (
           <p className="ml-6 text-muted-foreground">
