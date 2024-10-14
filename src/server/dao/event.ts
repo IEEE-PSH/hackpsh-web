@@ -15,6 +15,7 @@ export async function updateEventDetails(
   event_date: string,
   event_start_hour: number,
   event_duration: number,
+  event_challenges_enabled: boolean,
 ) {
   try {
     const user_role = await getUserRole(db, user_uuid);
@@ -34,15 +35,28 @@ export async function updateEventDetails(
       eventStartTime.getTime() + event_duration * 60 * 60 * 1000,
     );
 
-    await db.delete(app_event).execute();
-
-    await db.insert(app_event).values({
-      event_date: eventDate.toDateString(),
-      event_start_time: eventStartTime.toISOString(),
-      event_end_time: eventEndTime.toISOString(),
-      event_start_hour: event_start_hour,
-      event_duration: event_duration,
-    });
+    await db
+      .insert(app_event)
+      .values({
+        event_id: 1,
+        event_date: eventDate.toDateString(),
+        event_start_time: eventStartTime.toISOString(),
+        event_end_time: eventEndTime.toISOString(),
+        event_start_hour: event_start_hour,
+        event_duration: event_duration,
+        event_challenges_enabled: event_challenges_enabled,
+      })
+      .onConflictDoUpdate({
+        target: app_event.event_id,
+        set: {
+          event_date: eventDate.toDateString(),
+          event_start_time: eventStartTime.toISOString(),
+          event_end_time: eventEndTime.toISOString(),
+          event_start_hour: event_start_hour,
+          event_duration: event_duration,
+          event_challenges_enabled: event_challenges_enabled,
+        },
+      });
 
     return {
       update_event_details: true,
@@ -64,6 +78,7 @@ export async function getEventDetails(db: Database) {
         event_end_time: true,
         event_start_hour: true,
         event_duration: true,
+        event_challenges_enabled: true,
       },
     });
 
@@ -75,6 +90,23 @@ export async function getEventDetails(db: Database) {
         code: "CONFLICT",
       });
     }
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function isChallengesEnabled(db: Database) {
+  try {
+    const result = await db
+      .select({ event_challenges_enabled: app_event.event_challenges_enabled })
+      .from(app_event)
+      .limit(1);
+
+    if (result.length > 0 && result[0]?.event_challenges_enabled) return true;
+    return false;
+  } catch (error) {
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",

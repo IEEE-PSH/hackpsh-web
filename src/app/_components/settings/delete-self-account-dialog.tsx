@@ -29,14 +29,14 @@ export default function DeleteSelfAccountDialog() {
       router.refresh();
       toast({
         variant: "success",
-        title: "Account Deleted!",
+        title: "Account deleted.",
         duration: 4000,
       });
     },
     onError: () => {
       toast({
         variant: "destructive",
-        title: "Oops, Something Went Wrong!",
+        title: "Oops, something went wrong!",
         description:
           "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
         duration: 6000,
@@ -62,15 +62,15 @@ export default function DeleteSelfAccountDialog() {
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
         <Button variant="secondary" className="w-full flex-shrink-0 sm:w-auto">
-          Delete Account
+          Delete account
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Are you sure?</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete all users
-            with the participants role.
+            This action cannot be undone. This will permanently delete your
+            account and data from the platform.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -80,7 +80,7 @@ export default function DeleteSelfAccountDialog() {
               await deleteSelfAccount();
             }}
           >
-            Delete Account
+            Delete account
           </Button>
         </DialogFooter>
       </DialogContent>

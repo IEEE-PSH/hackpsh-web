@@ -23,7 +23,7 @@ import { Icons } from "../ui/icons";
 import { cn } from "@/app/_lib/client-utils";
 import { useRouter } from "next/navigation";
 import { getUser } from "@/shared/supabase/auth";
-import { AnnouncementPost } from "@/server/dao/announcements";
+import { type AnnouncementPost } from "@/server/dao/announcements";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
 type EditAnnouncementFormProps = { postData: AnnouncementPost }; //fix type
@@ -64,7 +64,7 @@ export default function EditAnnouncementPostForm({
       onError: () => {
         toast({
           variant: "destructive",
-          title: "Oops, Something Went Wrong!",
+          title: "Oops, something went wrong!",
           description:
             "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
           duration: 6000,

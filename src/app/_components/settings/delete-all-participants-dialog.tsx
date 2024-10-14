@@ -25,14 +25,14 @@ export default function DeleteAllParticipantsDialog() {
       router.refresh();
       toast({
         variant: "success",
-        title: "Participants Deleted!",
+        title: "Participants deleted.",
         duration: 4000,
       });
     },
     onError: () => {
       toast({
         variant: "destructive",
-        title: "Oops, Something Went Wrong!",
+        title: "Oops, something went wrong!",
         description:
           "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
         duration: 6000,
@@ -59,7 +59,7 @@ export default function DeleteAllParticipantsDialog() {
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
         <Button variant="secondary" className="ml-auto mt-6 w-full sm:w-auto">
-          Delete All Participants
+          Delete all participants
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -77,7 +77,7 @@ export default function DeleteAllParticipantsDialog() {
               await deleteAllParticipants();
             }}
           >
-            Delete All Participants
+            Delete all participants
           </Button>
         </DialogFooter>
       </DialogContent>

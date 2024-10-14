@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 export default function SettingsNav({ userRole }: { userRole: string }) {
   const pathname = usePathname();
   return (
-    <div className="container my-4 flex space-x-2">
+    <div className="container my-4 flex max-w-5xl space-x-2">
       <Button
         className={cn(
           pathname === siteConfig.paths.account

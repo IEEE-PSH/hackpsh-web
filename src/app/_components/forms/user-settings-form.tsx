@@ -95,7 +95,7 @@ export default function UserSettingsForm({
       router.refresh();
       toast({
         variant: "success",
-        title: "Settings Saved!",
+        title: "Settings saved.",
         duration: 4000,
       });
     },
@@ -335,9 +335,7 @@ export default function UserSettingsForm({
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                     <div className="space-y-0.5">
-                      <FormLabel className="text-base">
-                        Administrative
-                      </FormLabel>
+                      <FormLabel>Administrative</FormLabel>
                       <FormDescription>
                         Help us organize our social events, fundraising, and
                         better our social media!
@@ -359,7 +357,7 @@ export default function UserSettingsForm({
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                     <div className="space-y-0.5">
-                      <FormLabel className="text-base">Technical</FormLabel>
+                      <FormLabel>Technical</FormLabel>
                       <FormDescription>
                         Help us innovate and develop hardware and software to
                         further our unique experiences! {userSupportTechnical}

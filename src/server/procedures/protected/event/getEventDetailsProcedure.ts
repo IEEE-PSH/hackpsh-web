@@ -10,5 +10,6 @@ export default protectedProcedure.query(async ({ ctx }) => {
     event_end_time: result!.event_end_time,
     event_start_hour: result!.event_start_hour,
     event_duration: result!.event_duration,
+    event_challenges_enabled: result!.event_challenges_enabled,
   };
 });

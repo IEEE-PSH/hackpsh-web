@@ -62,7 +62,7 @@ export default function UserOptionsSheet({
       void utils.user.get_users.invalidate();
       toast({
         variant: "success",
-        title: "User Role Updated!",
+        title: "User role updated.",
         duration: 4000,
       });
     },
@@ -101,7 +101,7 @@ export default function UserOptionsSheet({
         {isSuccess ? (
           <>
             <SheetHeader>
-              <h1>Edit User {targetUserData?.user_display_name}</h1>
+              <h1>Edit user {targetUserData?.user_display_name}</h1>
             </SheetHeader>
             <Form {...form}>
               <form

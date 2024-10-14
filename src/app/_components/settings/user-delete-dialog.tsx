@@ -37,7 +37,7 @@ export default function UserDeleteDialog({
       setDialogOpen(false);
       toast({
         variant: "success",
-        title: "User Deleted!",
+        title: "User deleted.",
         duration: 4000,
       });
     },
@@ -73,7 +73,7 @@ export default function UserDeleteDialog({
         </DialogHeader>
         <DialogFooter>
           <Button variant="destructive" onClick={() => deleteUser()}>
-            Delete User Permanently
+            Delete user permanently
           </Button>
         </DialogFooter>
       </DialogContent>

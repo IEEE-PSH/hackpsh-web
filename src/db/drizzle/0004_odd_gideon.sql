@@ -1,1 +1,0 @@
-ALTER TABLE "app_schema"."app_user_profile" ALTER COLUMN "user_display_name" DROP NOT NULL;

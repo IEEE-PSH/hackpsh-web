@@ -1,5 +1,6 @@
 import { type Database } from ".";
 import {
+  app_difficulty,
   app_event,
   app_major,
   app_onboarding_phase,
@@ -106,6 +107,26 @@ export async function insertOnboardingPhases(db: Database, phase_name: string) {
 export async function insertEventDetails(db: Database) {
   await db
     .insert(app_event)
-    .values({ event_start_hour: 10 })
+    .values({
+      event_id: 1,
+      event_date: "Sun Sep 22 2024",
+      event_start_hour: 10,
+      event_start_time: "2024-09-22T06:00:00.000Z",
+      event_end_time: "2024-09-23T06:00:00.000Z",
+      event_duration: 12,
+      event_challenges_enabled: false,
+    })
+    .onConflictDoNothing();
+}
+
+export const dbDifficulties = ["easy", "medium", "hard"] as const;
+export type TDifficulties = (typeof dbDifficulties)[number];
+export async function insertDifficulties(
+  db: Database,
+  difficulty_name: string,
+) {
+  await db
+    .insert(app_difficulty)
+    .values({ difficulty_name })
     .onConflictDoNothing();
 }

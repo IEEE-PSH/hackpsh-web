@@ -34,14 +34,14 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
     onSuccess: () => {
       toast({
         variant: "success",
-        title: "Feedback Report Created!",
+        title: "Contact form sent!",
         duration: 4000,
       });
     },
     onError: () => {
       toast({
         variant: "destructive",
-        title: "Oops, Something Went Wrong!",
+        title: "Oops, something went wrong!",
         description:
           "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
         duration: 6000,
@@ -64,7 +64,7 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
   }
 
   return (
-    <>  
+    <>
       <Section className="bg-background-variant">
         <div
           className={cn("grid-gap-6 mx-auto max-w-xl", className)}
@@ -134,7 +134,7 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
                     <FormControl>
                       <Textarea
                         placeholder="Type here..."
-                        className="resize-none h-36"
+                        className="h-36 resize-none"
                         {...field}
                         value={field.value ?? ""}
                       />
@@ -149,7 +149,7 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
                 disabled={form.formState.isSubmitting}
               >
                 {form.formState.isSubmitting && (
-                  <Icons.spinner className="w-4 h-4 mr-2 animate-spin" />
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
                 Submit
               </Button>
@@ -163,15 +163,15 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
 
 function ContactHero() {
   return (
-    <section className="bg-background border-b-[1px] text-foreground">
+    <section className="border-b-[1px] bg-background text-foreground">
       <div className="container">
         <div className="flex justify-center py-6 md:py-12">
           <div className="flex flex-col justify-center space-y-6 md:space-y-4">
             <h2 className="text-6xl font-bold">Contact Us</h2>
-            <p className="text-lg text-muted-foreground max-w-[44rem]">
-              Do you have any questions regarding our event? Are you interested in working together?
-              This is the right place to reach out for general questions and interests in partnership
-              for future events.
+            <p className="max-w-[44rem] text-lg text-muted-foreground">
+              Do you have any questions regarding our event? Are you interested
+              in working together? This is the right place to reach out for
+              general questions and interests in partnership for future events.
             </p>
           </div>
         </div>

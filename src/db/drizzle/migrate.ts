@@ -3,10 +3,12 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schema from "./schema";
 import {
+  dbDifficulties,
   dbMajors,
   dbOnboardingPhases,
   dbRole,
   dbSchoolYear,
+  insertDifficulties,
   insertEventDetails,
   insertMajor,
   insertOnboardingPhases,
@@ -38,6 +40,10 @@ const runMigrations = async () => {
 
     for (const major_name of dbMajors) {
       await insertMajor(db, major_name);
+    }
+
+    for (const difficulty_name of dbDifficulties){
+      await insertDifficulties(db, difficulty_name)
     }
 
     //set default dates

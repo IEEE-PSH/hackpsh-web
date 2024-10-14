@@ -55,4 +55,18 @@
     --ring: 35.5 91.7% 32.9%;
     --banana: 48 96% 68%;
   }
+
+  /* deliberate breaking for long words/links*/
+  .break-all {
+    word-break: break-all; /* break long words and URLs */
+  }
+
+  .break-word {
+    overflow-wrap: break-word; /* break words at spaces */
+    word-wrap: break-word;
+  }
+
+  .word-break {
+    word-break: break-word; /* break words at spaces but allow for long words to break */
+  }
 }

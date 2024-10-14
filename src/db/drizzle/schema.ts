@@ -107,16 +107,57 @@ export const app_contact = app_schema.table("app_contact", {
 });
 
 export const app_event = app_schema.table("app_event", {
-  event_date: text("event_date")
+  event_id: integer("event_id").notNull().primaryKey(),
+  event_date: text("event_date").notNull(),
+  event_start_time: text("event_start_time").notNull(),
+  event_end_time: text("event_end_time").notNull(),
+  event_start_hour: integer("event_start_hour").notNull(),
+  event_duration: integer("event_duration").notNull(),
+  event_challenges_enabled: boolean("event_challenges_enabled").notNull(),
+});
+
+export const app_challenges = app_schema.table("app_challenges", {
+  challenge_uuid: uuid("challenge_uuid")
     .primaryKey()
-    .notNull()
-    .default("Sun Sep 22 2024"),
-  event_start_time: text("event_start_time")
-    .notNull()
-    .default("2024-09-22T06:00:00.000Z"),
-  event_end_time: text("event_end_time")
-    .notNull()
-    .default("2024-09-23T06:00:00.000Z"),
-  event_start_hour: integer("event_start_hour").notNull().default(10),
-  event_duration: integer("event_duration").notNull().default(12),
+    .default(sql`uuid_generate_v4()`),
+  challenge_id: serial("challenge_id"),
+  challenge_title: text("challenge_title").notNull(),
+  challenge_difficulty: text("challenge_difficulty")
+    .references(() => app_difficulty.difficulty_name)
+    .notNull(),
+  challenge_points: integer("challenge_points").notNull().default(0),
+  challenge_description: text("challenge_description").notNull(),
+  challenge_function_header: text("challenge_function_header").notNull(),
+  challenge_example_input: text("challenge_example_input").notNull(),
+  challenge_example_output: text("challenge_example_output").notNull(),
+  challenge_explanation: text("challenge_explanation").notNull(),
+});
+
+export const app_difficulty = app_schema.table("app_difficulty", {
+  difficulty_id: serial("difficulty_id").primaryKey(),
+  difficulty_name: text("difficulty_name").unique().notNull(),
+});
+
+export const app_test_cases = app_schema.table("app_test_cases", {
+  test_case_uuid: uuid("test_case_uuid")
+    .primaryKey()
+    .default(sql`uuid_generate_v4()`),
+  test_case_input: text("test_case_input").notNull(),
+  test_case_output: text("test_case_output").notNull(),
+  test_case_challenge_uuid: uuid("test_case_challenge_uuid")
+    .references(() => app_challenges.challenge_uuid, { onDelete: "cascade" })
+    .notNull(),
+});
+
+export const app_solved_challenges = app_schema.table("app_solved_challenges", {
+  solved_challenge_uuid: uuid("solved_challenge_uuid")
+    .primaryKey()
+    .default(sql`uuid_generate_v4()`),
+  solved_challenge_foreign_uuid: uuid(
+    "solved_challenge_foreign_uuid",
+  ).references(() => app_challenges.challenge_uuid, { onDelete: "cascade" }),
+  solved_challenge_team_uuid: uuid("solved_challenge_team_uuid")
+    .references(() => app_team.team_uuid, { onDelete: "cascade" })
+    .notNull(),
+  solved_challenge_code_submission: text("solved_challenge_code_submission"),
 });

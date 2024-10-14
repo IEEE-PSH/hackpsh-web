@@ -5,6 +5,7 @@ import { composeServerComponentClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import { serverTRPC } from "@/app/_trpc/server";
 import AdminCreatePost from "../announcement/admin-create-post";
+import CreateChallenge from "../challenges/create-challenge";
 
 export default async function ProtectedSiteHeader() {
   const supabase = composeServerComponentClient();
@@ -19,6 +20,7 @@ export default async function ProtectedSiteHeader() {
       <div className="mx-4 flex h-16 items-center">
         <ProtectedMobileNav />
         <SiteHeaderActions>
+          <CreateChallenge />
           <AdminCreatePost />
           <ProfileButton
             userDisplayName={user_display_name}

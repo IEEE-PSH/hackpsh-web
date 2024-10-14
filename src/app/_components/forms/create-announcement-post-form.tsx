@@ -23,6 +23,7 @@ import { useForm } from "react-hook-form";
 import { Icons } from "../ui/icons";
 import { cn } from "@/app/_lib/client-utils";
 import { useRouter } from "next/navigation";
+import { siteConfig } from "@/app/_config/site";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -44,13 +45,13 @@ export function CreateAnnouncementPostForm({
           description: "You have successfully created an announcement.",
           duration: 4000,
         });
-        router.replace("/announcements");
+        router.replace(siteConfig.paths.announcements);
         router.refresh();
       },
       onError: () => {
         toast({
           variant: "destructive",
-          title: "Oops, Something Went Wrong!",
+          title: "Oops, something went wrong!",
           description:
             "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
           duration: 6000,

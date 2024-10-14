@@ -480,6 +480,7 @@ export async function getUserTeamInfo(db: Database, user_uuid: string) {
         team_name: true,
         team_join_code: true,
         team_points: true,
+        team_points_additive: true,
       },
       where: (team_data, { eq }) =>
         eq(team_data.team_uuid, teamUUID!.user_team_uuid!),

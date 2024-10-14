@@ -7,6 +7,7 @@ import {
   composeMiddlewareClient,
   getSession,
 } from "@/server/lib/supabase/server";
+import { toast } from "./app/_components/ui/use-toast";
 
 export async function middleware(req: NextRequest) {
   try {
@@ -54,6 +55,16 @@ export async function middleware(req: NextRequest) {
       return redirectToPath(req, siteConfig.paths.announcements);
     }
 
+    const is_challenges_enabled =
+      await serverTRPC.event.is_challenges_enabled.query();
+    if (
+      get_user_role === "participant" &&
+      req.nextUrl.pathname.startsWith(siteConfig.paths.solve) &&
+      !is_challenges_enabled
+    ) {
+      return redirectToPath(req, siteConfig.paths.challenges);
+    }
+
     return res;
   } catch (cause) {
     return handleError(req, cause);
@@ -69,5 +80,6 @@ export const config = {
     "/leaderboard",
     "/challenges",
     "/settings(.*)",
+    "/challenges/solve(.*)",
   ],
 };
