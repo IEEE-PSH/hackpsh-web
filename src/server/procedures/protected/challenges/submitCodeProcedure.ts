@@ -126,3 +126,8 @@ export default protectedProcedure
       });
     }
   });
+
+export type TSubmitData = {
+  type: "valid" | "success" | "error";
+  output: string;
+};

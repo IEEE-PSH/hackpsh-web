@@ -16,6 +16,9 @@ export default async function ChallengePage({
     await serverTRPC.user.get_user_dropdown_info.query({
       user_uuid: user.id,
     });
+  const { team_name } = await serverTRPC.user.get_user_team_info.query({
+    user_uuid: user.id,
+  });
   return (
     <div className="min-h-screen bg-background">
       <ChallengeContentPage
@@ -23,6 +26,7 @@ export default async function ChallengePage({
         userEmailAddress={user_email_address!}
         challengeId={params.challengeId}
         userUUID={user.id}
+        teamName={team_name!}
       />
     </div>
   );

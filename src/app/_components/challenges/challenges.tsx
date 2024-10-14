@@ -3,6 +3,7 @@ import { type Challenges as TChallenges } from "@/server/dao/challenges";
 import { Card } from "../ui/card";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
 import { cn } from "@/app/_lib/client-utils";
+import ChallengeBooter from "./challenge-booter";
 
 export function Challenges({
   challenges,
@@ -76,17 +77,7 @@ export function Challenges({
                   userRole !== "participant" && "pointer-events-none",
                   "absolute z-[50] flex h-full w-full items-center justify-center bg-background/80",
                 )}
-              >
-                {userRole === "participant" ? (
-                  <p className="mx-16 text-center">
-                    Wait for the administrator to enable challenges.
-                  </p>
-                ) : (
-                  <p className="mx-16 text-center">
-                    You can edit and test challenges while they are disabled.
-                  </p>
-                )}
-              </div>
+              />
             )}
 
             <div className={cn("grid grid-cols-1")}>

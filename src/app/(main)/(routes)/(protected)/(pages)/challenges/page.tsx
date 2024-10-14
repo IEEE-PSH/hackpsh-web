@@ -1,8 +1,9 @@
+import ChallengeBooter from "@/app/_components/challenges/challenge-booter";
 import { Challenges } from "@/app/_components/challenges/challenges";
 import ChallengesProgress from "@/app/_components/challenges/challenges-progress";
 import { Card, CardContent, CardTitle } from "@/app/_components/ui/card";
 import { serverTRPC } from "@/app/_trpc/server";
-import { TUserRole } from "@/db/drizzle/startup_seed";
+import { type TUserRole } from "@/db/drizzle/startup_seed";
 import { composeServerComponentClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import { type Metadata } from "next";
@@ -51,6 +52,7 @@ export default async function ChallengesPage() {
         challengesEnabled={is_challenges_enabled}
         userRole={get_user_role as TUserRole}
       />
+      <ChallengeBooter />
     </div>
   );
 }

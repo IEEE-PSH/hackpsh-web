@@ -2,7 +2,6 @@
 import { Button } from "@/app/_components/ui/button";
 import { trpc } from "@/app/_trpc/react";
 import React, { type Dispatch, type SetStateAction } from "react";
-import { useState } from "react";
 import { toast } from "../ui/use-toast";
 import {
   Select,
@@ -12,12 +11,12 @@ import {
   SelectItem,
   SelectTrigger,
 } from "../ui/select";
-import { type TSubmitData } from "@/server/procedures/protected/challenges/runCodeProcedure";
 import { Check, Edit, Play, Send } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 import { type TLanguages } from "@/server/zod-schemas/challenges";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
+import { type TSubmitData } from "@/server/procedures/protected/challenges/submitCodeProcedure";
 
 type ChallengeNavActionsProps = {
   value: string;
@@ -25,11 +24,10 @@ type ChallengeNavActionsProps = {
   header: string;
   language: "python" | "cpp" | "javascript";
   userUUID: string;
-  setLanguage: Dispatch<SetStateAction<TLanguages>>;
   solved: boolean;
-  setSolved: Dispatch<SetStateAction<boolean>>;
-  setOutputData: Dispatch<SetStateAction<TSubmitData>>;
-  challengePoints: number;
+  checkedSolvedStatus: boolean;
+  setLanguage: Dispatch<SetStateAction<TLanguages>>;
+  setOutputData: Dispatch<SetStateAction<TSubmitData | null>>;
 };
 
 export default function ChallengeNavActions({
@@ -38,97 +36,68 @@ export default function ChallengeNavActions({
   header,
   language,
   userUUID,
-  setLanguage,
   solved,
-  setSolved,
+  checkedSolvedStatus,
+  setLanguage,
   setOutputData,
-  challengePoints,
 }: ChallengeNavActionsProps) {
   const router = useRouter();
-  const [runEnabled, setRunEnabled] = useState(false);
-  const [submitEnabled, setSubmitEnabled] = useState(false);
-
-  const { isFetchedAfterMount } = trpc.challenges.is_solved_challenge.useQuery(
-    {
-      challenge_id: challengeId,
-      user_uuid: userUUID,
-    },
-    {
-      onSuccess: (isSolved: boolean) => {
-        setSolved(isSolved);
-      },
-    },
-  );
-
-  //submits code
-  trpc.challenges.submit_code.useQuery(
-    {
-      code_string: value,
-      challenge_id: challengeId,
-      challenge_header: header,
-      language: language,
-      user_uuid: userUUID,
-    },
-    {
-      retry: false,
-      enabled: submitEnabled,
-      onSuccess: (submitData: TSubmitData) => {
-        setOutputData(submitData);
-        if (submitData.type == "success") {
-          setSolved(true);
-          router.refresh();
-          toast({
-            variant: "success",
-            title: `+ ${challengePoints} points!`,
-            duration: 4000,
-          });
-        }
-        setSubmitEnabled(false);
-      },
-      onError: (error) => {
-        setSubmitEnabled(false);
-        toast({
-          variant: "destructive",
-          title: error.data?.code,
-          description: error.message,
-          duration: 4000,
-        });
-      },
-    },
-  );
 
   //runs code
-  trpc.challenges.run_code.useQuery(
-    {
-      code_string: value,
-      challenge_id: challengeId,
-      challenge_header: header,
-      language: language,
-    },
-    {
-      enabled: runEnabled,
-      onSuccess: (outputData: TSubmitData) => {
-        setOutputData(outputData);
-        setRunEnabled(false);
+  const { refetch: runCode, isFetching: isRunning } =
+    trpc.challenges.run_code.useQuery(
+      {
+        code_string: value,
+        challenge_id: challengeId,
+        challenge_header: header,
+        language: language,
       },
-      onError: () => {
-        setRunEnabled(false);
-        toast({
-          variant: "destructive",
-          title: "Oops, Something went wrong!",
-          description:
-            "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
-          duration: 6000,
-        });
+      {
+        enabled: false,
+        onSuccess: (outputData: TSubmitData) => {
+          setOutputData(outputData);
+        },
+        onError: () => {
+          toast({
+            variant: "destructive",
+            title: "Oops, Something went wrong!",
+            description:
+              "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
+            duration: 6000,
+          });
+        },
       },
-    },
-  );
+    );
+
+  //submits code
+  const { refetch: submitCode, isFetching: isSubmitting } =
+    trpc.challenges.submit_code.useQuery(
+      {
+        code_string: value,
+        challenge_id: challengeId,
+        challenge_header: header,
+        language: language,
+        user_uuid: userUUID,
+      },
+      {
+        enabled: false,
+        retry: false,
+        onError: (error) => {
+          toast({
+            variant: "destructive",
+            title: error.data?.code,
+            description: error.message,
+            duration: 4000,
+          });
+        },
+      },
+    );
 
   const { data: role } = trpc.user.get_user_role.useQuery({
     user_uuid: userUUID,
   });
 
-  if (isFetchedAfterMount) {
+  if (checkedSolvedStatus) {
     return (
       <div className="ml-auto flex space-x-4">
         {role?.get_user_role !== "participant" && (
@@ -171,20 +140,16 @@ export default function ChallengeNavActions({
             <Button
               className="p-2 md:p-4"
               variant="secondary"
-              disabled={runEnabled}
-              onClick={() => {
-                setRunEnabled(true);
-              }}
+              disabled={isRunning}
+              onClick={() => runCode()}
             >
               <Play />
               <span className="ml-4 hidden md:block">Run</span>
             </Button>
             <Button
               className="p-2 md:p-4"
-              disabled={submitEnabled}
-              onClick={() => {
-                setSubmitEnabled(true);
-              }}
+              disabled={isSubmitting}
+              onClick={() => submitCode()}
             >
               <Send />
               <span className="ml-4 hidden md:block">Submit</span>

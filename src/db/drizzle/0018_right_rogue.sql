@@ -4,5 +4,3 @@ ALTER TABLE "app_schema"."app_event" ALTER COLUMN "event_start_time" SET DATA TY
 ALTER TABLE "app_schema"."app_event" ALTER COLUMN "event_start_time" DROP DEFAULT;--> statement-breakpoint
 ALTER TABLE "app_schema"."app_event" ALTER COLUMN "event_end_time" SET DATA TYPE text;--> statement-breakpoint
 ALTER TABLE "app_schema"."app_event" ALTER COLUMN "event_end_time" DROP DEFAULT;
-
-ALTER TABLE "app_schema"."app_event" ENABLE ROW LEVEL SECURITY;

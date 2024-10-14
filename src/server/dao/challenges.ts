@@ -42,7 +42,7 @@ export async function getChallenges(db: Database, user_uuid: string) {
                   app_challenges.challenge_uuid,
                 ),
                 eq(
-                  app_solved_challenges.solved_challenge_team_uuid!,
+                  app_solved_challenges.solved_challenge_team_uuid,
                   teamUUID!.user_team_uuid!,
                 ),
               ),
@@ -68,7 +68,7 @@ export async function getChallenges(db: Database, user_uuid: string) {
       )
       .where(
         eq(
-          app_solved_challenges.solved_challenge_team_uuid!,
+          app_solved_challenges.solved_challenge_team_uuid,
           teamUUID!.user_team_uuid!,
         ),
       );
