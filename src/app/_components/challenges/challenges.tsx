@@ -4,6 +4,11 @@ import { Card } from "../ui/card";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
 import { cn } from "@/app/_lib/client-utils";
 import ChallengeBooter from "./challenge-booter";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../ui/hover-card";
 
 export function Challenges({
   challenges,
@@ -97,19 +102,26 @@ export function Challenges({
           </span>
         </p>
         {solvedChallenges.length > 0 ? (
-          <Card className="relative mt-2">
-            {!challengesEnabled && (
-              <div
-                className={cn(
-                  userRole !== "participant" && "pointer-events-none",
-                  "absolute z-[50] flex h-full w-full items-center justify-center bg-background/80",
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <Card className="relative mt-2">
+                {!challengesEnabled && (
+                  <div
+                    className={cn(
+                      userRole !== "participant" && "pointer-events-none",
+                      "absolute z-[50] flex h-full w-full items-center justify-center bg-background/80",
+                    )}
+                  ></div>
                 )}
-              ></div>
-            )}
-            <div className={cn("grid grid-cols-1")}>
-              {solvedChallengeElements}
-            </div>
-          </Card>
+                <div className={cn("grid grid-cols-1")}>
+                  {solvedChallengeElements}
+                </div>
+              </Card>
+            </HoverCardTrigger>
+            <HoverCardContent className="mr-4 w-auto p-2">
+              <p className="text-sm">Challenges are currently disabled.</p>
+            </HoverCardContent>
+          </HoverCard>
         ) : (
           <p className="ml-6 text-muted-foreground">
             No challenges solved yet.

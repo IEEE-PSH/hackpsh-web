@@ -82,6 +82,9 @@ export default function ChallengeNavActions({
       {
         enabled: false,
         retry: false,
+        onSuccess: (outputData: TSubmitData) => {
+          setOutputData(outputData);
+        },
         onError: (error) => {
           toast({
             variant: "destructive",

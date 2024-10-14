@@ -35,16 +35,28 @@ export async function updateEventDetails(
       eventStartTime.getTime() + event_duration * 60 * 60 * 1000,
     );
 
-    await db.delete(app_event).execute();
-
-    await db.insert(app_event).values({
-      event_date: eventDate.toDateString(),
-      event_start_time: eventStartTime.toISOString(),
-      event_end_time: eventEndTime.toISOString(),
-      event_start_hour: event_start_hour,
-      event_duration: event_duration,
-      event_challenges_enabled: event_challenges_enabled,
-    });
+    await db
+      .insert(app_event)
+      .values({
+        event_id: 1,
+        event_date: eventDate.toDateString(),
+        event_start_time: eventStartTime.toISOString(),
+        event_end_time: eventEndTime.toISOString(),
+        event_start_hour: event_start_hour,
+        event_duration: event_duration,
+        event_challenges_enabled: event_challenges_enabled,
+      })
+      .onConflictDoUpdate({
+        target: app_event.event_id,
+        set: {
+          event_date: eventDate.toDateString(),
+          event_start_time: eventStartTime.toISOString(),
+          event_end_time: eventEndTime.toISOString(),
+          event_start_hour: event_start_hour,
+          event_duration: event_duration,
+          event_challenges_enabled: event_challenges_enabled,
+        },
+      });
 
     return {
       update_event_details: true,
