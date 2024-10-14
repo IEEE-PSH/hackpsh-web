@@ -49,7 +49,7 @@ export default async function Page() {
           <Separator className="my-4" />
           <div className="flex flex-col justify-between space-y-4 sm:flex-row md:space-x-4">
             <div className="flex flex-col space-y-2">
-              <Label>Delete Your Account</Label>
+              <Label>Delete your account</Label>
               <p className="text-sm text-muted-foreground">
                 No longer using your account? You can delete your account here.
               </p>

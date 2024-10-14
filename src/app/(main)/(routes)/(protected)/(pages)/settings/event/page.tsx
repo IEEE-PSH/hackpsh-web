@@ -63,7 +63,7 @@ export default async function Page() {
                 className="ml-auto mt-6 w-full sm:w-auto"
                 disabled={true}
               >
-                Delete All Teams
+                Delete all teams
               </Button>
             </div>
           </div>

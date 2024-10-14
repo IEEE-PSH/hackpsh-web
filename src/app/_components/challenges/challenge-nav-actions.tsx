@@ -60,7 +60,7 @@ export default function ChallengeNavActions({
         onError: () => {
           toast({
             variant: "destructive",
-            title: "Oops, Something went wrong!",
+            title: "Oops, something went wrong!",
             description:
               "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
             duration: 6000,

@@ -35,7 +35,7 @@ export default function TeamDeleteDialog({
       router.refresh();
       toast({
         variant: "success",
-        title: "Team Deleted!",
+        title: "Team deleted.",
         duration: 4000,
       });
     },
@@ -71,7 +71,7 @@ export default function TeamDeleteDialog({
         </DialogHeader>
         <DialogFooter>
           <Button variant="destructive" onClick={() => deleteTeam()}>
-            Delete Team Permanently
+            Delete team permanently
           </Button>
         </DialogFooter>
       </DialogContent>

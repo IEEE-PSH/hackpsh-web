@@ -51,7 +51,7 @@ export function CreateAnnouncementPostForm({
       onError: () => {
         toast({
           variant: "destructive",
-          title: "Oops, Something Went Wrong!",
+          title: "Oops, something went wrong!",
           description:
             "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
           duration: 6000,

@@ -72,7 +72,7 @@ export function CreateChallengeForm({
     onSuccess: () => {
       toast({
         variant: "success",
-        title: "Challenge Created!",
+        title: "Challenge created.",
         description: "You have successfully created a challenge.",
         duration: 4000,
       });

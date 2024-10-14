@@ -74,7 +74,7 @@ export default function EventDetailsForm({
       router.refresh();
       toast({
         variant: "success",
-        title: "Event Details Updated!",
+        title: "Event details updated.",
         duration: 4000,
       });
     },
@@ -254,7 +254,7 @@ export default function EventDetailsForm({
           render={({ field }) => (
             <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
               <div className="space-y-0.5">
-                <FormLabel className="text-base">Enable challenges</FormLabel>
+                <FormLabel>Enable challenges</FormLabel>
                 <FormDescription>
                   Toggle to enable or disable challenges for participants.
                 </FormDescription>

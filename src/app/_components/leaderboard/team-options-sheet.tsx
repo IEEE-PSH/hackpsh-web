@@ -57,7 +57,7 @@ export default function TeamOptionsSheet({
       router.refresh();
       toast({
         variant: "success",
-        title: "Team Points Updated!",
+        title: "Team points updated.",
         duration: 4000,
       });
     },

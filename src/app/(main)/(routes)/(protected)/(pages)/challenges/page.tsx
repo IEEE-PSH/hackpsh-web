@@ -31,6 +31,18 @@ export default async function ChallengesPage() {
     user_uuid: user.id,
   });
 
+  if (
+    challenges.solvedChallenges.length +
+      challenges.unsolvedChallenges.length ===
+    0
+  ) {
+    return (
+      <p className="mx-auto my-4 text-center text-muted-foreground">
+        No challenges yet.
+      </p>
+    );
+  }
+
   return (
     <div className="container my-4 grid max-w-5xl grid-cols-1 gap-y-8">
       <div className="grid gap-4 lg:grid-cols-2">

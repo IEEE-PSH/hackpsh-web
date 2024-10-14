@@ -74,8 +74,8 @@ export function EditChallengeForm({
       example_output: challenge?.challenge_example_output,
       explanation: challenge?.challenge_explanation,
       test_cases: testcases.map((testcase) => ({
-        input: testcase.test_case_input!,
-        output: testcase.test_case_output!,
+        input: testcase.test_case_input,
+        output: testcase.test_case_output,
       })),
     },
   });

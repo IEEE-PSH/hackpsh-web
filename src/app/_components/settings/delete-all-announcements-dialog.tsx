@@ -25,14 +25,14 @@ export default function DeleteAllAnnouncementsDialog() {
       router.refresh();
       toast({
         variant: "success",
-        title: "Announcements Deleted!",
+        title: "Announcements deleted.",
         duration: 4000,
       });
     },
     onError: () => {
       toast({
         variant: "destructive",
-        title: "Oops, Something Went Wrong!",
+        title: "Oops, something went wrong!",
         description:
           "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
         duration: 6000,
@@ -59,7 +59,7 @@ export default function DeleteAllAnnouncementsDialog() {
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
         <Button variant="secondary" className="ml-auto mt-6 w-full sm:w-auto">
-          Delete All Announcements
+          Delete all announcements
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -77,7 +77,7 @@ export default function DeleteAllAnnouncementsDialog() {
               await deleteAllAnnouncements();
             }}
           >
-            Delete All Announcements
+            Delete all announcements
           </Button>
         </DialogFooter>
       </DialogContent>
