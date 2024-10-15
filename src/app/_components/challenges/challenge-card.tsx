@@ -29,9 +29,12 @@ export default function ChallengeCard({
 
   if (challengesEnabled || userRole !== "participant") {
     return (
-      <Link href={siteConfig.paths.solve + "/" + challenge_id}>
+      <Link
+        href={siteConfig.paths.solve + "/" + challenge_id}
+        className="border-b last:border-0"
+      >
         <div
-          className="cursor-pointer border-b transition-colors last:border-0 hover:bg-accent/50"
+          className="cursor-pointer transition-colors hover:bg-accent/50"
           onClick={() => {
             if (challengesEnabled || userRole !== "participant")
               router.push(siteConfig.paths.solve + "/" + challenge_id);

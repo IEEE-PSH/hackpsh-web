@@ -55,16 +55,7 @@ export function CreateChallengeForm({
   const form = useForm<TCreateChallengeFormSchema>({
     resolver: zodResolver(CreateChallengeFormSchema),
     defaultValues: {
-      test_cases: [
-        {
-          input: "",
-          output: "",
-        },
-        {
-          input: "",
-          output: "",
-        },
-      ],
+      test_cases: [],
     },
   });
   const router = useRouter();
@@ -137,14 +128,14 @@ export function CreateChallengeForm({
   }
 
   function removeTestcase(i: number) {
-    if (fields.length <= 2) {
-      toast({
-        variant: "destructive",
-        description: "Minimum of two test cases required.",
-        duration: 4000,
-      });
-      return;
-    }
+    // if (fields.length <= 2) {
+    //   toast({
+    //     variant: "destructive",
+    //     description: "Minimum of two test cases required.",
+    //     duration: 4000,
+    //   });
+    //   return;
+    // }
     remove(i);
   }
 

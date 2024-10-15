@@ -6,7 +6,14 @@ import { cn } from "@/app/_lib/client-utils";
 import { siteConfig } from "@/app/_config/site";
 import { Button } from "../ui/button";
 import { Icons } from "../ui/icons";
-import { BarChart2, Bell, LayoutDashboard, Swords } from "lucide-react";
+import {
+  BarChart2,
+  Bell,
+  LayoutDashboard,
+  MessageCircle,
+  MessageSquare,
+  Swords,
+} from "lucide-react";
 
 export function ProtectedSideNav() {
   const pathname = usePathname();
@@ -90,6 +97,26 @@ export function ProtectedSideNav() {
             </Link>
           </Button>
         </nav>
+        <div className="relative border-t">
+          <nav className="m-4 flex flex-col">
+            <Button
+              className={cn(
+                "justify-start font-normal",
+                pathname === siteConfig.paths.announcements
+                  ? "bg-accent text-accent-foreground"
+                  : "text-foreground/60 hover:bg-accent/50",
+              )}
+              variant={"ghost"}
+              size={"default"}
+              asChild
+            >
+              <Link href={siteConfig.paths.announcements} scroll={true}>
+                <MessageSquare className="mr-4" />
+                <span>Chat</span>
+              </Link>
+            </Button>
+          </nav>
+        </div>
       </div>
     </div>
   );

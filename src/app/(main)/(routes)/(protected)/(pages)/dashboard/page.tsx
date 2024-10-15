@@ -24,19 +24,19 @@ export default async function DashboardPage() {
     });
 
   return (
-    <div className="container max-w-5xl">
-      <Card>
-        <CardHeader>
-          <CardTitle className="">Welcome</CardTitle>
-        </CardHeader>
-        <CardContent className=""></CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle className="">Welcome</CardTitle>
-        </CardHeader>
-        <CardContent className=""></CardContent>
-      </Card>
+    <div className="container grid max-w-5xl grid-cols-1 gap-y-8">
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Card>
+          <CardContent className="grid grid-cols-1 p-6">
+            <CardTitle className="text-md text-muted-foreground">
+              {team_name}
+            </CardTitle>
+            <p className="text-3xl font-semibold ">
+              {team_total_points} Points
+            </p>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

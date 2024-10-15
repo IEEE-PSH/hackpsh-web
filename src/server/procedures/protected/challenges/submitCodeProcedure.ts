@@ -102,15 +102,15 @@ export default protectedProcedure
               input.code_string,
             );
           }
-
+          console.log(testCases.length);
           return {
             type: "success",
-            output: `Passed ${passCount}/${expectedOutputs.length} testcases. ✔️`,
+            output: `Passed ${passCount}/${expectedOutputs.length} testcase${testCases.length !== 1 ? "s" : ""}. ✔️`,
           };
         } else {
           return {
             type: "error",
-            output: `Passed ${passCount}/${expectedOutputs.length} testcases. ❌`,
+            output: `Passed ${passCount}/${expectedOutputs.length} testcase${testCases.length !== 1 ? "s" : ""}. ❌`,
           };
         }
       } else {
