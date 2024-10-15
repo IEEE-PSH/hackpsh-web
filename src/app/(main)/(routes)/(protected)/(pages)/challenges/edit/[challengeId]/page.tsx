@@ -22,7 +22,7 @@ export default async function EditChallengePage({
       challenge_id: params.challengeId,
     });
   return (
-    <div className="container my-4 mt-8 max-w-4xl">
+    <div className="container mt-8 max-w-4xl">
       <EditChallengeForm challengeData={challengeData} userUUID={user.id} />
     </div>
   );

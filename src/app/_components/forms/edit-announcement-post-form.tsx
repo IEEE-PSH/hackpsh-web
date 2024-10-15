@@ -24,6 +24,7 @@ import { cn } from "@/app/_lib/client-utils";
 import { useRouter } from "next/navigation";
 import { getUser } from "@/shared/supabase/auth";
 import { type AnnouncementPost } from "@/server/dao/announcements";
+import Link from "next/link";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
 type EditAnnouncementFormProps = { postData: AnnouncementPost }; //fix type
@@ -132,12 +133,19 @@ export default function EditAnnouncementPostForm({
           <div className="grid grid-cols-2 gap-x-4 sm:flex sm:space-x-4">
             <Button
               type="button"
-              onClick={() => router.back()}
               variant="navigation"
               className="ml-auto w-full justify-end px-8 sm:w-auto"
               disabled={form.formState.isSubmitting}
+              asChild
             >
-              Cancel
+              <Link
+                href="#"
+                onClick={() => {
+                  router.back();
+                }}
+              >
+                Cancel
+              </Link>
             </Button>
             <Button
               type="submit"

@@ -44,6 +44,7 @@ import {
 } from "@/app/_lib/zod-schemas/forms/challenges";
 import { siteConfig } from "@/app/_config/site";
 import { Card } from "../ui/card";
+import Link from "next/link";
 
 type CreateChallengeFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -422,12 +423,19 @@ export function CreateChallengeForm({
           <div className="grid grid-cols-2 gap-x-4 sm:flex">
             <Button
               type="button"
-              onClick={() => router.back()}
               variant="navigation"
               className="px-8 sm:ml-auto"
               disabled={form.formState.isSubmitting}
+              asChild
             >
-              Cancel
+              <Link
+                href="#"
+                onClick={() => {
+                  router.back();
+                }}
+              >
+                Cancel
+              </Link>
             </Button>
             <Button
               type="submit"
