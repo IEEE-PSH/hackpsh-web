@@ -13,7 +13,7 @@ import { toast } from "../ui/use-toast";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { trpc } from "@/app/_trpc/react";
-import { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 
 export default function AnnouncementPostDeleteDialog({
   postID,
@@ -33,7 +33,7 @@ export default function AnnouncementPostDeleteDialog({
         setDialogOpen(false);
         toast({
           variant: "success",
-          title: "Announcement Deleted!",
+          title: "Announcement deleted.",
           duration: 4000,
         });
         router.refresh();

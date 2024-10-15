@@ -18,7 +18,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { toast } from "../ui/use-toast";
+import { toast, useToast } from "../ui/use-toast";
 import { useForm } from "react-hook-form";
 import { Icons } from "../ui/icons";
 import { cn } from "@/app/_lib/client-utils";
@@ -41,12 +41,9 @@ export function CreateAnnouncementPostForm({
       onSuccess: () => {
         toast({
           variant: "success",
-          title: "Announcement Created!",
-          description: "You have successfully created an announcement.",
-          duration: 4000,
+          title: "Created a new announcement.",
+          duration: 6000,
         });
-        router.replace(siteConfig.paths.announcements);
-        router.refresh();
       },
       onError: () => {
         toast({

@@ -7,11 +7,6 @@ import {
 } from "@/server/zod-schemas/challenges";
 import { TRPCError } from "@trpc/server";
 
-export type TSubmitData = {
-  type: "valid" | "success" | "error";
-  output: string;
-};
-
 // FORMAT
 export function formatFunctionCall(header: string) {
   const match = header.match(/^\s*(\w+)\s+(\w+)\s*\((.*)\)\s*$/);

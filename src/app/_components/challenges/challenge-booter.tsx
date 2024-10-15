@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
 import { siteConfig } from "@/app/_config/site";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Button } from "../ui/button";
 
 /*
 this notifies users when challenges are enabled/disabled
@@ -28,24 +29,37 @@ export default function ChallengeBooter() {
       },
       () => {
         void (async () => {
+          router.refresh();
+          if (pathname === siteConfig.paths.event) return;
+
           const isChallengesEnabled = await refetch();
           if (!isChallengesEnabled.data) {
             toast({
               variant: "default",
               title: "Challenges are now disabled.",
-              duration: 4000,
+              duration: 6000,
             });
 
             if (pathname.startsWith(siteConfig.paths.solve))
               router.push(siteConfig.paths.challenges);
           } else {
-            toast({
+            const enabledToast = toast({
               variant: "default",
               title: "Challenges are now enabled.",
-              duration: 4000,
+              duration: 6000,
+              action: (
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    router.push(siteConfig.paths.challenges);
+                    enabledToast.dismiss();
+                  }}
+                >
+                  View
+                </Button>
+              ),
             });
           }
-          router.refresh();
         })();
       },
     );
@@ -55,7 +69,7 @@ export default function ChallengeBooter() {
     return () => {
       void supabase.removeChannel(channel);
     };
-  }, [is_challenges_enabled, refetch, router, supabase]);
+  }, [is_challenges_enabled, refetch, router, supabase, pathname]);
 
   return <></>;
 }

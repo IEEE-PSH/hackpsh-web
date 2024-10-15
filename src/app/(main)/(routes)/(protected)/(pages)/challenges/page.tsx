@@ -64,7 +64,6 @@ export default async function ChallengesPage() {
         challengesEnabled={is_challenges_enabled}
         userRole={get_user_role as TUserRole}
       />
-      <ChallengeBooter />
     </div>
   );
 }

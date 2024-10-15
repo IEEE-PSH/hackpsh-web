@@ -4,7 +4,7 @@ import { Badge } from "../ui/badge";
 import { type Challenge } from "@/server/dao/challenges";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
-import { TUserRole } from "@/db/drizzle/startup_seed";
+import { type TUserRole } from "@/db/drizzle/startup_seed";
 
 type ChallengeCardProps = {
   challengeData: Challenge;
