@@ -34,20 +34,24 @@ function Hero() {
             HackPSH Fall 2024
           </h2>
 
-          <p className="text-muted-foreground">
+          <p className="text-foreground">
             Welcome to HackPSH Fall 2024! Dive into challenges testing your
             software and hardware skills. Whether you&apos;re new to coding or a
             circuit-building pro, this event has something for everyone!
           </p>
 
-          <div className="text-foreground">
+          <div className="text-muted-foreground">
             <Button
               variant="inline_link"
               size="navigation"
               className="text-md"
               asChild
             >
-              <Link href={siteConfig.location} target="_blank">
+              <Link
+                href={siteConfig.location}
+                target="_blank"
+                className="text-muted-foreground"
+              >
                 <span>Educational Activities Building | EAB 103</span>
               </Link>
             </Button>
