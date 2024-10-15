@@ -17,6 +17,7 @@ import { type TLanguages } from "@/server/zod-schemas/challenges";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
 import { type TSubmitData } from "@/server/procedures/protected/challenges/submitCodeProcedure";
+import Link from "next/link";
 
 type ChallengeNavActionsProps = {
   value: string;
@@ -104,15 +105,11 @@ export default function ChallengeNavActions({
     return (
       <div className="ml-auto flex space-x-4">
         {role?.get_user_role !== "participant" && (
-          <Button
-            className="p-2 md:p-4"
-            variant="secondary"
-            onClick={() =>
-              router.push(siteConfig.paths.edit_challenge + "/" + challengeId)
-            }
-          >
-            <Edit />
-            <span className="ml-4 hidden md:block">Edit</span>
+          <Button className="p-2 md:p-4" variant="secondary" asChild>
+            <Link href={siteConfig.paths.edit_challenge + "/" + challengeId}>
+              <Edit />
+              <span className="ml-4 hidden md:block">Edit</span>
+            </Link>
           </Button>
         )}
 
