@@ -16,7 +16,7 @@ export default async function ProtectedSiteHeader() {
     });
 
   return (
-    <header className="sticky top-0 border-b bg-background">
+    <header className="sticky top-0 z-10 border-b bg-background">
       <div className="mx-4 flex h-16 items-center">
         <ProtectedMobileNav />
         <SiteHeaderActions>

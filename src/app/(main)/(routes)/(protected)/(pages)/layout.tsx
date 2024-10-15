@@ -2,7 +2,6 @@ import AnnouncementNotifer from "@/app/_components/announcement/announcement-not
 import ChallengeBooter from "@/app/_components/challenges/challenge-booter";
 import { ProtectedSideNav } from "@/app/_components/nav/protected-side-nav";
 import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
-import PublicSiteHeader from "@/app/_components/nav/public-site-header";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

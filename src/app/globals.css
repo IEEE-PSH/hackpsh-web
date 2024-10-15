@@ -56,17 +56,25 @@
     --banana: 48 96% 68%;
   }
 
-  /* deliberate breaking for long words/links*/
+  /* break long words and URLs */
   .break-all {
-    word-break: break-all; /* break long words and URLs */
+    word-break: break-all;
   }
 
+  /* break words at spaces */
   .break-word {
-    overflow-wrap: break-word; /* break words at spaces */
+    overflow-wrap: break-word;
     word-wrap: break-word;
   }
 
+  /* break words at spaces but allow for long words to break */
   .word-break {
-    word-break: break-word; /* break words at spaces but allow for long words to break */
+    word-break: break-word;
+  }
+
+  /*override nextjs-toploader index; fixed bug*/
+  #nprogress {
+    position: fixed;
+    z-index: 100;
   }
 }

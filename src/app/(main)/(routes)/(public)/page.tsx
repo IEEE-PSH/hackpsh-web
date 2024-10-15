@@ -229,18 +229,18 @@ function HomePrizes() {
               more!
             </CardDescription>
             <CardContent className="mx-auto">
-              <div className="my-14 flex flex-shrink space-x-4">
-                <div className="box-border flex w-28 flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
-                  <Trophy className="h-8 w-8" />
-                  <p className="font-bold">1st Place</p>
-                  <p className="text-xl">$100</p>
-                </div>
-                <div className="flex w-28 flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground  dark:text-background">
+              <div className="my-14 flex scale-[0.85] flex-row space-x-4 sm:scale-[1]">
+                <div className="h-42 flex w-28 rotate-[2deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
                   <Medal className="h-8 w-8" />
                   <p className="font-bold">2nd Place</p>
                   <p className="text-xl">$50</p>
                 </div>
-                <div className="flex w-28 flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
+                <div className="h-42 z-[2] box-border flex w-28 rotate-[-7deg] scale-[1.3] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
+                  <Trophy className="h-8 w-8" />
+                  <p className="font-bold">1st Place</p>
+                  <p className="text-xl">$100</p>
+                </div>
+                <div className="h-42 flex w-28 rotate-[5deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
                   <Medal className="h-8 w-8" />
                   <p className="font-bold">3rd Place</p>
                   <p className="text-xl">$25</p>
