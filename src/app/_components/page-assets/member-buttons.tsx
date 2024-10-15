@@ -9,9 +9,13 @@ export type MemberContactInformation = {
   email?: string;
 };
 
-export function MemberButtons({ github, linkedin, email }: MemberContactInformation) {
+export function MemberButtons({
+  github,
+  linkedin,
+  email,
+}: MemberContactInformation) {
   return (
-    <div className="absolute bottom-0 right-0 flex space-x-2">
+    <div className="flex space-x-2">
       {github && (
         <Button variant="ghost" size="icon" asChild>
           <Link href={github} target="_blank">

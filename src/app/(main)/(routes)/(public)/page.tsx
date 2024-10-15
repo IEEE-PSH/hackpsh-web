@@ -229,25 +229,25 @@ function HomePrizes() {
               more!
             </CardDescription>
             <CardContent className="mx-auto">
-              <div className="my-14 flex scale-[0.85] flex-row space-x-4 sm:scale-[1]">
-                <div className="h-42 flex w-28 rotate-[2deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
-                  <Medal className="h-8 w-8" />
-                  <p className="font-bold">2nd Place</p>
-                  <p className="text-xl">$50</p>
-                </div>
-                <div className="h-42 z-[2] box-border flex w-28 rotate-[-7deg] scale-[1.3] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
+              <div className="my-14 flex flex-shrink space-x-4">
+                <div className="box-border flex w-28 flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
                   <Trophy className="h-8 w-8" />
                   <p className="font-bold">1st Place</p>
                   <p className="text-xl">$100</p>
                 </div>
-                <div className="h-42 flex w-28 rotate-[5deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
+                <div className="flex w-28 flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground  dark:text-background">
+                  <Medal className="h-8 w-8" />
+                  <p className="font-bold">2nd Place</p>
+                  <p className="text-xl">$50</p>
+                </div>
+                <div className="flex w-28 flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
                   <Medal className="h-8 w-8" />
                   <p className="font-bold">3rd Place</p>
                   <p className="text-xl">$25</p>
                 </div>
               </div>
             </CardContent>
-            <CardFooter className="text-lg font-medium dark:text-background/80">
+            <CardFooter className="text-md p-0 text-foreground dark:text-background/80">
               Everyone will receive a Certificate of Participation and an entry
               in the Resume Book.
             </CardFooter>
@@ -264,7 +264,7 @@ function HomePrizes() {
 
 function HomePastEvents() {
   return (
-    <Section className="bg-background-variant-other">
+    <Section className="bg-background-variant">
       <div className="mx-auto grid max-w-[30rem] gap-y-8 md:max-w-[60rem]">
         <p className="text-center text-4xl font-bold text-foreground">
           PAST EVENTS
@@ -273,7 +273,7 @@ function HomePastEvents() {
           <div className="grid grid-cols-1 gap-8 rounded-xl p-6 md:grid-cols-2">
             <Image
               alt="fall-2023-event"
-              className="rounded-md brightness-[105%] saturate-[120%]"
+              className="rounded-md"
               src={HackPSH2023Fall}
             />
             <div className="flex flex-col justify-between">
@@ -303,7 +303,7 @@ function HomePastEvents() {
           <div className="grid grid-cols-1 gap-8 rounded-xl p-6 md:grid-cols-2">
             <Image
               alt="spring-2023-event"
-              className="rounded-md brightness-[105%] saturate-[120%]"
+              className="rounded-md"
               src={HackPSH2023Spring}
             />
 

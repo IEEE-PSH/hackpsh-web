@@ -32,11 +32,14 @@ export default function RootLayout({
           storageKey="hackpsh-theme"
         >
           <ReactQueryProvider headers={headers()}>
-            <NextTopLoader
-              color="hsl(var(--primary))"
-              showSpinner={false}
-              height={3}
-            />
+            <div className="fixed z-20">
+              <NextTopLoader
+                color="hsl(var(--primary))"
+                showSpinner={false}
+                height={3}
+              />
+            </div>
+
             {children}
           </ReactQueryProvider>
           <Toaster />
