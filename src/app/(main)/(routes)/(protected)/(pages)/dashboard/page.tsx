@@ -24,28 +24,18 @@ export default async function DashboardPage() {
     });
 
   return (
-    <div className="container">
+    <div className="container max-w-5xl">
       <Card>
         <CardHeader>
-          <CardTitle className="text-4xl">Team</CardTitle>
+          <CardTitle className="">Welcome</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col space-y-4 text-muted-foreground">
-          <div>
-            <p className="text-xl text-foreground">General Information</p>
-            <p>Team Name: {team_name}</p>
-            <p>Team Code: {team_join_code}</p>
-            <p>Points: {team_total_points}</p>
-          </div>
-
-          <div>
-            <p className="text-xl text-foreground">Members</p>
-            {team_members.map((member, index) => (
-              <p key={`member-${index}`} className="text-muted-foreground">
-                {member.user_display_name}
-              </p>
-            ))}
-          </div>
-        </CardContent>
+        <CardContent className=""></CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle className="">Welcome</CardTitle>
+        </CardHeader>
+        <CardContent className=""></CardContent>
       </Card>
     </div>
   );

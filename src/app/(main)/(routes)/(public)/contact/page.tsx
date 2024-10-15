@@ -67,7 +67,7 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
     <>
       <Section className="bg-background-variant">
         <div
-          className={cn("grid-gap-6 mx-auto max-w-xl", className)}
+          className={cn("grid-gap-6 mx-auto max-w-3xl", className)}
           {...props}
         >
           <Form {...form}>
@@ -168,7 +168,7 @@ function ContactHero() {
         <div className="flex justify-center py-6 md:py-12">
           <div className="flex flex-col justify-center space-y-6 md:space-y-4">
             <h2 className="text-6xl font-bold">Contact Us</h2>
-            <p className="max-w-[44rem] text-lg text-muted-foreground">
+            <p className="max-w-3xl">
               Do you have any questions regarding our event? Are you interested
               in working together? This is the right place to reach out for
               general questions and interests in partnership for future events.

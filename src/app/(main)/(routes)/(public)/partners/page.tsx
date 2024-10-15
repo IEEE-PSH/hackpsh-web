@@ -30,10 +30,10 @@ function PartnersHero() {
   return (
     <section className="border-b-[1px] bg-background text-foreground">
       <div className="container">
-        <div className="flex flex-row justify-between py-6">
+        <div className="flex flex-row justify-between space-x-4 py-6">
           <div className="flex flex-col justify-center space-y-6 md:space-y-4">
             <h2 className="text-6xl font-bold">Partners</h2>
-            <p className="max-w-[44rem] text-lg text-muted-foreground">
+            <p className="max-w-3xl">
               We&apos;re thrilled to partner with exceptional organizations that
               share our passion for innovation and community-driven experiences.
               These partners play a pivotal role in making each event
