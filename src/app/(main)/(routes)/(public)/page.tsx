@@ -31,27 +31,31 @@ function Hero() {
       <div className="flex justify-center lg:justify-between">
         <div className="flex max-w-xl flex-col items-center space-y-8 text-center lg:items-start lg:text-left">
           <h2 className="text-4xl font-bold text-foreground">
-            HackPSH Spring 2024
+            HackPSH Fall 2024
           </h2>
 
-          <p className="text-lg text-muted-foreground">
-            Welcome to HackPSH Spring 2024! Dive into challenges testing your
+          <p className="text-foreground">
+            Welcome to HackPSH Fall 2024! Dive into challenges testing your
             software and hardware skills. Whether you&apos;re new to coding or a
             circuit-building pro, this event has something for everyone!
           </p>
 
-          <div className="text-foreground">
+          <div className="text-muted-foreground">
             <Button
               variant="inline_link"
               size="navigation"
               className="text-md"
               asChild
             >
-              <Link href={siteConfig.location} target="_blank">
+              <Link
+                href={siteConfig.location}
+                target="_blank"
+                className="text-muted-foreground"
+              >
                 <span>Educational Activities Building | EAB 103</span>
               </Link>
             </Button>
-            <p>March 23, 2024 | 10:00 AM - 10:00 PM EST</p>
+            <p>November 30, 2024 | 10:00 AM - 10:00 PM EST</p>
           </div>
 
           <Button variant="default" className="text-md w-48" asChild>
@@ -157,9 +161,9 @@ function HomeInfo() {
           <Image alt="Graphical Element" src={HomeInfo3Svg} width={160} />
         </div>
         <Card className="col-span-full p-6 text-foreground/80 md:col-span-3">
-          <p className="mb-8 text-4xl font-bold text-foreground">
+          <CardTitle className="text-3xl text-card-foreground">
             What is the theme?
-          </p>
+          </CardTitle>
           <p>
             The theme for HackPSH is currently in the works, awaiting its grand
             reveal. Traditionally, HackPSH selects themes that encourage
