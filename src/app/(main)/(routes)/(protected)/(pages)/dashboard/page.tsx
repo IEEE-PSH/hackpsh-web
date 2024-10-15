@@ -24,19 +24,8 @@ export default async function DashboardPage() {
     });
 
   return (
-    <div className="container max-w-5xl">
-      <Card>
-        <CardHeader>
-          <CardTitle className="">Welcome</CardTitle>
-        </CardHeader>
-        <CardContent className=""></CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle className="">Welcome</CardTitle>
-        </CardHeader>
-        <CardContent className=""></CardContent>
-      </Card>
+    <div className="container grid max-w-5xl grid-cols-1 gap-y-8">
+      <div className="grid gap-4 lg:grid-cols-2"></div>
     </div>
   );
 }
