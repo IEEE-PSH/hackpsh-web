@@ -41,17 +41,18 @@ export function AnnouncementPost({
   ).format(announcement_created_at);
 
   return (
-    <Card key={announcement_uuid} className="">
-      <CardHeader className="relative">
-        <CardTitle>{announcement_title}</CardTitle>
-        {userRole !== "participant" ? (
-          <AnnouncementPostActions
-            postID={announcement_id}
-            userRole={userRole}
-          />
-        ) : (
-          <></>
-        )}
+    <Card key={announcement_uuid}>
+      <CardHeader>
+        <div className="flex justify-between">
+          <CardTitle>{announcement_title}</CardTitle>
+          {userRole !== "participant" && (
+            <AnnouncementPostActions
+              postID={announcement_id}
+              userRole={userRole}
+            />
+          )}
+        </div>
+
         <CardDescription>
           <span className="font-semibold">Created By: </span>
           {announcement_author_display_name ?? "Deleted User"}

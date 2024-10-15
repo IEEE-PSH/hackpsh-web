@@ -198,3 +198,6 @@ ALTER publication supabase_realtime ADD TABLE "app_schema"."app_event";
 
 CREATE POLICY "Enable read access for all users" ON "app_schema"."app_solved_challenges" AS PERMISSIVE FOR SELECT TO authenticated USING (true);
 ALTER publication supabase_realtime ADD TABLE "app_schema"."app_solved_challenges";
+
+CREATE POLICY "Enable read access for all users" ON "app_schema"."app_announcement" AS PERMISSIVE FOR SELECT TO authenticated USING (true);
+ALTER publication supabase_realtime ADD TABLE "app_schema"."app_announcement";

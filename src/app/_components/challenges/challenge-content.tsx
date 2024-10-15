@@ -19,6 +19,8 @@ import ChallengeUsersStatus from "./challenge-users-status";
 import ChallengeBooter from "./challenge-booter";
 import ChallengeSyncer from "./challenge-syncer";
 import { type TSubmitData } from "@/server/procedures/protected/challenges/submitCodeProcedure";
+import Link from "next/link";
+import { siteConfig } from "@/app/_config/site";
 
 export default function ChallengeContentPage({
   userDisplayName,
@@ -90,10 +92,12 @@ export default function ChallengeContentPage({
         <Button
           variant="secondary"
           className="ml-4 mr-auto p-2 sm:flex md:p-4"
-          onClick={() => router.back()}
+          asChild
         >
-          <ArrowLeft />
-          <span className="ml-4 hidden md:block">Challenges</span>
+          <Link href="#" onClick={() => router.back()}>
+            <ArrowLeft />
+            <span className="ml-4 hidden md:block">Challenges</span>
+          </Link>
         </Button>
         <ChallengeNavActions
           value={value}

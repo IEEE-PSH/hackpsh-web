@@ -71,11 +71,10 @@ export default function EventDetailsForm({
 
   const updateSettingsMutation = trpc.event.update_event_details.useMutation({
     onSuccess: () => {
-      router.refresh();
       toast({
         variant: "success",
         title: "Event details updated.",
-        duration: 4000,
+        duration: 6000,
       });
     },
     onError: (error) => {

@@ -20,6 +20,7 @@ import { siteConfig } from "@/app/_config/site";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { toast } from "@/app/_components/ui/use-toast";
 import { Skeleton } from "../ui/skeleton";
+import Link from "next/link";
 
 type ProfileDropdownProps = {
   userDisplayName: string | null;
@@ -73,14 +74,11 @@ export default function ProfileDropdown({
           </div>
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onClick={() => {
-            router.replace(siteConfig.paths.account);
-          }}
-          className="cursor-pointer"
-        >
-          <Settings className="mr-2 h-4 w-4" />
-          <span>Settings</span>
+        <DropdownMenuItem className="cursor-pointer" asChild>
+          <Link href={siteConfig.paths.account}>
+            <Settings className="mr-2 h-4 w-4" />
+            <span>Settings</span>
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className="space-x-2">

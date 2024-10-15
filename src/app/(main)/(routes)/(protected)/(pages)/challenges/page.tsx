@@ -37,14 +37,14 @@ export default async function ChallengesPage() {
     0
   ) {
     return (
-      <p className="mx-auto my-4 text-center text-muted-foreground">
+      <p className="mx-auto text-center text-muted-foreground">
         No challenges yet.
       </p>
     );
   }
 
   return (
-    <div className="container my-4 grid max-w-5xl grid-cols-1 gap-y-8">
+    <div className="container grid max-w-5xl grid-cols-1 gap-y-8">
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
           <CardContent className="grid grid-cols-1 p-6">
@@ -64,7 +64,6 @@ export default async function ChallengesPage() {
         challengesEnabled={is_challenges_enabled}
         userRole={get_user_role as TUserRole}
       />
-      <ChallengeBooter />
     </div>
   );
 }

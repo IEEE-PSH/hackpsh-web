@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
 import AnnouncementPostDeleteDialog from "./announcement-post-delete-dialog";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function AnnouncementPostActions({
   postID,
@@ -32,23 +33,16 @@ export default function AnnouncementPostActions({
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-4 top-2"
-          >
+          <Button variant="ghost" size="icon" className="-m-2">
             <Ellipsis />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem
-            onClick={() => {
-              router.push(siteConfig.paths.edit_post + "/" + postID);
-            }}
-            className="cursor-pointer"
-          >
-            <Pencil className="mr-2 h-4 w-4" />
-            <span>Edit</span>
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href={siteConfig.paths.edit_post + "/" + postID}>
+              <Pencil className="mr-2 h-4 w-4" />
+              <span>Edit</span>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {

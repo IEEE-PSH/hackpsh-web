@@ -47,6 +47,7 @@ import { Card } from "../ui/card";
 import { TEditChallengeData } from "@/server/dao/challenges";
 import { TDifficulties } from "@/db/drizzle/startup_seed";
 import ChallengeDeleteDialog from "../challenges/challenge-delete-dialog";
+import Link from "next/link";
 
 type CreateChallengeFormProps = React.HTMLAttributes<HTMLDivElement>;
 type EditChallengeFormProps = {
@@ -437,12 +438,19 @@ export function EditChallengeForm({
           <div className="grid grid-cols-3 gap-x-4 sm:flex">
             <Button
               type="button"
-              onClick={() => router.back()}
               variant="navigation"
               className="ml-auto flex w-full justify-items-end px-8 text-end sm:w-auto"
               disabled={form.formState.isSubmitting}
+              asChild
             >
-              Cancel
+              <Link
+                href="#"
+                onClick={() => {
+                  router.back();
+                }}
+              >
+                Cancel
+              </Link>
             </Button>
             <ChallengeDeleteDialog
               challengeId={challengeData.challenge!.challenge_id}
