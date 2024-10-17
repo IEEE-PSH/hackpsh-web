@@ -68,8 +68,8 @@ export function CreateChallengeForm({
         description: "You have successfully created a challenge.",
         duration: 4000,
       });
-      router.replace(siteConfig.paths.challenges);
       router.refresh();
+      router.back();
     },
     onError: (error) => {
       toast({
@@ -128,14 +128,6 @@ export function CreateChallengeForm({
   }
 
   function removeTestcase(i: number) {
-    // if (fields.length <= 2) {
-    //   toast({
-    //     variant: "destructive",
-    //     description: "Minimum of two test cases required.",
-    //     duration: 4000,
-    //   });
-    //   return;
-    // }
     remove(i);
   }
 

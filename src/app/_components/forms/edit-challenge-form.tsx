@@ -89,6 +89,7 @@ export function EditChallengeForm({
         title: "Challenge updated.",
         duration: 4000,
       });
+      router.refresh();
       router.back();
     },
     onError: (error) => {
@@ -147,14 +148,6 @@ export function EditChallengeForm({
   }
 
   function removeTestcase(i: number) {
-    if (fields.length <= 2) {
-      toast({
-        variant: "destructive",
-        description: "Minimum of two test cases required.",
-        duration: 4000,
-      });
-      return;
-    }
     remove(i);
   }
 
