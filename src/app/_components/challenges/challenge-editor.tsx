@@ -30,7 +30,7 @@ export default function ChallengeEditor({
   challengeId,
 }: ChallengeEditor) {
   //update code submission only on initial render
-  const [isFetched, setIsFetched] = useState(false);
+  const [isFetched, setIsFetched] = useState<boolean>(false);
   const { data: codeSubmission } = trpc.challenges.get_code_submission.useQuery(
     {
       challenge_id: challengeId,
@@ -40,11 +40,11 @@ export default function ChallengeEditor({
   );
   useEffect(() => {
     const submission = codeSubmission?.solved_challenge_code_submission;
-    if (submission && !isFetched) {
+    if (submission) {
       setValue(submission);
       setIsFetched(true);
     } else setValue(header);
-  }, [header]);
+  }, [header, codeSubmission]);
 
   return (
     <div className={cn(solved && "cursor-not-allowed", "h-[320px]")}>
