@@ -20,7 +20,6 @@ import ChallengeBooter from "./challenge-booter";
 import ChallengeSyncer from "./challenge-syncer";
 import { type TSubmitData } from "@/server/procedures/protected/challenges/submitCodeProcedure";
 import Link from "next/link";
-import { siteConfig } from "@/app/_config/site";
 
 export default function ChallengeContentPage({
   userDisplayName,
@@ -37,7 +36,9 @@ export default function ChallengeContentPage({
 }) {
   const [value, setValue] = useState("");
   const [outputData, setOutputData] = useState<TSubmitData | null>(null);
-  const [language, setLanguage] = useState<TLanguages>("python");
+  const [language, setLanguage] = useState<TLanguages>(
+    (localStorage.getItem("hackpsh-stored-language") as TLanguages) ?? "python",
+  );
   const [header, setHeader] = useState("");
   const [presetHeader, setPresetHeader] = useState("");
   const [solved, setSolved] = useState(false);

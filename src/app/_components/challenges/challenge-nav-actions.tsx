@@ -120,8 +120,9 @@ export default function ChallengeNavActions({
           <>
             <Select
               value={language}
-              onValueChange={(value: TLanguages) => {
-                setLanguage(value);
+              onValueChange={(language: TLanguages) => {
+                setLanguage(language);
+                localStorage.setItem("hackpsh-stored-language", language);
               }}
             >
               <SelectTrigger className="w-32">
