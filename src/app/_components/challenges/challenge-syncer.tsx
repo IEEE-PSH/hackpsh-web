@@ -4,6 +4,7 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { type TLanguages } from "@/server/zod-schemas/challenges";
 
 export default function ChallengeSyncer({
   challengeId,
@@ -12,6 +13,7 @@ export default function ChallengeSyncer({
   userUUID,
   setSolved,
   setValue,
+  setLanguage,
 }: {
   challengeId: number;
   challengePoints: number;
@@ -19,6 +21,7 @@ export default function ChallengeSyncer({
   userUUID: string;
   setSolved: Dispatch<SetStateAction<boolean>>;
   setValue: Dispatch<SetStateAction<string>>;
+  setLanguage: Dispatch<SetStateAction<TLanguages>>;
 }) {
   const router = useRouter();
   const supabase = createClientComponentClient();
@@ -64,9 +67,12 @@ export default function ChallengeSyncer({
             router.refresh();
           }
           const result = await getSubmission();
-          const submission = result.data?.solved_challenge_code_submission;
-          if (submission) {
-            setValue(submission);
+          const submissionCode = result.data?.solved_challenge_code_submission;
+          const submissionLanguage = result.data
+            ?.solved_challenge_language as TLanguages;
+          if (submissionCode && submissionLanguage) {
+            setValue(submissionCode);
+            setLanguage(submissionLanguage);
           }
         };
         void checkSolvedStatus();
@@ -78,7 +84,7 @@ export default function ChallengeSyncer({
     return () => {
       void supabase.removeChannel(channel);
     };
-  }, [checkSolved, router, setValue, teamName, challengeId, challengePoints]);
+  }, [checkSolved, setValue, setLanguage]);
 
   return <></>;
 }

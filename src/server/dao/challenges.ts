@@ -207,6 +207,7 @@ export async function getCodeSubmission(
       const result = db.query.app_solved_challenges.findFirst({
         columns: {
           solved_challenge_code_submission: true,
+          solved_challenge_language: true,
         },
         where: and(
           eq(
@@ -385,6 +386,21 @@ export async function updateChallenge(
   }
 
   try {
+    //delete old test cases with new ones; easier for test case deletions
+    const matchingChallenge = await db.query.app_challenges.findFirst({
+      where: eq(app_challenges.challenge_id, challengeId),
+    });
+
+    await db
+      .delete(app_test_cases)
+      .where(
+        eq(
+          app_test_cases.test_case_challenge_uuid,
+          matchingChallenge!.challenge_uuid,
+        ),
+      );
+
+    //update challenge info
     const challenge = await db
       .update(app_challenges)
       .set({
@@ -402,14 +418,13 @@ export async function updateChallenge(
 
     const challengeUUID = challenge[0]!.uuid;
 
+    //insert test cases
     for (const test_case of test_cases) {
-      await db
-        .update(app_test_cases)
-        .set({
-          test_case_input: test_case.input,
-          test_case_output: test_case.output,
-        })
-        .where(eq(app_test_cases.test_case_challenge_uuid, challengeUUID));
+      await db.insert(app_test_cases).values({
+        test_case_input: test_case.input,
+        test_case_output: test_case.output,
+        test_case_challenge_uuid: challengeUUID,
+      });
     }
   } catch (error) {
     throw new TRPCError({
@@ -424,6 +439,7 @@ export async function solveChallenge(
   challenge_id: number,
   user_uuid: string,
   code_submission: string,
+  language: string,
 ) {
   try {
     const challenge = await db.query.app_challenges.findFirst({
@@ -463,6 +479,7 @@ export async function solveChallenge(
         solved_challenge_foreign_uuid: challenge!.challenge_uuid,
         solved_challenge_team_uuid: teamUUID!.user_team_uuid!,
         solved_challenge_code_submission: code_submission,
+        solved_challenge_language: language,
       });
 
       await db
