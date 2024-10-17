@@ -84,6 +84,7 @@ export default function ChallengeContentPage({
         userUUID={userUUID}
         setSolved={setSolved}
         setValue={setValue}
+        setLanguage={setLanguage}
       />
       <ProtectedEditorSiteHeader
         userDisplayName={userDisplayName}
@@ -121,6 +122,7 @@ export default function ChallengeContentPage({
             value={value}
             setValue={setValue}
             language={language}
+            setLanguage={setLanguage}
             header={presetHeader}
             solved={solved}
             userUUID={userUUID}
@@ -189,6 +191,6 @@ function getPresetHeader(header: string, language: TLanguages) {
   if (language === "python")
     return `# Implement this function\ndef ${header}:\n\t`;
   else if (language === "cpp")
-    return `// Implement this function\n${header}{\n\t\n}\n`;
+    return `#include <iostream>\n#include <vector>\n#include<string>\nusing namespace std;\n\n// Implement this function\n${header}{\n\t\n}\n`;
   else return `// Implement this function\nfunction ${header}{\n\t\n}\n`;
 }

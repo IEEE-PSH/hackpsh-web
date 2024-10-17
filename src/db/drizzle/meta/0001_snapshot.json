@@ -1,0 +1,790 @@
+{
+  "id": "7b7a3ed7-8009-4df8-bc91-34b7cda4976d",
+  "prevId": "fd2a4fc8-044d-4274-84b8-5cf082c07162",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "app_schema.app_announcement": {
+      "name": "app_announcement",
+      "schema": "app_schema",
+      "columns": {
+        "announcement_uuid": {
+          "name": "announcement_uuid",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "uuid_generate_v4()"
+        },
+        "announcement_created_at": {
+          "name": "announcement_created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "announcement_author_uuid": {
+          "name": "announcement_author_uuid",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "announcement_id": {
+          "name": "announcement_id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "announcement_title": {
+          "name": "announcement_title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "announcement_content": {
+          "name": "announcement_content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "app_announcement_announcement_author_uuid_app_user_profile_user_uuid_fk": {
+          "name": "app_announcement_announcement_author_uuid_app_user_profile_user_uuid_fk",
+          "tableFrom": "app_announcement",
+          "tableTo": "app_user_profile",
+          "schemaTo": "app_schema",
+          "columnsFrom": [
+            "announcement_author_uuid"
+          ],
+          "columnsTo": [
+            "user_uuid"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "app_schema.app_challenges": {
+      "name": "app_challenges",
+      "schema": "app_schema",
+      "columns": {
+        "challenge_uuid": {
+          "name": "challenge_uuid",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "uuid_generate_v4()"
+        },
+        "challenge_id": {
+          "name": "challenge_id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "challenge_title": {
+          "name": "challenge_title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "challenge_difficulty": {
+          "name": "challenge_difficulty",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "challenge_points": {
+          "name": "challenge_points",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "challenge_description": {
+          "name": "challenge_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "challenge_function_header": {
+          "name": "challenge_function_header",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "challenge_example_input": {
+          "name": "challenge_example_input",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "challenge_example_output": {
+          "name": "challenge_example_output",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "challenge_explanation": {
+          "name": "challenge_explanation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "app_challenges_challenge_difficulty_app_difficulty_difficulty_name_fk": {
+          "name": "app_challenges_challenge_difficulty_app_difficulty_difficulty_name_fk",
+          "tableFrom": "app_challenges",
+          "tableTo": "app_difficulty",
+          "schemaTo": "app_schema",
+          "columnsFrom": [
+            "challenge_difficulty"
+          ],
+          "columnsTo": [
+            "difficulty_name"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "app_schema.app_contact": {
+      "name": "app_contact",
+      "schema": "app_schema",
+      "columns": {
+        "contact_uuid": {
+          "name": "contact_uuid",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "uuid_generate_v4()"
+        },
+        "contact_created_at": {
+          "name": "contact_created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "contact_first_name": {
+          "name": "contact_first_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "contact_last_name": {
+          "name": "contact_last_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "contact_email": {
+          "name": "contact_email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "contact_content": {
+          "name": "contact_content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "app_schema.app_difficulty": {
+      "name": "app_difficulty",
+      "schema": "app_schema",
+      "columns": {
+        "difficulty_id": {
+          "name": "difficulty_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "difficulty_name": {
+          "name": "difficulty_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "app_difficulty_difficulty_name_unique": {
+          "name": "app_difficulty_difficulty_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "difficulty_name"
+          ]
+        }
+      }
+    },
+    "app_schema.app_event": {
+      "name": "app_event",
+      "schema": "app_schema",
+      "columns": {
+        "event_id": {
+          "name": "event_id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "event_date": {
+          "name": "event_date",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "event_start_time": {
+          "name": "event_start_time",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "event_end_time": {
+          "name": "event_end_time",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "event_start_hour": {
+          "name": "event_start_hour",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "event_duration": {
+          "name": "event_duration",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "event_challenges_enabled": {
+          "name": "event_challenges_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "app_schema.app_major": {
+      "name": "app_major",
+      "schema": "app_schema",
+      "columns": {
+        "major_id": {
+          "name": "major_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "major_name": {
+          "name": "major_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "app_major_major_name_unique": {
+          "name": "app_major_major_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "major_name"
+          ]
+        }
+      }
+    },
+    "app_schema.app_onboarding_phase": {
+      "name": "app_onboarding_phase",
+      "schema": "app_schema",
+      "columns": {
+        "phase_id": {
+          "name": "phase_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "phase_name": {
+          "name": "phase_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "app_onboarding_phase_phase_name_unique": {
+          "name": "app_onboarding_phase_phase_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "phase_name"
+          ]
+        }
+      }
+    },
+    "app_schema.app_role": {
+      "name": "app_role",
+      "schema": "app_schema",
+      "columns": {
+        "role_id": {
+          "name": "role_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "role_name": {
+          "name": "role_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "app_role_role_name_unique": {
+          "name": "app_role_role_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "role_name"
+          ]
+        }
+      }
+    },
+    "app_schema.app_school_year": {
+      "name": "app_school_year",
+      "schema": "app_schema",
+      "columns": {
+        "school_year_id": {
+          "name": "school_year_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "school_year_name": {
+          "name": "school_year_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "app_school_year_school_year_name_unique": {
+          "name": "app_school_year_school_year_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "school_year_name"
+          ]
+        }
+      }
+    },
+    "app_schema.app_solved_challenges": {
+      "name": "app_solved_challenges",
+      "schema": "app_schema",
+      "columns": {
+        "solved_challenge_uuid": {
+          "name": "solved_challenge_uuid",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "uuid_generate_v4()"
+        },
+        "solved_challenge_foreign_uuid": {
+          "name": "solved_challenge_foreign_uuid",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "solved_challenge_team_uuid": {
+          "name": "solved_challenge_team_uuid",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "solved_challenge_code_submission": {
+          "name": "solved_challenge_code_submission",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "solved_challenge_language": {
+          "name": "solved_challenge_language",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "app_solved_challenges_solved_challenge_foreign_uuid_app_challenges_challenge_uuid_fk": {
+          "name": "app_solved_challenges_solved_challenge_foreign_uuid_app_challenges_challenge_uuid_fk",
+          "tableFrom": "app_solved_challenges",
+          "tableTo": "app_challenges",
+          "schemaTo": "app_schema",
+          "columnsFrom": [
+            "solved_challenge_foreign_uuid"
+          ],
+          "columnsTo": [
+            "challenge_uuid"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "app_solved_challenges_solved_challenge_team_uuid_app_team_team_uuid_fk": {
+          "name": "app_solved_challenges_solved_challenge_team_uuid_app_team_team_uuid_fk",
+          "tableFrom": "app_solved_challenges",
+          "tableTo": "app_team",
+          "schemaTo": "app_schema",
+          "columnsFrom": [
+            "solved_challenge_team_uuid"
+          ],
+          "columnsTo": [
+            "team_uuid"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "app_schema.app_team": {
+      "name": "app_team",
+      "schema": "app_schema",
+      "columns": {
+        "team_uuid": {
+          "name": "team_uuid",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "uuid_generate_v4()"
+        },
+        "team_name": {
+          "name": "team_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "team_code": {
+          "name": "team_code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "team_points": {
+          "name": "team_points",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "team_points_additive": {
+          "name": "team_points_additive",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "app_team_team_name_unique": {
+          "name": "app_team_team_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "team_name"
+          ]
+        },
+        "app_team_team_code_unique": {
+          "name": "app_team_team_code_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "team_code"
+          ]
+        }
+      }
+    },
+    "app_schema.app_test_cases": {
+      "name": "app_test_cases",
+      "schema": "app_schema",
+      "columns": {
+        "test_case_uuid": {
+          "name": "test_case_uuid",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "uuid_generate_v4()"
+        },
+        "test_case_input": {
+          "name": "test_case_input",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "test_case_output": {
+          "name": "test_case_output",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "test_case_challenge_uuid": {
+          "name": "test_case_challenge_uuid",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "app_test_cases_test_case_challenge_uuid_app_challenges_challenge_uuid_fk": {
+          "name": "app_test_cases_test_case_challenge_uuid_app_challenges_challenge_uuid_fk",
+          "tableFrom": "app_test_cases",
+          "tableTo": "app_challenges",
+          "schemaTo": "app_schema",
+          "columnsFrom": [
+            "test_case_challenge_uuid"
+          ],
+          "columnsTo": [
+            "challenge_uuid"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "app_schema.app_user_profile": {
+      "name": "app_user_profile",
+      "schema": "app_schema",
+      "columns": {
+        "user_uuid": {
+          "name": "user_uuid",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_email_address": {
+          "name": "user_email_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_avatar_url": {
+          "name": "user_avatar_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_onboarding_complete": {
+          "name": "user_onboarding_complete",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_display_name": {
+          "name": "user_display_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_resume_url": {
+          "name": "user_resume_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_team_uuid": {
+          "name": "user_team_uuid",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_school_year": {
+          "name": "user_school_year",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_major": {
+          "name": "user_major",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_role": {
+          "name": "user_role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'participant'"
+        },
+        "user_support_administrative": {
+          "name": "user_support_administrative",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "user_support_technical": {
+          "name": "user_support_technical",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "user_onboarding_phase": {
+          "name": "user_onboarding_phase",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'personal-details'"
+        }
+      },
+      "indexes": {
+        "user_uuid_index": {
+          "name": "user_uuid_index",
+          "columns": [
+            {
+              "expression": "user_uuid",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "app_user_profile_user_team_uuid_app_team_team_uuid_fk": {
+          "name": "app_user_profile_user_team_uuid_app_team_team_uuid_fk",
+          "tableFrom": "app_user_profile",
+          "tableTo": "app_team",
+          "schemaTo": "app_schema",
+          "columnsFrom": [
+            "user_team_uuid"
+          ],
+          "columnsTo": [
+            "team_uuid"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "app_user_profile_user_school_year_app_school_year_school_year_name_fk": {
+          "name": "app_user_profile_user_school_year_app_school_year_school_year_name_fk",
+          "tableFrom": "app_user_profile",
+          "tableTo": "app_school_year",
+          "schemaTo": "app_schema",
+          "columnsFrom": [
+            "user_school_year"
+          ],
+          "columnsTo": [
+            "school_year_name"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "app_user_profile_user_major_app_major_major_name_fk": {
+          "name": "app_user_profile_user_major_app_major_major_name_fk",
+          "tableFrom": "app_user_profile",
+          "tableTo": "app_major",
+          "schemaTo": "app_schema",
+          "columnsFrom": [
+            "user_major"
+          ],
+          "columnsTo": [
+            "major_name"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "app_user_profile_user_role_app_role_role_name_fk": {
+          "name": "app_user_profile_user_role_app_role_role_name_fk",
+          "tableFrom": "app_user_profile",
+          "tableTo": "app_role",
+          "schemaTo": "app_schema",
+          "columnsFrom": [
+            "user_role"
+          ],
+          "columnsTo": [
+            "role_name"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "app_user_profile_user_onboarding_phase_app_onboarding_phase_phase_name_fk": {
+          "name": "app_user_profile_user_onboarding_phase_app_onboarding_phase_phase_name_fk",
+          "tableFrom": "app_user_profile",
+          "tableTo": "app_onboarding_phase",
+          "schemaTo": "app_schema",
+          "columnsFrom": [
+            "user_onboarding_phase"
+          ],
+          "columnsTo": [
+            "phase_name"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "app_user_profile_user_email_address_unique": {
+          "name": "app_user_profile_user_email_address_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "user_email_address"
+          ]
+        },
+        "app_user_profile_user_display_name_unique": {
+          "name": "app_user_profile_user_display_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "user_display_name"
+          ]
+        }
+      }
+    }
+  },
+  "enums": {},
+  "schemas": {
+    "app_schema": "app_schema"
+  },
+  "sequences": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

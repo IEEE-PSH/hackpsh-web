@@ -207,6 +207,7 @@ export async function getCodeSubmission(
       const result = db.query.app_solved_challenges.findFirst({
         columns: {
           solved_challenge_code_submission: true,
+          solved_challenge_language: true,
         },
         where: and(
           eq(
@@ -424,6 +425,7 @@ export async function solveChallenge(
   challenge_id: number,
   user_uuid: string,
   code_submission: string,
+  language: string,
 ) {
   try {
     const challenge = await db.query.app_challenges.findFirst({
@@ -463,6 +465,7 @@ export async function solveChallenge(
         solved_challenge_foreign_uuid: challenge!.challenge_uuid,
         solved_challenge_team_uuid: teamUUID!.user_team_uuid!,
         solved_challenge_code_submission: code_submission,
+        solved_challenge_language: language,
       });
 
       await db

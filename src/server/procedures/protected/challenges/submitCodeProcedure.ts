@@ -9,6 +9,7 @@ import {
   type ExecutionResponse,
   fillFunctionCall,
   formatFunctionCall,
+  languagePreset,
 } from "./runCodeProcedure";
 import { TRPCError } from "@trpc/server";
 import { getParamTypes } from "@/app/_lib/zod-schemas/forms/challenges";
@@ -28,23 +29,46 @@ export default protectedProcedure
     const tempHeader = formatFunctionCall(
       challengeData!.challenge_function_header,
     );
-    const functionsToExecute = [];
+    const funcsToExecute = [];
     const paramTypes = getParamTypes(challengeData!.challenge_function_header);
     const headerType = challengeData!.challenge_function_header.split(" ")[0];
 
     for (const testCase of testCases) {
-      const func = fillFunctionCall(
+      const funcToExecute = fillFunctionCall(
         tempHeader,
         input.language,
         testCase.test_case_input,
         paramTypes,
       );
       if (headerType === "void") {
-        functionsToExecute.push(`${func}`);
-      } else functionsToExecute.push(`print(${func})`);
+        if (input.language === "cpp") {
+          funcsToExecute.push(`${funcToExecute}; cout<<endl;`);
+        } else {
+          funcsToExecute.push(`${funcToExecute}`);
+        }
+      } else {
+        if (input.language === "python") {
+          funcsToExecute.push(`print(${funcToExecute})`);
+        } else if (input.language === "cpp") {
+          funcsToExecute.push(`cout<<${funcToExecute}<<endl;`);
+        } else {
+          funcsToExecute.push(`console.log(${funcToExecute})`);
+        }
+      }
     }
-    const boilerPlate = "\n" + functionsToExecute.join("\n");
+    const funcsToExecuteString = funcsToExecute.join("\n");
+    let boilerPlate = "\n" + funcsToExecuteString;
+    if (input.language === "cpp") {
+      if (
+        headerType === "intArr" ||
+        headerType === "stringArr" ||
+        headerType === "doubleArr"
+      ) {
+        boilerPlate = `template<typename T>ostream& operator<<(ostream& os, const vector<T>& vec) {os << "{";for (size_t i = 0;i < vec.size(); ++i) {os << vec[i]; if (i != vec.size() - 1) os << ", ";}os << "}";return os;}int main() {${funcsToExecuteString};return 0;}`;
+      } else boilerPlate = `int main(){${funcsToExecuteString}}`;
+    }
 
+    console.log(input.code_string + boilerPlate);
     try {
       const response = await fetch("https://emkc.org/api/v2/piston/execute", {
         method: "POST",
@@ -52,8 +76,8 @@ export default protectedProcedure
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          language: "python",
-          version: "3.10.0",
+          language: languagePreset[input.language]!.language,
+          version: languagePreset[input.language]!.version,
           files: [
             {
               content: input.code_string + boilerPlate,
@@ -69,8 +93,10 @@ export default protectedProcedure
           const out = testCase.test_case_output;
           expectedOutputs.push(out);
         }
-        const stdOutputs = data.run.stdout.split("\n");
-
+        const stdOutputs = data.run.stdout
+          .replace("\n\n", "\n")
+          .replace("\n\n", "\n")
+          .split("\n"); //RECONSIDER THIS LINE
         //tomfoolery goin on ere; not actually
         const outputLengths: number[] = [];
         for (const testCase of testCases) {
@@ -78,7 +104,7 @@ export default protectedProcedure
           outputLengths.push(outputs.length);
         }
 
-        const stdOuts: string[] = [];
+        let stdOuts: string[] = [];
         for (const n of outputLengths) {
           const temp: string[] = [];
           for (let i = 0; i < n; i++) {
@@ -87,8 +113,20 @@ export default protectedProcedure
           stdOuts.push(temp.join("\n"));
         }
 
+        //convert cpp brace arrays to bracket arrays
+        if (
+          (input.language === "cpp" && headerType === "intArr") ||
+          headerType === "stringArr" ||
+          headerType === "doubleArr"
+        ) {
+          stdOuts = stdOuts.map((stdOut) => {
+            return `[${stdOut.slice(1, -1).replace(/,/g, ",")}]`;
+          });
+        }
+
+        const maxOutputs = Math.max(expectedOutputs.length, stdOuts.length);
         let passCount = 0;
-        for (let i = 0; i < expectedOutputs.length; i++)
+        for (let i = 0; i < maxOutputs; i++)
           if (expectedOutputs[i] === stdOuts[i]) passCount++;
 
         if (data.run.code === 0 && passCount === expectedOutputs.length) {
@@ -100,9 +138,10 @@ export default protectedProcedure
               input.challenge_id,
               input.user_uuid,
               input.code_string,
+              input.language,
             );
           }
-          console.log(testCases.length);
+
           return {
             type: "success",
             output: `Passed ${passCount}/${expectedOutputs.length} testcase${testCases.length !== 1 ? "s" : ""}. ✔️`,

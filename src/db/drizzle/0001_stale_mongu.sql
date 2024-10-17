@@ -1,0 +1,1 @@
+ALTER TABLE "app_schema"."app_solved_challenges" ADD COLUMN "solved_challenge_language" text NOT NULL;

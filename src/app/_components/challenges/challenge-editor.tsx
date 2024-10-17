@@ -13,6 +13,7 @@ import { trpc } from "@/app/_trpc/react";
 type ChallengeEditor = {
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
+  setLanguage: Dispatch<SetStateAction<TLanguages>>;
   language: TLanguages;
   header: string;
   solved: boolean;
@@ -24,6 +25,7 @@ export default function ChallengeEditor({
   value,
   setValue,
   language,
+  setLanguage,
   header,
   solved,
   userUUID,
@@ -31,7 +33,7 @@ export default function ChallengeEditor({
 }: ChallengeEditor) {
   //update code submission only on initial render
   const [isFetched, setIsFetched] = useState<boolean>(false);
-  const { data: codeSubmission } = trpc.challenges.get_code_submission.useQuery(
+  const { data: submission } = trpc.challenges.get_code_submission.useQuery(
     {
       challenge_id: challengeId,
       user_uuid: userUUID,
@@ -39,12 +41,15 @@ export default function ChallengeEditor({
     { enabled: !isFetched },
   );
   useEffect(() => {
-    const submission = codeSubmission?.solved_challenge_code_submission;
     if (submission) {
-      setValue(submission);
+      const submissionCode = submission?.solved_challenge_code_submission;
+      const submissionLanguage =
+        submission?.solved_challenge_language as TLanguages;
+      setValue(submissionCode!);
+      setLanguage(submissionLanguage);
       setIsFetched(true);
     } else setValue(header);
-  }, [header, codeSubmission]);
+  }, [header, submission, setLanguage, language, setValue]);
 
   return (
     <div className={cn(solved && "cursor-not-allowed", "h-[320px]")}>
@@ -53,7 +58,7 @@ export default function ChallengeEditor({
         height="100%"
         theme="vs-dark"
         language={language}
-        defaultLanguage="python"
+        defaultLanguage={language ?? "python"}
         value={value}
         loading={""}
         onChange={(newValue) => setValue(newValue!)}

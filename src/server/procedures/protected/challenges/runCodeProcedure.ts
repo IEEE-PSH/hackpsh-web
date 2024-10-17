@@ -7,6 +7,15 @@ import {
 } from "@/server/zod-schemas/challenges";
 import { TRPCError } from "@trpc/server";
 
+export const languagePreset: Record<
+  string,
+  { language: string; version: string }
+> = {
+  python: { language: "python", version: "3.10.0" },
+  cpp: { language: "cpp", version: "10.2.0" },
+  javascript: { language: "javascript", version: "18.15.0" },
+};
+
 // FORMAT
 export function formatFunctionCall(header: string) {
   const match = header.match(/^\s*(\w+)\s+(\w+)\s*\((.*)\)\s*$/);
@@ -46,7 +55,6 @@ export function fillFunctionCall(
       header = header.replace(".", formatInput(input, paramTypes[i]!));
     }
   }
-
   return header;
 }
 
@@ -68,16 +76,33 @@ export default protectedProcedure
     );
 
     const paramTypes = getParamTypes(challengeData!.challenge_function_header);
-    const headerToExecute = fillFunctionCall(
+    const funcToExecute = fillFunctionCall(
       tempHeader,
       input.language,
       exampleInputs!,
       paramTypes,
     );
 
-    let boilerPlate = `\nprint(${headerToExecute})`;
+    //get proper boilerplate
+    let boilerPlate = "";
     if (headerType === "void") {
-      boilerPlate = `\n${headerToExecute}`;
+      if (input.language === "cpp") {
+        boilerPlate = `int main(){${funcToExecute};}`;
+      } else boilerPlate = `\n${funcToExecute}`;
+    } else {
+      if (input.language === "python") {
+        boilerPlate = `print(${funcToExecute})`;
+      } else if (input.language === "cpp") {
+        if (
+          headerType === "intArr" ||
+          headerType === "stringArr" ||
+          headerType === "doubleArr"
+        ) {
+          boilerPlate = `template<typename T>ostream& operator<<(ostream& os, const vector<T>& vec) {os << "{";for (size_t i = 0;i < vec.size(); ++i) {os << vec[i]; if (i != vec.size() - 1) os << ", ";}os << "}";return os;}int main() {cout <<${funcToExecute}<< endl;return 0;}`;
+        } else boilerPlate = `int main(){cout<<${funcToExecute};}`;
+      } else {
+        boilerPlate = `console.log(${funcToExecute})`;
+      }
     }
 
     try {
@@ -87,8 +112,8 @@ export default protectedProcedure
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          language: "python",
-          version: "3.10.0",
+          language: languagePreset[input.language]!.language,
+          version: languagePreset[input.language]!.version,
           files: [
             {
               content: input.code_string + boilerPlate,
@@ -96,7 +121,6 @@ export default protectedProcedure
           ],
         }),
       });
-
       const data = (await response.json()) as ExecutionResponse;
       if (data.run.code == 0)
         return {

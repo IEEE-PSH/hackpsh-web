@@ -14,7 +14,6 @@ import {
 import { Check, Edit, Play, Send } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 import { type TLanguages } from "@/server/zod-schemas/challenges";
-import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
 import { type TSubmitData } from "@/server/procedures/protected/challenges/submitCodeProcedure";
 import Link from "next/link";
@@ -42,8 +41,6 @@ export default function ChallengeNavActions({
   setLanguage,
   setOutputData,
 }: ChallengeNavActionsProps) {
-  const router = useRouter();
-
   //runs code
   const { refetch: runCode, isFetching: isRunning } =
     trpc.challenges.run_code.useQuery(
@@ -54,6 +51,7 @@ export default function ChallengeNavActions({
         language: language,
       },
       {
+        retry: false,
         enabled: false,
         onSuccess: (outputData: TSubmitData) => {
           setOutputData(outputData);
