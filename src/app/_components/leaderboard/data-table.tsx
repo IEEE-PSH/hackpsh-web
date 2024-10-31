@@ -57,7 +57,7 @@ export default function DataTable({
     <div className={cn("w-full", className)}>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Search up a team!"
+          placeholder="Search a team"
           value={
             (table.getColumn("team_name")?.getFilterValue() as string) ?? ""
           }

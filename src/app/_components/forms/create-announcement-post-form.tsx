@@ -44,6 +44,8 @@ export function CreateAnnouncementPostForm({
           title: "Created a new announcement.",
           duration: 6000,
         });
+        router.refresh();
+        router.back();
       },
       onError: () => {
         toast({

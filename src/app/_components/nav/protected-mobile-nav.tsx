@@ -30,7 +30,7 @@ export function ProtectedMobileNav() {
           onOpenChange={setIsOpen}
           scroll={false}
         >
-          <Icons.brand className="mr-2 h-4 w-4" />
+          <Icons.brand className="mr-2 h-6 w-6" />
           <span className="text-xl font-bold">{siteConfig.name}</span>
         </MobileLink>
 
@@ -52,12 +52,12 @@ export function ProtectedMobileNav() {
             Dashboard
           </MobileLink>
           <MobileLink
-            href={siteConfig.paths.challenges}
+            href={siteConfig.paths.announcements}
             onOpenChange={setIsOpen}
             scroll={false}
             className="hover:underline"
           >
-            Challenges
+            Announcements
           </MobileLink>
           <MobileLink
             href={siteConfig.paths.leaderboard}
@@ -66,14 +66,6 @@ export function ProtectedMobileNav() {
             className="hover:underline"
           >
             Leaderboard
-          </MobileLink>
-          <MobileLink
-            href={siteConfig.paths.announcements}
-            onOpenChange={setIsOpen}
-            scroll={false}
-            className="hover:underline"
-          >
-            Announcements
           </MobileLink>
         </div>
       </SheetContent>

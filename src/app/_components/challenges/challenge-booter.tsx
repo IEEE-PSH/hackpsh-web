@@ -40,8 +40,8 @@ export default function ChallengeBooter() {
               duration: 6000,
             });
 
-            if (pathname.startsWith(siteConfig.paths.solve))
-              router.push(siteConfig.paths.challenges);
+            if (pathname.startsWith(siteConfig.paths.challenge))
+              router.push(siteConfig.paths.dashboard);
           } else {
             const enabledToast = toast({
               variant: "default",
@@ -51,7 +51,7 @@ export default function ChallengeBooter() {
                 <Button
                   variant="outline"
                   onClick={() => {
-                    router.push(siteConfig.paths.challenges);
+                    router.push(siteConfig.paths.dashboard);
                     enabledToast.dismiss();
                   }}
                 >

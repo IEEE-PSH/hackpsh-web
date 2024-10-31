@@ -93,12 +93,12 @@ export default function ChallengeContentPage({
       >
         <Button
           variant="secondary"
-          className="ml-4 mr-auto p-2 sm:flex md:p-4"
+          className="ml-4 mr-auto hidden p-2 sm:flex lg:p-4"
           asChild
         >
           <Link href="#" onClick={() => router.back()}>
             <ArrowLeft />
-            <span className="ml-4 hidden md:block">Challenges</span>
+            <span className="ml-4 hidden lg:block">Challenges</span>
           </Link>
         </Button>
         <ChallengeNavActions

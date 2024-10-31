@@ -32,7 +32,7 @@ export function PublicMobileNav() {
             onOpenChange={setIsOpen}
             scroll={true}
           >
-            <Icons.brand className="mr-2 h-4 w-4" />
+            <Icons.brand className="mr-2 h-6 w-6" />
             <span className="text-xl font-bold">{siteConfig.name}</span>
           </MobileLink>
           <div className="my-4 flex h-full flex-col space-y-3 pb-10 pl-6 text-base">
@@ -74,7 +74,7 @@ export function PublicMobileNav() {
       </Sheet>
       <Button variant="brand" size="navigation" className="mr-6" asChild>
         <Link href={siteConfig.paths.home} scroll={true}>
-          <Icons.brand className="h-[2.4rem] w-[2.0rem]" />
+          <Icons.brand className="h-8 w-8" />
           <span className="hidden text-xl font-bold sm:inline-block">
             {siteConfig.name}
           </span>

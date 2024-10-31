@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 export default function CreateChallengeButton() {
   const pathname = usePathname();
 
-  if (pathname !== siteConfig.paths.challenges) return;
+  if (pathname !== siteConfig.paths.dashboard) return;
 
   return (
     <Button

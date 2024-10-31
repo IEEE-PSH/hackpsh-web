@@ -3,8 +3,12 @@ import { AnnouncementPost } from "./announcement-post";
 import { composeServerComponentClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
+import { cn } from "@/app/_lib/client-utils";
+import { Separator } from "../ui/separator";
 
-export async function Announcements() {
+export async function Announcements({
+  className,
+}: React.HTMLAttributes<HTMLDivElement>) {
   const serverAnnouncementPosts =
     await serverTRPC.announcements.get_announcement_posts.query();
 
@@ -27,7 +31,7 @@ export async function Announcements() {
   });
 
   if (postElements.length > 0)
-    return <div className="space-y-4">{postElements}</div>;
+    return <div className={cn(className, "space-y-4")}>{postElements}</div>;
   else
     return (
       <p className="mx-auto text-center text-muted-foreground">
