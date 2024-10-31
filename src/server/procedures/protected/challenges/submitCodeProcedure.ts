@@ -68,7 +68,6 @@ export default protectedProcedure
       } else boilerPlate = `int main(){${funcsToExecuteString}}`;
     }
 
-    console.log(input.code_string + boilerPlate);
     try {
       const response = await fetch("https://emkc.org/api/v2/piston/execute", {
         method: "POST",
@@ -93,10 +92,15 @@ export default protectedProcedure
           const out = testCase.test_case_output;
           expectedOutputs.push(out);
         }
+
+        //RECONSIDER THIS LINE
+        // reformat output because piston api prints arrays with extra spacing
         const stdOutputs = data.run.stdout
           .replace("\n\n", "\n")
           .replace("\n\n", "\n")
-          .split("\n"); //RECONSIDER THIS LINE
+          .replace("[ ", "[")
+          .replace(" ]", "]")
+          .split("\n");
         //tomfoolery goin on ere; not actually
         const outputLengths: number[] = [];
         for (const testCase of testCases) {
