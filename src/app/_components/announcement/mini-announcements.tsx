@@ -23,12 +23,11 @@ export async function MiniAnnouncements({
     if (i < 3)
       postElements.push(
         <>
-          {" "}
           <MiniAnnouncementPost
             key={announcementPostData.announcement_uuid}
             postData={announcementPostData}
           />
-          {i < 2 && <Separator />}
+          {i < 2 && i != serverAnnouncementPosts.length - 1 && <Separator />}
         </>,
       );
   });
@@ -52,9 +51,7 @@ export async function MiniAnnouncements({
           {postElements.length > 0 ? (
             postElements
           ) : (
-            <p className="mx-auto text-center text-muted-foreground">
-              No announcements yet.
-            </p>
+            <p className="text-muted-foreground">No announcements</p>
           )}
         </CardContent>
       </Card>

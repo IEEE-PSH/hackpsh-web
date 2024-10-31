@@ -18,12 +18,11 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { toast, useToast } from "../ui/use-toast";
+import { toast } from "../ui/use-toast";
 import { useForm } from "react-hook-form";
 import { Icons } from "../ui/icons";
 import { cn } from "@/app/_lib/client-utils";
 import { useRouter } from "next/navigation";
-import { siteConfig } from "@/app/_config/site";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
 
