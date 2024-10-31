@@ -91,7 +91,7 @@ export default protectedProcedure
       } else boilerPlate = `\n${funcToExecute}`;
     } else {
       if (input.language === "python") {
-        boilerPlate = `print(${funcToExecute})`;
+        boilerPlate = `\nprint(${funcToExecute})`;
       } else if (input.language === "cpp") {
         if (
           headerType === "intArr" ||
@@ -122,12 +122,16 @@ export default protectedProcedure
         }),
       });
       const data = (await response.json()) as ExecutionResponse;
-      if (data.run.code == 0)
+      if (data.run.code == 0) {
+        // reformat output because piston api prints arrays with extra spacing
+        const formattedOutput = data.run.stdout
+          .replace("[ ", "[")
+          .replace(" ]", "]");
         return {
           type: "valid",
-          output: data.run.stdout,
+          output: formattedOutput,
         };
-      else
+      } else
         return {
           type: "error",
           output: data.run.stderr,

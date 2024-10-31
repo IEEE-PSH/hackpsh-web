@@ -28,7 +28,7 @@ export default function DeleteChallengeDialog({
   const deleteChallengeMutation = trpc.challenges.delete_challenge.useMutation({
     onSuccess: () => {
       setDialogOpen(false);
-      router.replace(siteConfig.paths.challenges);
+      router.replace(siteConfig.paths.dashboard);
       router.refresh();
       toast({
         variant: "success",

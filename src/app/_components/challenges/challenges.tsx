@@ -27,16 +27,20 @@ export function Challenges({
     medium: 2,
     hard: 3,
   };
-  unsolvedChallenges = unsolvedChallenges.sort(
-    (a, b) =>
+  unsolvedChallenges = unsolvedChallenges.sort((a, b) => {
+    const comparison =
       difficultyOrder[a.challenge_difficulty]! -
-      difficultyOrder[b.challenge_difficulty]!,
-  );
-  solvedChallenges = solvedChallenges.sort(
-    (a, b) =>
+      difficultyOrder[b.challenge_difficulty]!;
+    if (comparison != 0) return comparison;
+    return a.challenge_points - b.challenge_points;
+  });
+  solvedChallenges = solvedChallenges.sort((a, b) => {
+    const comparison =
       difficultyOrder[a.challenge_difficulty]! -
-      difficultyOrder[b.challenge_difficulty]!,
-  );
+      difficultyOrder[b.challenge_difficulty]!;
+    if (comparison != 0) return comparison;
+    return a.challenge_points - b.challenge_points;
+  });
 
   //populate challengeElements
   const unsolvedChallengeElements: JSX.Element[] = [];
@@ -66,7 +70,7 @@ export function Challenges({
   const totalChallenges = solvedChallenges.length + unsolvedChallenges.length;
 
   return (
-    <div className="grid grid-cols-1 gap-8">
+    <div className="flex w-full flex-col gap-8">
       <div>
         <p className="ml-6">
           Unsolved{" "}

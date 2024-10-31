@@ -30,18 +30,18 @@ export default function ChallengeCard({
   if (challengesEnabled || userRole !== "participant") {
     return (
       <Link
-        href={siteConfig.paths.solve + "/" + challenge_id}
+        href={siteConfig.paths.challenge + "/" + challenge_id}
         className="border-b last:border-0"
       >
         <div
           className="cursor-pointer transition-colors hover:bg-accent/50"
           onClick={() => {
             if (challengesEnabled || userRole !== "participant")
-              router.push(siteConfig.paths.solve + "/" + challenge_id);
+              router.push(siteConfig.paths.challenge + "/" + challenge_id);
           }}
         >
-          <div className="flex flex-row items-center px-6 py-4">
-            <h1 className="mr-4 text-lg">{challenge_title}</h1>
+          <div className="flex flex-row items-center px-6 py-3">
+            <h1 className="mr-4">{challenge_title}</h1>
             <div className="ml-auto flex items-center justify-center space-x-2">
               <Badge className="w-16 justify-center bg-foreground text-background hover:bg-foreground/90">
                 {challenge_points}
@@ -72,11 +72,11 @@ export default function ChallengeCard({
       className="cursor-pointer border-b transition-colors last:border-0 hover:bg-accent/50"
       onClick={() => {
         if (challengesEnabled || userRole !== "participant")
-          router.push(siteConfig.paths.solve + "/" + challenge_id);
+          router.push(siteConfig.paths.challenge + "/" + challenge_id);
       }}
     >
-      <div className="flex flex-row items-center px-6 py-4">
-        <h1 className="mr-4 text-lg">{challenge_title}</h1>
+      <div className="flex flex-row items-center px-6 py-3">
+        <h1 className="mr-4">{challenge_title}</h1>
         <div className="ml-auto flex items-center justify-center space-x-2">
           <Badge className="w-16 justify-center bg-foreground text-background hover:bg-foreground/90">
             {challenge_points}

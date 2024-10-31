@@ -52,14 +52,6 @@ export function ProtectedEditorMobileNav() {
             Dashboard
           </MobileLink>
           <MobileLink
-            href={siteConfig.paths.challenges}
-            onOpenChange={setIsOpen}
-            scroll={false}
-            className="hover:underline"
-          >
-            Challenges
-          </MobileLink>
-          <MobileLink
             href={siteConfig.paths.leaderboard}
             onOpenChange={setIsOpen}
             scroll={false}

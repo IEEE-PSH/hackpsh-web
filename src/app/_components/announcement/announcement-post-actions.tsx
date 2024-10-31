@@ -33,7 +33,11 @@ export default function AnnouncementPostActions({
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" className="-m-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute -right-2 -top-2"
+          >
             <Ellipsis />
           </Button>
         </DropdownMenuTrigger>

@@ -17,17 +17,19 @@ export default function SignIn() {
   return (
     <>
       <ToastErrorParams />
-      <div className="container relative grid flex-col items-center justify-center h-screen lg:max-w-none lg:grid-cols-2 lg:px-0">
-        <div className="absolute flex items-center flex-1 w-full text-lg font-medium top-4 md:top-8">
+      <div className="container relative grid h-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
+        <div className="absolute top-4 flex w-full flex-1 items-center text-lg font-medium md:top-8">
           <Link
             href={siteConfig.paths.home}
-            className="flex flex-row items-center justify-start ml-4 space-x-2 lg:hidden"
+            className="ml-4 flex flex-row items-center justify-start space-x-2 lg:hidden"
             scroll={false}
           >
-            <Icons.brand className="h-[2.4rem] w-[2.0rem]" />
-            <span className="inline-block text-xl font-bold">{siteConfig.name}</span>
+            <Icons.brand className="h-8 w-8" />
+            <span className="inline-block text-xl font-bold">
+              {siteConfig.name}
+            </span>
           </Link>
-          <nav className="flex items-center justify-end flex-1 mr-4 space-x-2">
+          <nav className="mr-4 flex flex-1 items-center justify-end space-x-2">
             <Link
               href={siteConfig.paths.sign_up}
               className={cn(buttonVariants({ variant: "ghost" }))}
@@ -39,7 +41,7 @@ export default function SignIn() {
           </nav>
         </div>
 
-        <div className="relative flex-col hidden h-full p-10 text-white bg-muted dark:border-r lg:flex">
+        <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
           <div className="absolute inset-0 bg-zinc-900" />
           <div className="relative z-20 flex items-center text-lg">
             <Link
@@ -47,8 +49,10 @@ export default function SignIn() {
               className="flex flex-row items-center justify-start space-x-2"
               scroll={false}
             >
-              <Icons.brand className="h-[2.4rem] w-[2.0rem]" />
-              <span className="hidden font-bold text-lg sm:inline-block">{siteConfig.name}</span>
+              <Icons.brand className="h-8 w-8" />
+              <span className="hidden text-lg font-bold sm:inline-block">
+                {siteConfig.name}
+              </span>
             </Link>
           </div>
         </div>
@@ -64,7 +68,7 @@ export default function SignIn() {
               </p>
             </div>
             <UserAuthForm />
-            <p className="px-8 text-sm text-center text-muted-foreground">
+            <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{" "}
               <Link
                 href="/info/terms-of-service"

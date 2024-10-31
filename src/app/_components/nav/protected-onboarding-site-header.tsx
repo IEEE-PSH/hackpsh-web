@@ -25,7 +25,7 @@ export default async function ProtectedOnboardingSiteHeader() {
         <div className="flex">
           <Button variant="brand" size="navigation" asChild>
             <Link href={siteConfig.paths.home}>
-              <Icons.brand className="h-[2.4rem] w-[2.0rem]" />
+              <Icons.brand className="h-8 w-8" />
               <span className="text-xl font-bold">{siteConfig.name}</span>
             </Link>
           </Button>

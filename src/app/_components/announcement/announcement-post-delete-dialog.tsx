@@ -79,7 +79,7 @@ export default function AnnouncementPostDeleteDialog({
               await deletePost(postID);
             }}
           >
-            Delete Post
+            Delete post
           </Button>
         </DialogFooter>
       </DialogContent>

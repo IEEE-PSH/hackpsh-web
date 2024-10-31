@@ -1,10 +1,10 @@
 import { type AnnouncementPost } from "@/server/dao/announcements";
 import {
-  Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
+  Card,
 } from "../ui/card";
 import AnnouncementPostActions from "./announcement-post-actions";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
@@ -43,8 +43,8 @@ export function AnnouncementPost({
   return (
     <Card key={announcement_uuid}>
       <CardHeader>
-        <div className="flex justify-between">
-          <CardTitle>{announcement_title}</CardTitle>
+        <div className="relative flex justify-between">
+          <CardTitle className="text-lg">{announcement_title}</CardTitle>
           {userRole !== "participant" && (
             <AnnouncementPostActions
               postID={announcement_id}
@@ -54,15 +54,13 @@ export function AnnouncementPost({
         </div>
 
         <CardDescription>
-          <span className="font-semibold">Created By: </span>
           {announcement_author_display_name ?? "Deleted User"}
           {" | "}
-          <span className="font-semibold">Posted On: </span>
           {formatted_announcement_created_at}
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="word-break w-full max-w-full whitespace-pre-line break-words">
+        <p className="word-break w-full max-w-full whitespace-pre-line break-words text-sm">
           {announcement_content}
         </p>
       </CardContent>
