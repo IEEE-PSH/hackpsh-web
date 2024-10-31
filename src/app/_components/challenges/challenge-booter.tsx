@@ -1,6 +1,6 @@
 "use client";
 import { trpc } from "@/app/_trpc/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
 import { siteConfig } from "@/app/_config/site";
@@ -19,6 +19,10 @@ export default function ChallengeBooter() {
     trpc.event.is_challenges_enabled.useQuery();
 
   const pathname = usePathname();
+
+  // useState to only toast if is_challenges_enabled is different
+  const [previousStatus, setPreviousStatus] = useState<boolean | null>(null);
+
   useEffect(() => {
     const channel = supabase.channel("event").on(
       "postgres_changes",
@@ -33,32 +37,38 @@ export default function ChallengeBooter() {
           if (pathname === siteConfig.paths.event) return;
 
           const isChallengesEnabled = await refetch();
-          if (!isChallengesEnabled.data) {
-            toast({
-              variant: "default",
-              title: "Challenges are now disabled.",
-              duration: 6000,
-            });
 
-            if (pathname.startsWith(siteConfig.paths.challenge))
-              router.push(siteConfig.paths.dashboard);
-          } else {
-            const enabledToast = toast({
-              variant: "default",
-              title: "Challenges are now enabled.",
-              duration: 6000,
-              action: (
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    router.push(siteConfig.paths.dashboard);
-                    enabledToast.dismiss();
-                  }}
-                >
-                  View
-                </Button>
-              ),
-            });
+          if (isChallengesEnabled.data !== previousStatus) {
+            setPreviousStatus(isChallengesEnabled.data!);
+
+            if (!isChallengesEnabled.data) {
+              toast({
+                variant: "default",
+                title: "Challenges are now disabled.",
+                duration: 6000,
+              });
+
+              if (pathname.startsWith(siteConfig.paths.challenge))
+                router.push(siteConfig.paths.dashboard);
+            } else {
+              const enabledToast = toast({
+                variant: "default",
+                title: "Challenges are now enabled.",
+                duration: 6000,
+                action: (
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      router.refresh();
+                      router.push(siteConfig.paths.dashboard);
+                      enabledToast.dismiss();
+                    }}
+                  >
+                    View
+                  </Button>
+                ),
+              });
+            }
           }
         })();
       },
