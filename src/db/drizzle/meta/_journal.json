@@ -15,6 +15,13 @@
       "when": 1729147476774,
       "tag": "0001_stale_mongu",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1730435359532,
+      "tag": "0002_shiny_venus",
+      "breakpoints": true
     }
   ]
 }
