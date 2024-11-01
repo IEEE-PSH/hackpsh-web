@@ -20,6 +20,8 @@ export const app_user_profile = app_schema.table(
     user_avatar_url: text("user_avatar_url"),
     user_onboarding_complete: boolean("user_onboarding_complete"),
     user_display_name: text("user_display_name").unique(),
+    user_first_name: text("user_first_name"),
+    user_last_name: text("user_last_name"),
     user_resume_url: text("user_resume_url"),
     user_team_uuid: uuid("user_team_uuid").references(
       () => app_team.team_uuid,
