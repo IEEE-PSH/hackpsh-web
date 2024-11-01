@@ -428,7 +428,6 @@ export async function getUserOnboardingFields(db: Database, user_uuid: string) {
         user_display_name: true,
         user_major: true,
         user_school_year: true,
-        user_team_uuid: true,
         user_support_administrative: true,
         user_support_technical: true,
       },

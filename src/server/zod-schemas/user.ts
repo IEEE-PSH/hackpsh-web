@@ -72,7 +72,6 @@ export const ValidUserProfileAfterOnboardingSchema = z.object({
   user_first_name: z.string(),
   user_last_name: z.string(),
   user_display_name: z.string(),
-  user_team_uuid: z.string().uuid(),
   user_school_year: z.enum(dbSchoolYear),
   user_major: z.enum(dbMajors),
   user_support_administrative: z.boolean(),
