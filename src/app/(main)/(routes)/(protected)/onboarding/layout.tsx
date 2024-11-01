@@ -4,7 +4,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background">
       <ProtectedOnboardingSiteHeader />
-      <div className="container max-w-xl py-16">{children}</div>
+      <div className="container mt-16 max-w-xl">{children}</div>
     </div>
   );
 }

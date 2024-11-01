@@ -10,9 +10,6 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1 className="mb-10 text-center text-3xl font-bold">
-        Team Creation
-      </h1>
       <NumberStepper currentStep={2} maxStep={3} />
       <TeamFormWrapper />
     </>

@@ -19,6 +19,7 @@ import deleteUserProcedure from "../procedures/protected/user/deleteUserProcedur
 import getUserInfoProcedure from "../procedures/protected/user/getUserInfoProcedure";
 import getUserTeamInfoProcedure from "../procedures/protected/user/getUserTeamInfoProcedure";
 import deleteUserSelfProcedure from "../procedures/protected/user/deleteUserSelfProcedure";
+import updateSchoolDetailsProcedure from "../procedures/protected/user/updateSchoolDetailsProcedure";
 
 export const userRouter = createTRPCRouter({
   is_onboarding_complete: isOnboardingCompeleteProcedure,
@@ -30,6 +31,7 @@ export const userRouter = createTRPCRouter({
   get_user_info: getUserInfoProcedure,
   get_user_settings_info: getUserSettingsInfoProcedure,
   update_personal_details: updatePersonalDetailsProcedure,
+  update_school_details: updateSchoolDetailsProcedure,
   update_support_us: updateSupportUsProcedure,
   update_user_settings: updateUserSettingsProcedure,
   get_user_support_info: getUserSupportInfoProcedure,

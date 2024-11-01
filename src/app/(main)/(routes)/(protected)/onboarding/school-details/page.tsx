@@ -1,5 +1,5 @@
 import NumberStepper from "@/app/_components/onboarding/number-stepper";
-import OnboardingPersonalDetailsForm from "@/app/_components/onboarding/personal-details-form";
+import OnboardingSchoolDetailsForm from "@/app/_components/onboarding/school-details-form";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <NumberStepper currentStep={1} maxStep={3} />
-      <OnboardingPersonalDetailsForm />
+      <NumberStepper currentStep={2} maxStep={3} />
+      <OnboardingSchoolDetailsForm />
     </>
   );
 }

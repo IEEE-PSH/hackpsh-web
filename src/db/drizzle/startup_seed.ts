@@ -90,7 +90,7 @@ export async function insertMajor(db: Database, major_name: string) {
 
 export const dbOnboardingPhases = [
   "personal-details",
-  "team-creation",
+  "school-details",
   "support-us",
   "validate-onboarding",
 ] as const;

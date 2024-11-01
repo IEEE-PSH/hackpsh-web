@@ -1,10 +1,10 @@
 import { type Database } from "@/db/drizzle";
-import { app_announcement, app_user_profile } from "@/db/drizzle/schema";
+import { app_user_profile } from "@/db/drizzle/schema";
 import {
   type TUserOnboardingPhase,
   type TUserMajor,
   type TUserSchoolYear,
-  TUserRole,
+  type TUserRole,
 } from "@/db/drizzle/startup_seed";
 import { BaseError } from "@/shared/error";
 import { TRPCError } from "@trpc/server";
@@ -233,9 +233,9 @@ export async function getUserFromDisplayName(
 export async function updateUserPersonalDetails(
   db: Database,
   user_uuid: string,
+  user_first_name: string,
+  user_last_name: string,
   user_display_name: string,
-  user_school_year: TUserSchoolYear,
-  user_major: TUserMajor,
 ) {
   try {
     const user_from_display_name = await getUserFromDisplayName(
@@ -266,17 +266,55 @@ export async function updateUserPersonalDetails(
     await db
       .update(app_user_profile)
       .set({
+        user_first_name,
+        user_last_name,
         user_display_name,
-        user_school_year,
-        user_major,
         user_onboarding_phase: onboarding_complete?.user_onboarding_complete
           ? "validate-onboarding"
-          : "team-creation",
+          : "school-details",
       })
       .where(eq(app_user_profile.user_uuid, user_uuid));
 
     return {
       update_user_personal_details: true,
+    };
+  } catch (error) {
+    console.log(error);
+    if (error instanceof BaseError) {
+      throw new TRPCError({
+        message: error.description!,
+        code: "CONFLICT",
+      });
+    }
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function updateUserSchoolDetails(
+  db: Database,
+  user_uuid: string,
+  user_school_year: string,
+  user_major: string,
+) {
+  try {
+    const onboarding_complete = await getUserOnboardingStatus(db, user_uuid);
+
+    await db
+      .update(app_user_profile)
+      .set({
+        user_school_year,
+        user_major,
+        user_onboarding_phase: onboarding_complete?.user_onboarding_complete
+          ? "validate-onboarding"
+          : "support-us",
+      })
+      .where(eq(app_user_profile.user_uuid, user_uuid));
+
+    return {
+      update_user_school_details: true,
     };
   } catch (error) {
     if (error instanceof BaseError) {
@@ -385,6 +423,8 @@ export async function getUserOnboardingFields(db: Database, user_uuid: string) {
   try {
     const user_profile = await db.query.app_user_profile.findFirst({
       columns: {
+        user_first_name: true,
+        user_last_name: true,
         user_display_name: true,
         user_major: true,
         user_school_year: true,

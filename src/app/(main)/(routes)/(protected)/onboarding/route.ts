@@ -19,8 +19,8 @@ export async function GET(req: NextRequest) {
 
     if (get_user_onboarding_phase === "personal-details") {
       return redirectToPath(req, siteConfig.paths.onboarding_personal_details);
-    } else if (get_user_onboarding_phase === "team-creation") {
-      return redirectToPath(req, siteConfig.paths.onboarding_team_creation);
+    } else if (get_user_onboarding_phase === "school-details") {
+      return redirectToPath(req, siteConfig.paths.onboarding_school_details);
     } else if (get_user_onboarding_phase === "support-us") {
       return redirectToPath(req, siteConfig.paths.onboarding_support_us);
     } else if (get_user_onboarding_phase === "validate-onboarding") {

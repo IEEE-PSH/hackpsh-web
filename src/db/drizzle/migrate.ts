@@ -42,8 +42,8 @@ const runMigrations = async () => {
       await insertMajor(db, major_name);
     }
 
-    for (const difficulty_name of dbDifficulties){
-      await insertDifficulties(db, difficulty_name)
+    for (const difficulty_name of dbDifficulties) {
+      await insertDifficulties(db, difficulty_name);
     }
 
     //set default dates
