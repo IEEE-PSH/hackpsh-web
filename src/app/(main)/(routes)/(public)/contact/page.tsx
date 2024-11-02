@@ -81,7 +81,7 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
                       <FormLabel>First</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="First Name"
+                          placeholder="First name"
                           {...field}
                           value={field.value ?? ""}
                         />
@@ -98,7 +98,7 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
                       <FormLabel>Last</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Last Name"
+                          placeholder="Last name"
                           {...field}
                           value={field.value ?? ""}
                         />

@@ -44,7 +44,10 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { toast } from "@/app/_components/ui/use-toast";
 import { Switch } from "../ui/switch";
-import { SettingsFormSchema, type TSettingsForm } from "@/app/_lib/settings";
+import {
+  AccountSettingsFormSchema,
+  type TAccountSettingsForm,
+} from "@/app/_lib/settings";
 import { Separator } from "../ui/separator";
 import { useRouter } from "next/navigation";
 import { TUserSettingsInfo, TUserSupportInfo } from "@/server/dao/user";
@@ -61,8 +64,8 @@ export default function UserSettingsForm({
   const supabase = createClientComponentClient();
 
   // Form Definition
-  const form = useForm<TSettingsForm>({
-    resolver: zodResolver(SettingsFormSchema),
+  const form = useForm<TAccountSettingsForm>({
+    resolver: zodResolver(AccountSettingsFormSchema),
     defaultValues: {
       user_first_name: userPersonalDetails?.user_first_name as string,
       user_last_name: userPersonalDetails?.user_last_name as string,
@@ -98,7 +101,7 @@ export default function UserSettingsForm({
     },
   });
 
-  async function onSubmit(values: TSettingsForm) {
+  async function onSubmit(values: TAccountSettingsForm) {
     try {
       const user = await getUser(supabase);
 
@@ -120,7 +123,7 @@ export default function UserSettingsForm({
   return (
     <Form {...form}>
       <form
-        id="onboardingPersonalDetailsForm"
+        id="userSettingsForm"
         onSubmit={form.handleSubmit(onSubmit)}
         className="grid gap-8 md:grid-cols-2"
       >
@@ -136,7 +139,7 @@ export default function UserSettingsForm({
                 name="user_first_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>First Name</FormLabel>
+                    <FormLabel>First name</FormLabel>
                     <FormControl>
                       <Input
                         className="border-muted-foreground"
@@ -156,7 +159,7 @@ export default function UserSettingsForm({
                 name="user_last_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Last Name</FormLabel>
+                    <FormLabel>Last name</FormLabel>
                     <FormControl>
                       <Input
                         className="border-muted-foreground"
@@ -178,7 +181,7 @@ export default function UserSettingsForm({
               name="user_display_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Display Name</FormLabel>
+                  <FormLabel>Display name</FormLabel>
                   <FormControl>
                     <Input
                       className="border-muted-foreground"
@@ -225,7 +228,7 @@ export default function UserSettingsForm({
               name="user_school_year"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>School Year</FormLabel>
+                  <FormLabel>School year</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>

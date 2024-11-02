@@ -73,6 +73,73 @@ export async function updateTeam(
   }
 }
 
+export async function updateTeamDetails(
+  db: Database,
+  user_uuid: string,
+  team_name: string,
+  team_join_code: string,
+) {
+  try {
+    //find existing team name
+    const existing_team_name = await getTeamFromName(db, team_name);
+
+    //find self team name
+    const self_team_uuid = await db.query.app_user_profile.findFirst({
+      columns: {
+        user_team_uuid: true,
+      },
+      where: eq(app_user_profile.user_uuid, user_uuid),
+    });
+
+    const self_team_name = await db.query.app_team.findFirst({
+      columns: {
+        team_name: true,
+      },
+      where: eq(app_team.team_uuid, self_team_uuid?.user_team_uuid!),
+    });
+
+    //if existing team name is not the user's team name, then error
+    if (
+      existing_team_name?.team_name === team_name &&
+      self_team_name?.team_name !== team_name
+    ) {
+      throw new BaseError({
+        error_title: "Unavailable Team Name",
+        error_desc: "This team name has already been taken.",
+      });
+    }
+
+    //update team name and join code
+    const team_uuid = await db.query.app_user_profile.findFirst({
+      columns: { user_team_uuid: true },
+      where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
+    });
+    await db
+      .update(app_team)
+      .set({
+        team_name: team_name,
+        team_join_code: team_join_code,
+      })
+      .where(eq(app_team.team_uuid, team_uuid?.user_team_uuid!));
+
+    return {
+      update_team_details: true,
+    };
+  } catch (error) {
+    console.log(error);
+    if (error instanceof BaseError) {
+      throw new TRPCError({
+        message: error.description!,
+        code: "CONFLICT",
+      });
+    }
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
 export async function deleteTeam(
   db: Database,
   user_uuid: string,
@@ -107,24 +174,6 @@ export async function getTeamFromName(db: Database, team_name: string) {
         team_name: true,
       },
       where: (team_data, { eq }) => eq(team_data.team_name, team_name),
-    });
-
-    return result;
-  } catch (error) {
-    throw new TRPCError({
-      message: "The database has encountered some issues.",
-      code: "INTERNAL_SERVER_ERROR",
-    });
-  }
-}
-
-export async function getTeamNameFromUserUUID(db: Database, user_uuid: string) {
-  try {
-    const result = await db.query.app_team.findFirst({
-      columns: {
-        team_name: true,
-      },
-      where: eq(app_team.team_uuid, user_uuid),
     });
 
     return result;

@@ -88,7 +88,8 @@ export default function CreateTeamForm({
                 />
               </FormControl>
               <FormDescription>
-                Please be appropriate, else it will be deleted.
+                Provide an appropriate team name, otherwise the team will be
+                deleted.
               </FormDescription>
               <FormMessage />
             </FormItem>

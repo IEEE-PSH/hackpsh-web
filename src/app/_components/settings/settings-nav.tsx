@@ -24,7 +24,22 @@ export default function SettingsNav({ userRole }: { userRole: string }) {
           <span>Account</span>
         </Link>
       </Button>
-      {userRole === "admin" ? (
+      <Button
+        className={cn(
+          pathname === siteConfig.paths.team
+            ? "bg-accent text-accent-foreground"
+            : "text-foreground/60 hover:bg-accent/50",
+          "rounded-full",
+        )}
+        variant="ghost"
+        size="default"
+        asChild
+      >
+        <Link href={siteConfig.paths.team} scroll={true}>
+          <span>Team</span>
+        </Link>
+      </Button>
+      {userRole === "admin" && (
         <>
           <Button
             className={cn(
@@ -57,8 +72,6 @@ export default function SettingsNav({ userRole }: { userRole: string }) {
             </Link>
           </Button>
         </>
-      ) : (
-        <></>
       )}
     </div>
   );

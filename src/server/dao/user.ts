@@ -231,24 +231,26 @@ export async function updateUserPersonalDetails(
   user_display_name: string,
 ) {
   try {
-    const user_from_display_name = await getUserFromDisplayName(
+    //find existing display name
+    const existing_display_name = await getUserFromDisplayName(
       db,
       user_display_name,
     );
 
-    const user_display_name_from_uuid =
-      await db.query.app_user_profile.findFirst({
-        columns: {
-          user_display_name: true,
-        },
-        where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
-      });
+    //find self display name
+    const self_display_name = await db.query.app_user_profile.findFirst({
+      columns: {
+        user_display_name: true,
+      },
+      where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
+    });
 
     const onboarding_complete = await getUserOnboardingStatus(db, user_uuid);
 
+    //if display name already exists and it is not the user's, then error
     if (
-      user_from_display_name?.user_display_name === user_display_name &&
-      user_display_name_from_uuid?.user_display_name !== user_display_name
+      existing_display_name?.user_display_name === user_display_name &&
+      self_display_name?.user_display_name !== user_display_name
     ) {
       throw new BaseError({
         error_title: "Unavailable Display Name",
@@ -514,6 +516,7 @@ export async function getUserTeamInfo(db: Database, user_uuid: string) {
 
     const teamGeneralInfo = await db.query.app_team.findFirst({
       columns: {
+        team_uuid: true,
         team_name: true,
         team_join_code: true,
         team_points: true,
@@ -531,7 +534,15 @@ export async function getUserTeamInfo(db: Database, user_uuid: string) {
         eq(user_data.user_team_uuid, teamUUID!.user_team_uuid!),
     });
 
-    return { teamGeneralInfo, teamMembers };
+    return {
+      team_uuid: teamGeneralInfo?.team_uuid,
+      team_name: teamGeneralInfo?.team_name,
+      team_join_code: teamGeneralInfo?.team_join_code,
+      team_points: teamGeneralInfo?.team_points,
+      team_total_points:
+        teamGeneralInfo?.team_points! + teamGeneralInfo?.team_points_additive!,
+      team_members: teamMembers,
+    };
   } catch (error) {
     throw new TRPCError({
       message: "The database has encountered some issues.",
@@ -539,3 +550,5 @@ export async function getUserTeamInfo(db: Database, user_uuid: string) {
     });
   }
 }
+
+export type TUserTeamInfo = Awaited<ReturnType<typeof getUserTeamInfo>>;

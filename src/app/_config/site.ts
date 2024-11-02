@@ -36,7 +36,7 @@ export const siteConfig = {
     event: "/settings/event",
     account: "/settings/account",
     users: "/settings/users",
-    teams: "/settings/teams",
+    team: "/settings/team",
     challenge: "/challenge",
     join_team: "/teams",
   },
