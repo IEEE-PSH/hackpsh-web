@@ -23,6 +23,7 @@ export default function ChallengeSyncer({
   setValue: Dispatch<SetStateAction<string>>;
   setLanguage: Dispatch<SetStateAction<TLanguages>>;
 }) {
+  if (!teamName) return;
   const router = useRouter();
   const supabase = createClientComponentClient();
 

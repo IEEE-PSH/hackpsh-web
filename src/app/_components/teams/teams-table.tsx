@@ -9,7 +9,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { columns } from "@/app/_components/leaderboard/columns";
+import { columns } from "@/app/_components/teams/teams-columns";
 import { Input } from "@/app/_components/ui/input";
 import {
   Table,
@@ -23,21 +23,24 @@ import { cn } from "@/app/_lib/client-utils";
 import { useState } from "react";
 import { type LeaderboardStandings } from "@/server/dao/leaderboard";
 import { type TUserInfo } from "@/server/dao/user";
-import { Pencil } from "lucide-react";
 import { Button } from "../ui/button";
-import TeamOptionsSheet from "./team-options-sheet";
+import TeamInfoSheet from "./team-info-sheet";
+import TeamCreateDialog from "./team-create-dialog";
+import TeamDeleteDialog from "./team-delete-dialog";
+import TeamJoinDialog from "./team-join-dialog";
+import TeamLeaveDialog from "./team-leave-dialog";
 
-interface DataTableProps {
+interface TeamsTableProps {
   data: LeaderboardStandings;
   className?: string;
   userData: TUserInfo;
 }
 
-export default function DataTable({
+export default function TeamsTable({
   data,
   className,
   userData,
-}: DataTableProps) {
+}: TeamsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -55,18 +58,16 @@ export default function DataTable({
     },
   });
 
-  //move later
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
-  const [teamUUIDToEdit, setTeamUUIDToEdit] = useState<string | null>(null);
+  const [teamUUID, setTeamUUID] = useState<string | null>(null);
 
   return (
     <>
-      {teamUUIDToEdit && (
-        <TeamOptionsSheet
+      {teamUUID && (
+        <TeamInfoSheet
           sheetOpen={sheetOpen}
           setSheetOpen={setSheetOpen}
-          teamUUID={teamUUIDToEdit}
-          userData={userData}
+          teamUUID={teamUUID}
         />
       )}
 
@@ -80,8 +81,14 @@ export default function DataTable({
             onChange={(event) =>
               table.getColumn("team_name")?.setFilterValue(event.target.value)
             }
-            className="max-w-sm"
+            className="mr-auto max-w-sm"
           />
+
+          {userData?.user_team_uuid ? (
+            <TeamLeaveDialog userUUID={userData.user_uuid} />
+          ) : (
+            <TeamCreateDialog />
+          )}
         </div>
         <div className="rounded-md border">
           <Table>
@@ -117,20 +124,30 @@ export default function DataTable({
                             )}
                           </div>
 
-                          {cell.column.id === "team_total_points" ? (
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => {
-                                setTeamUUIDToEdit(row.original.team_uuid);
-                                setSheetOpen(true);
-                              }}
-                              className="h-8 w-8"
-                            >
-                              <Pencil className="h-4 w-4" />
-                            </Button>
-                          ) : (
-                            <></>
+                          {cell.column.id === "team_size" && (
+                            <div className="flex items-center gap-2">
+                              {row.original.team_uuid !==
+                                userData?.user_team_uuid && (
+                                <TeamJoinDialog
+                                  teamName={row.original.team_name}
+                                />
+                              )}
+
+                              <Button
+                                variant="secondary"
+                                className="h-8"
+                                onClick={() => {
+                                  setSheetOpen(true);
+                                  setTeamUUID(row.original.team_uuid);
+                                }}
+                              >
+                                View
+                              </Button>
+                              <TeamDeleteDialog
+                                teamUUID={row.original.team_uuid}
+                                userData={userData}
+                              />
+                            </div>
                           )}
                         </div>
                       </TableCell>

@@ -5,58 +5,29 @@ import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { getUserRole } from "./user";
 
-function generateRandomCode() {
-  const code = [];
-
-  // Generate three random uppercase letters
-  for (let i = 0; i < 3; i++) {
-    const randomLetterCode = Math.floor(65 + Math.random() * 26); // ASCII values for A-Z
-    code.push(String.fromCharCode(randomLetterCode));
-  }
-
-  // Generate four random digits in the range [1000, 9999]
-  const randomNumber = Math.floor(1000 + Math.random() * 9000);
-  code.push(randomNumber.toString());
-
-  return code.join("");
-}
-
-async function availableRandomCode(db: Database) {
-  let code;
-  let team_from_code;
-
-  do {
-    code = generateRandomCode();
-    team_from_code = await getTeamFromCode(db, code);
-  } while (team_from_code?.team_uuid);
-
-  return code;
-}
-
 export async function createTeam(
   db: Database,
   user_uuid: string,
   team_name: string,
+  team_join_code: string,
 ) {
   try {
     const team_from_name = await getTeamFromName(db, team_name);
 
     if (team_from_name?.team_name) {
       throw new BaseError({
-        error_title: "Team Already Exists.",
+        error_title: "Team already exists.",
         error_desc:
           "Please pick a different team, as this team name is already taken.",
       });
     }
-
-    const team_join_code = await availableRandomCode(db);
 
     await db.insert(app_team).values({
       team_name,
       team_join_code,
     });
 
-    await joinTeam(db, user_uuid, team_join_code);
+    await joinTeam(db, user_uuid, team_name, team_join_code);
   } catch (error) {
     if (error instanceof BaseError) {
       throw new TRPCError({
@@ -165,14 +136,13 @@ export async function getTeamNameFromUserUUID(db: Database, user_uuid: string) {
   }
 }
 
-export async function getTeamFromCode(db: Database, team_join_code: string) {
+export async function getTeamFromTeamName(db: Database, team_name: string) {
   try {
     const team_from_code = await db.query.app_team.findFirst({
       columns: {
         team_uuid: true,
       },
-      where: (team_data, { eq }) =>
-        eq(team_data.team_join_code, team_join_code),
+      where: (team_data, { eq }) => eq(team_data.team_name, team_name),
     });
 
     return team_from_code;
@@ -187,23 +157,58 @@ export async function getTeamFromCode(db: Database, team_join_code: string) {
 export async function joinTeam(
   db: Database,
   user_uuid: string,
+  team_name: string,
   team_join_code: string,
 ) {
   try {
-    const team_from_code = await getTeamFromCode(db, team_join_code);
+    const team_from_team_name = await getTeamFromTeamName(db, team_name);
 
-    if (!team_from_code?.team_uuid) {
+    if (!team_from_team_name?.team_uuid) {
       throw new BaseError({
-        error_title: "Invalid Team Code",
-        error_desc: "The provided team code is invalid.",
+        error_title: "Invalid team name.",
+        error_desc: "The provided team name is invalid.",
       });
     }
 
+    const found_team_join_code = await db.query.app_team.findFirst({
+      columns: { team_join_code: true },
+      where: (team_data, { eq }) =>
+        eq(team_data.team_uuid, team_from_team_name.team_uuid),
+    });
+
+    if (team_join_code === found_team_join_code?.team_join_code) {
+      await db
+        .update(app_user_profile)
+        .set({
+          user_team_uuid: team_from_team_name.team_uuid,
+        })
+        .where(eq(app_user_profile.user_uuid, user_uuid));
+    } else {
+      throw new BaseError({
+        error_title: "Wrong team join code.",
+        error_desc: "The provided team join code is incorrect.",
+      });
+    }
+  } catch (error) {
+    if (error instanceof BaseError) {
+      throw new TRPCError({
+        message: error.description!,
+        code: "NOT_FOUND",
+      });
+    }
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function leaveTeam(db: Database, user_uuid: string) {
+  try {
     await db
       .update(app_user_profile)
       .set({
-        user_team_uuid: team_from_code.team_uuid,
-        user_onboarding_phase: "support-us",
+        user_team_uuid: null,
       })
       .where(eq(app_user_profile.user_uuid, user_uuid));
   } catch (error) {

@@ -28,6 +28,7 @@ type ChallengeNavActionsProps = {
   checkedSolvedStatus: boolean;
   setLanguage: Dispatch<SetStateAction<TLanguages>>;
   setOutputData: Dispatch<SetStateAction<TSubmitData | null>>;
+  teamName: string;
 };
 
 export default function ChallengeNavActions({
@@ -40,6 +41,7 @@ export default function ChallengeNavActions({
   checkedSolvedStatus,
   setLanguage,
   setOutputData,
+  teamName,
 }: ChallengeNavActionsProps) {
   //runs code
   const { refetch: runCode, isFetching: isRunning } =
@@ -69,6 +71,16 @@ export default function ChallengeNavActions({
     );
 
   //submits code
+  function attemptSubmitCode() {
+    if (teamName) submitCode();
+    else {
+      toast({
+        variant: "destructive",
+        description: "You must be on a team to submit challenges.",
+        duration: 4000,
+      });
+    }
+  }
   const { refetch: submitCode, isFetching: isSubmitting } =
     trpc.challenges.submit_code.useQuery(
       {
@@ -148,7 +160,7 @@ export default function ChallengeNavActions({
             <Button
               className="p-2 md:p-4"
               disabled={isSubmitting}
-              onClick={() => submitCode()}
+              onClick={() => attemptSubmitCode()}
             >
               <Send />
               <span className="ml-4 hidden md:block">Submit</span>

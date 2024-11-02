@@ -24,6 +24,7 @@ export default function ChallengeUsersStatus({
   challengeId: number;
   teamName: string;
 }) {
+  if (!teamName) return;
   const [currentUsers, setCurrentUsers] = useState<TUserTracker>([]);
   useEffect(() => {
     const supabase = createClientComponentClient();

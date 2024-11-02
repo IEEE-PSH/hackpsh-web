@@ -134,6 +134,8 @@ export async function getUserInfo(db: Database, user_uuid: string) {
   try {
     const result = await db.query.app_user_profile.findFirst({
       columns: {
+        user_first_name: true,
+        user_last_name: true,
         user_display_name: true,
         user_email_address: true,
         user_role: true,

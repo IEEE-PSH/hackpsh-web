@@ -83,7 +83,7 @@ export default function ProfileDropdown({
         <DropdownMenuSub>
           <DropdownMenuSubTrigger className="space-x-2">
             <Palette className="h-4 w-4" />
-            <span>Change Appearance</span>
+            <span>Change appearance</span>
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
@@ -114,7 +114,7 @@ export default function ProfileDropdown({
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer" onClick={handleSignOut}>
           <LogOut className="mr-2 h-4 w-4" />
-          <span>Sign Out</span>
+          <span>Sign out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

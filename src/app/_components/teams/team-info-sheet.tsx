@@ -25,7 +25,7 @@ export default function TeamInfoSheet({
       <SheetContent>
         <SheetHeader className="text-xl">
           {isSuccess ? (
-            <h1>Team {teamData?.team_name}</h1>
+            <h1 className="text-left">Team {teamData?.team_name}</h1>
           ) : (
             <Skeleton className="my-1 h-5 w-52" />
           )}

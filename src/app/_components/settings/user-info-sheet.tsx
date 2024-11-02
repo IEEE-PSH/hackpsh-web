@@ -23,7 +23,7 @@ export default function UserInfoSheet({
   return (
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetContent>
-        <SheetHeader className="text-xl">
+        <SheetHeader className="text-left text-xl">
           {isSuccess ? (
             <h1>User {userData.user_display_name}</h1>
           ) : (
@@ -36,6 +36,10 @@ export default function UserInfoSheet({
             <p className="col-span-1">Role</p>
             <p className="col-span-4 capitalize text-muted-foreground">
               {userData.user_role}
+            </p>
+            <p className="col-span-1">Name</p>
+            <p className="col-span-4 capitalize text-muted-foreground">
+              {userData.user_first_name} {userData.user_last_name}
             </p>
             <p className="col-span-1">Email</p>
             <p className="col-span-4 text-muted-foreground">

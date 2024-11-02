@@ -38,6 +38,7 @@ export const siteConfig = {
     users: "/settings/users",
     teams: "/settings/teams",
     challenge: "/challenge",
+    join_team: "/teams",
   },
 };
 

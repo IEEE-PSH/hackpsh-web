@@ -36,12 +36,17 @@ export default function ChallengeContentPage({
 }) {
   const [value, setValue] = useState("");
   const [outputData, setOutputData] = useState<TSubmitData | null>(null);
-  const [language, setLanguage] = useState<TLanguages>(
-    (localStorage.getItem("hackpsh-stored-language") as TLanguages) ?? "python",
-  );
+  const [language, setLanguage] = useState<TLanguages>("python");
   const [header, setHeader] = useState("");
   const [presetHeader, setPresetHeader] = useState("");
   const [solved, setSolved] = useState(false);
+
+  useEffect(() => {
+    const storedLanguage = localStorage.getItem(
+      "hackpsh-stored-language",
+    ) as TLanguages;
+    setLanguage(storedLanguage ?? "python");
+  }, []);
 
   const { data: challengeData, isSuccess } =
     trpc.challenges.get_challenge.useQuery({
@@ -111,6 +116,7 @@ export default function ChallengeContentPage({
           checkedSolvedStatus={checkedSolvedStatus}
           setLanguage={setLanguage}
           setOutputData={setOutputData}
+          teamName={teamName}
         />
       </ProtectedEditorSiteHeader>
       <div className="grid grid-cols-1 md:grid-cols-2">

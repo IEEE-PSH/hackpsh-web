@@ -8,6 +8,8 @@ export default protectedProcedure
     const result = await getUserInfo(ctx.db, input.user_uuid);
 
     return {
+      user_first_name: result!.user_first_name,
+      user_last_name: result!.user_last_name,
       user_display_name: result!.user_display_name,
       user_email_address: result!.user_email_address,
       user_role: result!.user_role,

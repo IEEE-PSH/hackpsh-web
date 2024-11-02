@@ -9,6 +9,9 @@ import { ChevronRight } from "lucide-react";
 import { composeServerComponentClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import { serverTRPC } from "@/app/_trpc/server";
+import { Button } from "../ui/button";
+import Link from "next/link";
+import { siteConfig } from "@/app/_config/site";
 
 export default async function DashboardTeamInfo() {
   const supabase = composeServerComponentClient();
@@ -18,6 +21,23 @@ export default async function DashboardTeamInfo() {
     await serverTRPC.user.get_user_team_info.query({
       user_uuid: user.id,
     });
+
+  if (!team_name) {
+    return (
+      <Card>
+        <CardContent className="flex h-full items-center justify-between gap-4 p-6 text-sm">
+          <p className="text-md text-muted-foreground">
+            You must be on a team to participate in challenges.
+          </p>
+          <Link href={siteConfig.paths.join_team}>
+            <Button variant="outline" className="w-32">
+              Join a team
+            </Button>
+          </Link>
+        </CardContent>
+      </Card>
+    );
+  }
   return (
     <Card>
       <CardContent className="grid grid-cols-3 p-6 text-sm">
@@ -48,7 +68,9 @@ export default async function DashboardTeamInfo() {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-            {/* <ChevronRight className="text-muted-foreground transition hover:translate-x-1 hover:cursor-pointer hover:text-foreground" /> */}
+            <Link href={siteConfig.paths.join_team}>
+              <ChevronRight className="text-muted-foreground transition hover:translate-x-1 hover:cursor-pointer hover:text-foreground" />
+            </Link>
           </div>
         </div>
       </CardContent>

@@ -10,29 +10,27 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
-import { type Dispatch, type SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { trpc } from "@/app/_trpc/react";
 import { type TUserInfo } from "@/server/dao/user";
 import { useRouter } from "next/navigation";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import { Trash } from "lucide-react";
 
 type TeamOptionsSheet = {
-  dialogOpen: boolean;
-  setDialogOpen: Dispatch<SetStateAction<boolean>>;
   teamUUID: string;
   userData: TUserInfo;
 };
 
 export default function TeamDeleteDialog({
-  dialogOpen,
-  setDialogOpen,
   teamUUID,
   userData,
 }: TeamOptionsSheet) {
   const router = useRouter();
   const deleteTeamMutation = trpc.team.delete_team.useMutation({
     onSuccess: () => {
-      setDialogOpen(false);
       router.refresh();
+      setDialogOpen(false);
       toast({
         variant: "success",
         title: "Team deleted.",
@@ -59,19 +57,26 @@ export default function TeamDeleteDialog({
     }
   }
 
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+      <DialogTrigger asChild>
+        <Button size="icon" variant="ghost" className="h-8 w-8">
+          <Trash className="h-4 w-4" />
+        </Button>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Are you sure?</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete the team
-            and its members from the platform.
+            This action cannot be undone. This will kick all members from the
+            team and delete the team from the platform.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button variant="destructive" onClick={() => deleteTeam()}>
-            Delete team permanently
+            Delete permanently
           </Button>
         </DialogFooter>
       </DialogContent>

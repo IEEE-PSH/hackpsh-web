@@ -151,7 +151,7 @@ export default function UserTable({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No Results.
+                  No users.
                 </TableCell>
               </TableRow>
             )}

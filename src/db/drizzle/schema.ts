@@ -25,7 +25,7 @@ export const app_user_profile = app_schema.table(
     user_resume_url: text("user_resume_url"),
     user_team_uuid: uuid("user_team_uuid").references(
       () => app_team.team_uuid,
-      { onDelete: "cascade" },
+      { onDelete: "set null" },
     ),
     user_school_year: text("user_school_year").references(
       () => app_school_year.school_year_name,
