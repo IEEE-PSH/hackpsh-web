@@ -43,7 +43,7 @@ export default function ProfileDropdown({
     router.push(siteConfig.paths.home);
     router.refresh();
     toast({
-      title: "Signed Out Successfully!",
+      title: "Signed out.",
       variant: "success",
     });
   }

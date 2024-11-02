@@ -162,8 +162,10 @@ export type TUserInfo = Awaited<ReturnType<typeof getUserInfo>>;
 
 export async function getUserSettingsInfo(db: Database, user_uuid: string) {
   try {
-    const userInfo = await db.query.app_user_profile.findFirst({
+    const result = await db.query.app_user_profile.findFirst({
       columns: {
+        user_first_name: true,
+        user_last_name: true,
         user_display_name: true,
         user_email_address: true,
         user_school_year: true,
@@ -171,18 +173,6 @@ export async function getUserSettingsInfo(db: Database, user_uuid: string) {
       },
       where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
     });
-
-    const teamInfo = await getUserTeamInfo(db, user_uuid);
-
-    //explicity list variables in result to maintain consistency with other procedures
-    const result = {
-      user_display_name: userInfo?.user_display_name,
-      user_email_address: userInfo?.user_email_address,
-      user_school_year: userInfo?.user_school_year,
-      user_major: userInfo?.user_major,
-      user_team_name: teamInfo?.teamGeneralInfo?.team_name,
-    };
-
     return result;
   } catch (error) {
     throw new TRPCError({
@@ -191,6 +181,7 @@ export async function getUserSettingsInfo(db: Database, user_uuid: string) {
     });
   }
 }
+export type TUserSettingsInfo = Awaited<ReturnType<typeof getUserSettingsInfo>>;
 
 export async function getUserOnboardingPhase(db: Database, user_uuid: string) {
   try {
@@ -380,6 +371,8 @@ export async function updateUserRole(
 export async function updateUserSettings(
   db: Database,
   user_uuid: string,
+  user_first_name: string,
+  user_last_name: string,
   user_display_name: string,
   user_school_year: TUserSchoolYear,
   user_major: TUserMajor,
@@ -390,10 +383,11 @@ export async function updateUserSettings(
   await updateUserPersonalDetails(
     db,
     user_uuid,
+    user_first_name,
+    user_last_name,
     user_display_name,
-    user_school_year,
-    user_major,
   );
+  await updateUserSchoolDetails(db, user_uuid, user_school_year, user_major);
   await updateUserSupport(
     db,
     user_uuid,
@@ -420,6 +414,8 @@ export async function getUserSupportInfo(db: Database, user_uuid: string) {
     });
   }
 }
+
+export type TUserSupportInfo = Awaited<ReturnType<typeof getUserSupportInfo>>;
 
 export async function getUserOnboardingFields(db: Database, user_uuid: string) {
   try {

@@ -44,7 +44,7 @@ export default function SupportUsForm({
 
   const updateSupportUsMutation = trpc.user.update_support_us.useMutation({
     onSuccess: () => {
-      router.push(siteConfig.paths.onboarding, { scroll: false });
+      router.push(siteConfig.paths.dashboard, { scroll: false });
     },
     onError: (error) => {
       toast({

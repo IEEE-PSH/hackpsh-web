@@ -57,7 +57,7 @@ export default function OnboardingSchoolDetailsForm({
   const updateSchoolDetailsMutation =
     trpc.user.update_school_details.useMutation({
       onSuccess: () => {
-        router.push(siteConfig.paths.onboarding, { scroll: false });
+        router.push(siteConfig.paths.onboarding_support_us, { scroll: false });
       },
       onError: (error) => {
         toast({

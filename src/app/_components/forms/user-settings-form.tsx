@@ -46,27 +46,17 @@ import { toast } from "@/app/_components/ui/use-toast";
 import { Switch } from "../ui/switch";
 import { SettingsFormSchema, type TSettingsForm } from "@/app/_lib/settings";
 import { Separator } from "../ui/separator";
-import { type TSupportUsForm } from "@/app/_lib/zod-schemas/forms/onboarding/support-us";
 import { useRouter } from "next/navigation";
+import { TUserSettingsInfo, TUserSupportInfo } from "@/server/dao/user";
 
 type UserSettingsFormProps = {
-  userDisplayName: string | null;
-  userEmailAddress: string | null;
-  userSchoolYear: string | null;
-  userMajor: string | null;
-  userSupportAdministrative: boolean;
-  userSupportTechnical: boolean;
-  userTeamName: string | null;
+  userPersonalDetails: TUserSettingsInfo;
+  userSupportDetails: TUserSupportInfo;
 };
 
 export default function UserSettingsForm({
-  userDisplayName,
-  userEmailAddress,
-  userSchoolYear,
-  userMajor,
-  userSupportAdministrative,
-  userSupportTechnical,
-  userTeamName,
+  userPersonalDetails,
+  userSupportDetails,
 }: UserSettingsFormProps) {
   const supabase = createClientComponentClient();
 
@@ -74,16 +64,16 @@ export default function UserSettingsForm({
   const form = useForm<TSettingsForm>({
     resolver: zodResolver(SettingsFormSchema),
     defaultValues: {
-      user_display_name: userDisplayName!,
-      user_school_year: dbSchoolYear.includes(userSchoolYear as TUserSchoolYear)
-        ? (userSchoolYear as TUserSchoolYear)
-        : undefined,
-
-      user_major: dbMajors.includes(userMajor as TUserMajor)
-        ? (userMajor as TUserMajor)
-        : undefined,
-      user_support_administrative: userSupportAdministrative,
-      user_support_technical: userSupportTechnical,
+      user_first_name: userPersonalDetails?.user_first_name as string,
+      user_last_name: userPersonalDetails?.user_last_name as string,
+      user_display_name: userPersonalDetails?.user_display_name as string,
+      user_school_year:
+        userPersonalDetails?.user_school_year as TUserSchoolYear,
+      user_major: userPersonalDetails?.user_major as TUserMajor,
+      user_support_administrative:
+        userSupportDetails?.user_support_administrative as boolean,
+      user_support_technical:
+        userSupportDetails?.user_support_technical as boolean,
     },
   });
 
@@ -108,12 +98,14 @@ export default function UserSettingsForm({
     },
   });
 
-  async function onSubmit(values: TPersonalDetailsForm & TSupportUsForm) {
+  async function onSubmit(values: TSettingsForm) {
     try {
       const user = await getUser(supabase);
 
       await updateSettingsMutation.mutateAsync({
         user_uuid: user.id,
+        user_first_name: values.user_first_name,
+        user_last_name: values.user_last_name,
         user_display_name: values.user_display_name,
         user_school_year: values.user_school_year,
         user_major: values.user_major,
@@ -130,14 +122,57 @@ export default function UserSettingsForm({
       <form
         id="onboardingPersonalDetailsForm"
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid gap-8 lg:grid-cols-2"
+        className="grid gap-8 md:grid-cols-2"
       >
-        <div>
+        <div className="col-span-2 md:col-span-1">
           <h1 className="text-2xl font-semibold leading-none tracking-tight">
             Personal Details
           </h1>
           <Separator className="my-4" />
           <div className="space-y-8">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-1 lg:grid-cols-2">
+              <FormField
+                control={form.control}
+                name="user_first_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>First Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        className="border-muted-foreground"
+                        placeholder="Peter"
+                        {...field}
+                        value={
+                          field.value ?? userPersonalDetails?.user_first_name
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="user_last_name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        className="border-muted-foreground"
+                        placeholder="Parker"
+                        {...field}
+                        value={
+                          field.value ?? userPersonalDetails?.user_last_name
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <FormField
               control={form.control}
               name="user_display_name"
@@ -147,9 +182,11 @@ export default function UserSettingsForm({
                   <FormControl>
                     <Input
                       className="border-muted-foreground"
-                      placeholder="CoolHacker123"
+                      placeholder="Spiderman"
                       {...field}
-                      value={field.value ?? userDisplayName ?? ""}
+                      value={
+                        field.value ?? userPersonalDetails?.user_display_name
+                      }
                     />
                   </FormControl>
                   <FormDescription>
@@ -166,7 +203,7 @@ export default function UserSettingsForm({
                 <Input
                   disabled={true}
                   className="border-muted-foreground"
-                  placeholder={userEmailAddress!}
+                  placeholder={userPersonalDetails?.user_email_address}
                 />
               </FormControl>
               <FormDescription>
@@ -175,7 +212,14 @@ export default function UserSettingsForm({
               </FormDescription>
               <FormMessage />
             </FormItem>
-
+          </div>
+        </div>
+        <div className="col-span-2 md:col-span-1">
+          <h1 className="text-2xl font-semibold leading-none tracking-tight">
+            School Details
+          </h1>
+          <Separator className="my-4" />
+          <div className="flex flex-grow flex-col space-y-8">
             <FormField
               control={form.control}
               name="user_school_year"
@@ -322,90 +366,67 @@ export default function UserSettingsForm({
             />
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="col-span-2 flex flex-col">
           <h1 className="text-2xl font-semibold leading-none tracking-tight">
             Support Preferences
           </h1>
           <Separator className="my-4" />
-          <div className="flex flex-grow flex-col">
-            <div className="space-y-8">
-              <FormField
-                control={form.control}
-                name="user_support_administrative"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                    <div className="space-y-0.5">
-                      <FormLabel>Administrative</FormLabel>
-                      <FormDescription>
-                        Help us organize our social events, fundraising, and
-                        better our social media!
-                      </FormDescription>
-                    </div>
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        className="ml-4"
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="user_support_technical"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                    <div className="space-y-0.5">
-                      <FormLabel>Technical</FormLabel>
-                      <FormDescription>
-                        Help us innovate and develop hardware and software to
-                        further our unique experiences! {userSupportTechnical}
-                      </FormDescription>
-                    </div>
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        className="ml-4"
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-            <h1 className="mt-8 text-2xl font-semibold leading-none tracking-tight">
-              Team Details
-            </h1>
-            <Separator className="my-4" />
-            <div className="flex h-full flex-grow flex-col space-y-8">
-              <FormItem>
-                <FormLabel>Team</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={true}
-                    className="border-muted-foreground"
-                    placeholder={userTeamName!}
-                  />
-                </FormControl>
-                <FormDescription>
-                  This is the team linked to your account. This cannot be
-                  changed.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            </div>
-            <Button
-              type="submit"
-              className="ml-auto mt-6 w-full sm:w-32"
-              disabled={form.formState.isSubmitting}
-            >
-              {form.formState.isSubmitting && (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          <div className="grid gap-8 md:col-span-2 md:grid-cols-2">
+            <FormField
+              control={form.control}
+              name="user_support_administrative"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel>Administrative</FormLabel>
+                    <FormDescription>
+                      Help us organize our social events, fundraising, and
+                      better our social media!
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      className="ml-4"
+                    />
+                  </FormControl>
+                </FormItem>
               )}
-              Save
-            </Button>
+            />
+            <FormField
+              control={form.control}
+              name="user_support_technical"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel>Technical</FormLabel>
+                    <FormDescription>
+                      Help us innovate and develop hardware and software to
+                      further our unique experiences!
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      className="ml-4"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </div>
+          <Button
+            type="submit"
+            className="ml-auto mt-4 w-full sm:w-32"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            Save
+          </Button>
         </div>
       </form>
     </Form>

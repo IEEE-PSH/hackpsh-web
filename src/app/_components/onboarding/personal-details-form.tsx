@@ -43,7 +43,7 @@ export default function OnboardingPersonalDetailsForm({
   const updatePersonalDetailsMutation =
     trpc.user.update_personal_details.useMutation({
       onSuccess: () => {
-        router.push(siteConfig.paths.onboarding, {
+        router.push(siteConfig.paths.onboarding_school_details, {
           scroll: false,
         });
       },
@@ -90,7 +90,7 @@ export default function OnboardingPersonalDetailsForm({
                   <FormControl>
                     <Input
                       className="border-muted-foreground"
-                      placeholder="John"
+                      placeholder="Peter"
                       {...field}
                       value={field.value ?? ""}
                     />
@@ -108,7 +108,7 @@ export default function OnboardingPersonalDetailsForm({
                   <FormControl>
                     <Input
                       className="border-muted-foreground"
-                      placeholder="Wick"
+                      placeholder="Parker"
                       {...field}
                       value={field.value ?? ""}
                     />
@@ -127,7 +127,7 @@ export default function OnboardingPersonalDetailsForm({
                 <FormControl>
                   <Input
                     className="border-muted-foreground"
-                    placeholder="CoolHacker123"
+                    placeholder="Spiderman"
                     {...field}
                     value={field.value ?? ""}
                   />
