@@ -25,6 +25,7 @@ export async function createTeam(
     await db.insert(app_team).values({
       team_name,
       team_join_code,
+      team_leader_uuid: user_uuid,
     });
 
     await joinTeam(db, user_uuid, team_name, team_join_code);

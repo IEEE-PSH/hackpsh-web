@@ -39,6 +39,7 @@ export default function SettingsNav({ userRole }: { userRole: string }) {
           <span>Team</span>
         </Link>
       </Button>
+
       {userRole === "admin" && (
         <>
           <Button

@@ -17,7 +17,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
 
-export default function DeleteSelfAccountDialog() {
+export default function DeleteSelfTeamDialog() {
   const router = useRouter();
   const supabase = createClientComponentClient();
 
@@ -62,7 +62,7 @@ export default function DeleteSelfAccountDialog() {
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" className="w-full flex-shrink-0 sm:w-auto">
-          Delete account
+          Delete team
         </Button>
       </DialogTrigger>
       <DialogContent>

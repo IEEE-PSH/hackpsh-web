@@ -23,10 +23,10 @@ import { getUser } from "@/shared/supabase/auth";
 import { toast } from "@/app/_components/ui/use-toast";
 import { Separator } from "../ui/separator";
 import { useRouter } from "next/navigation";
-import { TUserTeamInfo } from "@/server/dao/user";
+import { type TUserTeamInfo } from "@/server/dao/user";
 import {
   CreateTeamFormSchema,
-  TCreateTeamForm,
+  type TCreateTeamForm,
 } from "@/app/_lib/zod-schemas/forms/team";
 import { Button } from "../ui/button";
 import { Icons } from "../ui/icons";
@@ -83,12 +83,16 @@ export default function TeamSettingsForm({ teamData }: TeamSettingsFormProps) {
   }
   return (
     <Form {...form}>
-      <form id="teamSettingsForm" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        id="teamSettingsForm"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col"
+      >
         <h1 className="text-2xl font-semibold leading-none tracking-tight">
           Team Details
         </h1>
         <Separator className="my-4" />
-        <div className="flex flex-col space-y-8">
+        <div className="grid gap-x-4 gap-y-8 sm:grid-cols-2">
           <FormField
             control={form.control}
             name="team_name"
@@ -132,17 +136,17 @@ export default function TeamSettingsForm({ teamData }: TeamSettingsFormProps) {
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            className="ml-auto mt-4 w-full sm:w-32"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Save
-          </Button>
         </div>
+        <Button
+          type="submit"
+          className="ml-auto mt-4 w-full sm:w-fit"
+          disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting && (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          )}
+          Save
+        </Button>
       </form>
     </Form>
   );

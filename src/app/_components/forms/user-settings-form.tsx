@@ -50,7 +50,10 @@ import {
 } from "@/app/_lib/settings";
 import { Separator } from "../ui/separator";
 import { useRouter } from "next/navigation";
-import { TUserSettingsInfo, TUserSupportInfo } from "@/server/dao/user";
+import {
+  type TUserSettingsInfo,
+  type TUserSupportInfo,
+} from "@/server/dao/user";
 
 type UserSettingsFormProps = {
   userPersonalDetails: TUserSettingsInfo;
@@ -125,14 +128,14 @@ export default function UserSettingsForm({
       <form
         id="userSettingsForm"
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid gap-8 md:grid-cols-2"
+        className="grid gap-x-4 gap-y-20 md:grid-cols-2"
       >
         <div className="col-span-2 md:col-span-1">
           <h1 className="text-2xl font-semibold leading-none tracking-tight">
             Personal Details
           </h1>
           <Separator className="my-4" />
-          <div className="space-y-8">
+          <div className="space-y-6">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-1 lg:grid-cols-2">
               <FormField
                 control={form.control}
@@ -206,7 +209,9 @@ export default function UserSettingsForm({
                 <Input
                   disabled={true}
                   className="border-muted-foreground"
-                  placeholder={userPersonalDetails?.user_email_address}
+                  placeholder={
+                    userPersonalDetails?.user_email_address as string
+                  }
                 />
               </FormControl>
               <FormDescription>
@@ -374,7 +379,7 @@ export default function UserSettingsForm({
             Support Preferences
           </h1>
           <Separator className="my-4" />
-          <div className="grid gap-8 md:col-span-2 md:grid-cols-2">
+          <div className="grid gap-4 md:col-span-2 md:grid-cols-2">
             <FormField
               control={form.control}
               name="user_support_administrative"
@@ -422,7 +427,7 @@ export default function UserSettingsForm({
           </div>
           <Button
             type="submit"
-            className="ml-auto mt-4 w-full sm:w-32"
+            className="ml-auto mt-4 w-full sm:w-fit"
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting && (

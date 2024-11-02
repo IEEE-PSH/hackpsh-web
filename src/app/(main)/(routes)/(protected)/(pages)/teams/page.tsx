@@ -1,9 +1,7 @@
 import { type Metadata } from "next";
-import RealtimeLeaderboard from "@/app/_components/leaderboard/realtime-leaderboard";
 import { serverTRPC } from "@/app/_trpc/server";
 import { composeServerComponentClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
-import TeamFormWrapper from "@/app/_components/onboarding/team-form-wrapper";
 import TeamsTable from "@/app/_components/teams/teams-table";
 
 export const revalidate = 0;
@@ -25,7 +23,6 @@ export default async function LeaderboardPage() {
 
   return (
     <div className="container mb-4 max-w-5xl">
-      {/* <TeamFormWrapper /> */}
       <TeamsTable data={data} userData={userData} />
     </div>
   );

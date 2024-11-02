@@ -271,7 +271,7 @@ export default function EventDetailsForm({
 
         <Button
           type="submit"
-          className="ml-auto w-full sm:w-32"
+          className="ml-auto w-full sm:w-fit"
           disabled={form.formState.isSubmitting}
         >
           {form.formState.isSubmitting && (

@@ -29,6 +29,9 @@ import TeamCreateDialog from "./team-create-dialog";
 import TeamDeleteDialog from "./team-delete-dialog";
 import TeamJoinDialog from "./team-join-dialog";
 import TeamLeaveDialog from "./team-leave-dialog";
+import { Settings } from "lucide-react";
+import Link from "next/link";
+import { siteConfig } from "@/app/_config/site";
 
 interface TeamsTableProps {
   data: LeaderboardStandings;
@@ -85,7 +88,15 @@ export default function TeamsTable({
           />
 
           {userData?.user_team_uuid ? (
-            <TeamLeaveDialog userUUID={userData.user_uuid} />
+            <>
+              <TeamLeaveDialog userUUID={userData.user_uuid} />
+              <Link href={siteConfig.paths.team}>
+                <Button variant="outline" className="ml-4 gap-2">
+                  <Settings className="h-4 w-4 " />
+                  <span className="text-nowrap">Settings</span>
+                </Button>
+              </Link>
+            </>
           ) : (
             <TeamCreateDialog />
           )}

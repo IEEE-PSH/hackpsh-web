@@ -71,9 +71,12 @@ export const app_team = app_schema.table("app_team", {
     .primaryKey()
     .default(sql`uuid_generate_v4()`),
   team_name: text("team_name").notNull().unique(),
-  team_join_code: text("team_code").notNull().unique(),
+  team_join_code: text("team_code").notNull(),
   team_points: integer("team_points").notNull().default(0),
   team_points_additive: integer("team_points_additive").notNull().default(0),
+  team_leader_uuid: uuid("team_leader_uuid")
+    .references(() => app_user_profile.user_uuid, { onDelete: "no action" })
+    .notNull(),
 });
 
 export const app_announcement = app_schema.table("app_announcement", {

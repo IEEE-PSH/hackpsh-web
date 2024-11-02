@@ -28,6 +28,24 @@ export async function getUserOnboardingStatus(db: Database, user_uuid: string) {
   }
 }
 
+export async function isUserOnTeam(db: Database, user_uuid: string) {
+  try {
+    const result = await db.query.app_user_profile.findFirst({
+      columns: {
+        user_team_uuid: true,
+      },
+      where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
+    });
+
+    return result;
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
 export async function createUser(
   db: Database,
   user_uuid: string,
@@ -493,7 +511,7 @@ export async function getUsers(db: Database, role: TUserRole) {
         user_uuid: app_user_profile.user_uuid,
       })
       .from(app_user_profile)
-      .where(eq(app_user_profile.user_role, role)); //ordered?
+      .where(eq(app_user_profile.user_role, role));
 
     return result;
   } catch (error) {
@@ -523,7 +541,7 @@ export async function getUserTeamInfo(db: Database, user_uuid: string) {
         team_points_additive: true,
       },
       where: (team_data, { eq }) =>
-        eq(team_data.team_uuid, teamUUID!.user_team_uuid!),
+        eq(team_data.team_uuid, teamUUID!.user_team_uuid),
     });
 
     const teamMembers = await db.query.app_user_profile.findMany({
@@ -531,16 +549,16 @@ export async function getUserTeamInfo(db: Database, user_uuid: string) {
         user_display_name: true,
       },
       where: (user_data, { eq }) =>
-        eq(user_data.user_team_uuid, teamUUID!.user_team_uuid!),
+        eq(user_data.user_team_uuid, teamUUID!.user_team_uuid),
     });
 
     return {
-      team_uuid: teamGeneralInfo?.team_uuid,
-      team_name: teamGeneralInfo?.team_name,
-      team_join_code: teamGeneralInfo?.team_join_code,
-      team_points: teamGeneralInfo?.team_points,
-      team_total_points:
-        teamGeneralInfo?.team_points! + teamGeneralInfo?.team_points_additive!,
+      team_uuid: teamGeneralInfo?.team_uuid as string,
+      team_name: teamGeneralInfo?.team_name as string,
+      team_join_code: teamGeneralInfo?.team_join_code as string,
+      team_points: teamGeneralInfo?.team_points as number,
+      team_total_points: (teamGeneralInfo?.team_points +
+        teamGeneralInfo?.team_points_additive) as number,
       team_members: teamMembers,
     };
   } catch (error) {
