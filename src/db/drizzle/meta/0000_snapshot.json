@@ -1,5 +1,5 @@
 {
-  "id": "fd2a4fc8-044d-4274-84b8-5cf082c07162",
+  "id": "32061343-4234-4bda-addd-ab0f2b8f73e4",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -432,6 +432,12 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "solved_challenge_language": {
+          "name": "solved_challenge_language",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
@@ -515,13 +521,6 @@
           "nullsNotDistinct": false,
           "columns": [
             "team_name"
-          ]
-        },
-        "app_team_team_code_unique": {
-          "name": "app_team_team_code_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "team_code"
           ]
         }
       }
@@ -610,6 +609,18 @@
           "primaryKey": false,
           "notNull": false
         },
+        "user_first_name": {
+          "name": "user_first_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_last_name": {
+          "name": "user_last_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
         "user_resume_url": {
           "name": "user_resume_url",
           "type": "text",
@@ -661,6 +672,13 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'personal-details'"
+        },
+        "user_team_leader": {
+          "name": "user_team_leader",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
         }
       },
       "indexes": {
@@ -692,7 +710,7 @@
           "columnsTo": [
             "team_uuid"
           ],
-          "onDelete": "cascade",
+          "onDelete": "set null",
           "onUpdate": "no action"
         },
         "app_user_profile_user_school_year_app_school_year_school_year_name_fk": {

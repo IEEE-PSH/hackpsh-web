@@ -43,6 +43,7 @@ export const app_user_profile = app_schema.table(
       .notNull()
       .references(() => app_onboarding_phase.phase_name)
       .default("personal-details"),
+    user_team_leader: boolean("user_team_leader").default(false),
   },
   (table) => {
     return {
@@ -74,9 +75,6 @@ export const app_team = app_schema.table("app_team", {
   team_join_code: text("team_code").notNull(),
   team_points: integer("team_points").notNull().default(0),
   team_points_additive: integer("team_points_additive").notNull().default(0),
-  team_leader_uuid: uuid("team_leader_uuid")
-    .references(() => app_user_profile.user_uuid, { onDelete: "no action" })
-    .notNull(),
 });
 
 export const app_announcement = app_schema.table("app_announcement", {

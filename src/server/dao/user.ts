@@ -541,7 +541,7 @@ export async function getUserTeamInfo(db: Database, user_uuid: string) {
         team_points_additive: true,
       },
       where: (team_data, { eq }) =>
-        eq(team_data.team_uuid, teamUUID!.user_team_uuid),
+        eq(team_data.team_uuid, teamUUID!.user_team_uuid!),
     });
 
     const teamMembers = await db.query.app_user_profile.findMany({
@@ -549,16 +549,16 @@ export async function getUserTeamInfo(db: Database, user_uuid: string) {
         user_display_name: true,
       },
       where: (user_data, { eq }) =>
-        eq(user_data.user_team_uuid, teamUUID!.user_team_uuid),
+        eq(user_data.user_team_uuid, teamUUID!.user_team_uuid!),
     });
 
     return {
-      team_uuid: teamGeneralInfo?.team_uuid as string,
-      team_name: teamGeneralInfo?.team_name as string,
-      team_join_code: teamGeneralInfo?.team_join_code as string,
-      team_points: teamGeneralInfo?.team_points as number,
-      team_total_points: (teamGeneralInfo?.team_points +
-        teamGeneralInfo?.team_points_additive) as number,
+      team_uuid: teamGeneralInfo!.team_uuid,
+      team_name: teamGeneralInfo!.team_name,
+      team_join_code: teamGeneralInfo!.team_join_code,
+      team_points: teamGeneralInfo!.team_points,
+      team_total_points:
+        teamGeneralInfo!.team_points + teamGeneralInfo!.team_points_additive,
       team_members: teamMembers,
     };
   } catch (error) {

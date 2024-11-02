@@ -75,7 +75,8 @@ CREATE TABLE IF NOT EXISTS "app_schema"."app_solved_challenges" (
 	"solved_challenge_uuid" uuid PRIMARY KEY DEFAULT uuid_generate_v4() NOT NULL,
 	"solved_challenge_foreign_uuid" uuid,
 	"solved_challenge_team_uuid" uuid NOT NULL,
-	"solved_challenge_code_submission" text
+	"solved_challenge_code_submission" text,
+	"solved_challenge_language" text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "app_schema"."app_team" (
@@ -84,8 +85,7 @@ CREATE TABLE IF NOT EXISTS "app_schema"."app_team" (
 	"team_code" text NOT NULL,
 	"team_points" integer DEFAULT 0 NOT NULL,
 	"team_points_additive" integer DEFAULT 0 NOT NULL,
-	CONSTRAINT "app_team_team_name_unique" UNIQUE("team_name"),
-	CONSTRAINT "app_team_team_code_unique" UNIQUE("team_code")
+	CONSTRAINT "app_team_team_name_unique" UNIQUE("team_name")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "app_schema"."app_test_cases" (
@@ -101,6 +101,8 @@ CREATE TABLE IF NOT EXISTS "app_schema"."app_user_profile" (
 	"user_avatar_url" text,
 	"user_onboarding_complete" boolean,
 	"user_display_name" text,
+	"user_first_name" text,
+	"user_last_name" text,
 	"user_resume_url" text,
 	"user_team_uuid" uuid,
 	"user_school_year" text,
@@ -109,6 +111,7 @@ CREATE TABLE IF NOT EXISTS "app_schema"."app_user_profile" (
 	"user_support_administrative" boolean DEFAULT false,
 	"user_support_technical" boolean DEFAULT false,
 	"user_onboarding_phase" text DEFAULT 'personal-details' NOT NULL,
+	"user_team_leader" boolean DEFAULT false,
 	CONSTRAINT "app_user_profile_user_email_address_unique" UNIQUE("user_email_address"),
 	CONSTRAINT "app_user_profile_user_display_name_unique" UNIQUE("user_display_name")
 );
@@ -144,7 +147,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "app_schema"."app_user_profile" ADD CONSTRAINT "app_user_profile_user_team_uuid_app_team_team_uuid_fk" FOREIGN KEY ("user_team_uuid") REFERENCES "app_schema"."app_team"("team_uuid") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "app_schema"."app_user_profile" ADD CONSTRAINT "app_user_profile_user_team_uuid_app_team_team_uuid_fk" FOREIGN KEY ("user_team_uuid") REFERENCES "app_schema"."app_team"("team_uuid") ON DELETE set null ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

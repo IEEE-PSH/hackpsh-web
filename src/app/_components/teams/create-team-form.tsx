@@ -23,7 +23,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
-import { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 
 export default function CreateTeamForm({
   setDialogOpen,

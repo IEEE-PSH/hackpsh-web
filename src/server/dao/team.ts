@@ -25,7 +25,6 @@ export async function createTeam(
     await db.insert(app_team).values({
       team_name,
       team_join_code,
-      team_leader_uuid: user_uuid,
     });
 
     await joinTeam(db, user_uuid, team_name, team_join_code);
@@ -96,7 +95,7 @@ export async function updateTeamDetails(
       columns: {
         team_name: true,
       },
-      where: eq(app_team.team_uuid, self_team_uuid?.user_team_uuid!),
+      where: eq(app_team.team_uuid, self_team_uuid!.user_team_uuid!),
     });
 
     //if existing team name is not the user's team name, then error
@@ -121,7 +120,7 @@ export async function updateTeamDetails(
         team_name: team_name,
         team_join_code: team_join_code,
       })
-      .where(eq(app_team.team_uuid, team_uuid?.user_team_uuid!));
+      .where(eq(app_team.team_uuid, team_uuid!.user_team_uuid!));
 
     return {
       update_team_details: true,

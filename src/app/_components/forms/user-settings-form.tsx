@@ -70,16 +70,15 @@ export default function UserSettingsForm({
   const form = useForm<TAccountSettingsForm>({
     resolver: zodResolver(AccountSettingsFormSchema),
     defaultValues: {
-      user_first_name: userPersonalDetails?.user_first_name as string,
-      user_last_name: userPersonalDetails?.user_last_name as string,
-      user_display_name: userPersonalDetails?.user_display_name as string,
+      user_first_name: userPersonalDetails!.user_first_name!,
+      user_last_name: userPersonalDetails!.user_last_name!,
+      user_display_name: userPersonalDetails!.user_display_name!,
       user_school_year:
         userPersonalDetails?.user_school_year as TUserSchoolYear,
       user_major: userPersonalDetails?.user_major as TUserMajor,
       user_support_administrative:
-        userSupportDetails?.user_support_administrative as boolean,
-      user_support_technical:
-        userSupportDetails?.user_support_technical as boolean,
+        userSupportDetails!.user_support_administrative!,
+      user_support_technical: userSupportDetails!.user_support_technical!,
     },
   });
 
@@ -209,9 +208,7 @@ export default function UserSettingsForm({
                 <Input
                   disabled={true}
                   className="border-muted-foreground"
-                  placeholder={
-                    userPersonalDetails?.user_email_address as string
-                  }
+                  placeholder={userPersonalDetails?.user_email_address}
                 />
               </FormControl>
               <FormDescription>

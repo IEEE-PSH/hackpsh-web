@@ -16,7 +16,7 @@ export default async function Layout({
 
   return (
     <div className="mx-auto max-w-5xl">
-      <SettingsNav userRole={get_user_role} />
+      <SettingsNav userRole={get_user_role!} />
       {children}
     </div>
   );
