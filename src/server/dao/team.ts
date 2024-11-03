@@ -148,15 +148,20 @@ export async function updateTeamDetails(
 }
 
 export async function deleteTeam(db: Database, target_team_uuid: string) {
-  // const role = await getUserRole(db, user_uuid);
-  // if (role?.user_role === "participant") {
-  //   throw new TRPCError({
-  //     message: "User must be an officer or admin to delete teams.",
-  //     code: "UNAUTHORIZED",
-  //   });
-  // }
-
   try {
+    //make all team members user_team_leader to false
+    const teamMembers = await db.query.app_user_profile.findMany({
+      columns: {
+        user_uuid: true,
+      },
+      where: (user_data, { eq }) =>
+        eq(user_data.user_team_uuid, target_team_uuid),
+    });
+    for (const member of teamMembers) {
+      updateTeamLeader(db, member.user_uuid, false);
+    }
+
+    //delete team
     const result = await db
       .delete(app_team)
       .where(eq(app_team.team_uuid, target_team_uuid));
@@ -260,7 +265,16 @@ export async function leaveTeam(db: Database, user_uuid: string) {
     const result = await isTeamLeader(db, user_uuid);
     const { team_uuid } = await getUserTeamInfo(db, user_uuid);
 
-    if (!result?.user_team_leader) return;
+    //if not team leader, simply leave team
+    if (!result?.user_team_leader) {
+      await db
+        .update(app_user_profile)
+        .set({
+          user_team_uuid: null,
+        })
+        .where(eq(app_user_profile.user_uuid, user_uuid));
+      return;
+    }
 
     await updateTeamLeader(db, user_uuid, false);
     await db
@@ -270,7 +284,7 @@ export async function leaveTeam(db: Database, user_uuid: string) {
       })
       .where(eq(app_user_profile.user_uuid, user_uuid));
 
-    //attempt to redelatate a different member as team leader
+    //attempt to redelegate a different member as team leader
     const newLeader = await db.query.app_user_profile.findFirst({
       columns: {
         user_uuid: true,

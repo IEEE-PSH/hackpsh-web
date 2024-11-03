@@ -1,5 +1,4 @@
-import TeamDefaultSettings from "@/app/_components/settings/team-default-settings";
-import TeamLeaderSettings from "@/app/_components/settings/team-leader-settings";
+import TeamSettings from "@/app/_components/settings/team-settings";
 import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { siteConfig } from "@/app/_config/site";
@@ -20,8 +19,7 @@ export default async function Page() {
     const { is_team_leader } = await serverTRPC.user.is_team_leader.query({
       user_uuid: user.id,
     });
-    if (is_team_leader) return <TeamLeaderSettings userUUID={user.id} />;
-    return <TeamDefaultSettings userUUID={user.id} />;
+    return <TeamSettings userUUID={user.id} isTeamLeader={is_team_leader!} />;
   }
 
   return (

@@ -154,10 +154,12 @@ export default function TeamsTable({
                               >
                                 View
                               </Button>
-                              <TeamDeleteDialog
-                                teamUUID={row.original.team_uuid}
-                                userData={userData}
-                              />
+                              {userData?.user_role !== "participant" && (
+                                <TeamDeleteDialog
+                                  teamUUID={row.original.team_uuid}
+                                  userData={userData}
+                                />
+                              )}
                             </div>
                           )}
                         </div>

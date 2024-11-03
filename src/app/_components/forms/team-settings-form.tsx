@@ -33,9 +33,13 @@ import { Icons } from "../ui/icons";
 
 type TeamSettingsFormProps = {
   teamData: TUserTeamInfo;
+  isTeamLeader: boolean;
 };
 
-export default function TeamSettingsForm({ teamData }: TeamSettingsFormProps) {
+export default function TeamSettingsForm({
+  teamData,
+  isTeamLeader,
+}: TeamSettingsFormProps) {
   const supabase = createClientComponentClient();
 
   // Form Definition
@@ -94,6 +98,7 @@ export default function TeamSettingsForm({ teamData }: TeamSettingsFormProps) {
         <Separator className="my-4" />
         <div className="grid gap-x-4 gap-y-8 sm:grid-cols-2">
           <FormField
+            disabled={!isTeamLeader}
             control={form.control}
             name="team_name"
             render={({ field }) => (
@@ -108,14 +113,23 @@ export default function TeamSettingsForm({ teamData }: TeamSettingsFormProps) {
                   />
                 </FormControl>
                 <FormDescription>
-                  Provide an appropriate team name, otherwise the team will be
-                  deleted.
+                  {isTeamLeader ? (
+                    <span>
+                      Provide an appropriate team name, otherwise the team will
+                      be deleted.
+                    </span>
+                  ) : (
+                    <span>
+                      You must be team leader to change the team name.
+                    </span>
+                  )}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
+            disabled={!isTeamLeader}
             control={form.control}
             name="team_join_code"
             render={({ field }) => (
@@ -130,23 +144,33 @@ export default function TeamSettingsForm({ teamData }: TeamSettingsFormProps) {
                   />
                 </FormControl>
                 <FormDescription>
-                  Users can join your team with the provided code.
+                  {isTeamLeader ? (
+                    <span>
+                      Users can join your team with the provided code.
+                    </span>
+                  ) : (
+                    <span>
+                      You must be team leader to change the team join code.
+                    </span>
+                  )}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <Button
-          type="submit"
-          className="ml-auto mt-4 w-full sm:w-fit"
-          disabled={form.formState.isSubmitting}
-        >
-          {form.formState.isSubmitting && (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          )}
-          Save
-        </Button>
+        {isTeamLeader && (
+          <Button
+            type="submit"
+            className="ml-auto mt-4 w-full sm:w-fit"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            Save
+          </Button>
+        )}
       </form>
     </Form>
   );

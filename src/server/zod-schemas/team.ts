@@ -21,3 +21,9 @@ export const UpdateTeamSchema = z.object({
   team_uuid: z.string().uuid("Please provide a valid UUID."),
   team_points_additive: z.number().default(0),
 });
+
+export const UpdateTeamLeaderSchema = z.object({
+  user_uuid: z.string().uuid("Please provide a valid UUID."),
+  is_team_leader: z.boolean(),
+  target_uuid: z.string().uuid("Please provide a valid UUID."),
+});

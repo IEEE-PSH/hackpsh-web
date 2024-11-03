@@ -9,27 +9,27 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { getUser } from "@/shared/supabase/auth";
 import { trpc } from "@/app/_trpc/react";
 import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { siteConfig } from "@/app/_config/site";
 
-export default function DeleteSelfAccountDialog() {
+export default function TeamPromoteUserDialog({
+  userUUID,
+  targetUUID,
+}: {
+  userUUID: string;
+  targetUUID: string;
+}) {
   const router = useRouter();
-  const supabase = createClientComponentClient();
 
-  const deleteSelfAccountMutation = trpc.user.delete_user_self.useMutation({
+  const promoteUserMutation = trpc.team.update_team_leader.useMutation({
     onSuccess: async () => {
       setDialogOpen(false);
-      await supabase.auth.signOut();
-      router.push(siteConfig.paths.home);
       router.refresh();
       toast({
-        variant: "success",
-        title: "Account deleted.",
+        variant: "default",
+        title: "Team leader updated.",
         duration: 4000,
       });
     },
@@ -44,12 +44,12 @@ export default function DeleteSelfAccountDialog() {
     },
   });
 
-  async function deleteSelfAccount() {
+  async function promoteUser() {
     try {
-      const user = await getUser(supabase);
-
-      await deleteSelfAccountMutation.mutateAsync({
-        user_uuid: user.id,
+      await promoteUserMutation.mutateAsync({
+        user_uuid: userUUID,
+        is_team_leader: false,
+        target_uuid: targetUUID,
       });
     } catch (err: unknown) {
       console.log(err);
@@ -61,28 +61,25 @@ export default function DeleteSelfAccountDialog() {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-full flex-shrink-0 sm:w-auto">
-          Delete account
+        <Button variant="secondary" className="ml-4 h-8">
+          Promote
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Are you sure?</DialogTitle>
           <DialogDescription>
-            This will permanently delete your account and its data from the
-            platform. If you are a team leader, a different member will be
-            redelegated as team leader. If you are the only member on your team,
-            your team will be deleted.
+            Promoting this member as team leader means you will no longer be
+            team leader.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button
-            variant="destructive"
             onClick={async () => {
-              await deleteSelfAccount();
+              await promoteUser();
             }}
           >
-            Delete account
+            Confirm
           </Button>
         </DialogFooter>
       </DialogContent>

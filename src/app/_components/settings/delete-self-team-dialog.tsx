@@ -1,6 +1,5 @@
 "use client";
-import { DialogTrigger } from "@radix-ui/react-dialog";
-import { Button } from "../ui/button";
+
 import {
   Dialog,
   DialogContent,
@@ -9,78 +8,68 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { getUser } from "@/shared/supabase/auth";
-import { trpc } from "@/app/_trpc/react";
+import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
 import { useState } from "react";
+import { trpc } from "@/app/_trpc/react";
 import { useRouter } from "next/navigation";
-import { siteConfig } from "@/app/_config/site";
+import { DialogTrigger } from "@radix-ui/react-dialog";
 
-export default function DeleteSelfTeamDialog() {
+type DeleteSelfTeamDialogProps = {
+  userUUID: string;
+};
+
+export default function DeleteSelfTeamDialog({
+  userUUID,
+}: DeleteSelfTeamDialogProps) {
   const router = useRouter();
-  const supabase = createClientComponentClient();
-
-  const deleteSelfAccountMutation = trpc.user.delete_user_self.useMutation({
-    onSuccess: async () => {
-      setDialogOpen(false);
-      await supabase.auth.signOut();
-      router.push(siteConfig.paths.home);
+  const deleteSelfTeamMutation = trpc.user.delete_team_self.useMutation({
+    onSuccess: () => {
       router.refresh();
+      setDialogOpen(false);
       toast({
         variant: "success",
-        title: "Account deleted.",
+        title: "Team deleted.",
         duration: 4000,
       });
     },
-    onError: () => {
+    onError: (error) => {
       toast({
+        description: error.message,
         variant: "destructive",
-        title: "Oops, something went wrong!",
-        description:
-          "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
         duration: 6000,
       });
     },
   });
 
-  async function deleteSelfAccount() {
+  async function deleteTeam() {
     try {
-      const user = await getUser(supabase);
-
-      await deleteSelfAccountMutation.mutateAsync({
-        user_uuid: user.id,
+      await deleteSelfTeamMutation.mutateAsync({
+        user_uuid: userUUID,
       });
     } catch (err: unknown) {
       console.log(err);
     }
   }
 
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-full flex-shrink-0 sm:w-auto">
-          Delete team
-        </Button>
+        <Button variant="outline">Delete team</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Are you sure?</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and data from the platform.
+            This action cannot be undone. This will kick all members from the
+            team and delete the team from the platform.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button
-            variant="destructive"
-            onClick={async () => {
-              await deleteSelfAccount();
-            }}
-          >
-            Delete account
+          <Button variant="destructive" onClick={() => deleteTeam()}>
+            Delete permanently
           </Button>
         </DialogFooter>
       </DialogContent>
