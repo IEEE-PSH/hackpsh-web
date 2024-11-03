@@ -7,6 +7,7 @@ import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
 import DeleteSelfTeamDialog from "./delete-self-team-dialog";
 import TeamPromoteUserDialog from "./team-promote-user-dialog";
+import TeamKickUserDialog from "./team-kick-user-dialog";
 
 export default async function TeamSettings({
   userUUID,
@@ -46,9 +47,7 @@ export default async function TeamSettings({
                         userUUID={userUUID}
                         targetUUID={member.user_uuid}
                       />
-                      <Button variant="secondary" className="ml-2 h-8">
-                        Kick
-                      </Button>
+                      <TeamKickUserDialog targetUUID={member.user_uuid} />
                     </>
                   )}
                 </div>

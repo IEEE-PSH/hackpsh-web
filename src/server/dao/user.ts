@@ -709,3 +709,19 @@ export async function updateTeamLeader(
     });
   }
 }
+
+export async function kickUserFromTeam(db: Database, target_uuid: string) {
+  try {
+    await db
+      .update(app_user_profile)
+      .set({
+        user_team_uuid: null,
+      })
+      .where(eq(app_user_profile.user_uuid, target_uuid));
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
