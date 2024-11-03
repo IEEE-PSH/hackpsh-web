@@ -20,7 +20,7 @@ export function MiniAnnouncementPost({ postData }: AnnouncementPostProps) {
 
   return (
     <div key={announcement_uuid} className="w-full space-y-2 overflow-hidden">
-      <p className="text-sm text-muted-foreground">{formattedTimeAgo}</p>
+      <p className="text-xs text-muted-foreground">{formattedTimeAgo}</p>
       <p className="font-semibold leading-none tracking-tight">
         {announcement_title}
       </p>
