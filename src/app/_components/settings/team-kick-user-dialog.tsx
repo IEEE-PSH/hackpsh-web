@@ -22,7 +22,7 @@ export default function TeamKickUserDialog({
   const router = useRouter();
 
   const kickUserMutation = trpc.team.kick_user.useMutation({
-    onSuccess: async () => {
+    onSuccess: () => {
       setDialogOpen(false);
       router.refresh();
       toast({

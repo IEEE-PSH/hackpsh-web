@@ -24,7 +24,7 @@ export default function TeamPromoteUserDialog({
   const router = useRouter();
 
   const promoteUserMutation = trpc.team.update_team_leader.useMutation({
-    onSuccess: async () => {
+    onSuccess: () => {
       setDialogOpen(false);
       router.refresh();
       toast({

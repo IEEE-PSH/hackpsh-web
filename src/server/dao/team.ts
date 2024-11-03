@@ -55,15 +55,15 @@ export async function updateTeam(
   target_team_uuid: string,
   target_team_points_additive: number,
 ) {
-  const role = await getUserRole(db, user_uuid);
-  if (role?.user_role === "participant") {
-    throw new TRPCError({
-      message: "User must be an officer or admin to edit teams.",
-      code: "UNAUTHORIZED",
-    });
-  }
-
   try {
+    const role = await getUserRole(db, user_uuid);
+    if (role?.user_role === "participant") {
+      throw new TRPCError({
+        message: "User must be an officer or admin to edit teams.",
+        code: "UNAUTHORIZED",
+      });
+    }
+
     const result = await db
       .update(app_team)
       .set({
