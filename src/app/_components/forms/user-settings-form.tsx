@@ -77,8 +77,8 @@ export default function UserSettingsForm({
         userPersonalDetails?.user_school_year as TUserSchoolYear,
       user_major: userPersonalDetails?.user_major as TUserMajor,
       user_support_administrative:
-        userSupportDetails!.user_support_administrative!,
-      user_support_technical: userSupportDetails!.user_support_technical!,
+        userSupportDetails!.user_support_administrative,
+      user_support_technical: userSupportDetails!.user_support_technical,
     },
   });
 

@@ -158,7 +158,7 @@ export async function deleteTeam(db: Database, target_team_uuid: string) {
         eq(user_data.user_team_uuid, target_team_uuid),
     });
     for (const member of teamMembers) {
-      updateTeamLeader(db, member.user_uuid, false);
+      await updateTeamLeader(db, member.user_uuid, false);
     }
 
     //delete team
