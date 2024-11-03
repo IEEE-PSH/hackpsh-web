@@ -31,6 +31,41 @@ export async function middleware(req: NextRequest) {
       user_uuid: session.user.id,
     });
 
+    const { get_user_onboarding_phase } =
+      await serverTRPC.user.get_user_onboarding_phase.query({
+        user_uuid: session.user.id,
+      });
+
+    //handle onboarding phases individually
+    if (
+      get_user_onboarding_phase === "personal-details" &&
+      !req.nextUrl.pathname.startsWith(
+        siteConfig.paths.onboarding_personal_details,
+      )
+    ) {
+      return redirectToPath(req, siteConfig.paths.onboarding_personal_details);
+    } else if (
+      get_user_onboarding_phase === "school-details" &&
+      !req.nextUrl.pathname.startsWith(
+        siteConfig.paths.onboarding_school_details,
+      )
+    ) {
+      return redirectToPath(req, siteConfig.paths.onboarding_school_details);
+    } else if (
+      get_user_onboarding_phase === "support-us" &&
+      !req.nextUrl.pathname.startsWith(siteConfig.paths.onboarding_support_us)
+    ) {
+      return redirectToPath(req, siteConfig.paths.onboarding_support_us);
+    }
+
+    //prevent users who completed onboarding from revisiting onboarding forms
+    if (
+      is_onboarding_complete &&
+      req.nextUrl.pathname.startsWith(siteConfig.paths.onboarding)
+    ) {
+      return redirectToPath(req, siteConfig.paths.dashboard);
+    }
+
     if (
       !is_onboarding_complete &&
       !req.nextUrl.pathname.startsWith(siteConfig.paths.onboarding)
@@ -38,6 +73,7 @@ export async function middleware(req: NextRequest) {
       return redirectToPath(req, siteConfig.paths.onboarding);
     }
 
+    //prevent participants from accessing admin/officer-only pages
     if (
       get_user_role === "participant" &&
       (req.nextUrl.pathname.startsWith(siteConfig.paths.users) ||
@@ -54,6 +90,7 @@ export async function middleware(req: NextRequest) {
       return redirectToPath(req, siteConfig.paths.announcements);
     }
 
+    //prevent participants from viewing challenges while challenges disabled
     const is_challenges_enabled =
       await serverTRPC.event.is_challenges_enabled.query();
     if (
@@ -79,5 +116,6 @@ export const config = {
     "/leaderboard",
     "/settings(.*)",
     "/challenge(.*)",
+    "/teams(.*)",
   ],
 };

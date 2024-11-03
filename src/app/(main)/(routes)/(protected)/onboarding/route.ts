@@ -7,6 +7,7 @@ import { composeRouteHandlerClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import { type NextRequest } from "next/server";
 
+//prevention of visiting wrong onboarding page is handled through middleware.ts
 export async function GET(req: NextRequest) {
   const supabase = composeRouteHandlerClient();
   try {

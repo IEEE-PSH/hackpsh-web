@@ -10,6 +10,9 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
+      <h1 className="mb-8 text-center text-2xl font-semibold leading-none tracking-tight">
+        Support IEEE!
+      </h1>
       <NumberStepper currentStep={3} maxStep={3} />
       <SupportUsForm />
     </>
