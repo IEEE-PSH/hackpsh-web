@@ -83,15 +83,18 @@ export default function ChallengeContentPage({
   return (
     <>
       <ChallengeBooter />
-      <ChallengeSyncer
-        challengeId={challengeId}
-        challengePoints={challengeData?.challenge_points ?? 0}
-        teamName={teamName}
-        userUUID={userUUID}
-        setSolved={setSolved}
-        setValue={setValue}
-        setLanguage={setLanguage}
-      />
+      {teamName && (
+        <ChallengeSyncer
+          challengeId={challengeId}
+          challengePoints={challengeData?.challenge_points ?? 0}
+          teamName={teamName}
+          userUUID={userUUID}
+          setSolved={setSolved}
+          setValue={setValue}
+          setLanguage={setLanguage}
+        />
+      )}
+
       <ProtectedEditorSiteHeader
         userDisplayName={userDisplayName}
         userEmailAddress={userEmailAddress}
@@ -146,11 +149,13 @@ export default function ChallengeContentPage({
           </pre>
         </div>
       </div>
-      <ChallengeUsersStatus
-        userDisplayName={userDisplayName}
-        challengeId={challengeId}
-        teamName={teamName}
-      />
+      {teamName && (
+        <ChallengeUsersStatus
+          userDisplayName={userDisplayName}
+          challengeId={challengeId}
+          teamName={teamName}
+        />
+      )}
     </>
   );
 }

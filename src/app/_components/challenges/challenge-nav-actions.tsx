@@ -71,8 +71,8 @@ export default function ChallengeNavActions({
     );
 
   //submits code
-  function attemptSubmitCode() {
-    if (teamName) submitCode();
+  async function attemptSubmitCode() {
+    if (teamName) await submitCode();
     else {
       toast({
         variant: "destructive",
