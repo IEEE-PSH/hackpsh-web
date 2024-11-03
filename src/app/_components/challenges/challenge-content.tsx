@@ -32,7 +32,7 @@ export default function ChallengeContentPage({
   userEmailAddress: string;
   challengeId: number;
   userUUID: string;
-  teamName: string;
+  teamName: string | null;
 }) {
   const [value, setValue] = useState("");
   const [outputData, setOutputData] = useState<TSubmitData | null>(null);

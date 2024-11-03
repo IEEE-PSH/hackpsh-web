@@ -28,7 +28,7 @@ type ChallengeNavActionsProps = {
   checkedSolvedStatus: boolean;
   setLanguage: Dispatch<SetStateAction<TLanguages>>;
   setOutputData: Dispatch<SetStateAction<TSubmitData | null>>;
-  teamName: string;
+  teamName: string | null;
 };
 
 export default function ChallengeNavActions({

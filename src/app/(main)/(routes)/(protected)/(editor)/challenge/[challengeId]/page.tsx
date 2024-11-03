@@ -12,13 +12,18 @@ export default async function ChallengePage({
 }) {
   const supabase = composeServerComponentClient();
   const user = await getUser(supabase);
-  const { user_display_name, user_email_address } =
-    await serverTRPC.user.get_user_dropdown_info.query({
+
+  const { user_display_name, user_email_address, user_team_uuid } =
+    await serverTRPC.user.get_user_info.query({ user_uuid: user.id });
+
+  let teamName: string | null = null;
+
+  if (user_team_uuid) {
+    const teamInfo = await serverTRPC.user.get_user_team_info.query({
       user_uuid: user.id,
     });
-  const { team_name } = await serverTRPC.user.get_user_team_info.query({
-    user_uuid: user.id,
-  });
+    teamName = teamInfo?.team_name ?? null;
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -27,7 +32,7 @@ export default async function ChallengePage({
         userEmailAddress={user_email_address!}
         challengeId={params.challengeId}
         userUUID={user.id}
-        teamName={team_name}
+        teamName={teamName}
       />
     </div>
   );
