@@ -156,7 +156,6 @@ export default function EventDetailsForm({
                   />
                 </PopoverContent>
               </Popover>
-              <FormDescription>Set the day of the event.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -208,9 +207,6 @@ export default function EventDetailsForm({
                   </ScrollArea>
                 </SelectContent>
               </Select>
-              <FormDescription>
-                Set the time for when the event will start.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -239,9 +235,6 @@ export default function EventDetailsForm({
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <FormDescription>
-                Set how long the event will last.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

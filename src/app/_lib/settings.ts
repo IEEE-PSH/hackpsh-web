@@ -14,6 +14,7 @@ export const AccountSettingsFormSchema = z.object({
   user_major: z.enum(dbMajors),
   user_support_administrative: z.boolean(),
   user_support_technical: z.boolean(),
+  user_role: z.enum(dbRole),
 });
 
 export type TAccountSettingsForm = z.infer<typeof AccountSettingsFormSchema>;

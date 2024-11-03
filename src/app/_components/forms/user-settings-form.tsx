@@ -22,6 +22,7 @@ import { Input } from "@/app/_components/ui/input";
 import {
   dbMajors,
   dbSchoolYear,
+  TUserRole,
   type TUserMajor,
   type TUserSchoolYear,
 } from "@/db/drizzle/startup_seed";
@@ -79,6 +80,7 @@ export default function UserSettingsForm({
       user_support_administrative:
         userSupportDetails!.user_support_administrative,
       user_support_technical: userSupportDetails!.user_support_technical,
+      user_role: userPersonalDetails?.user_role as TUserRole,
     },
   });
 
@@ -127,7 +129,7 @@ export default function UserSettingsForm({
       <form
         id="userSettingsForm"
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid gap-x-4 gap-y-20 md:grid-cols-2"
+        className="grid gap-x-8 gap-y-20 md:grid-cols-2"
       >
         <div className="col-span-2 md:col-span-1">
           <h1 className="text-2xl font-semibold leading-none tracking-tight">
@@ -135,7 +137,7 @@ export default function UserSettingsForm({
           </h1>
           <Separator className="my-4" />
           <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-1 lg:grid-cols-2">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-1 lg:grid-cols-2">
               <FormField
                 control={form.control}
                 name="user_first_name"
@@ -206,7 +208,7 @@ export default function UserSettingsForm({
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
-                  disabled={true}
+                  disabled
                   className="border-muted-foreground"
                   placeholder={userPersonalDetails?.user_email_address}
                 />
@@ -215,223 +217,232 @@ export default function UserSettingsForm({
                 This is the email linked to your account. This cannot be
                 changed.
               </FormDescription>
-              <FormMessage />
+            </FormItem>
+
+            <FormItem>
+              <FormLabel>Role</FormLabel>
+              <FormControl>
+                <Input
+                  disabled
+                  className="border-muted-foreground capitalize"
+                  placeholder={userPersonalDetails?.user_role}
+                />
+              </FormControl>
             </FormItem>
           </div>
         </div>
-        <div className="col-span-2 md:col-span-1">
-          <h1 className="text-2xl font-semibold leading-none tracking-tight">
-            School Details
-          </h1>
-          <Separator className="my-4" />
-          <div className="flex flex-grow flex-col space-y-8">
-            <FormField
-              control={form.control}
-              name="user_school_year"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>School year</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          role="combobox"
-                          className={cn(
-                            "justify-between",
-                            !field.value && "text-muted-foreground",
-                          )}
-                        >
-                          {field.value
-                            ? dbSchoolYear
-                                .find(
-                                  (school_year) => school_year === field.value,
-                                )
-                                ?.replace("_", " ")
-                                .toLocaleUpperCase()
-                            : "Select school year"}
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="p-0">
-                      <Command>
-                        <CommandInput placeholder="Search school year..." />
-                        <CommandEmpty>
-                          Cannot find provided school year.
-                        </CommandEmpty>
-                        <CommandGroup>
-                          {dbSchoolYear.map((school_year) => (
-                            <CommandItem
-                              value={school_year}
-                              key={school_year}
-                              onSelect={() => {
-                                form.setValue("user_school_year", school_year);
-                              }}
-                            >
-                              <Check
-                                className={cn(
-                                  "mr-2 h-4 w-4",
-                                  school_year === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0",
-                                )}
-                              />
-                              {school_year
-                                .replace("_", " ")
-                                .toLocaleUpperCase()}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormDescription>
-                    Select a school year closest to your current academic
-                    status.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="user_major"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Major</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          role="combobox"
-                          className={cn(
-                            "justify-between",
-                            !field.value && "text-muted-foreground",
-                          )}
-                        >
-                          <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+        <div className="grid-col grid gap-y-20 md:gap-y-8">
+          <div className="col-span-2 md:col-span-1">
+            <h1 className="text-2xl font-semibold leading-none tracking-tight">
+              School Details
+            </h1>
+            <Separator className="my-4" />
+            <div className="flex flex-grow flex-col space-y-8">
+              <FormField
+                control={form.control}
+                name="user_school_year"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>School year</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            role="combobox"
+                            className={cn(
+                              "justify-between",
+                              !field.value && "text-muted-foreground",
+                            )}
+                          >
                             {field.value
-                              ? dbMajors
+                              ? dbSchoolYear
                                   .find(
-                                    (major_name) => major_name === field.value,
+                                    (school_year) =>
+                                      school_year === field.value,
                                   )
-                                  ?.replaceAll("_", " ")
+                                  ?.replace("_", " ")
                                   .toLocaleUpperCase()
-                              : "Select major"}
-                          </span>
-
-                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="h-80 w-96 p-0">
-                      <Command>
-                        <CommandInput placeholder="Search majors..." />
-                        <ScrollArea>
+                              : "Select school year"}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="p-0">
+                        <Command>
+                          <CommandInput placeholder="Search school year..." />
                           <CommandEmpty>
-                            Cannot find provided major.
+                            Cannot find provided school year.
                           </CommandEmpty>
                           <CommandGroup>
-                            {dbMajors.map((major_name) => (
+                            {dbSchoolYear.map((school_year) => (
                               <CommandItem
-                                value={major_name}
-                                key={major_name}
+                                value={school_year}
+                                key={school_year}
                                 onSelect={() => {
-                                  form.setValue("user_major", major_name);
+                                  form.setValue(
+                                    "user_school_year",
+                                    school_year,
+                                  );
                                 }}
                               >
                                 <Check
                                   className={cn(
                                     "mr-2 h-4 w-4",
-                                    major_name === field.value
+                                    school_year === field.value
                                       ? "opacity-100"
                                       : "opacity-0",
                                   )}
                                 />
-                                {major_name
-                                  .replaceAll("_", " ")
+                                {school_year
+                                  .replace("_", " ")
                                   .toLocaleUpperCase()}
                               </CommandItem>
                             ))}
                           </CommandGroup>
-                        </ScrollArea>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                  <FormDescription>
-                    Select a major that you are pursuing or the most interested
-                    in.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="user_major"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Major</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            role="combobox"
+                            className={cn(
+                              "justify-between",
+                              !field.value && "text-muted-foreground",
+                            )}
+                          >
+                            <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+                              {field.value
+                                ? dbMajors
+                                    .find(
+                                      (major_name) =>
+                                        major_name === field.value,
+                                    )
+                                    ?.replaceAll("_", " ")
+                                    .toLocaleUpperCase()
+                                : "Select major"}
+                            </span>
+
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="h-80 w-96 p-0">
+                        <Command>
+                          <CommandInput placeholder="Search majors..." />
+                          <ScrollArea>
+                            <CommandEmpty>
+                              Cannot find provided major.
+                            </CommandEmpty>
+                            <CommandGroup>
+                              {dbMajors.map((major_name) => (
+                                <CommandItem
+                                  value={major_name}
+                                  key={major_name}
+                                  onSelect={() => {
+                                    form.setValue("user_major", major_name);
+                                  }}
+                                >
+                                  <Check
+                                    className={cn(
+                                      "mr-2 h-4 w-4",
+                                      major_name === field.value
+                                        ? "opacity-100"
+                                        : "opacity-0",
+                                    )}
+                                  />
+                                  {major_name
+                                    .replaceAll("_", " ")
+                                    .toLocaleUpperCase()}
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </ScrollArea>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
-        </div>
-        <div className="col-span-2 flex flex-col">
-          <h1 className="text-2xl font-semibold leading-none tracking-tight">
-            Support Preferences
-          </h1>
-          <Separator className="my-4" />
-          <div className="grid gap-4 md:col-span-2 md:grid-cols-2">
-            <FormField
-              control={form.control}
-              name="user_support_administrative"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel>Administrative</FormLabel>
-                    <FormDescription>
-                      Help us organize our social events, fundraising, and
-                      better our social media!
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      className="ml-4"
-                    />
-                  </FormControl>
-                </FormItem>
+          <div className="flex flex-col">
+            <h1 className="text-2xl font-semibold leading-none tracking-tight">
+              Support Preferences
+            </h1>
+            <Separator className="my-4" />
+            <div className="grid gap-4">
+              <FormField
+                control={form.control}
+                name="user_support_administrative"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                    <div className="space-y-0.5">
+                      <FormLabel>Administrative</FormLabel>
+                      <FormDescription>
+                        Help us organize our social events, fundraising, and
+                        better our social media!
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        className="ml-4"
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="user_support_technical"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                    <div className="space-y-0.5">
+                      <FormLabel>Technical</FormLabel>
+                      <FormDescription>
+                        Help us innovate and develop hardware and software to
+                        further our unique experiences!
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        className="ml-4"
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+            <Button
+              type="submit"
+              className="ml-auto mt-6 w-full sm:w-fit"
+              disabled={form.formState.isSubmitting}
+            >
+              {form.formState.isSubmitting && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}
-            />
-            <FormField
-              control={form.control}
-              name="user_support_technical"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel>Technical</FormLabel>
-                    <FormDescription>
-                      Help us innovate and develop hardware and software to
-                      further our unique experiences!
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      className="ml-4"
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+              Save
+            </Button>
           </div>
-          <Button
-            type="submit"
-            className="ml-auto mt-4 w-full sm:w-fit"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Save
-          </Button>
         </div>
       </form>
     </Form>

@@ -285,6 +285,7 @@ export async function getUserSettingsInfo(db: Database, user_uuid: string) {
         user_email_address: true,
         user_school_year: true,
         user_major: true,
+        user_role: true,
       },
       where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
     });
