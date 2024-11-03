@@ -176,6 +176,24 @@ export async function getUserInfo(db: Database, user_uuid: string) {
   }
 }
 
+export async function isTeamLeader(db: Database, user_uuid: string) {
+  try {
+    const result = await db.query.app_user_profile.findFirst({
+      columns: {
+        user_team_leader: true,
+      },
+      where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
+    });
+
+    return result;
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
 export type TUserInfo = Awaited<ReturnType<typeof getUserInfo>>;
 
 export async function getUserSettingsInfo(db: Database, user_uuid: string) {
@@ -570,3 +588,23 @@ export async function getUserTeamInfo(db: Database, user_uuid: string) {
 }
 
 export type TUserTeamInfo = Awaited<ReturnType<typeof getUserTeamInfo>>;
+
+export async function updateTeamLeader(
+  db: Database,
+  user_uuid: string,
+  isLeader: boolean,
+) {
+  try {
+    await db
+      .update(app_user_profile)
+      .set({
+        user_team_leader: isLeader,
+      })
+      .where(eq(app_user_profile.user_uuid, user_uuid));
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}

@@ -1,11 +1,11 @@
 import { deleteTeam } from "@/server/dao/team";
 import { protectedProcedure } from "@/server/trpc";
-import { UpdateTeamSchema } from "@/server/zod-schemas/team";
+import { LookupTeamSchema } from "@/server/zod-schemas/user";
 
 export default protectedProcedure
-  .input(UpdateTeamSchema)
+  .input(LookupTeamSchema)
   .mutation(async ({ ctx, input }) => {
-    await deleteTeam(ctx.db, input.user_uuid, input.team_uuid);
+    await deleteTeam(ctx.db, input.team_uuid);
 
     return {
       delete_team: true,

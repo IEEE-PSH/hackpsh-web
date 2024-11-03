@@ -43,7 +43,7 @@ export default function JoinTeamForm({
   const utils = trpc.useContext();
   const joinTeamMutation = trpc.team.join_team.useMutation({
     onSuccess: () => {
-      utils.team.get_team_info.invalidate();
+      void utils.team.get_team_info.invalidate();
       router.refresh();
       setDialogOpen(false);
       toast({

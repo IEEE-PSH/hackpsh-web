@@ -21,7 +21,6 @@ import {
 } from "@/app/_components/ui/table";
 import { cn } from "@/app/_lib/client-utils";
 import { useState } from "react";
-import { type LeaderboardStandings } from "@/server/dao/leaderboard";
 import { type TUserInfo } from "@/server/dao/user";
 import { Button } from "../ui/button";
 import TeamInfoSheet from "./team-info-sheet";
@@ -32,9 +31,10 @@ import TeamLeaveDialog from "./team-leave-dialog";
 import { Settings } from "lucide-react";
 import Link from "next/link";
 import { siteConfig } from "@/app/_config/site";
+import { type Teams } from "@/server/dao/team";
 
 interface TeamsTableProps {
-  data: LeaderboardStandings;
+  data: Teams;
   className?: string;
   userData: TUserInfo;
 }
@@ -135,7 +135,7 @@ export default function TeamsTable({
                             )}
                           </div>
 
-                          {cell.column.id === "team_size" && (
+                          {cell.column.id === "team_member_count" && (
                             <div className="flex items-center gap-2">
                               {row.original.team_uuid !==
                                 userData?.user_team_uuid && (

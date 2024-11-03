@@ -32,20 +32,11 @@ export default function TeamInfoSheet({
         </SheetHeader>
 
         {isSuccess ? (
-          <>
-            {teamData.team_members.length > 0 ? (
-              teamData.team_members.map((member) => (
-                <p
-                  className="text-muted-foreground"
-                  key={member.user_display_name}
-                >
-                  {member.user_display_name}
-                </p>
-              ))
-            ) : (
-              <p className="text-muted-foreground">No team members found :/</p>
-            )}
-          </>
+          teamData.team_members.map((member) => (
+            <p className="text-muted-foreground" key={member.user_display_name}>
+              {member.user_display_name}
+            </p>
+          ))
         ) : (
           <>
             <Skeleton className="my-1 h-4 w-56" />

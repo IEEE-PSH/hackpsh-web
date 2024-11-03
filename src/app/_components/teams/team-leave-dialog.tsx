@@ -24,8 +24,8 @@ export default function TeamLeaveDialog({ userUUID }: { userUUID: string }) {
   const utils = trpc.useContext();
   const leaveTeamMutation = trpc.team.leave_team.useMutation({
     onSuccess: () => {
-      router.refresh();
       void utils.team.get_team_info.invalidate();
+      router.refresh();
       setDialogOpen(false);
       toast({
         variant: "default",
@@ -71,7 +71,7 @@ export default function TeamLeaveDialog({ userUUID }: { userUUID: string }) {
         <DialogHeader>
           <DialogTitle>Are you sure?</DialogTitle>
           <DialogDescription>
-            If you are the team leader, another member will be promoted instead.
+            Leaving a team as leader will promote another member instead.
             Leaving a team as the only member will permanently delete the team.
           </DialogDescription>
         </DialogHeader>

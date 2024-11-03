@@ -28,7 +28,7 @@ export default async function DashboardTeamInfo() {
       });
     return (
       <Card>
-        <CardContent className="grid grid-cols-3 p-6 text-sm">
+        <CardContent className="grid h-full grid-cols-3 items-center p-6 text-sm">
           <div className="col-span-2">
             <p className="text-md text-muted-foreground">Team</p>
             <div className="flex items-center justify-between">

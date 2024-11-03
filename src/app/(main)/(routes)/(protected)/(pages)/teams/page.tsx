@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function LeaderboardPage() {
-  const data = await serverTRPC.leaderboard.get_current_standings.query();
+  const data = await serverTRPC.team.get_teams.query();
 
   const supabase = composeServerComponentClient();
   const user = await getUser(supabase);

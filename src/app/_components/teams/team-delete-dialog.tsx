@@ -49,7 +49,6 @@ export default function TeamDeleteDialog({
   async function deleteTeam() {
     try {
       await deleteTeamMutation.mutateAsync({
-        user_uuid: userData!.user_uuid,
         team_uuid: teamUUID,
       });
     } catch (err: unknown) {

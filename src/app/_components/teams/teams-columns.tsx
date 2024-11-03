@@ -5,12 +5,9 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
 import { Button } from "@/app/_components/ui/button";
-import { type TeamStanding } from "@/server/dao/leaderboard";
-import { trpc } from "@/app/_trpc/react";
-import { Skeleton } from "../ui/skeleton";
-import { useEffect, useState } from "react";
+import { Team } from "@/server/dao/team";
 
-export const columns: ColumnDef<TeamStanding>[] = [
+export const columns: ColumnDef<Team>[] = [
   {
     accessorKey: "team_name",
     header: ({ column }) => {
@@ -33,7 +30,7 @@ export const columns: ColumnDef<TeamStanding>[] = [
     ),
   },
   {
-    accessorKey: "team_size",
+    accessorKey: "team_member_count",
     header: ({ column }) => {
       return (
         <Button
@@ -46,19 +43,11 @@ export const columns: ColumnDef<TeamStanding>[] = [
       );
     },
     cell: ({ row }) => {
-      const teamInfo = trpc.team.get_team_info.useQuery({
-        team_uuid: row.original.team_uuid,
-      });
-
-      if (teamInfo.data?.team_members)
-        return (
-          <div className="ml-4 font-medium">
-            {teamInfo.data.team_members.length}/4
-          </div>
-        );
-      else {
-        return <Skeleton className="ml-4 h-5 w-10" />;
-      }
+      return (
+        <div className="ml-4 font-medium">
+          {row.getValue("team_member_count")}/4
+        </div>
+      );
     },
   },
 ];
