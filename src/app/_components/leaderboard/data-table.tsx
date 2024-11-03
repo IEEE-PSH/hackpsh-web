@@ -80,7 +80,7 @@ export default function DataTable({
             onChange={(event) =>
               table.getColumn("team_name")?.setFilterValue(event.target.value)
             }
-            className="max-w-sm"
+            className="sm:max-w-sm"
           />
         </div>
         <div className="rounded-md border">

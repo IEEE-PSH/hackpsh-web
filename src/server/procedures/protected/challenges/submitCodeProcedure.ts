@@ -136,6 +136,7 @@ export default protectedProcedure
         if (data.run.code === 0 && passCount === expectedOutputs.length) {
           //only solveChallenge if challenges are disabled; officers and admins can still check test cases
           const is_challenges_enabled = await isChallengesEnabled(ctx.db);
+
           if (is_challenges_enabled) {
             await solveChallenge(
               ctx.db,

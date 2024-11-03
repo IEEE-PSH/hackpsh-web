@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "See where your team stands amongst the competition.",
 };
 
-export default async function LeaderboardPage() {
+export default async function TeamsPage() {
   const data = await serverTRPC.team.get_teams.query();
 
   const supabase = composeServerComponentClient();

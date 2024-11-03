@@ -119,7 +119,6 @@ export default function ChallengeContentPage({
           checkedSolvedStatus={checkedSolvedStatus}
           setLanguage={setLanguage}
           setOutputData={setOutputData}
-          teamName={teamName}
         />
       </ProtectedEditorSiteHeader>
       <div className="grid grid-cols-1 md:grid-cols-2">

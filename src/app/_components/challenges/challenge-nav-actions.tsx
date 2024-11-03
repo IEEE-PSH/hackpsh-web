@@ -28,7 +28,6 @@ type ChallengeNavActionsProps = {
   checkedSolvedStatus: boolean;
   setLanguage: Dispatch<SetStateAction<TLanguages>>;
   setOutputData: Dispatch<SetStateAction<TSubmitData | null>>;
-  teamName: string | null;
 };
 
 export default function ChallengeNavActions({
@@ -41,7 +40,6 @@ export default function ChallengeNavActions({
   checkedSolvedStatus,
   setLanguage,
   setOutputData,
-  teamName,
 }: ChallengeNavActionsProps) {
   //runs code
   const { refetch: runCode, isFetching: isRunning } =
@@ -70,9 +68,15 @@ export default function ChallengeNavActions({
       },
     );
 
+  const { data: onTeam, refetch: checkUserOnTeam } =
+    trpc.user.is_on_team.useQuery({
+      user_uuid: userUUID,
+    });
+
   //submits code
   async function attemptSubmitCode() {
-    if (teamName) await submitCode();
+    await checkUserOnTeam();
+    if (onTeam?.is_on_team) await submitCode();
     else {
       toast({
         variant: "destructive",
