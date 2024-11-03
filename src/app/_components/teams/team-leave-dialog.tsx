@@ -72,7 +72,7 @@ export default function TeamLeaveDialog({ userUUID }: { userUUID: string }) {
           <DialogTitle>Are you sure?</DialogTitle>
           <DialogDescription>
             Leaving a team as leader will promote another member instead.
-            Leaving a team as the only member will permanently delete the team.
+            Leaving a team as the only member will delete the team.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
