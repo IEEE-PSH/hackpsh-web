@@ -25,6 +25,7 @@ export default function ChallengeUsersStatus({
   teamName: string;
 }) {
   const [currentUsers, setCurrentUsers] = useState<TUserTracker>([]);
+
   useEffect(() => {
     const supabase = createClientComponentClient();
     const room = supabase.channel(`${teamName}-room-${challengeId}`);

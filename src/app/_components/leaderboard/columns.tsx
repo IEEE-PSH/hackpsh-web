@@ -16,7 +16,7 @@ export const columns: ColumnDef<TeamStanding>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Team Name
+          Team
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );

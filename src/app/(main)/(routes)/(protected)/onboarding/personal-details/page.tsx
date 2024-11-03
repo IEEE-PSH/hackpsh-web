@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1 className="mb-10 text-center text-3xl font-bold">
-        Tell Us About Yourself!
+      <h1 className="mb-8 text-center text-2xl font-semibold leading-none tracking-tight">
+        Personal Details
       </h1>
       <NumberStepper currentStep={1} maxStep={3} />
       <OnboardingPersonalDetailsForm />

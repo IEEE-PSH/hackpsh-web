@@ -7,7 +7,7 @@ export async function getCurrentStandings(db: Database) {
   try {
     const result = await db
       .select({
-        team_id: app_team.team_uuid,
+        team_uuid: app_team.team_uuid,
         team_name: app_team.team_name,
         team_points: app_team.team_points,
         team_points_additive: app_team.team_points_additive,
@@ -16,7 +16,7 @@ export async function getCurrentStandings(db: Database) {
       .orderBy(desc(app_team.team_points));
 
     const newResult = result.map((team) => ({
-      team_id: team.team_id,
+      team_uuid: team.team_uuid,
       team_name: team.team_name,
       team_total_points: team.team_points + team.team_points_additive,
     }));

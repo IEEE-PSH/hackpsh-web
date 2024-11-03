@@ -1,6 +1,6 @@
 {
-  "id": "7b7a3ed7-8009-4df8-bc91-34b7cda4976d",
-  "prevId": "fd2a4fc8-044d-4274-84b8-5cf082c07162",
+  "id": "71248fa7-896b-4b37-8756-d14a93308a90",
+  "prevId": "32061343-4234-4bda-addd-ab0f2b8f73e4",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -276,7 +276,8 @@
           "name": "event_challenges_enabled",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": false
         }
       },
       "indexes": {},
@@ -522,13 +523,6 @@
           "columns": [
             "team_name"
           ]
-        },
-        "app_team_team_code_unique": {
-          "name": "app_team_team_code_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "team_code"
-          ]
         }
       }
     },
@@ -608,10 +602,23 @@
           "name": "user_onboarding_complete",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true,
+          "default": false
         },
         "user_display_name": {
           "name": "user_display_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_first_name": {
+          "name": "user_first_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_last_name": {
+          "name": "user_last_name",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -651,14 +658,14 @@
           "name": "user_support_administrative",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": false
         },
         "user_support_technical": {
           "name": "user_support_technical",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": false
         },
         "user_onboarding_phase": {
@@ -667,6 +674,13 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'personal-details'"
+        },
+        "user_team_leader": {
+          "name": "user_team_leader",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         }
       },
       "indexes": {
@@ -698,7 +712,7 @@
           "columnsTo": [
             "team_uuid"
           ],
-          "onDelete": "cascade",
+          "onDelete": "set null",
           "onUpdate": "no action"
         },
         "app_user_profile_user_school_year_app_school_year_school_year_name_fk": {

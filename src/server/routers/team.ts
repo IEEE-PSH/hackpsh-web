@@ -4,7 +4,11 @@ import getTeamInfoProcedure from "../procedures/protected/team/getTeamInfoProced
 import joinTeamProcedure from "../procedures/protected/team/joinTeamProcedure";
 import { createTRPCRouter } from "../trpc";
 import deleteTeamProcedure from "../procedures/protected/team/deleteTeamProcedure";
-import getTeamNameFromUserUUIDProcedure from "../procedures/protected/team/getTeamNameFromUserUUIDProcedure";
+import leaveTeamProcedure from "../procedures/protected/team/leaveTeamProcedure";
+import updateTeamDetailsProcedure from "../procedures/protected/team/updateTeamDetailsProcedure";
+import getTeamsProcedure from "../procedures/protected/team/getTeamsProcedure";
+import updateTeamLeaderProcedure from "../procedures/protected/team/updateTeamLeaderProcedure";
+import kickUserFromTeamProcedure from "../procedures/protected/team/kickUserFromTeamProcedure";
 
 export const teamRouter = createTRPCRouter({
   join_team: joinTeamProcedure,
@@ -12,5 +16,9 @@ export const teamRouter = createTRPCRouter({
   update_team: updateTeamProcedure,
   get_team_info: getTeamInfoProcedure,
   delete_team: deleteTeamProcedure,
-  get_team_name_from_user_uuid: getTeamNameFromUserUUIDProcedure,
+  leave_team: leaveTeamProcedure,
+  update_team_details: updateTeamDetailsProcedure,
+  get_teams: getTeamsProcedure,
+  update_team_leader: updateTeamLeaderProcedure,
+  kick_user: kickUserFromTeamProcedure,
 });

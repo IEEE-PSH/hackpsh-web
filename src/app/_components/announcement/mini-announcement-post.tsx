@@ -19,12 +19,11 @@ export function MiniAnnouncementPost({ postData }: AnnouncementPostProps) {
   );
 
   return (
-    <div key={announcement_uuid} className="w-full space-y-2 overflow-hidden">
-      <p className="text-sm text-muted-foreground">{formattedTimeAgo}</p>
-      <p className="font-semibold leading-none tracking-tight">
+    <div key={announcement_uuid} className="w-full overflow-hidden">
+      <p className="mb-3 text-xs text-muted-foreground">{formattedTimeAgo}</p>
+      <p className="mb-1 font-semibold leading-none tracking-tight">
         {announcement_title}
       </p>
-
       <p className="line-clamp-6 text-ellipsis text-sm">
         {announcement_content}
       </p>

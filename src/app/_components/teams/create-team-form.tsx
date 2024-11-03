@@ -3,7 +3,7 @@
 import {
   CreateTeamFormSchema,
   type TCreateTeamForm,
-} from "@/app/_lib/zod-schemas/forms/onboarding/team";
+} from "@/app/_lib/zod-schemas/forms/team";
 import {
   Form,
   FormControl,
@@ -19,13 +19,17 @@ import { Input } from "@/app/_components/ui/input";
 import { Button } from "@/app/_components/ui/button";
 import { Icons } from "@/app/_components/ui/icons";
 import { trpc } from "@/app/_trpc/react";
-import { siteConfig } from "@/app/_config/site";
 import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
+import { type Dispatch, type SetStateAction } from "react";
 
-export default function CreateTeamForm() {
+export default function CreateTeamForm({
+  setDialogOpen,
+}: {
+  setDialogOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   const router = useRouter();
   const supabase = createClientComponentClient();
 
@@ -36,7 +40,7 @@ export default function CreateTeamForm() {
   const createTeamMutation = trpc.team.create_team.useMutation({
     onSuccess: () => {
       router.refresh();
-      router.push(siteConfig.paths.onboarding, { scroll: false });
+      setDialogOpen(false);
     },
     onError: (error) => {
       toast({
@@ -54,6 +58,7 @@ export default function CreateTeamForm() {
       await createTeamMutation.mutateAsync({
         user_uuid: user.id,
         team_name: values.team_name,
+        team_join_code: values.team_join_code,
       });
     } catch (err: unknown) {
       console.log(err);
@@ -65,7 +70,7 @@ export default function CreateTeamForm() {
     <Form {...form}>
       <form
         id="createTeamForm"
-        className="space-y-8"
+        className="flex flex-col space-y-8"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -73,17 +78,39 @@ export default function CreateTeamForm() {
           name="team_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Team Name</FormLabel>
+              <FormLabel>Team name</FormLabel>
               <FormControl>
                 <Input
                   className="border-muted-foreground"
-                  placeholder="Enter Team Name"
+                  placeholder="Avengers"
                   {...field}
                   value={field.value ?? ""}
                 />
               </FormControl>
               <FormDescription>
-                You will not be able to join other teams.
+                Provide an appropriate team name, otherwise the team will be
+                deleted.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="team_join_code"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Team join code</FormLabel>
+              <FormControl>
+                <Input
+                  className="border-muted-foreground"
+                  placeholder="ASSEMBLE"
+                  {...field}
+                  value={field.value ?? ""}
+                />
+              </FormControl>
+              <FormDescription>
+                Users can join your team with the provided code.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -92,13 +119,14 @@ export default function CreateTeamForm() {
 
         <Button
           type="submit"
-          className="w-full"
           disabled={form.formState.isSubmitting}
+          className="ml-auto"
         >
-          {form.formState.isSubmitting && (
+          {form.formState.isSubmitting ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <span>Create</span>
           )}
-          Next
         </Button>
       </form>
     </Form>

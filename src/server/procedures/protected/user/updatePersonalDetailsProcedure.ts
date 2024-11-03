@@ -8,9 +8,9 @@ export default protectedProcedure
     await updateUserPersonalDetails(
       ctx.db,
       input.user_uuid,
+      input.user_first_name,
+      input.user_last_name,
       input.user_display_name,
-      input.user_school_year,
-      input.user_major,
     );
 
     return {

@@ -7,6 +7,7 @@ import { composeRouteHandlerClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import { type NextRequest } from "next/server";
 
+//prevention of visiting wrong onboarding page is handled through middleware.ts
 export async function GET(req: NextRequest) {
   const supabase = composeRouteHandlerClient();
   try {
@@ -19,8 +20,8 @@ export async function GET(req: NextRequest) {
 
     if (get_user_onboarding_phase === "personal-details") {
       return redirectToPath(req, siteConfig.paths.onboarding_personal_details);
-    } else if (get_user_onboarding_phase === "team-creation") {
-      return redirectToPath(req, siteConfig.paths.onboarding_team_creation);
+    } else if (get_user_onboarding_phase === "school-details") {
+      return redirectToPath(req, siteConfig.paths.onboarding_school_details);
     } else if (get_user_onboarding_phase === "support-us") {
       return redirectToPath(req, siteConfig.paths.onboarding_support_us);
     } else if (get_user_onboarding_phase === "validate-onboarding") {

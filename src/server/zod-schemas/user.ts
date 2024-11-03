@@ -27,12 +27,18 @@ export const UpdateUserRoleSchema = z.object({
 
 export const UpdateUserPersonalDetailsSchema = z.object({
   user_uuid: z.string().uuid("Please provide a valid UUID."),
+  user_first_name: z.string().min(1),
+  user_last_name: z.string().min(1),
   user_display_name: z
     .string()
     .min(5, { message: "Display Name must be 5 or more characters long." })
     .max(30, {
       message: "Display Name must be fewer than 30 characters long.",
     }),
+});
+
+export const UpdateSchoolDetailsSchema = z.object({
+  user_uuid: z.string().uuid("Please provide a valid UUID."),
   user_school_year: z.enum(dbSchoolYear),
   user_major: z.enum(dbMajors),
 });
@@ -45,6 +51,8 @@ export const UpdateUserSupportSchema = z.object({
 
 export const UpdateUserSettingsSchema = z.object({
   user_uuid: z.string().uuid("Please provide a valid UUID."),
+  user_first_name: z.string().min(1),
+  user_last_name: z.string().min(1),
   user_display_name: z
     .string()
     .min(5, { message: "Display Name must be 5 or more characters long." })
@@ -63,8 +71,9 @@ export const DeleteUserSchema = z.object({
 });
 
 export const ValidUserProfileAfterOnboardingSchema = z.object({
+  user_first_name: z.string(),
+  user_last_name: z.string(),
   user_display_name: z.string(),
-  user_team_uuid: z.string().uuid(),
   user_school_year: z.enum(dbSchoolYear),
   user_major: z.enum(dbMajors),
   user_support_administrative: z.boolean(),

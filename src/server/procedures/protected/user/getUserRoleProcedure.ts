@@ -8,6 +8,6 @@ export default protectedProcedure
     const result = await getUserRole(ctx.db, input.user_uuid);
 
     return {
-      get_user_role: result!.user_role,
+      get_user_role: result?.user_role,
     };
   });

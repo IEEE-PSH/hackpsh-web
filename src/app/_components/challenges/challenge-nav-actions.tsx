@@ -68,7 +68,23 @@ export default function ChallengeNavActions({
       },
     );
 
+  const { data: onTeam, refetch: checkUserOnTeam } =
+    trpc.user.is_on_team.useQuery({
+      user_uuid: userUUID,
+    });
+
   //submits code
+  async function attemptSubmitCode() {
+    await checkUserOnTeam();
+    if (onTeam?.is_on_team) await submitCode();
+    else {
+      toast({
+        variant: "destructive",
+        description: "You must be on a team to submit challenges.",
+        duration: 4000,
+      });
+    }
+  }
   const { refetch: submitCode, isFetching: isSubmitting } =
     trpc.challenges.submit_code.useQuery(
       {
@@ -148,7 +164,7 @@ export default function ChallengeNavActions({
             <Button
               className="p-2 md:p-4"
               disabled={isSubmitting}
-              onClick={() => submitCode()}
+              onClick={() => attemptSubmitCode()}
             >
               <Send />
               <span className="ml-4 hidden md:block">Submit</span>

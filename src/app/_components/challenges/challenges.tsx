@@ -99,7 +99,7 @@ export function Challenges({
               <HoverCardContent className="mr-4 w-auto p-2" side="top">
                 <p className="text-sm">
                   {userRole === "participant"
-                    ? "Challenges are currently disabled."
+                    ? "Challenges are currently disabled for participants."
                     : "Challenges are currently disabled, but you can still view and edit them."}
                 </p>
               </HoverCardContent>
@@ -138,7 +138,7 @@ export function Challenges({
               <HoverCardContent className="mr-4 w-auto p-2" side="top">
                 <p className="text-sm">
                   {userRole === "participant"
-                    ? "Challenges are currently disabled."
+                    ? "Challenges are currently disabled for participants."
                     : "Challenges are currently disabled, but you can still view and edit them."}
                 </p>
               </HoverCardContent>

@@ -22,7 +22,7 @@ export const siteConfig = {
     sign_up: "/sign-up",
     onboarding: "/onboarding",
     onboarding_personal_details: "/onboarding/personal-details",
-    onboarding_team_creation: "/onboarding/team-creation",
+    onboarding_school_details: "/onboarding/school-details",
     onboarding_support_us: "/onboarding/support-us",
     dashboard: "/dashboard",
     leaderboard: "/leaderboard",
@@ -36,8 +36,9 @@ export const siteConfig = {
     event: "/settings/event",
     account: "/settings/account",
     users: "/settings/users",
-    teams: "/settings/teams",
+    team: "/settings/team",
     challenge: "/challenge",
+    join_team: "/teams",
   },
 };
 

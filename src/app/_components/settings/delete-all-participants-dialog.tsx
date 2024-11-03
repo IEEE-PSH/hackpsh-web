@@ -19,33 +19,34 @@ import { useRouter } from "next/navigation";
 export default function DeleteAllParticipantsDialog() {
   const router = useRouter();
 
-  const announcementMutation = trpc.event.delete_all_participants.useMutation({
-    onSuccess: () => {
-      setDialogOpen(false);
-      router.refresh();
-      toast({
-        variant: "success",
-        title: "Participants deleted.",
-        duration: 4000,
-      });
-    },
-    onError: () => {
-      toast({
-        variant: "destructive",
-        title: "Oops, something went wrong!",
-        description:
-          "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
-        duration: 6000,
-      });
-    },
-  });
+  const deleteAllParticipantsMutation =
+    trpc.event.delete_all_participants.useMutation({
+      onSuccess: () => {
+        setDialogOpen(false);
+        router.refresh();
+        toast({
+          variant: "success",
+          title: "Participants deleted.",
+          duration: 4000,
+        });
+      },
+      onError: () => {
+        toast({
+          variant: "destructive",
+          title: "Oops, something went wrong!",
+          description:
+            "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
+          duration: 6000,
+        });
+      },
+    });
 
   async function deleteAllParticipants() {
     try {
       const supabase = createClientComponentClient();
       const user = await getUser(supabase);
 
-      await announcementMutation.mutateAsync({
+      await deleteAllParticipantsMutation.mutateAsync({
         user_uuid: user.id,
       });
     } catch (err: unknown) {
@@ -58,7 +59,7 @@ export default function DeleteAllParticipantsDialog() {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="ml-auto mt-6 w-full sm:w-auto">
+        <Button variant="secondary" className="ml-auto w-full sm:w-auto">
           Delete all participants
         </Button>
       </DialogTrigger>
@@ -77,7 +78,7 @@ export default function DeleteAllParticipantsDialog() {
               await deleteAllParticipants();
             }}
           >
-            Delete all participants
+            Confirm
           </Button>
         </DialogFooter>
       </DialogContent>

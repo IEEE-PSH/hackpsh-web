@@ -58,7 +58,7 @@ export default function DeleteAllAnnouncementsDialog() {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="ml-auto mt-6 w-full sm:w-auto">
+        <Button variant="secondary" className="w-full text-nowrap sm:w-auto">
           Delete all announcements
         </Button>
       </DialogTrigger>
@@ -77,7 +77,7 @@ export default function DeleteAllAnnouncementsDialog() {
               await deleteAllAnnouncements();
             }}
           >
-            Delete all announcements
+            Confirm
           </Button>
         </DialogFooter>
       </DialogContent>

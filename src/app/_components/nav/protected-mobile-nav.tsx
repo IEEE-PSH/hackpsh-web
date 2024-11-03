@@ -67,6 +67,14 @@ export function ProtectedMobileNav() {
           >
             Leaderboard
           </MobileLink>
+          <MobileLink
+            href={siteConfig.paths.join_team}
+            onOpenChange={setIsOpen}
+            scroll={false}
+            className="hover:underline"
+          >
+            Teams
+          </MobileLink>
         </div>
       </SheetContent>
     </Sheet>

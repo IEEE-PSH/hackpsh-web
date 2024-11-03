@@ -1,6 +1,11 @@
 "use client";
 
 import {
+  JoinTeamFormSchema,
+  TJoinTeamForm,
+  type TCreateTeamForm,
+} from "@/app/_lib/zod-schemas/forms/team";
+import {
   Form,
   FormControl,
   FormDescription,
@@ -14,18 +19,20 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/app/_components/ui/input";
 import { Button } from "@/app/_components/ui/button";
 import { Icons } from "@/app/_components/ui/icons";
-import {
-  JoinTeamFormSchema,
-  type TJoinTeamForm,
-} from "@/app/_lib/zod-schemas/forms/onboarding/team";
 import { trpc } from "@/app/_trpc/react";
-import { toast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
-import { siteConfig } from "@/app/_config/site";
-import { getUser } from "@/shared/supabase/auth";
+import { toast } from "../ui/use-toast";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { getUser } from "@/shared/supabase/auth";
+import { Dispatch, SetStateAction } from "react";
 
-export default function JoinTeamForm() {
+export default function JoinTeamForm({
+  teamName,
+  setDialogOpen,
+}: {
+  teamName: string;
+  setDialogOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   const router = useRouter();
   const supabase = createClientComponentClient();
 
@@ -33,10 +40,17 @@ export default function JoinTeamForm() {
     resolver: zodResolver(JoinTeamFormSchema),
   });
 
+  const utils = trpc.useContext();
   const joinTeamMutation = trpc.team.join_team.useMutation({
     onSuccess: () => {
+      void utils.team.get_team_info.invalidate();
       router.refresh();
-      router.push(siteConfig.paths.onboarding, { scroll: false });
+      setDialogOpen(false);
+      toast({
+        variant: "default",
+        description: `Joined team ${teamName}.`,
+        duration: 3000,
+      });
     },
     onError: (error) => {
       toast({
@@ -50,9 +64,11 @@ export default function JoinTeamForm() {
   async function onSubmit(values: TJoinTeamForm) {
     try {
       const user = await getUser(supabase);
+
       await joinTeamMutation.mutateAsync({
-        team_join_code: values.team_join_code,
         user_uuid: user.id,
+        team_name: teamName,
+        team_join_code: values.team_join_code,
       });
     } catch (err: unknown) {
       console.log(err);
@@ -64,7 +80,7 @@ export default function JoinTeamForm() {
     <Form {...form}>
       <form
         id="joinTeamForm"
-        className="space-y-8"
+        className="flex flex-col space-y-8"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
@@ -72,18 +88,21 @@ export default function JoinTeamForm() {
           name="team_join_code"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Team Code</FormLabel>
+              <FormLabel>Team join code</FormLabel>
               <FormControl>
                 <Input
                   className="border-muted-foreground"
-                  id="username"
-                  placeholder="Enter Team Code"
                   {...field}
                   value={field.value ?? ""}
                 />
               </FormControl>
               <FormDescription>
-                You will not be able to leave and join other teams.
+                Enter the team join code to join the team.
+              </FormDescription>
+              <FormDescription>
+                NOTE: You will leave your current team. Leaving a team as leader
+                will promote another member instead. Leaving a team as the only
+                member will delete the team.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -92,13 +111,14 @@ export default function JoinTeamForm() {
 
         <Button
           type="submit"
-          className="w-full"
           disabled={form.formState.isSubmitting}
+          className="ml-auto"
         >
-          {form.formState.isSubmitting && (
+          {form.formState.isSubmitting ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <span>Confirm</span>
           )}
-          Next
         </Button>
       </form>
     </Form>

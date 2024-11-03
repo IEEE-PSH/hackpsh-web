@@ -18,12 +18,16 @@ export const app_user_profile = app_schema.table(
     user_uuid: uuid("user_uuid").primaryKey(),
     user_email_address: text("user_email_address").notNull().unique(),
     user_avatar_url: text("user_avatar_url"),
-    user_onboarding_complete: boolean("user_onboarding_complete"),
+    user_onboarding_complete: boolean("user_onboarding_complete")
+      .default(false)
+      .notNull(),
     user_display_name: text("user_display_name").unique(),
+    user_first_name: text("user_first_name"),
+    user_last_name: text("user_last_name"),
     user_resume_url: text("user_resume_url"),
     user_team_uuid: uuid("user_team_uuid").references(
       () => app_team.team_uuid,
-      { onDelete: "cascade" },
+      { onDelete: "set null" },
     ),
     user_school_year: text("user_school_year").references(
       () => app_school_year.school_year_name,
@@ -33,14 +37,17 @@ export const app_user_profile = app_schema.table(
       .notNull()
       .references(() => app_role.role_name)
       .default("participant"),
-    user_support_administrative: boolean("user_support_administrative").default(
-      false,
-    ),
-    user_support_technical: boolean("user_support_technical").default(false),
+    user_support_administrative: boolean("user_support_administrative")
+      .default(false)
+      .notNull(),
+    user_support_technical: boolean("user_support_technical")
+      .default(false)
+      .notNull(),
     user_onboarding_phase: text("user_onboarding_phase")
       .notNull()
       .references(() => app_onboarding_phase.phase_name)
       .default("personal-details"),
+    user_team_leader: boolean("user_team_leader").default(false).notNull(),
   },
   (table) => {
     return {
@@ -69,7 +76,7 @@ export const app_team = app_schema.table("app_team", {
     .primaryKey()
     .default(sql`uuid_generate_v4()`),
   team_name: text("team_name").notNull().unique(),
-  team_join_code: text("team_code").notNull().unique(),
+  team_join_code: text("team_code").notNull(),
   team_points: integer("team_points").notNull().default(0),
   team_points_additive: integer("team_points_additive").notNull().default(0),
 });
@@ -113,7 +120,9 @@ export const app_event = app_schema.table("app_event", {
   event_end_time: text("event_end_time").notNull(),
   event_start_hour: integer("event_start_hour").notNull(),
   event_duration: integer("event_duration").notNull(),
-  event_challenges_enabled: boolean("event_challenges_enabled").notNull(),
+  event_challenges_enabled: boolean("event_challenges_enabled")
+    .default(false)
+    .notNull(),
 });
 
 export const app_challenges = app_schema.table("app_challenges", {

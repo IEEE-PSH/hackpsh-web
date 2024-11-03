@@ -61,7 +61,7 @@ export default function DeleteSelfAccountDialog() {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="w-full flex-shrink-0 sm:w-auto">
+        <Button variant="outline" className="w-full flex-shrink-0 sm:w-auto">
           Delete account
         </Button>
       </DialogTrigger>
@@ -69,8 +69,10 @@ export default function DeleteSelfAccountDialog() {
         <DialogHeader>
           <DialogTitle>Are you sure?</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and data from the platform.
+            This will permanently delete your account and its data from the
+            platform. If you are a team leader, a different member will be
+            redelegated as team leader. If you are the only member on your team,
+            your team will be deleted.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

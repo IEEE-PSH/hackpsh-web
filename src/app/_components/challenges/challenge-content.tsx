@@ -32,16 +32,21 @@ export default function ChallengeContentPage({
   userEmailAddress: string;
   challengeId: number;
   userUUID: string;
-  teamName: string;
+  teamName: string | null;
 }) {
   const [value, setValue] = useState("");
   const [outputData, setOutputData] = useState<TSubmitData | null>(null);
-  const [language, setLanguage] = useState<TLanguages>(
-    (localStorage.getItem("hackpsh-stored-language") as TLanguages) ?? "python",
-  );
+  const [language, setLanguage] = useState<TLanguages>("python");
   const [header, setHeader] = useState("");
   const [presetHeader, setPresetHeader] = useState("");
   const [solved, setSolved] = useState(false);
+
+  useEffect(() => {
+    const storedLanguage = localStorage.getItem(
+      "hackpsh-stored-language",
+    ) as TLanguages;
+    setLanguage(storedLanguage ?? "python");
+  }, []);
 
   const { data: challengeData, isSuccess } =
     trpc.challenges.get_challenge.useQuery({
@@ -78,15 +83,18 @@ export default function ChallengeContentPage({
   return (
     <>
       <ChallengeBooter />
-      <ChallengeSyncer
-        challengeId={challengeId}
-        challengePoints={challengeData?.challenge_points ?? 0}
-        teamName={teamName}
-        userUUID={userUUID}
-        setSolved={setSolved}
-        setValue={setValue}
-        setLanguage={setLanguage}
-      />
+      {teamName && (
+        <ChallengeSyncer
+          challengeId={challengeId}
+          challengePoints={challengeData?.challenge_points ?? 0}
+          teamName={teamName}
+          userUUID={userUUID}
+          setSolved={setSolved}
+          setValue={setValue}
+          setLanguage={setLanguage}
+        />
+      )}
+
       <ProtectedEditorSiteHeader
         userDisplayName={userDisplayName}
         userEmailAddress={userEmailAddress}
@@ -140,11 +148,13 @@ export default function ChallengeContentPage({
           </pre>
         </div>
       </div>
-      <ChallengeUsersStatus
-        userDisplayName={userDisplayName}
-        challengeId={challengeId}
-        teamName={teamName}
-      />
+      {teamName && (
+        <ChallengeUsersStatus
+          userDisplayName={userDisplayName}
+          challengeId={challengeId}
+          teamName={teamName}
+        />
+      )}
     </>
   );
 }
