@@ -16,36 +16,37 @@ import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function DeleteAllAnnouncementsDialog() {
+export default function DeleteAllChallengesDialog() {
   const router = useRouter();
 
-  const announcementMutation = trpc.event.delete_all_announcements.useMutation({
-    onSuccess: () => {
-      setDialogOpen(false);
-      router.refresh();
-      toast({
-        variant: "success",
-        title: "Announcements deleted.",
-        duration: 4000,
-      });
-    },
-    onError: () => {
-      toast({
-        variant: "destructive",
-        title: "Oops, something went wrong!",
-        description:
-          "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
-        duration: 6000,
-      });
-    },
-  });
+  const deleteAllChallengesMutation =
+    trpc.event.delete_all_challenges.useMutation({
+      onSuccess: () => {
+        setDialogOpen(false);
+        router.refresh();
+        toast({
+          variant: "success",
+          title: "Challenges deleted.",
+          duration: 4000,
+        });
+      },
+      onError: () => {
+        toast({
+          variant: "destructive",
+          title: "Oops, something went wrong!",
+          description:
+            "If you've encountered an issue, please contact our event administrators for assistance. We apologize for any inconvenience and will resolve it promptly.",
+          duration: 6000,
+        });
+      },
+    });
 
-  async function deleteAllAnnouncements() {
+  async function deleteAllChallenges() {
     try {
       const supabase = createClientComponentClient();
       const user = await getUser(supabase);
 
-      await announcementMutation.mutateAsync({
+      await deleteAllChallengesMutation.mutateAsync({
         user_uuid: user.id,
       });
     } catch (err: unknown) {
@@ -58,8 +59,8 @@ export default function DeleteAllAnnouncementsDialog() {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="w-full text-nowrap sm:w-auto">
-          Delete all announcements
+        <Button variant="secondary" className="ml-auto w-full sm:w-auto">
+          Delete all challenges
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -67,14 +68,14 @@ export default function DeleteAllAnnouncementsDialog() {
           <DialogTitle>Are you sure?</DialogTitle>
           <DialogDescription>
             This action cannot be undone. This will permanently delete all
-            announcements.
+            challenges from the platform.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button
             variant="destructive"
             onClick={async () => {
-              await deleteAllAnnouncements();
+              await deleteAllChallenges();
             }}
           >
             Confirm

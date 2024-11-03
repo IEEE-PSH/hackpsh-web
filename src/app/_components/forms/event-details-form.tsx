@@ -116,162 +116,166 @@ export default function EventDetailsForm({
     <Form {...form}>
       <form
         id="eventDetailsForm"
-        className="flex flex-col space-y-8"
+        className="grid grid-cols-1 gap-8 sm:grid-cols-2"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <FormField
-          control={form.control}
-          name="event_date"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Date</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground",
-                      )}
-                    >
-                      {field.value ? (
-                        Intl.DateTimeFormat(
-                          "en-US",
-                          format_time_options,
-                        ).format(field.value)
-                      ) : (
-                        <span>Select a date.</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex flex-col space-y-6">
+          <FormField
+            control={form.control}
+            name="event_date"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Date</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "max-w-[280px] pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground",
+                        )}
+                      >
+                        {field.value ? (
+                          Intl.DateTimeFormat(
+                            "en-US",
+                            format_time_options,
+                          ).format(field.value)
+                        ) : (
+                          <span>Select a date.</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="event_start_hour"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Start Time</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                defaultValue={eventStartHour.toString()}
-              >
-                <SelectTrigger className="w-[280px]">
-                  <SelectValue placeholder="Select a time" />
-                </SelectTrigger>
+          <FormField
+            control={form.control}
+            name="event_start_hour"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Start Time</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={eventStartHour.toString()}
+                >
+                  <SelectTrigger className="max-w-[280px]">
+                    <SelectValue placeholder="Select a time" />
+                  </SelectTrigger>
 
-                <SelectContent>
-                  <ScrollArea className="h-80">
+                  <SelectContent>
+                    <ScrollArea className="h-80">
+                      <SelectGroup>
+                        <SelectItem value="0">12:00 AM</SelectItem>
+                        <SelectItem value="1">1:00 AM</SelectItem>
+                        <SelectItem value="2">2:00 AM</SelectItem>
+                        <SelectItem value="3">3:00 AM</SelectItem>
+                        <SelectItem value="4">4:00 AM</SelectItem>
+                        <SelectItem value="5">5:00 AM</SelectItem>
+                        <SelectItem value="6">6:00 AM</SelectItem>
+                        <SelectItem value="7">7:00 AM</SelectItem>
+                        <SelectItem value="8">8:00 AM</SelectItem>
+                        <SelectItem value="9">9:00 AM</SelectItem>
+                        <SelectItem value="10">10:00 AM</SelectItem>
+                        <SelectItem value="11">11:00 AM</SelectItem>
+                        <SelectItem value="12">12:00 PM</SelectItem>
+                        <SelectItem value="13">1:00 PM</SelectItem>
+                        <SelectItem value="14">2:00 PM</SelectItem>
+                        <SelectItem value="15">3:00 PM</SelectItem>
+                        <SelectItem value="16">4:00 PM</SelectItem>
+                        <SelectItem value="17">5:00 PM</SelectItem>
+                        <SelectItem value="18">6:00 PM</SelectItem>
+                        <SelectItem value="19">7:00 PM</SelectItem>
+                        <SelectItem value="20">8:00 PM</SelectItem>
+                        <SelectItem value="21">9:00 PM</SelectItem>
+                        <SelectItem value="22">10:00 PM</SelectItem>
+                        <SelectItem value="23">11:00 PM</SelectItem>
+                        <SelectItem value="24">12:00 PM</SelectItem>
+                      </SelectGroup>
+                    </ScrollArea>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="event_duration"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Duration</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={eventDuration.toString()}
+                >
+                  <SelectTrigger className="max-w-[280px]">
+                    <SelectValue placeholder="Select a duration" />
+                  </SelectTrigger>
+
+                  <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="0">12:00 AM</SelectItem>
-                      <SelectItem value="1">1:00 AM</SelectItem>
-                      <SelectItem value="2">2:00 AM</SelectItem>
-                      <SelectItem value="3">3:00 AM</SelectItem>
-                      <SelectItem value="4">4:00 AM</SelectItem>
-                      <SelectItem value="5">5:00 AM</SelectItem>
-                      <SelectItem value="6">6:00 AM</SelectItem>
-                      <SelectItem value="7">7:00 AM</SelectItem>
-                      <SelectItem value="8">8:00 AM</SelectItem>
-                      <SelectItem value="9">9:00 AM</SelectItem>
-                      <SelectItem value="10">10:00 AM</SelectItem>
-                      <SelectItem value="11">11:00 AM</SelectItem>
-                      <SelectItem value="12">12:00 PM</SelectItem>
-                      <SelectItem value="13">1:00 PM</SelectItem>
-                      <SelectItem value="14">2:00 PM</SelectItem>
-                      <SelectItem value="15">3:00 PM</SelectItem>
-                      <SelectItem value="16">4:00 PM</SelectItem>
-                      <SelectItem value="17">5:00 PM</SelectItem>
-                      <SelectItem value="18">6:00 PM</SelectItem>
-                      <SelectItem value="19">7:00 PM</SelectItem>
-                      <SelectItem value="20">8:00 PM</SelectItem>
-                      <SelectItem value="21">9:00 PM</SelectItem>
-                      <SelectItem value="22">10:00 PM</SelectItem>
-                      <SelectItem value="23">11:00 PM</SelectItem>
-                      <SelectItem value="24">12:00 PM</SelectItem>
+                      <SelectItem value="12">12 Hours</SelectItem>
+                      <SelectItem value="24">24 Hours</SelectItem>
+                      <SelectItem value="36">36 Hours</SelectItem>
+                      <SelectItem value="48">48 Hours</SelectItem>
                     </SelectGroup>
-                  </ScrollArea>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
-        <FormField
-          control={form.control}
-          name="event_duration"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Duration</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                defaultValue={eventDuration.toString()}
-              >
-                <SelectTrigger className="w-[280px]">
-                  <SelectValue placeholder="Select a duration" />
-                </SelectTrigger>
+        <div className="flex flex-col items-end justify-between gap-y-6">
+          <FormField
+            control={form.control}
+            name="event_challenges_enabled"
+            render={({ field }) => (
+              <FormItem className="flex w-full flex-row items-center justify-between rounded-lg border p-4">
+                <div className="space-y-0.5">
+                  <FormLabel>Enable challenges</FormLabel>
+                  <FormDescription>
+                    Toggle to enable or disable challenges for participants.
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    className="ml-4"
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
 
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="12">12 Hours</SelectItem>
-                    <SelectItem value="24">24 Hours</SelectItem>
-                    <SelectItem value="36">36 Hours</SelectItem>
-                    <SelectItem value="48">48 Hours</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="event_challenges_enabled"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-              <div className="space-y-0.5">
-                <FormLabel>Enable challenges</FormLabel>
-                <FormDescription>
-                  Toggle to enable or disable challenges for participants.
-                </FormDescription>
-              </div>
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                  className="ml-4"
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-
-        <Button
-          type="submit"
-          className="ml-auto w-full sm:w-fit"
-          disabled={form.formState.isSubmitting}
-        >
-          {form.formState.isSubmitting && (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          )}
-          Save
-        </Button>
+          <Button
+            type="submit"
+            className="ml-auto w-full sm:w-fit"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            Save
+          </Button>
+        </div>
       </form>
     </Form>
   );

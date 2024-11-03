@@ -99,6 +99,11 @@ export default function JoinTeamForm({
               <FormDescription>
                 Enter the team join code to join the team.
               </FormDescription>
+              <FormDescription>
+                NOTE: You will leave your current team. Leaving a team as leader
+                will promote another member instead. Leaving a team as the only
+                member will delete the team.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

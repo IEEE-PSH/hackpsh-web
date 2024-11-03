@@ -16,16 +16,16 @@ import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function DeleteAllAnnouncementsDialog() {
+export default function DeleteAllTeamsDialog() {
   const router = useRouter();
 
-  const announcementMutation = trpc.event.delete_all_announcements.useMutation({
+  const deleteAllTeamsMutation = trpc.event.delete_all_teams.useMutation({
     onSuccess: () => {
       setDialogOpen(false);
       router.refresh();
       toast({
         variant: "success",
-        title: "Announcements deleted.",
+        title: "Teams deleted.",
         duration: 4000,
       });
     },
@@ -40,12 +40,12 @@ export default function DeleteAllAnnouncementsDialog() {
     },
   });
 
-  async function deleteAllAnnouncements() {
+  async function deleteAllTeams() {
     try {
       const supabase = createClientComponentClient();
       const user = await getUser(supabase);
 
-      await announcementMutation.mutateAsync({
+      await deleteAllTeamsMutation.mutateAsync({
         user_uuid: user.id,
       });
     } catch (err: unknown) {
@@ -58,23 +58,23 @@ export default function DeleteAllAnnouncementsDialog() {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="w-full text-nowrap sm:w-auto">
-          Delete all announcements
+        <Button variant="secondary" className="ml-auto w-full sm:w-auto">
+          Delete all teams
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Are you sure?</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete all
-            announcements.
+            This action cannot be undone. This will permanently delete all teams
+            from the platform.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button
             variant="destructive"
             onClick={async () => {
-              await deleteAllAnnouncements();
+              await deleteAllTeams();
             }}
           >
             Confirm

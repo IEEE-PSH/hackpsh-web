@@ -1,7 +1,8 @@
 import EventDetailsForm from "@/app/_components/forms/event-details-form";
 import DeleteAllAnnouncementsDialog from "@/app/_components/settings/delete-all-announcements-dialog";
+import DeleteAllChallengesDialog from "@/app/_components/settings/delete-all-challenges-dialog";
 import DeleteAllParticipantsDialog from "@/app/_components/settings/delete-all-participants-dialog";
-import { Button } from "@/app/_components/ui/button";
+import DeleteAllTeamsDialog from "@/app/_components/settings/delete-all-teams-dialog";
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { Label } from "@/app/_components/ui/label";
 import { Separator } from "@/app/_components/ui/separator";
@@ -16,7 +17,7 @@ export default async function Page() {
   } = await serverTRPC.event.get_event_details.query();
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:container lg:grid-cols-2">
+    <div className="grid gap-4 sm:container">
       <Card className="border-0 sm:border">
         <CardContent className="p-8">
           <h1 className="text-2xl font-semibold leading-none tracking-tight">
@@ -37,34 +38,46 @@ export default async function Page() {
             Danger Zone
           </h1>
           <Separator className="my-4" />
-          <div className="flex flex-grow flex-col justify-between space-y-6">
-            <div className="flex flex-col">
-              <Label>Delete All Announcements</Label>
-              <p className="mt-2 text-sm text-muted-foreground">
-                This will remove all posts from the Announcements page.
-              </p>
+          <div className="flex flex-grow flex-col justify-between space-y-4">
+            <div className="flex flex-col justify-between gap-x-4 space-y-6 sm:flex-row sm:items-center sm:space-y-0">
+              <div>
+                <Label>Delete all announcements</Label>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Delete all posts from the Announcements page.
+                </p>
+              </div>
               <DeleteAllAnnouncementsDialog />
             </div>
-            <div className="flex flex-col">
-              <Label>Delete All Participants</Label>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Delete all users with the participant role.
-              </p>
+            <Separator className="my-4" />
+            <div className="flex flex-col justify-between gap-x-4 space-y-6 sm:flex-row sm:items-center sm:space-y-0">
+              <div>
+                <Label>Delete all teams</Label>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Delete all teams. This will kick all members from teams.
+                </p>
+              </div>
+              <DeleteAllTeamsDialog />
+            </div>
+            <Separator className="my-4" />
+            <div className="flex flex-col justify-between gap-x-4 space-y-6 sm:flex-row sm:items-center sm:space-y-0">
+              <div>
+                <Label>Delete all participants</Label>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Delete all users with the participant role.
+                </p>
+              </div>
+
               <DeleteAllParticipantsDialog />
             </div>
-            <div className="flex flex-col">
-              <Label>Delete All Teams (Not Yet Implemented)</Label>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Delete all teams and their members. This is useful in resetting
-                all users and teams before a new event.
-              </p>
-              <Button
-                variant="secondary"
-                className="ml-auto mt-6 w-full sm:w-auto"
-                disabled={true}
-              >
-                Delete all teams
-              </Button>
+            <Separator className="my-4" />
+            <div className="flex flex-col justify-between gap-x-4 space-y-6 sm:flex-row sm:items-center sm:space-y-0">
+              <div>
+                <Label>Delete all challenges</Label>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Delete all challenges from the Challenges page.
+                </p>
+              </div>
+              <DeleteAllChallengesDialog />
             </div>
           </div>
         </CardContent>

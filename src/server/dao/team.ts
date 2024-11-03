@@ -7,6 +7,7 @@ import {
   getUserRole,
   getUserTeamInfo,
   isTeamLeader,
+  isUserOnTeam,
   updateTeamLeader,
 } from "./user";
 
@@ -217,6 +218,12 @@ export async function joinTeam(
   team_join_code: string,
 ) {
   try {
+    //if user on team, leave it (this will redelegate leader/delete team accordingly)
+    const onTeam = await isUserOnTeam(db, user_uuid);
+    if (onTeam?.user_team_uuid) {
+      await leaveTeam(db, user_uuid);
+    }
+
     const team_from_team_name = await getTeamFromTeamName(db, team_name);
 
     if (!team_from_team_name?.team_uuid) {
