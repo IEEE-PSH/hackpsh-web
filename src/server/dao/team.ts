@@ -2,9 +2,8 @@ import { type Database } from "@/db/drizzle";
 import { app_team, app_user_profile } from "@/db/drizzle/schema";
 import { BaseError } from "@/shared/error";
 import { TRPCError } from "@trpc/server";
-import { count, desc, eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import {
-  getUserInfo,
   getUserRole,
   getUserTeamInfo,
   isTeamLeader,

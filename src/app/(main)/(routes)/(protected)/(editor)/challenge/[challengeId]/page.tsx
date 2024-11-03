@@ -29,7 +29,7 @@ export default async function ChallengePage({
     <div className="min-h-screen bg-background">
       <ChallengeContentPage
         userDisplayName={user_display_name!}
-        userEmailAddress={user_email_address!}
+        userEmailAddress={user_email_address}
         challengeId={params.challengeId}
         userUUID={user.id}
         teamName={teamName}
