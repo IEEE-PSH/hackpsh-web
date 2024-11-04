@@ -55,6 +55,7 @@ export default function UserDeleteDialog({
       await deleteUserMutation.mutateAsync({
         user_uuid: userData!.user_uuid,
         target_uuid: targetUserUUID,
+        authorization_check: true,
       });
     } catch (err: unknown) {
       console.log(err);

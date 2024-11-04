@@ -87,12 +87,6 @@ export async function getEventDetails(db: Database) {
 
     return result;
   } catch (error) {
-    if (error instanceof BaseError) {
-      throw new TRPCError({
-        message: error.description!,
-        code: "CONFLICT",
-      });
-    }
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",
@@ -180,12 +174,6 @@ export async function deleteAllParticipants(db: Database, user_uuid: string) {
       delete_all_participants: true,
     };
   } catch (error) {
-    if (error instanceof BaseError) {
-      throw new TRPCError({
-        message: error.description!,
-        code: "CONFLICT",
-      });
-    }
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",
@@ -208,12 +196,6 @@ export async function deleteAllChallenges(db: Database, user_uuid: string) {
       delete_all_challenges: true,
     };
   } catch (error) {
-    if (error instanceof BaseError) {
-      throw new TRPCError({
-        message: error.description!,
-        code: "CONFLICT",
-      });
-    }
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",
@@ -241,12 +223,6 @@ export async function deleteAllTeams(db: Database, user_uuid: string) {
       delete_all_teams: true,
     };
   } catch (error) {
-    if (error instanceof BaseError) {
-      throw new TRPCError({
-        message: error.description!,
-        code: "CONFLICT",
-      });
-    }
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",
@@ -269,12 +245,6 @@ export async function deleteAllAnnouncements(db: Database, user_uuid: string) {
       delete_all_announcements: true,
     };
   } catch (error) {
-    if (error instanceof BaseError) {
-      throw new TRPCError({
-        message: error.description!,
-        code: "CONFLICT",
-      });
-    }
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",

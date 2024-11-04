@@ -68,6 +68,7 @@ export const UpdateUserSettingsSchema = z.object({
 export const DeleteUserSchema = z.object({
   user_uuid: z.string().uuid("Please provide a valid UUID."),
   target_uuid: z.string().uuid("Please provide a valid UUID."),
+  authorization_check: z.boolean(),
 });
 
 export const ValidUserProfileAfterOnboardingSchema = z.object({

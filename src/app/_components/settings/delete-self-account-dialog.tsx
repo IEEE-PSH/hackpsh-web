@@ -21,7 +21,7 @@ export default function DeleteSelfAccountDialog() {
   const router = useRouter();
   const supabase = createClientComponentClient();
 
-  const deleteSelfAccountMutation = trpc.user.delete_user_self.useMutation({
+  const deleteSelfAccountMutation = trpc.user.delete_user.useMutation({
     onSuccess: async () => {
       setDialogOpen(false);
       await supabase.auth.signOut();
@@ -50,6 +50,8 @@ export default function DeleteSelfAccountDialog() {
 
       await deleteSelfAccountMutation.mutateAsync({
         user_uuid: user.id,
+        target_uuid: user.id,
+        authorization_check: false,
       });
     } catch (err: unknown) {
       console.log(err);

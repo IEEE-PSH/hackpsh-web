@@ -8,6 +8,7 @@ import {
   getUserTeamInfo,
   isTeamLeader,
   isUserOnTeam,
+  redelegateTeamLeader,
   updateTeamLeader,
 } from "./user";
 
@@ -253,12 +254,6 @@ export async function joinTeam(
       });
     }
   } catch (error) {
-    if (error instanceof BaseError) {
-      throw new TRPCError({
-        message: error.description!,
-        code: "NOT_FOUND",
-      });
-    }
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",
@@ -268,21 +263,10 @@ export async function joinTeam(
 
 export async function leaveTeam(db: Database, user_uuid: string) {
   try {
-    const result = await isTeamLeader(db, user_uuid);
+    //get current team uuid
     const { team_uuid } = await getUserTeamInfo(db, user_uuid);
 
-    //if not team leader, simply leave team
-    if (!result?.user_team_leader) {
-      await db
-        .update(app_user_profile)
-        .set({
-          user_team_uuid: null,
-        })
-        .where(eq(app_user_profile.user_uuid, user_uuid));
-      return;
-    }
-
-    await updateTeamLeader(db, user_uuid, false);
+    //leave team
     await db
       .update(app_user_profile)
       .set({
@@ -290,27 +274,13 @@ export async function leaveTeam(db: Database, user_uuid: string) {
       })
       .where(eq(app_user_profile.user_uuid, user_uuid));
 
-    //attempt to redelegate a different member as team leader
-    const newLeader = await db.query.app_user_profile.findFirst({
-      columns: {
-        user_uuid: true,
-      },
-      where: (user_data, { eq }) => eq(user_data.user_team_uuid, team_uuid),
-    });
-
-    //if found, make them new leader; otherwise, delete team
-    if (newLeader) {
-      await updateTeamLeader(db, newLeader.user_uuid, true);
-    } else {
-      await deleteTeam(db, team_uuid);
+    //if was team leader, attempt to redelegate a different member
+    const result = await isTeamLeader(db, user_uuid);
+    if (result?.user_team_leader) {
+      await updateTeamLeader(db, user_uuid, false);
+      await redelegateTeamLeader(db, team_uuid);
     }
   } catch (error) {
-    if (error instanceof BaseError) {
-      throw new TRPCError({
-        message: error.description!,
-        code: "NOT_FOUND",
-      });
-    }
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",

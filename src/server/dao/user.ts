@@ -73,78 +73,56 @@ export async function deleteUser(
   db: Database,
   user_uuid: string,
   target_uuid: string,
+  authorization_check: boolean,
 ) {
-  const role = await getUserRole(db, user_uuid);
-  if (role?.user_role !== "admin") {
+  try {
+    if (authorization_check) {
+      const role = await getUserRole(db, user_uuid);
+      if (role?.user_role !== "admin") {
+        throw new TRPCError({
+          message: "User must be an admin to delete users.",
+          code: "UNAUTHORIZED",
+        });
+      }
+    }
+
+    //delete user
+    const result = await isTeamLeader(db, target_uuid);
+    const { team_uuid } = await getUserTeamInfo(db, target_uuid);
+    await db
+      .delete(app_user_profile)
+      .where(eq(app_user_profile.user_uuid, target_uuid));
+
+    //attempt to redelegate team leader if possible
+    if (result?.user_team_leader) await redelegateTeamLeader(db, team_uuid);
+  } catch (error) {
     throw new TRPCError({
-      message: "User must be an admin to delete users.",
-      code: "UNAUTHORIZED",
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
     });
-  }
-
-  const result = await isTeamLeader(db, user_uuid);
-  //if user is not team leader, simply delete user
-  if (!result?.user_team_leader) {
-    await db
-      .delete(app_user_profile)
-      .where(eq(app_user_profile.user_uuid, target_uuid));
-    return;
-  }
-
-  //if user is team leader, attempt to redelegate different member as leader
-  const { team_uuid } = await getUserTeamInfo(db, user_uuid);
-  const newLeader = await db.query.app_user_profile.findFirst({
-    columns: {
-      user_uuid: true,
-    },
-    where: (user_data, { eq }) => eq(user_data.user_team_uuid, team_uuid),
-  });
-  //if found, make them new leader; otherwise, delete team
-  if (newLeader) {
-    await updateTeamLeader(db, newLeader.user_uuid, true);
-    await db
-      .delete(app_user_profile)
-      .where(eq(app_user_profile.user_uuid, target_uuid));
-  } else {
-    await deleteTeam(db, team_uuid);
   }
 }
 
-export async function deleteUserSelf(db: Database, user_uuid: string) {
+export async function redelegateTeamLeader(db: Database, team_uuid: string) {
   try {
-    const result = await isTeamLeader(db, user_uuid);
-    //if user is not team leader, simply delete user
-    if (!result?.user_team_leader) {
-      await db
-        .delete(app_user_profile)
-        .where(eq(app_user_profile.user_uuid, user_uuid));
-      return;
-    }
-
-    //if user is team leader, attempt to redelegate different member as leader
-    const { team_uuid } = await getUserTeamInfo(db, user_uuid);
+    //find new team leader
     const newLeader = await db.query.app_user_profile.findFirst({
       columns: {
         user_uuid: true,
       },
       where: (user_data, { eq }) => eq(user_data.user_team_uuid, team_uuid),
     });
-    //if found, make them new leader; otherwise, delete team
+
+    //if found, make them new leader
     if (newLeader) {
+      // console.log("new leader found");
       await updateTeamLeader(db, newLeader.user_uuid, true);
-      await db
-        .delete(app_user_profile)
-        .where(eq(app_user_profile.user_uuid, user_uuid));
+      //if not found, delete team
     } else {
+      // console.log("new leader not found, deleting team");
       await deleteTeam(db, team_uuid);
     }
   } catch (error) {
-    if (error instanceof BaseError) {
-      throw new TRPCError({
-        message: error.description!,
-        code: "NOT_FOUND",
-      });
-    }
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",

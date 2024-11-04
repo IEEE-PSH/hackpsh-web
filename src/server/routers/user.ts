@@ -18,7 +18,6 @@ import updateUserRoleProcedure from "../procedures/protected/user/updateUserRole
 import deleteUserProcedure from "../procedures/protected/user/deleteUserProcedure";
 import getUserInfoProcedure from "../procedures/protected/user/getUserInfoProcedure";
 import getUserTeamInfoProcedure from "../procedures/protected/user/getUserTeamInfoProcedure";
-import deleteUserSelfProcedure from "../procedures/protected/user/deleteUserSelfProcedure";
 import updateSchoolDetailsProcedure from "../procedures/protected/user/updateSchoolDetailsProcedure";
 import isUserOnTeamProcedure from "../procedures/protected/user/isUserOnTeamProcedure";
 import isTeamLeaderProcedure from "../procedures/protected/user/isTeamLeaderProcedure";
@@ -46,7 +45,6 @@ export const userRouter = createTRPCRouter({
   delete_user: deleteUserProcedure,
   get_user_team_info: getUserTeamInfoProcedure,
   is_on_team: isUserOnTeamProcedure,
-  delete_user_self: deleteUserSelfProcedure,
   is_team_leader: isTeamLeaderProcedure,
   delete_team_self: deleteTeamSelfProcedure,
 });
