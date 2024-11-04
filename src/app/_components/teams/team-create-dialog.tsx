@@ -56,18 +56,17 @@ export default function TeamCreateDialog({ userRole }: { userRole: string }) {
         </Dialog>
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>
-              <Button
-                variant="outline"
-                className="ml-4 cursor-pointer gap-2 opacity-50"
-                onClick={() => {
-                  console.log("cicked");
-                  setDialogOpen(true);
-                }}
-              >
-                <Plus className="h-4 w-4 " />
-                <span className="text-nowrap">Create team</span>
-              </Button>
+            <TooltipTrigger asChild>
+              <div>
+                <Button
+                  variant="outline"
+                  className=" hover:none ml-4 gap-2 opacity-50"
+                  onClick={() => setDialogOpen(true)}
+                >
+                  <Plus className="h-4 w-4" />
+                  <span className="text-nowrap">Create team</span>
+                </Button>
+              </div>
             </TooltipTrigger>
             <TooltipContent>
               <p>Team creation is currently disabled for participants.</p>
@@ -81,11 +80,17 @@ export default function TeamCreateDialog({ userRole }: { userRole: string }) {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger className="cursor-default">
-          <Button variant="outline" className="ml-4 gap-2" disabled>
-            <Plus className="h-4 w-4 " />
-            <span className="text-nowrap">Create team</span>
-          </Button>
+        <TooltipTrigger className="cursor-default" asChild>
+          <div>
+            <Button
+              variant="outline"
+              className=" hover:none ml-4 gap-2"
+              disabled
+            >
+              <Plus className="h-4 w-4" />
+              <span className="text-nowrap">Create team</span>
+            </Button>
+          </div>
         </TooltipTrigger>
         <TooltipContent>
           <p>Team creation is currently disabled for participants.</p>
