@@ -52,6 +52,14 @@ export function ProtectedEditorMobileNav() {
             Dashboard
           </MobileLink>
           <MobileLink
+            href={siteConfig.paths.announcements}
+            onOpenChange={setIsOpen}
+            scroll={false}
+            className="hover:underline"
+          >
+            Announcements
+          </MobileLink>
+          <MobileLink
             href={siteConfig.paths.leaderboard}
             onOpenChange={setIsOpen}
             scroll={false}
@@ -60,12 +68,12 @@ export function ProtectedEditorMobileNav() {
             Leaderboard
           </MobileLink>
           <MobileLink
-            href={siteConfig.paths.announcements}
+            href={siteConfig.paths.team}
             onOpenChange={setIsOpen}
             scroll={false}
             className="hover:underline"
           >
-            Announcements
+            Teams
           </MobileLink>
         </div>
       </SheetContent>
