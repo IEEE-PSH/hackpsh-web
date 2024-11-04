@@ -1,4 +1,4 @@
-import { deleteTeamSelf, deleteUserSelf } from "@/server/dao/user";
+import { deleteTeamSelf } from "@/server/dao/user";
 import { protectedProcedure } from "@/server/trpc";
 import { LookupUserSchema } from "@/server/zod-schemas/user";
 
