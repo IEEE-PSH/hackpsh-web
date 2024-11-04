@@ -39,13 +39,13 @@ import {
   type TEventDetailsFormSchema,
 } from "@/app/_lib/event-details";
 import { Switch } from "../ui/switch";
-import { useRouter } from "next/navigation";
 
 type EventDetailsFormProps = {
   eventDate: string;
   eventStartHour: number;
   eventDuration: number;
   eventChallengesEnabled: boolean;
+  eventTeamCreationEnabled: boolean;
 };
 
 export default function EventDetailsForm({
@@ -53,6 +53,7 @@ export default function EventDetailsForm({
   eventStartHour,
   eventDuration,
   eventChallengesEnabled,
+  eventTeamCreationEnabled,
 }: EventDetailsFormProps) {
   const supabase = createClientComponentClient();
 
@@ -64,10 +65,9 @@ export default function EventDetailsForm({
       event_start_hour: eventStartHour.toString(),
       event_duration: eventDuration.toString(),
       event_challenges_enabled: eventChallengesEnabled,
+      event_team_creation_enabled: eventTeamCreationEnabled,
     },
   });
-
-  const router = useRouter();
 
   const updateSettingsMutation = trpc.event.update_event_details.useMutation({
     onSuccess: () => {
@@ -99,6 +99,7 @@ export default function EventDetailsForm({
         ),
         event_duration: parseInt(values.event_duration as unknown as string),
         event_challenges_enabled: values.event_challenges_enabled,
+        event_team_creation_enabled: values.event_team_creation_enabled,
       });
     } catch (err: unknown) {
       console.log(err);
@@ -242,12 +243,33 @@ export default function EventDetailsForm({
           />
         </div>
 
-        <div className="flex flex-col items-end justify-between gap-y-6">
+        <div className="flex flex-col items-end justify-between">
+          <FormField
+            control={form.control}
+            name="event_team_creation_enabled"
+            render={({ field }) => (
+              <FormItem className="flex w-full flex-row items-center justify-between rounded-lg border p-4">
+                <div className="space-y-0.5">
+                  <FormLabel>Enable team creation</FormLabel>
+                  <FormDescription>
+                    Toggle to enable or disable team creation for participants.
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    className="ml-4"
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="event_challenges_enabled"
             render={({ field }) => (
-              <FormItem className="flex w-full flex-row items-center justify-between rounded-lg border p-4">
+              <FormItem className="mt-4 flex w-full flex-row items-center justify-between rounded-lg border p-4">
                 <div className="space-y-0.5">
                   <FormLabel>Enable challenges</FormLabel>
                   <FormDescription>
@@ -267,7 +289,7 @@ export default function EventDetailsForm({
 
           <Button
             type="submit"
-            className="ml-auto w-full sm:w-fit"
+            className="ml-auto mt-6 w-full sm:w-fit"
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting && (

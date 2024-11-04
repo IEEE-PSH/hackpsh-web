@@ -1,5 +1,5 @@
 import AnnouncementNotifer from "@/app/_components/announcement/announcement-notifier";
-import ChallengeBooter from "@/app/_components/challenges/challenge-booter";
+import EventUpdateNotifer from "@/app/_components/event/event-update-notifier";
 import { ProtectedMiniSideNav } from "@/app/_components/nav/protected-mini-side-nav";
 import { ProtectedSideNav } from "@/app/_components/nav/protected-side-nav";
 import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
@@ -7,7 +7,7 @@ import ProtectedSiteHeader from "@/app/_components/nav/protected-site-header";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <ChallengeBooter />
+      <EventUpdateNotifer />
       <AnnouncementNotifer />
 
       <div className="min-h-screen bg-background">

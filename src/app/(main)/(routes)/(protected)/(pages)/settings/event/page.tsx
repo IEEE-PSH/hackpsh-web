@@ -14,6 +14,7 @@ export default async function Page() {
     event_start_hour,
     event_duration,
     event_challenges_enabled,
+    event_team_creation_enabled,
   } = await serverTRPC.event.get_event_details.query();
 
   return (
@@ -29,6 +30,7 @@ export default async function Page() {
             eventStartHour={event_start_hour}
             eventDuration={event_duration}
             eventChallengesEnabled={event_challenges_enabled}
+            eventTeamCreationEnabled={event_team_creation_enabled}
           />
         </CardContent>
       </Card>

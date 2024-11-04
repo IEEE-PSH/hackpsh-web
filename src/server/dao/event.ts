@@ -6,11 +6,9 @@ import {
   app_team,
   app_user_profile,
 } from "@/db/drizzle/schema";
-import { BaseError } from "@/shared/error";
 import { TRPCError } from "@trpc/server";
 import { getUserRole, updateTeamLeader } from "./user";
-import { eq, inArray, isNotNull, ne, not, notInArray } from "drizzle-orm";
-import { deleteTeam } from "./team";
+import { eq, isNotNull, notInArray } from "drizzle-orm";
 
 export async function updateEventDetails(
   db: Database,
@@ -19,6 +17,7 @@ export async function updateEventDetails(
   event_start_hour: number,
   event_duration: number,
   event_challenges_enabled: boolean,
+  event_team_creation_enabled: boolean,
 ) {
   try {
     const user_role = await getUserRole(db, user_uuid);
@@ -48,6 +47,7 @@ export async function updateEventDetails(
         event_start_hour: event_start_hour,
         event_duration: event_duration,
         event_challenges_enabled: event_challenges_enabled,
+        event_team_creation_enabled: event_team_creation_enabled,
       })
       .onConflictDoUpdate({
         target: app_event.event_id,
@@ -58,6 +58,7 @@ export async function updateEventDetails(
           event_start_hour: event_start_hour,
           event_duration: event_duration,
           event_challenges_enabled: event_challenges_enabled,
+          event_team_creation_enabled: event_team_creation_enabled,
         },
       });
 
@@ -82,6 +83,7 @@ export async function getEventDetails(db: Database) {
         event_start_hour: true,
         event_duration: true,
         event_challenges_enabled: true,
+        event_team_creation_enabled: true,
       },
     });
 
@@ -102,6 +104,26 @@ export async function isChallengesEnabled(db: Database) {
       .limit(1);
 
     if (result.length > 0 && result[0]?.event_challenges_enabled) return true;
+    return false;
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function isTeamCreationEnabled(db: Database) {
+  try {
+    const result = await db
+      .select({
+        event_team_creation_enabled: app_event.event_team_creation_enabled,
+      })
+      .from(app_event)
+      .limit(1);
+
+    if (result.length > 0 && result[0]?.event_team_creation_enabled)
+      return true;
     return false;
   } catch (error) {
     throw new TRPCError({

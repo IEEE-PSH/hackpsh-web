@@ -11,6 +11,7 @@ import {
   redelegateTeamLeader,
   updateTeamLeader,
 } from "./user";
+import { isTeamCreationEnabled } from "./event";
 
 export async function createTeam(
   db: Database,
@@ -19,6 +20,16 @@ export async function createTeam(
   team_join_code: string,
 ) {
   try {
+    const user_role = await getUserRole(db, user_uuid);
+    const is_team_creation_enabled = await isTeamCreationEnabled(db);
+    if (user_role?.user_role === "participant" && !is_team_creation_enabled) {
+      throw new TRPCError({
+        message:
+          "You must be authorized to create teams while team creation is disabled.",
+        code: "UNAUTHORIZED",
+      });
+    }
+
     const team_from_name = await getTeamFromName(db, team_name);
 
     if (team_from_name?.team_name) {

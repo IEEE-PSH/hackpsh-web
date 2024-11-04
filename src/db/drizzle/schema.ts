@@ -123,6 +123,9 @@ export const app_event = app_schema.table("app_event", {
   event_challenges_enabled: boolean("event_challenges_enabled")
     .default(false)
     .notNull(),
+  event_team_creation_enabled: boolean("event_team_creation_enabled")
+    .default(false)
+    .notNull(),
 });
 
 export const app_challenges = app_schema.table("app_challenges", {
