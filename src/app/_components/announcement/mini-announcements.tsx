@@ -1,19 +1,11 @@
 import { serverTRPC } from "@/app/_trpc/server";
-import { AnnouncementPost } from "./announcement-post";
-import { composeServerComponentClient } from "@/server/lib/supabase/server";
-import { getUser } from "@/shared/supabase/auth";
-import { type TUserRole } from "@/db/drizzle/startup_seed";
-import { cn } from "@/app/_lib/client-utils";
 import { Separator } from "../ui/separator";
 import { MiniAnnouncementPost } from "./mini-announcement-post";
 import { Card, CardContent } from "../ui/card";
-import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { siteConfig } from "@/app/_config/site";
 
-export async function MiniAnnouncements({
-  className,
-}: React.HTMLAttributes<HTMLDivElement>) {
+export async function MiniAnnouncements({}: React.HTMLAttributes<HTMLDivElement>) {
   const serverAnnouncementPosts =
     await serverTRPC.announcements.get_announcement_posts.query();
 

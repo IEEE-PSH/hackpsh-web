@@ -2,8 +2,7 @@
 
 import {
   JoinTeamFormSchema,
-  TJoinTeamForm,
-  type TCreateTeamForm,
+  type TJoinTeamForm,
 } from "@/app/_lib/zod-schemas/forms/team";
 import {
   Form,
@@ -24,7 +23,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
-import { Dispatch, SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 
 export default function JoinTeamForm({
   teamName,
@@ -40,10 +39,8 @@ export default function JoinTeamForm({
     resolver: zodResolver(JoinTeamFormSchema),
   });
 
-  const utils = trpc.useContext();
   const joinTeamMutation = trpc.team.join_team.useMutation({
     onSuccess: () => {
-      void utils.team.get_team_info.invalidate();
       router.refresh();
       setDialogOpen(false);
       toast({

@@ -134,7 +134,7 @@ export default function TeamsTable({
                 </Link>
               </>
             ) : (
-              <TeamCreateDialog />
+              <TeamCreateDialog userRole={userData!.user_role} />
             )}
           </div>
         </div>

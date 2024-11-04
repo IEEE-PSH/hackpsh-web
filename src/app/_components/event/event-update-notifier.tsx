@@ -9,25 +9,30 @@ import { Button } from "../ui/button";
 
 /*
 this notifies users when challenges are enabled/disabled
+and when team creation is enabled/disabled
 users will be booted off challenges if they are disabled
+
+these two tasks are combined since they must be called by
+the same supabase channel
 */
-export default function ChallengeBooter() {
+export default function EventUpdateNotifer() {
   const router = useRouter();
   const supabase = createClientComponentClient();
 
-  const { data: is_challenges_enabled, refetch: refetchChallengeStatus } =
-    trpc.event.is_challenges_enabled.useQuery();
+  //queries to get status of team creation and challenges
   const { data: is_team_creation_enabled, refetch: refetchTeamCreationStatus } =
     trpc.event.is_team_creation_enabled.useQuery();
   const pathname = usePathname();
+  const { data: is_challenges_enabled, refetch: refetchChallengeStatus } =
+    trpc.event.is_challenges_enabled.useQuery();
 
-  const [oldTeamCreationStatus, setOldTeamCreationStatus] = useState<
-    boolean | null
-  >(null);
-  //useState to only toast if is_challenges_enabled is different
+  //useStates to only toast if data is different
   const [oldChallengeStatus, setOldChallengeStatus] = useState<boolean | null>(
     null,
   );
+  const [oldTeamCreationStatus, setOldTeamCreationStatus] = useState<
+    boolean | null
+  >(null);
 
   useEffect(() => {
     const channel = supabase.channel("event").on(
@@ -38,10 +43,9 @@ export default function ChallengeBooter() {
         table: "app_event",
       },
       () => {
+        router.refresh();
+        if (pathname === siteConfig.paths.event) return;
         void (async () => {
-          router.refresh();
-          if (pathname === siteConfig.paths.event) return;
-
           //toast if challenge status different
           const isChallengesEnabled = await refetchChallengeStatus();
           if (isChallengesEnabled.data !== oldChallengeStatus) {
@@ -81,9 +85,6 @@ export default function ChallengeBooter() {
         })();
 
         void (async () => {
-          router.refresh();
-          if (pathname === siteConfig.paths.event) return;
-
           //toast if team creation status different
           const isTeamCreationEnabled = await refetchTeamCreationStatus();
           if (isTeamCreationEnabled.data !== oldTeamCreationStatus) {

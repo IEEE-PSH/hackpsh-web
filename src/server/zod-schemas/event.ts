@@ -6,4 +6,5 @@ export const UpdateEventDetailsSchema = z.object({
   event_start_hour: z.number(),
   event_duration: z.number(),
   event_challenges_enabled: z.boolean(),
+  event_team_creation_enabled: z.boolean(),
 });

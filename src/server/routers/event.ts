@@ -4,6 +4,7 @@ import deleteAllParticipantsProcedure from "../procedures/protected/event/delete
 import deleteAllTeamsProcedure from "../procedures/protected/event/deleteAllTeamsProcedure";
 import getEventDetailsProcedure from "../procedures/protected/event/getEventDetailsProcedure";
 import isChallengesEnabledProcedure from "../procedures/protected/event/isChallengesEnabledProcedure";
+import isTeamCreationEnabledProcedure from "../procedures/protected/event/isTeamCreationEnabledProcedure";
 import updateEventDetailsProcedure from "../procedures/protected/event/updateEventDetailsProcedure";
 import { createTRPCRouter } from "../trpc";
 
@@ -15,4 +16,5 @@ export const eventRouter = createTRPCRouter({
   delete_all_challenges: deleteAllChallengesProcedure,
   delete_all_teams: deleteAllTeamsProcedure,
   is_challenges_enabled: isChallengesEnabledProcedure,
+  is_team_creation_enabled: isTeamCreationEnabledProcedure,
 });

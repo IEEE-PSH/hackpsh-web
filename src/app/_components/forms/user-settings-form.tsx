@@ -1,10 +1,6 @@
 "use client";
 
 import { cn } from "@/app/_lib/client-utils";
-import {
-  PersonalDetailsFormSchema,
-  type TPersonalDetailsForm,
-} from "@/app/_lib/zod-schemas/forms/onboarding/personal-details";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -22,7 +18,7 @@ import { Input } from "@/app/_components/ui/input";
 import {
   dbMajors,
   dbSchoolYear,
-  TUserRole,
+  type TUserRole,
   type TUserMajor,
   type TUserSchoolYear,
 } from "@/db/drizzle/startup_seed";
@@ -124,6 +120,7 @@ export default function UserSettingsForm({
       // TODO: Add Logger to capture browser api submission errors
     }
   }
+
   return (
     <Form {...form}>
       <form
@@ -131,7 +128,7 @@ export default function UserSettingsForm({
         onSubmit={form.handleSubmit(onSubmit)}
         className="grid gap-x-8 gap-y-20 md:grid-cols-2"
       >
-        <div className="col-span-2 md:col-span-1">
+        <div className="">
           <h1 className="text-2xl font-semibold leading-none tracking-tight">
             Personal Details
           </h1>
@@ -232,7 +229,7 @@ export default function UserSettingsForm({
           </div>
         </div>
         <div className="grid-col grid gap-y-20 md:gap-y-8">
-          <div className="col-span-2 md:col-span-1">
+          <div className="col-span-1">
             <h1 className="text-2xl font-semibold leading-none tracking-tight">
               School Details
             </h1>
@@ -255,15 +252,20 @@ export default function UserSettingsForm({
                               !field.value && "text-muted-foreground",
                             )}
                           >
-                            {field.value
-                              ? dbSchoolYear
-                                  .find(
-                                    (school_year) =>
-                                      school_year === field.value,
-                                  )
-                                  ?.replace("_", " ")
-                                  .toLocaleUpperCase()
-                              : "Select school year"}
+                            <div className="flex w-0 flex-grow">
+                              <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+                                {field.value
+                                  ? dbSchoolYear
+                                      .find(
+                                        (school_year) =>
+                                          school_year === field.value,
+                                      )
+                                      ?.replaceAll("_", " ")
+                                      .toLocaleUpperCase()
+                                  : "Select school year"}
+                              </span>
+                            </div>
+
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
@@ -325,17 +327,19 @@ export default function UserSettingsForm({
                               !field.value && "text-muted-foreground",
                             )}
                           >
-                            <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-                              {field.value
-                                ? dbMajors
-                                    .find(
-                                      (major_name) =>
-                                        major_name === field.value,
-                                    )
-                                    ?.replaceAll("_", " ")
-                                    .toLocaleUpperCase()
-                                : "Select major"}
-                            </span>
+                            <div className="flex w-0 flex-grow">
+                              <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+                                {field.value
+                                  ? dbMajors
+                                      .find(
+                                        (major_name) =>
+                                          major_name === field.value,
+                                      )
+                                      ?.replaceAll("_", " ")
+                                      .toLocaleUpperCase()
+                                  : "Select major"}
+                              </span>
+                            </div>
 
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>

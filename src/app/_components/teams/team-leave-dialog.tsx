@@ -21,10 +21,8 @@ export default function TeamLeaveDialog({ userUUID }: { userUUID: string }) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const router = useRouter();
 
-  const utils = trpc.useContext();
   const leaveTeamMutation = trpc.team.leave_team.useMutation({
     onSuccess: () => {
-      void utils.team.get_team_info.invalidate();
       router.refresh();
       setDialogOpen(false);
       toast({

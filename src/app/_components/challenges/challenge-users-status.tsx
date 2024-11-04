@@ -64,7 +64,7 @@ export default function ChallengeUsersStatus({
         {currentUsers.map((user, i) => (
           <HoverCard key={`user-${i}`}>
             <HoverCardTrigger asChild>
-              <Avatar key={`user-${i}`}>
+              <Avatar>
                 <AvatarFallback>{user[0]}</AvatarFallback>
               </Avatar>
             </HoverCardTrigger>

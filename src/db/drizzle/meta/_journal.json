@@ -15,6 +15,13 @@
       "when": 1730600911533,
       "tag": "0001_productive_paper_doll",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1730707615581,
+      "tag": "0002_wise_sharon_carter",
+      "breakpoints": true
     }
   ]
 }

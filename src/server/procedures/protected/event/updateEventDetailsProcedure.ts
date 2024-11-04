@@ -12,6 +12,7 @@ export default protectedProcedure
       input.event_start_hour,
       input.event_duration,
       input.event_challenges_enabled,
+      input.event_team_creation_enabled,
     );
 
     return {
