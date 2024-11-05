@@ -10,8 +10,8 @@ import { type Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "Challenges | HackPSH",
-  description: "Pick a challenge to solve to gain points!",
+  title: "Dashboard | HackPSH",
+  description: "View challenges and your team information.",
 };
 
 export default async function ChallengesPage() {

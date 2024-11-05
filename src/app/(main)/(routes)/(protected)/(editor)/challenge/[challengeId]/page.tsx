@@ -2,6 +2,12 @@ import ChallengeContentPage from "@/app/_components/challenges/challenge-content
 import { serverTRPC } from "@/app/_trpc/server";
 import { composeServerComponentClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Challenge | HackPSH",
+  description: "Run and submit your code.",
+};
 
 export default async function ChallengePage({
   params,
