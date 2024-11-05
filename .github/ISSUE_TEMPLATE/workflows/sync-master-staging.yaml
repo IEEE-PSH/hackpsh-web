@@ -1,0 +1,34 @@
+# This is a workflow for GitHub Actions to automatically
+# sync code from the master branch to "master-staging".
+
+# This is to allow Vercel to run preview deployments (for testing)
+# on master-staging since Vercel does not allow preview branches
+# on master.
+
+name: Sync master to master-staging
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  sync-branches:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout master branch
+        uses: actions/checkout@v3
+        with:
+          ref: master
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync with master-staging
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git checkout -B master-staging
+          git push origin master-staging --force
