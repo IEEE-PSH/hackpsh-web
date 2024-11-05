@@ -3,7 +3,7 @@ import OnboardingSchoolDetailsForm from "@/app/_components/onboarding/school-det
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Onboarding | Personal Details | HackPSH",
+  title: "Onboarding | School Details | HackPSH",
   description: "Welcome to HackPSH!",
 };
 
