@@ -7,6 +7,9 @@
 
 name: Sync master to master-staging
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
