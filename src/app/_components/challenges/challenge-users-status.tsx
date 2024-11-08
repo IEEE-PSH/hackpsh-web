@@ -22,11 +22,12 @@ export default function ChallengeUsersStatus({
 }: {
   userDisplayName: string;
   challengeId: number;
-  teamName: string;
+  teamName: string | null;
 }) {
   const [currentUsers, setCurrentUsers] = useState<TUserTracker>([]);
 
   useEffect(() => {
+    if (!teamName) return;
     const supabase = createClientComponentClient();
     const room = supabase.channel(`${teamName}-room-${challengeId}`);
     room
@@ -58,8 +59,8 @@ export default function ChallengeUsersStatus({
     };
   }, []);
 
-  return (
-    <>
+  if (teamName) {
+    return (
       <div className="fixed bottom-4 right-4 z-[50] flex">
         {currentUsers.map((user, i) => (
           <HoverCard key={`user-${i}`}>
@@ -74,6 +75,6 @@ export default function ChallengeUsersStatus({
           </HoverCard>
         ))}
       </div>
-    </>
-  );
+    );
+  }
 }

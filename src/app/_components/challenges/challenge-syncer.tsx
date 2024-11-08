@@ -1,6 +1,6 @@
 "use client";
 import { trpc } from "@/app/_trpc/react";
-import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
@@ -17,7 +17,7 @@ export default function ChallengeSyncer({
 }: {
   challengeId: number;
   challengePoints: number;
-  teamName: string;
+  teamName: string | null;
   userUUID: string;
   setSolved: Dispatch<SetStateAction<boolean>>;
   setValue: Dispatch<SetStateAction<string>>;
@@ -47,6 +47,7 @@ export default function ChallengeSyncer({
 
   //respond to postgres changes if solved challenge inserted in db
   useEffect(() => {
+    if (!teamName) return;
     const channel = supabase.channel(`${teamName}-challenge-${challengeId}`).on(
       "postgres_changes",
       {
