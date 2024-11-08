@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/app/_components/ui/button";
-import { trpc } from "@/app/_trpc/react";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import ProtectedEditorSiteHeader from "../nav/protected-editor-site-header";

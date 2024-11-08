@@ -19,7 +19,15 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export default function TeamCreateDialog({ userRole }: { userRole: string }) {
+export default function TeamCreateDialog({
+  userRole,
+  getTeams,
+  getUserClientData,
+}: {
+  userRole: string;
+  getTeams: () => void;
+  getUserClientData: () => void;
+}) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   const { data: is_team_creation_enabled } =
@@ -38,7 +46,11 @@ export default function TeamCreateDialog({ userRole }: { userRole: string }) {
           <DialogHeader>
             <DialogTitle>Create a team</DialogTitle>
           </DialogHeader>
-          <CreateTeamForm setDialogOpen={setDialogOpen} />
+          <CreateTeamForm
+            setDialogOpen={setDialogOpen}
+            getTeams={getTeams}
+            getUserClientData={getUserClientData}
+          />
         </DialogContent>
       </Dialog>
     );
@@ -51,7 +63,11 @@ export default function TeamCreateDialog({ userRole }: { userRole: string }) {
             <DialogHeader>
               <DialogTitle>Create a team</DialogTitle>
             </DialogHeader>
-            <CreateTeamForm setDialogOpen={setDialogOpen} />
+            <CreateTeamForm
+              setDialogOpen={setDialogOpen}
+              getTeams={getTeams}
+              getUserClientData={getUserClientData}
+            />
           </DialogContent>
         </Dialog>
         <TooltipProvider>

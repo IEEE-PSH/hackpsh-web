@@ -704,3 +704,18 @@ export async function kickUserFromTeam(db: Database, target_uuid: string) {
     });
   }
 }
+
+export async function doesTeamExist(db: Database, team_uuid: string) {
+  try {
+    const result = await db.query.app_team.findFirst({
+      where: (team_data, { eq }) => eq(team_data.team_uuid, team_uuid),
+    });
+    if (result) return true;
+    else return false;
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}

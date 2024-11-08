@@ -19,7 +19,6 @@ import { Input } from "@/app/_components/ui/input";
 import { Button } from "@/app/_components/ui/button";
 import { Icons } from "@/app/_components/ui/icons";
 import { trpc } from "@/app/_trpc/react";
-import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
@@ -28,11 +27,14 @@ import { type Dispatch, type SetStateAction } from "react";
 export default function JoinTeamForm({
   teamName,
   setDialogOpen,
+  getTeams,
+  getUserClientData,
 }: {
   teamName: string;
   setDialogOpen: Dispatch<SetStateAction<boolean>>;
+  getTeams: () => void;
+  getUserClientData: () => void;
 }) {
-  const router = useRouter();
   const supabase = createClientComponentClient();
 
   const form = useForm<TJoinTeamForm>({
@@ -41,7 +43,8 @@ export default function JoinTeamForm({
 
   const joinTeamMutation = trpc.team.join_team.useMutation({
     onSuccess: () => {
-      router.refresh();
+      getTeams();
+      getUserClientData();
       setDialogOpen(false);
       toast({
         variant: "default",

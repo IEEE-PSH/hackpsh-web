@@ -9,6 +9,7 @@ import updateTeamDetailsProcedure from "../procedures/protected/team/updateTeamD
 import getTeamsProcedure from "../procedures/protected/team/getTeamsProcedure";
 import updateTeamLeaderProcedure from "../procedures/protected/team/updateTeamLeaderProcedure";
 import kickUserFromTeamProcedure from "../procedures/protected/team/kickUserFromTeamProcedure";
+import doesTeamExistProcedure from "../procedures/protected/team/doesTeamExistProcedure";
 
 export const teamRouter = createTRPCRouter({
   join_team: joinTeamProcedure,
@@ -21,4 +22,5 @@ export const teamRouter = createTRPCRouter({
   get_teams: getTeamsProcedure,
   update_team_leader: updateTeamLeaderProcedure,
   kick_user: kickUserFromTeamProcedure,
+  does_team_exist: doesTeamExistProcedure,
 });

@@ -11,19 +11,27 @@ import {
   DialogTrigger,
 } from "@/app/_components/ui/dialog";
 import { DoorClosed } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { toast } from "../ui/use-toast";
 import { trpc } from "@/app/_trpc/react";
 import { siteConfig } from "@/app/_config/site";
 
-export default function TeamLeaveDialog({ userUUID }: { userUUID: string }) {
+export default function TeamLeaveDialog({
+  userUUID,
+  getTeams,
+  getUserClientData,
+}: {
+  userUUID: string;
+  getTeams: () => void;
+  getUserClientData: () => void;
+}) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const router = useRouter();
 
   const leaveTeamMutation = trpc.team.leave_team.useMutation({
     onSuccess: () => {
-      router.refresh();
+      getTeams();
+      getUserClientData();
       setDialogOpen(false);
       toast({
         variant: "default",
