@@ -27,11 +27,9 @@ import { type Dispatch, type SetStateAction } from "react";
 export default function CreateTeamForm({
   setDialogOpen,
   getTeams,
-  getUserClientData,
 }: {
   setDialogOpen: Dispatch<SetStateAction<boolean>>;
   getTeams: () => void;
-  getUserClientData: () => void;
 }) {
   const supabase = createClientComponentClient();
 
@@ -42,7 +40,6 @@ export default function CreateTeamForm({
   const createTeamMutation = trpc.team.create_team.useMutation({
     onSuccess: () => {
       getTeams();
-      getUserClientData();
       setDialogOpen(false);
     },
     onError: (error) => {

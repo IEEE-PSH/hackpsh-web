@@ -20,18 +20,15 @@ import { siteConfig } from "@/app/_config/site";
 export default function TeamLeaveDialog({
   userUUID,
   getTeams,
-  getUserClientData,
 }: {
   userUUID: string;
   getTeams: () => void;
-  getUserClientData: () => void;
 }) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   const leaveTeamMutation = trpc.team.leave_team.useMutation({
     onSuccess: () => {
       getTeams();
-      getUserClientData();
       setDialogOpen(false);
       toast({
         variant: "default",

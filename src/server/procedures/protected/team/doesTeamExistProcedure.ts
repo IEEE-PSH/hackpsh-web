@@ -5,5 +5,6 @@ import { LookupTeamSchema } from "@/server/zod-schemas/user";
 export default protectedProcedure
   .input(LookupTeamSchema)
   .query(async ({ ctx, input }) => {
-    return await doesTeamExist(ctx.db, input.team_uuid);
+    const result = await doesTeamExist(ctx.db, input.team_uuid);
+    return result;
   });

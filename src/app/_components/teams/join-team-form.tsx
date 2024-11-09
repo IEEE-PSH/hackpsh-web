@@ -28,12 +28,10 @@ export default function JoinTeamForm({
   teamName,
   setDialogOpen,
   getTeams,
-  getUserClientData,
 }: {
   teamName: string;
   setDialogOpen: Dispatch<SetStateAction<boolean>>;
   getTeams: () => void;
-  getUserClientData: () => void;
 }) {
   const supabase = createClientComponentClient();
 
@@ -44,7 +42,6 @@ export default function JoinTeamForm({
   const joinTeamMutation = trpc.team.join_team.useMutation({
     onSuccess: () => {
       getTeams();
-      getUserClientData();
       setDialogOpen(false);
       toast({
         variant: "default",

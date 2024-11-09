@@ -22,11 +22,9 @@ import {
 export default function TeamCreateDialog({
   userRole,
   getTeams,
-  getUserClientData,
 }: {
   userRole: string;
   getTeams: () => void;
-  getUserClientData: () => void;
 }) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
@@ -46,11 +44,7 @@ export default function TeamCreateDialog({
           <DialogHeader>
             <DialogTitle>Create a team</DialogTitle>
           </DialogHeader>
-          <CreateTeamForm
-            setDialogOpen={setDialogOpen}
-            getTeams={getTeams}
-            getUserClientData={getUserClientData}
-          />
+          <CreateTeamForm setDialogOpen={setDialogOpen} getTeams={getTeams} />
         </DialogContent>
       </Dialog>
     );
@@ -63,11 +57,7 @@ export default function TeamCreateDialog({
             <DialogHeader>
               <DialogTitle>Create a team</DialogTitle>
             </DialogHeader>
-            <CreateTeamForm
-              setDialogOpen={setDialogOpen}
-              getTeams={getTeams}
-              getUserClientData={getUserClientData}
-            />
+            <CreateTeamForm setDialogOpen={setDialogOpen} getTeams={getTeams} />
           </DialogContent>
         </Dialog>
         <TooltipProvider>

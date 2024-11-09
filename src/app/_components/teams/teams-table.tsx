@@ -51,7 +51,7 @@ export default function TeamsTable({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
-  const [teamUUID, setTeamUUID] = useState<string | null>(null);
+  const [teamUUID, setTeamUUID] = useState<string>("");
   const [teamsData, setTeamsData] = useState<Teams>(data);
   const [userTeamUUID, setUserTeamUUID] = useState<string | null>(
     userData!.user_team_uuid,
@@ -71,52 +71,34 @@ export default function TeamsTable({
     },
   });
 
-  const {
-    data: teams,
-    isRefetching,
-    refetch: getTeams,
-  } = trpc.team.get_teams.useQuery(undefined, { enabled: false });
-
-  const { data: userClientData, refetch: getUserClientData } =
-    trpc.user.get_user_info.useQuery(
-      {
-        user_uuid: userData!.user_uuid,
+  const { isRefetching, refetch: getTeams } = trpc.team.get_teams.useQuery(
+    undefined,
+    {
+      enabled: false,
+      onSuccess: (teams) => {
+        void (async () => {
+          await getUserClientData();
+          setTeamsData(teams);
+        })();
       },
-      { enabled: false },
-    );
+    },
+  );
 
-  useEffect(() => {
-    if (teams) setTeamsData(teams);
-    if (userClientData?.user_team_uuid)
-      setUserTeamUUID(userClientData.user_team_uuid);
-    else {
-      setUserTeamUUID(null);
-    }
-  }, [teams, userClientData]);
-
-  const { data: isTeam, refetch: checkTeamExists } =
-    trpc.team.does_team_exist.useQuery(
-      {
-        team_uuid: teamUUID ?? "",
+  const { refetch: getUserClientData } = trpc.user.get_user_info.useQuery(
+    {
+      user_uuid: userData!.user_uuid,
+    },
+    {
+      enabled: false,
+      onSuccess: (userClientData) => {
+        setUserTeamUUID(userClientData.user_team_uuid);
       },
-      { enabled: false },
-    );
+      onError: () => {
+        setUserTeamUUID(null);
+      },
+    },
+  );
 
-  function attemptViewTeam(teamName: string) {
-    void checkTeamExists();
-    if (isTeam) {
-      setSheetOpen(true);
-      setTeamUUID(teamName);
-    } else {
-      void getTeams();
-      void getUserClientData();
-      toast({
-        variant: "default",
-        description: `Team ${teamName} no longer exists.`,
-        duration: 3000,
-      });
-    }
-  }
   return (
     <>
       {teamUUID && (
@@ -124,6 +106,7 @@ export default function TeamsTable({
           sheetOpen={sheetOpen}
           setSheetOpen={setSheetOpen}
           teamUUID={teamUUID}
+          getTeams={getTeams}
         />
       )}
 
@@ -161,7 +144,6 @@ export default function TeamsTable({
                 <TeamLeaveDialog
                   userUUID={userData!.user_uuid}
                   getTeams={getTeams}
-                  getUserClientData={getUserClientData}
                 />
                 <Link href={siteConfig.paths.team}>
                   <Button variant="outline" className="ml-4 gap-2">
@@ -174,7 +156,6 @@ export default function TeamsTable({
               <TeamCreateDialog
                 userRole={userData!.user_role}
                 getTeams={getTeams}
-                getUserClientData={getUserClientData}
               />
             )}
           </div>
@@ -219,7 +200,6 @@ export default function TeamsTable({
                                 <TeamJoinDialog
                                   teamName={row.original.team_name}
                                   getTeams={getTeams}
-                                  getUserClientData={getUserClientData}
                                 />
                               )}
 
@@ -227,7 +207,8 @@ export default function TeamsTable({
                                 variant="secondary"
                                 className="h-8"
                                 onClick={() => {
-                                  attemptViewTeam(row.original.team_name);
+                                  setTeamUUID(row.original.team_uuid);
+                                  setSheetOpen(true);
                                 }}
                               >
                                 View
@@ -236,7 +217,6 @@ export default function TeamsTable({
                                 <TeamDeleteDialog
                                   teamUUID={row.original.team_uuid}
                                   getTeams={getTeams}
-                                  getUserClientData={getUserClientData}
                                 />
                               )}
                             </div>
