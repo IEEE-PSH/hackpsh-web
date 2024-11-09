@@ -23,6 +23,7 @@ import { useForm } from "react-hook-form";
 import { Icons } from "../ui/icons";
 import { cn } from "@/app/_lib/client-utils";
 import { useRouter } from "next/navigation";
+import { siteConfig } from "@/app/_config/site";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -43,8 +44,8 @@ export function CreateAnnouncementPostForm({
           title: "Created a new announcement.",
           duration: 6000,
         });
-        router.refresh();
         router.back();
+        router.refresh();
       },
       onError: () => {
         toast({

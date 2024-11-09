@@ -59,8 +59,8 @@ export default function EditAnnouncementPostForm({
           title: "",
           content: "",
         });
-        router.refresh();
         router.back();
+        router.refresh();
       },
       onError: () => {
         toast({

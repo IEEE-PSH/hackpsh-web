@@ -44,20 +44,18 @@ import {
 } from "@/app/_lib/zod-schemas/forms/challenges";
 import { siteConfig } from "@/app/_config/site";
 import { Card } from "../ui/card";
-import { TEditChallengeData } from "@/server/dao/challenges";
-import { TDifficulties } from "@/db/drizzle/startup_seed";
+import { type TEditChallengeData } from "@/server/dao/challenges";
+import { type TDifficulties } from "@/db/drizzle/startup_seed";
 import ChallengeDeleteDialog from "../challenges/challenge-delete-dialog";
 import Link from "next/link";
 
 type CreateChallengeFormProps = React.HTMLAttributes<HTMLDivElement>;
 type EditChallengeFormProps = {
   challengeData: TEditChallengeData;
-  userUUID: string;
 };
 
 export function EditChallengeForm({
   challengeData,
-  userUUID,
   className,
   ...props
 }: CreateChallengeFormProps & EditChallengeFormProps) {
@@ -89,8 +87,8 @@ export function EditChallengeForm({
         title: "Challenge updated.",
         duration: 4000,
       });
-      router.refresh();
       router.back();
+      router.refresh();
     },
     onError: (error) => {
       toast({
