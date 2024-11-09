@@ -232,8 +232,8 @@ function HomePrizes() {
               Attend HackPSH to earn prizes, participate in raffles, and much
               more!
             </CardDescription>
-            <CardContent className="mx-auto">
-              <div className="my-14 flex scale-[0.85] flex-row space-x-4 sm:scale-[1]">
+            <CardContent className="mx-auto p-0">
+              <div className="my-14 flex scale-[0.75] flex-row space-x-4 sm:scale-[1]">
                 <div className="h-42 flex w-28 rotate-[2deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
                   <Medal className="h-8 w-8" />
                   <p className="font-bold">2nd Place</p>
