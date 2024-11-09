@@ -35,6 +35,7 @@ import { type Teams } from "@/server/dao/team";
 import { Icons } from "../ui/icons";
 import { trpc } from "@/app/_trpc/react";
 import { toast } from "../ui/use-toast";
+import { useRouter } from "next/navigation";
 
 interface TeamsTableProps {
   data: Teams;
@@ -71,6 +72,7 @@ export default function TeamsTable({
     },
   });
 
+  const router = useRouter();
   const { isRefetching, refetch: getTeams } = trpc.team.get_teams.useQuery(
     undefined,
     {
@@ -79,6 +81,7 @@ export default function TeamsTable({
         void (async () => {
           await getUserClientData();
           setTeamsData(teams);
+          router.refresh();
         })();
       },
     },
