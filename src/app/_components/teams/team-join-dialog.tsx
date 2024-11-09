@@ -14,13 +14,11 @@ import JoinTeamForm from "./join-team-form";
 type TeamJoinDialogProps = {
   teamName: string;
   getTeams: () => void;
-  getUserClientData: () => void;
 };
 
 export default function TeamJoinDialog({
   teamName,
   getTeams,
-  getUserClientData,
 }: TeamJoinDialogProps) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
@@ -37,7 +35,6 @@ export default function TeamJoinDialog({
           setDialogOpen={setDialogOpen}
           teamName={teamName}
           getTeams={getTeams}
-          getUserClientData={getUserClientData}
         />
       </DialogContent>
     </Dialog>
