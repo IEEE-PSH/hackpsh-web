@@ -1,10 +1,5 @@
 "use client";
 
-import { cn } from "@/app/_lib/client-utils";
-import {
-  PersonalDetailsFormSchema,
-  type TPersonalDetailsForm,
-} from "@/app/_lib/zod-schemas/forms/onboarding/personal-details";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {

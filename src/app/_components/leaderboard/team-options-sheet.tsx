@@ -1,13 +1,7 @@
 "use client";
 
 import { Button } from "../ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/sheet";
+import { Sheet, SheetContent, SheetHeader } from "../ui/sheet";
 import {
   Form,
   FormDescription,
@@ -30,7 +24,6 @@ import {
 import { trpc } from "@/app/_trpc/react";
 import { type TUserInfo } from "@/server/dao/user";
 import { Skeleton } from "../ui/skeleton";
-import { Pencil } from "lucide-react";
 
 type TeamOptionsSheet = {
   sheetOpen: boolean;
