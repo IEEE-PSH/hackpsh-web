@@ -22,13 +22,13 @@ export default function TeamLeaveDialog({
   getTeams,
 }: {
   userUUID: string;
-  getTeams: () => void;
+  getTeams?: () => void;
 }) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   const leaveTeamMutation = trpc.team.leave_team.useMutation({
     onSuccess: () => {
-      getTeams();
+      if (getTeams) getTeams();
       setDialogOpen(false);
       toast({
         variant: "default",
