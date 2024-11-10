@@ -100,11 +100,11 @@ export default function CreateTeamForm({
           name="team_join_code"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Team join code</FormLabel>
+              <FormLabel>Team join code (optional)</FormLabel>
               <FormControl>
                 <Input
                   className="border-muted-foreground"
-                  placeholder="ASSEMBLE"
+                  placeholder="assemble"
                   {...field}
                   value={field.value ?? ""}
                 />
