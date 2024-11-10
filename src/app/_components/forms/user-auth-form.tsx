@@ -33,6 +33,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       provider: "google",
       options: {
         redirectTo: `${baseURL}/api/auth/callback`,
+        queryParams: {
+          prompt: "select_account",
+        },
       },
     });
   }

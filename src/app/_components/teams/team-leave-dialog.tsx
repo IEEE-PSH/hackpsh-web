@@ -17,13 +17,21 @@ import { toast } from "../ui/use-toast";
 import { trpc } from "@/app/_trpc/react";
 import { siteConfig } from "@/app/_config/site";
 
-export default function TeamLeaveDialog({ userUUID }: { userUUID: string }) {
+export default function TeamLeaveDialog({
+  userUUID,
+  getTeams,
+}: {
+  userUUID: string;
+  getTeams?: () => void;
+}) {
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+
   const router = useRouter();
 
   const leaveTeamMutation = trpc.team.leave_team.useMutation({
     onSuccess: () => {
-      router.refresh();
+      if (getTeams) getTeams();
+      else router.refresh();
       setDialogOpen(false);
       toast({
         variant: "default",

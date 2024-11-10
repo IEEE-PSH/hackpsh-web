@@ -25,7 +25,6 @@ type ChallengeNavActionsProps = {
   language: "python" | "cpp" | "javascript";
   userUUID: string;
   solved: boolean;
-  checkedSolvedStatus: boolean;
   setLanguage: Dispatch<SetStateAction<TLanguages>>;
   setOutputData: Dispatch<SetStateAction<TSubmitData | null>>;
 };
@@ -37,7 +36,6 @@ export default function ChallengeNavActions({
   language,
   userUUID,
   solved,
-  checkedSolvedStatus,
   setLanguage,
   setOutputData,
 }: ChallengeNavActionsProps) {
@@ -115,65 +113,61 @@ export default function ChallengeNavActions({
     user_uuid: userUUID,
   });
 
-  if (checkedSolvedStatus) {
-    return (
-      <div className="ml-auto flex space-x-4">
-        {role?.get_user_role !== "participant" && (
-          <Button className="p-2 md:p-4" variant="secondary" asChild>
-            <Link href={siteConfig.paths.edit_challenge + "/" + challengeId}>
-              <Edit />
-              <span className="ml-4 hidden md:block">Edit</span>
-            </Link>
-          </Button>
-        )}
+  return (
+    <div className="ml-auto flex space-x-4">
+      {role?.get_user_role !== "participant" && (
+        <Button className="p-2 md:p-4" variant="secondary" asChild>
+          <Link href={siteConfig.paths.edit_challenge + "/" + challengeId}>
+            <Edit />
+            <span className="ml-4 hidden md:block">Edit</span>
+          </Link>
+        </Button>
+      )}
 
-        {solved ? (
-          <Button disabled={true}>
-            <Check className="mr-2" />
-            <span>Solved </span>
+      {solved ? (
+        <Button disabled={true}>
+          <Check className="mr-2" />
+          <span>Solved </span>
+        </Button>
+      ) : (
+        <>
+          <Select
+            value={language}
+            onValueChange={(language: TLanguages) => {
+              setLanguage(language);
+              localStorage.setItem("hackpsh-stored-language", language);
+            }}
+          >
+            <SelectTrigger className="w-32">
+              <SelectValue defaultValue="python" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="python">Python</SelectItem>
+                <SelectItem value="cpp">C++</SelectItem>
+                <SelectItem value="javascript">JavaScript</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Button
+            className="p-2 md:p-4"
+            variant="secondary"
+            disabled={isRunning}
+            onClick={() => runCode()}
+          >
+            <Play />
+            <span className="ml-4 hidden md:block">Run</span>
           </Button>
-        ) : (
-          <>
-            <Select
-              value={language}
-              onValueChange={(language: TLanguages) => {
-                setLanguage(language);
-                localStorage.setItem("hackpsh-stored-language", language);
-              }}
-            >
-              <SelectTrigger className="w-32">
-                <SelectValue defaultValue="python" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="python">Python</SelectItem>
-                  <SelectItem value="cpp">C++</SelectItem>
-                  <SelectItem value="javascript">JavaScript</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-            <Button
-              className="p-2 md:p-4"
-              variant="secondary"
-              disabled={isRunning}
-              onClick={() => runCode()}
-            >
-              <Play />
-              <span className="ml-4 hidden md:block">Run</span>
-            </Button>
-            <Button
-              className="p-2 md:p-4"
-              disabled={isSubmitting}
-              onClick={() => attemptSubmitCode()}
-            >
-              <Send />
-              <span className="ml-4 hidden md:block">Submit</span>
-            </Button>
-          </>
-        )}
-      </div>
-    );
-  }
-
-  return <Skeleton className="h-10 w-full md:w-56" />;
+          <Button
+            className="p-2 md:p-4"
+            disabled={isSubmitting}
+            onClick={() => attemptSubmitCode()}
+          >
+            <Send />
+            <span className="ml-4 hidden md:block">Submit</span>
+          </Button>
+        </>
+      )}
+    </div>
+  );
 }

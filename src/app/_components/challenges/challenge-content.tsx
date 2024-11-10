@@ -1,7 +1,5 @@
 "use client";
 import { Button } from "@/app/_components/ui/button";
-import { cn } from "@/app/_lib/client-utils";
-import { trpc } from "@/app/_trpc/react";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import ProtectedEditorSiteHeader from "../nav/protected-editor-site-header";
@@ -13,33 +11,35 @@ import {
 } from "@/app/_lib/zod-schemas/forms/challenges";
 import ChallengeNavActions from "./challenge-nav-actions";
 import ChallengeContentInfo from "./challenge-content-info";
-import ChallengeEditor from "./challenge-editor";
+import ChallengeEditorWrapper from "./challenge-editor";
 import { type TLanguages } from "@/server/zod-schemas/challenges";
 import ChallengeUsersStatus from "./challenge-users-status";
-import ChallengeBooter from "./challenge-booter";
 import ChallengeSyncer from "./challenge-syncer";
 import { type TSubmitData } from "@/server/procedures/protected/challenges/submitCodeProcedure";
 import Link from "next/link";
+import { type TChallengeData } from "@/server/dao/challenges";
 
 export default function ChallengeContentPage({
   userDisplayName,
   userEmailAddress,
-  challengeId,
+  challengeData,
   userUUID,
   teamName,
+  isSolved,
 }: {
   userDisplayName: string;
   userEmailAddress: string;
-  challengeId: number;
+  challengeData: TChallengeData;
   userUUID: string;
   teamName: string | null;
+  isSolved: boolean;
 }) {
   const [value, setValue] = useState("");
   const [outputData, setOutputData] = useState<TSubmitData | null>(null);
   const [language, setLanguage] = useState<TLanguages>("python");
   const [header, setHeader] = useState("");
   const [presetHeader, setPresetHeader] = useState("");
-  const [solved, setSolved] = useState(false);
+  const [solved, setSolved] = useState(isSolved);
 
   useEffect(() => {
     const storedLanguage = localStorage.getItem(
@@ -47,27 +47,6 @@ export default function ChallengeContentPage({
     ) as TLanguages;
     setLanguage(storedLanguage ?? "python");
   }, []);
-
-  const { data: challengeData, isSuccess } =
-    trpc.challenges.get_challenge.useQuery({
-      challenge_id: challengeId,
-    });
-
-  const { isFetchedAfterMount: checkedSolvedStatus } =
-    trpc.challenges.is_solved_challenge.useQuery(
-      {
-        challenge_id: challengeId,
-        user_uuid: userUUID,
-      },
-      {
-        onSuccess: (isSolved: boolean) => {
-          if (isSolved) {
-            router.refresh();
-            setSolved(true);
-          }
-        },
-      },
-    );
 
   useEffect(() => {
     if (challengeData) {
@@ -82,18 +61,15 @@ export default function ChallengeContentPage({
   const router = useRouter();
   return (
     <>
-      <ChallengeBooter />
-      {teamName && (
-        <ChallengeSyncer
-          challengeId={challengeId}
-          challengePoints={challengeData?.challenge_points ?? 0}
-          teamName={teamName}
-          userUUID={userUUID}
-          setSolved={setSolved}
-          setValue={setValue}
-          setLanguage={setLanguage}
-        />
-      )}
+      <ChallengeSyncer
+        challengeId={challengeData!.challenge_id}
+        challengePoints={challengeData!.challenge_points}
+        teamName={teamName ?? null}
+        userUUID={userUUID}
+        setSolved={setSolved}
+        setValue={setValue}
+        setLanguage={setLanguage}
+      />
 
       <ProtectedEditorSiteHeader
         userDisplayName={userDisplayName}
@@ -111,50 +87,36 @@ export default function ChallengeContentPage({
         </Button>
         <ChallengeNavActions
           value={value}
-          challengeId={challengeId}
+          challengeId={challengeData!.challenge_id}
           header={header}
           language={language}
           userUUID={userUUID}
           solved={solved}
-          checkedSolvedStatus={checkedSolvedStatus}
           setLanguage={setLanguage}
           setOutputData={setOutputData}
         />
       </ProtectedEditorSiteHeader>
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        <ChallengeContentInfo
-          challengeData={challengeData}
-          isSuccess={isSuccess}
-        />
-        <div className="flex flex-col">
-          <ChallengeEditor
-            value={value}
-            setValue={setValue}
-            language={language}
-            setLanguage={setLanguage}
-            header={presetHeader}
-            solved={solved}
-            userUUID={userUUID}
-            challengeId={challengeId}
-          />
 
-          <pre
-            className={cn(
-              "w-full whitespace-pre-wrap text-wrap break-words bg-background-variant p-4 font-mono",
-              outputData?.type == "error" ? "text-red-400" : "",
-            )}
-          >
-            {outputData?.output}
-          </pre>
-        </div>
-      </div>
-      {teamName && (
-        <ChallengeUsersStatus
-          userDisplayName={userDisplayName}
-          challengeId={challengeId}
-          teamName={teamName}
+      <div className="grid grid-cols-1 md:grid-cols-2">
+        <ChallengeContentInfo challengeData={challengeData} isSuccess={true} />
+        <ChallengeEditorWrapper
+          value={value}
+          setValue={setValue}
+          language={language}
+          setLanguage={setLanguage}
+          header={presetHeader}
+          solved={solved}
+          userUUID={userUUID}
+          challengeId={challengeData!.challenge_id}
+          outputData={outputData!}
         />
-      )}
+      </div>
+
+      <ChallengeUsersStatus
+        userDisplayName={userDisplayName}
+        challengeId={challengeData!.challenge_id}
+        teamName={teamName ?? null}
+      />
     </>
   );
 }

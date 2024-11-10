@@ -19,7 +19,7 @@ import {
   TableRow,
 } from "@/app/_components/ui/table";
 import { cn } from "@/app/_lib/client-utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TUserInfo, type AllUsers } from "@/server/dao/user";
 import { columns } from "@/app/_components/settings/user-columns";
 import UserOptionsSheet from "./user-options-sheet";
@@ -47,13 +47,12 @@ export default function UserTable({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [currRole, setCurrRole] = useState<TUserRole>("participant");
+  const [currUsers, setCurrUsers] = useState<AllUsers>(data);
 
-  const { data: currData = data } = trpc.user.get_users.useQuery({
-    role: currRole,
-  });
+  const { data: currData = data } = trpc.user.get_users.useQuery();
 
   const table = useReactTable({
-    data: currData,
+    data: currUsers,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -65,6 +64,16 @@ export default function UserTable({
       columnFilters,
     },
   });
+
+  useEffect(() => {
+    if (currData) {
+      const usersWithRole = currData.filter(
+        (user) => user.user_role === currRole,
+      );
+      setCurrUsers(usersWithRole);
+    }
+    console.log(currUsers);
+  }, [currData, currRole]);
 
   return (
     <div className={cn("w-full", className)}>

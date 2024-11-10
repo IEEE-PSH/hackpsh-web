@@ -12,24 +12,21 @@ import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import { trpc } from "@/app/_trpc/react";
-import { type TUserInfo } from "@/server/dao/user";
-import { useRouter } from "next/navigation";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Trash } from "lucide-react";
 
-type TeamOptionsSheet = {
+type TeamDeleteDialogProps = {
   teamUUID: string;
-  userData: TUserInfo;
+  getTeams: () => void;
 };
 
 export default function TeamDeleteDialog({
   teamUUID,
-  userData,
-}: TeamOptionsSheet) {
-  const router = useRouter();
+  getTeams,
+}: TeamDeleteDialogProps) {
   const deleteTeamMutation = trpc.team.delete_team.useMutation({
     onSuccess: () => {
-      router.refresh();
+      getTeams();
       setDialogOpen(false);
       toast({
         variant: "success",

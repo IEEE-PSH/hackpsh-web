@@ -36,14 +36,6 @@ export function ProtectedMobileNav() {
 
         <div className="my-4 flex h-full flex-col space-y-3 pb-10 pl-6 text-base">
           <MobileLink
-            href={siteConfig.paths.home}
-            onOpenChange={setIsOpen}
-            scroll={false}
-            className="hover:underline"
-          >
-            Home
-          </MobileLink>
-          <MobileLink
             href={siteConfig.paths.dashboard}
             onOpenChange={setIsOpen}
             scroll={false}

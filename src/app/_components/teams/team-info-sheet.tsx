@@ -2,23 +2,59 @@
 
 import { trpc } from "@/app/_trpc/react";
 import { Sheet, SheetContent, SheetHeader } from "../ui/sheet";
-import { type Dispatch, type SetStateAction } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 import { Skeleton } from "../ui/skeleton";
+import { toast } from "../ui/use-toast";
 
 type TeamInfoSheetProps = {
   sheetOpen: boolean;
   setSheetOpen: Dispatch<SetStateAction<boolean>>;
   teamUUID: string;
+  getTeams: () => void;
 };
 
 export default function TeamInfoSheet({
   sheetOpen,
   setSheetOpen,
   teamUUID,
+  getTeams,
 }: TeamInfoSheetProps) {
-  const { data: teamData, isSuccess } = trpc.team.get_team_info.useQuery({
-    team_uuid: teamUUID,
-  });
+  const {
+    data: teamData,
+    refetch: getTeamData,
+    isSuccess,
+  } = trpc.team.get_team_info.useQuery(
+    {
+      team_uuid: teamUUID,
+    },
+    { enabled: false },
+  );
+
+  useEffect(() => {
+    void checkTeamExists();
+    setSheetOpen(true);
+  }, [teamUUID]);
+
+  const { refetch: checkTeamExists } = trpc.team.does_team_exist.useQuery(
+    { team_uuid: teamUUID },
+    {
+      enabled: false,
+      retry: false,
+      onSuccess: (isTeam) => {
+        if (isTeam) {
+          void getTeamData();
+        } else {
+          setSheetOpen(false);
+          void getTeams();
+          toast({
+            variant: "default",
+            description: `Team no longer exists.`,
+            duration: 3000,
+          });
+        }
+      },
+    },
+  );
 
   return (
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>

@@ -68,8 +68,8 @@ export function CreateChallengeForm({
         description: "You have successfully created a challenge.",
         duration: 4000,
       });
-      router.refresh();
       router.back();
+      router.refresh();
     },
     onError: (error) => {
       toast({

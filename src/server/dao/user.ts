@@ -577,7 +577,7 @@ export async function updateUserOnboardingStatus(
   }
 }
 
-export async function getUsers(db: Database, role: TUserRole) {
+export async function getUsers(db: Database) {
   try {
     const result = await db
       .select({
@@ -586,8 +586,7 @@ export async function getUsers(db: Database, role: TUserRole) {
         user_role: app_user_profile.user_role,
         user_uuid: app_user_profile.user_uuid,
       })
-      .from(app_user_profile)
-      .where(eq(app_user_profile.user_role, role));
+      .from(app_user_profile);
 
     return result;
   } catch (error) {
@@ -697,6 +696,21 @@ export async function kickUserFromTeam(db: Database, target_uuid: string) {
         user_team_uuid: null,
       })
       .where(eq(app_user_profile.user_uuid, target_uuid));
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export async function doesTeamExist(db: Database, team_uuid: string) {
+  try {
+    const result = await db.query.app_team.findFirst({
+      where: (team_data, { eq }) => eq(team_data.team_uuid, team_uuid),
+    });
+    if (result) return true;
+    else return false;
   } catch (error) {
     throw new TRPCError({
       message: "The database has encountered some issues.",

@@ -260,11 +260,17 @@ export async function joinTeam(
         .where(eq(app_user_profile.user_uuid, user_uuid));
     } else {
       throw new BaseError({
-        error_title: "Wrong team join code.",
-        error_desc: "The provided team join code is incorrect.",
+        error_title: "Wrong join code.",
+        error_desc: "The provided join code is incorrect.",
       });
     }
   } catch (error) {
+    if (error instanceof BaseError) {
+      throw new TRPCError({
+        message: error.description!,
+        code: "BAD_REQUEST",
+      });
+    }
     throw new TRPCError({
       message: "The database has encountered some issues.",
       code: "INTERNAL_SERVER_ERROR",

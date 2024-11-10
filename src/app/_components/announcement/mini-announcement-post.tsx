@@ -1,11 +1,18 @@
 import { type AnnouncementPost } from "@/server/dao/announcements";
 import { formatDistanceToNow } from "date-fns";
+import { Separator } from "../ui/separator";
 
-type AnnouncementPostProps = {
+type MiniAnnouncementPostProps = {
   postData: AnnouncementPost;
+  index: number;
+  postsLength: number;
 };
 
-export function MiniAnnouncementPost({ postData }: AnnouncementPostProps) {
+export function MiniAnnouncementPost({
+  postData,
+  index,
+  postsLength,
+}: MiniAnnouncementPostProps) {
   const {
     announcement_uuid,
     announcement_created_at,
@@ -19,14 +26,17 @@ export function MiniAnnouncementPost({ postData }: AnnouncementPostProps) {
   );
 
   return (
-    <div key={announcement_uuid} className="w-full overflow-hidden">
-      <p className="mb-3 text-xs text-muted-foreground">{formattedTimeAgo}</p>
-      <p className="mb-1 font-semibold leading-none tracking-tight">
-        {announcement_title}
-      </p>
-      <p className="line-clamp-6 text-ellipsis text-sm">
-        {announcement_content}
-      </p>
-    </div>
+    <>
+      <div key={announcement_uuid} className="w-full overflow-hidden">
+        <p className="mb-3 text-xs text-muted-foreground">{formattedTimeAgo}</p>
+        <p className="mb-1 font-semibold leading-none tracking-tight">
+          {announcement_title}
+        </p>
+        <p className="line-clamp-6 text-ellipsis text-sm">
+          {announcement_content}
+        </p>
+      </div>
+      {index < 2 && index != postsLength - 1 && <Separator />}
+    </>
   );
 }

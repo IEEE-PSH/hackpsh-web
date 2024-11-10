@@ -19,7 +19,6 @@ import { Input } from "@/app/_components/ui/input";
 import { Button } from "@/app/_components/ui/button";
 import { Icons } from "@/app/_components/ui/icons";
 import { trpc } from "@/app/_trpc/react";
-import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
@@ -27,10 +26,11 @@ import { type Dispatch, type SetStateAction } from "react";
 
 export default function CreateTeamForm({
   setDialogOpen,
+  getTeams,
 }: {
   setDialogOpen: Dispatch<SetStateAction<boolean>>;
+  getTeams: () => void;
 }) {
-  const router = useRouter();
   const supabase = createClientComponentClient();
 
   const form = useForm<TCreateTeamForm>({
@@ -39,7 +39,7 @@ export default function CreateTeamForm({
 
   const createTeamMutation = trpc.team.create_team.useMutation({
     onSuccess: () => {
-      router.refresh();
+      getTeams();
       setDialogOpen(false);
     },
     onError: (error) => {
@@ -100,11 +100,11 @@ export default function CreateTeamForm({
           name="team_join_code"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Team join code</FormLabel>
+              <FormLabel>Team join code (optional)</FormLabel>
               <FormControl>
                 <Input
                   className="border-muted-foreground"
-                  placeholder="ASSEMBLE"
+                  placeholder="assemble"
                   {...field}
                   value={field.value ?? ""}
                 />
