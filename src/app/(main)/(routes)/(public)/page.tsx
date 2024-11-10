@@ -104,10 +104,10 @@ function HomeInfo() {
                 asChild
               >
                 <Link href={siteConfig.links.blog} target="_blank">
-                  Penn State Harrisburg&apos;s IEEE Student Chapter
+                  Penn State Harrisburg&apos;s IEEE Student Chapter,
                 </Link>
               </Button>
-              , HackPSH is a dynamic hackathon focused on solving challenges
+              {` `}HackPSH is a dynamic hackathon focused on solving challenges
               dedicated towards subjects within the Computer Science and
               Electrical Engineering disciplines. Participants will be provided
               with Raspbery Pi Pico W kits to build various circuits and engage
