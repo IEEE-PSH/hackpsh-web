@@ -1,5 +1,4 @@
 import { serverTRPC } from "@/app/_trpc/server";
-import { Separator } from "../ui/separator";
 import { MiniAnnouncementPost } from "./mini-announcement-post";
 import { Card, CardContent } from "../ui/card";
 import Link from "next/link";
@@ -14,13 +13,12 @@ export async function MiniAnnouncements({}: React.HTMLAttributes<HTMLDivElement>
   serverAnnouncementPosts.forEach((announcementPostData, i) => {
     if (i < 3)
       postElements.push(
-        <>
-          <MiniAnnouncementPost
-            key={announcementPostData.announcement_uuid}
-            postData={announcementPostData}
-          />
-          {i < 2 && i != serverAnnouncementPosts.length - 1 && <Separator />}
-        </>,
+        <MiniAnnouncementPost
+          key={announcementPostData.announcement_uuid}
+          postData={announcementPostData}
+          index={i}
+          postsLength={serverAnnouncementPosts.length}
+        />,
       );
   });
 
