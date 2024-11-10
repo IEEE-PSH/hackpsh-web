@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function UsersPage() {
-  const data = await serverTRPC.user.get_users.query({ role: "participant" });
+  const data = await serverTRPC.user.get_users.query();
 
   const supabase = composeServerComponentClient();
   const user = await getUser(supabase);
@@ -24,7 +24,10 @@ export default async function UsersPage() {
 
   return (
     <div className="container max-w-5xl">
-      <UserTable data={data} userData={userData} />
+      <UserTable
+        data={data.filter((user) => user.user_role === "participant")}
+        userData={userData}
+      />
     </div>
   );
 }

@@ -577,7 +577,7 @@ export async function updateUserOnboardingStatus(
   }
 }
 
-export async function getUsers(db: Database, role: TUserRole) {
+export async function getUsers(db: Database) {
   try {
     const result = await db
       .select({
@@ -586,8 +586,7 @@ export async function getUsers(db: Database, role: TUserRole) {
         user_role: app_user_profile.user_role,
         user_uuid: app_user_profile.user_uuid,
       })
-      .from(app_user_profile)
-      .where(eq(app_user_profile.user_role, role));
+      .from(app_user_profile);
 
     return result;
   } catch (error) {
