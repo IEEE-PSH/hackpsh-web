@@ -42,7 +42,6 @@ import {
   CreateChallengeFormSchema,
   type TCreateChallengeFormSchema,
 } from "@/app/_lib/zod-schemas/forms/challenges";
-import { siteConfig } from "@/app/_config/site";
 import { Card } from "../ui/card";
 import { type TEditChallengeData } from "@/server/dao/challenges";
 import { type TDifficulties } from "@/db/drizzle/startup_seed";
@@ -265,7 +264,7 @@ export function EditChallengeForm({
                       <p className="underline">Function types:</p>
                       <p>
                         void, boolean, int, intArr, double, doubleArr, string,
-                        stringArr, char, charArr
+                        stringArr, char, charArr, auto
                       </p>
                       <p className="underline">Param types:</p>
                       <p>

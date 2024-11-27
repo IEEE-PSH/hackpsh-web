@@ -125,8 +125,8 @@ export default protectedProcedure
       if (data.run.code == 0) {
         // reformat output because piston api prints arrays with extra spacing
         const formattedOutput = data.run.stdout
-          .replace("[ ", "[")
-          .replace(" ]", "]");
+          .replaceAll("[ ", "[")
+          .replaceAll(" ]", "]");
         return {
           type: "valid",
           output: formattedOutput,

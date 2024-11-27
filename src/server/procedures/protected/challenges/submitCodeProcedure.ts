@@ -114,7 +114,9 @@ export default protectedProcedure
           for (let i = 0; i < n; i++) {
             temp.push(stdOutputs.shift()!);
           }
-          stdOuts.push(temp.join("\n"));
+          stdOuts.push(
+            temp.join("\n").replace(/\[\s+/g, "[").replace(/\s+\]/g, "]"), //remove piston spacing
+          );
         }
 
         //convert cpp brace arrays to bracket arrays

@@ -42,7 +42,6 @@ import {
   CreateChallengeFormSchema,
   type TCreateChallengeFormSchema,
 } from "@/app/_lib/zod-schemas/forms/challenges";
-import { siteConfig } from "@/app/_config/site";
 import { Card } from "../ui/card";
 import Link from "next/link";
 
@@ -242,7 +241,7 @@ export function CreateChallengeForm({
                       <p className="underline">Function types:</p>
                       <p>
                         void, boolean, int, intArr, double, doubleArr, string,
-                        stringArr, char, charArr
+                        stringArr, char, charArr, auto
                       </p>
                       <p className="underline">Param types:</p>
                       <p>
