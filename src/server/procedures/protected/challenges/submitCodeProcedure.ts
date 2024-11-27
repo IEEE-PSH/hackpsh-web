@@ -162,7 +162,7 @@ export default protectedProcedure
       } else {
         return {
           type: "error",
-          output: "Did you even test your code? 🤡",
+          output: "Code failed to compile. 😔",
         };
       }
     } catch (error) {
