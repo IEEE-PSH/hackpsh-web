@@ -146,7 +146,7 @@ export default function ChallengeNavActions({
             <SelectContent>
               <SelectGroup>
                 {challengeLanguages.split(",").map((language) => (
-                  <SelectItem key="language" value={language}>
+                  <SelectItem key={language} value={language}>
                     {language === "python"
                       ? "Python"
                       : language === "cpp"
