@@ -53,7 +53,7 @@ export const isSolvedChallengeSchema = z.object({
   user_uuid: z.string().uuid("Please provide a valid UUID."),
 });
 
-export const languages = ["python", "cpp", "javascript"] as const;
+export const languages = ["cpp", "javascript", "python"] as const;
 export type TLanguages = (typeof languages)[number];
 
 export const runCodeSchema = z.object({
