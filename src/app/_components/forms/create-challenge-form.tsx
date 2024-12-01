@@ -16,12 +16,12 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { toast } from "../ui/use-toast";
-import { useFieldArray, useForm } from "react-hook-form";
+import { ControllerRenderProps, useFieldArray, useForm } from "react-hook-form";
 import { Icons } from "../ui/icons";
 import { cn } from "@/app/_lib/client-utils";
 import { useRouter } from "next/navigation";
 import { Separator } from "../ui/separator";
-import { CirclePlus, Info, Trash } from "lucide-react";
+import { Check, ChevronsUpDown, CirclePlus, Info, Trash } from "lucide-react";
 import {
   HoverCard,
   HoverCardContent,
@@ -44,6 +44,8 @@ import {
 } from "@/app/_lib/zod-schemas/forms/challenges";
 import { Card } from "../ui/card";
 import Link from "next/link";
+import { Checkbox } from "../ui/checkbox";
+import { languages, type TLanguages } from "@/server/zod-schemas/challenges";
 
 type CreateChallengeFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -80,6 +82,7 @@ export function CreateChallengeForm({
   });
 
   async function onSubmit(values: TCreateChallengeFormSchema) {
+    console.log("Attempted");
     try {
       const supabase = createClientComponentClient();
       const user = await getUser(supabase);
@@ -90,6 +93,7 @@ export function CreateChallengeForm({
         difficulty: values.difficulty,
         points: values.points,
         description: values.description,
+        languages: values.languages,
         function_header: values.function_header,
         example_input: values.example_input,
         example_output: values.example_output,
@@ -128,6 +132,21 @@ export function CreateChallengeForm({
 
   function removeTestcase(i: number) {
     remove(i);
+  }
+
+  function updateLanguages(language: TLanguages) {
+    let languagesArray: string[] = [];
+    const supportedLanguages = form.getValues("languages") ?? "";
+    if (supportedLanguages.length > 0)
+      languagesArray = supportedLanguages.split(",");
+
+    if (languagesArray.includes(language))
+      languagesArray = languagesArray.filter((lang) => lang !== language);
+    else languagesArray.push(language);
+
+    const tempString = languagesArray.sort().join(",");
+
+    form.setValue("languages", tempString);
   }
 
   return (
@@ -224,6 +243,37 @@ export function CreateChallengeForm({
               </FormItem>
             )}
           />
+
+          <FormField
+            control={form.control}
+            name="languages"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Supported Languages</FormLabel>
+                <div className="flex space-x-4">
+                  {languages.map((language) => (
+                    <div key={language} className="flex space-x-2 align-middle">
+                      <Checkbox
+                        id={language}
+                        className="border-input"
+                        checked={field.value?.includes(language)}
+                        onCheckedChange={() => updateLanguages(language)}
+                      />
+                      <Label htmlFor={language}>
+                        {language === "python"
+                          ? "Python"
+                          : language === "cpp"
+                            ? "C++"
+                            : "Javascript"}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="function_header"

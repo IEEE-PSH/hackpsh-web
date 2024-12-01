@@ -54,8 +54,9 @@ export const CreateChallengeFormSchema = z
   .object({
     title: z.string().min(1, "Cannot leave field empty."),
     difficulty: z.enum(difficulty),
-    points: z.coerce.number().min(1, "Cannot leave field empty."),
+    points: z.coerce.number().default(0),
     description: z.string().min(1, "Cannot leave field empty."),
+    languages: z.string().min(1, "At least one language is required."),
     function_header: z.string().refine((value) => isValidHeader(value), {
       message: "Function header not valid.",
     }),

@@ -36,7 +36,9 @@ export default function ChallengeContentPage({
 }) {
   const [value, setValue] = useState("");
   const [outputData, setOutputData] = useState<TSubmitData | null>(null);
-  const [language, setLanguage] = useState<TLanguages>("python");
+  const [language, setLanguage] = useState<TLanguages>(
+    challengeData!.challenge_languages.split(",")[0] as TLanguages,
+  );
   const [header, setHeader] = useState("");
   const [presetHeader, setPresetHeader] = useState("");
   const [solved, setSolved] = useState(isSolved);
@@ -45,7 +47,8 @@ export default function ChallengeContentPage({
     const storedLanguage = localStorage.getItem(
       "hackpsh-stored-language",
     ) as TLanguages;
-    setLanguage(storedLanguage ?? "python");
+    if (challengeData!.challenge_languages.includes(storedLanguage))
+      setLanguage(storedLanguage);
   }, []);
 
   useEffect(() => {
@@ -88,6 +91,7 @@ export default function ChallengeContentPage({
         <ChallengeNavActions
           value={value}
           challengeId={challengeData!.challenge_id}
+          challengeLanguages={challengeData!.challenge_languages}
           header={header}
           language={language}
           userUUID={userUUID}

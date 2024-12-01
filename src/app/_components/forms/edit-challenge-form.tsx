@@ -47,6 +47,8 @@ import { type TEditChallengeData } from "@/server/dao/challenges";
 import { type TDifficulties } from "@/db/drizzle/startup_seed";
 import ChallengeDeleteDialog from "../challenges/challenge-delete-dialog";
 import Link from "next/link";
+import { languages, type TLanguages } from "@/server/zod-schemas/challenges";
+import { Checkbox } from "../ui/checkbox";
 
 type CreateChallengeFormProps = React.HTMLAttributes<HTMLDivElement>;
 type EditChallengeFormProps = {
@@ -65,6 +67,7 @@ export function EditChallengeForm({
     defaultValues: {
       title: challenge?.challenge_title,
       description: challenge?.challenge_description,
+      languages: challenge?.challenge_languages,
       difficulty: challenge?.challenge_difficulty as TDifficulties,
       points: challenge?.challenge_points,
       function_header: challenge?.challenge_function_header,
@@ -109,6 +112,7 @@ export function EditChallengeForm({
         difficulty: values.difficulty,
         points: values.points,
         description: values.description,
+        languages: values.languages,
         function_header: values.function_header,
         example_input: values.example_input,
         example_output: values.example_output,
@@ -146,6 +150,21 @@ export function EditChallengeForm({
 
   function removeTestcase(i: number) {
     remove(i);
+  }
+
+  function updateLanguages(language: TLanguages) {
+    let languagesArray: string[] = [];
+    const supportedLanguages = form.getValues("languages");
+    if (supportedLanguages.length > 0)
+      languagesArray = supportedLanguages.split(",");
+
+    if (languagesArray.includes(language))
+      languagesArray = languagesArray.filter((lang) => lang !== language);
+    else languagesArray.push(language);
+
+    const tempString = languagesArray.sort().join(",");
+
+    form.setValue("languages", tempString);
   }
 
   return (
@@ -247,6 +266,37 @@ export function EditChallengeForm({
               </FormItem>
             )}
           />
+
+          <FormField
+            control={form.control}
+            name="languages"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Supported Languages</FormLabel>
+                <div className="flex space-x-4">
+                  {languages.map((language) => (
+                    <div key={language} className="flex space-x-2 align-middle">
+                      <Checkbox
+                        id={language}
+                        className="border-input"
+                        checked={field.value?.includes(language)}
+                        onCheckedChange={() => updateLanguages(language)}
+                      />
+                      <Label htmlFor={language}>
+                        {language === "python"
+                          ? "Python"
+                          : language === "cpp"
+                            ? "C++"
+                            : "Javascript"}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="function_header"

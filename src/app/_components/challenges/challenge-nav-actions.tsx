@@ -21,6 +21,7 @@ import Link from "next/link";
 type ChallengeNavActionsProps = {
   value: string;
   challengeId: number;
+  challengeLanguages: string;
   header: string;
   language: "python" | "cpp" | "javascript";
   userUUID: string;
@@ -32,6 +33,7 @@ type ChallengeNavActionsProps = {
 export default function ChallengeNavActions({
   value,
   challengeId,
+  challengeLanguages,
   header,
   language,
   userUUID,
@@ -139,13 +141,19 @@ export default function ChallengeNavActions({
             }}
           >
             <SelectTrigger className="w-32">
-              <SelectValue defaultValue="python" />
+              <SelectValue defaultValue={"cpp"} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value="python">Python</SelectItem>
-                <SelectItem value="cpp">C++</SelectItem>
-                <SelectItem value="javascript">JavaScript</SelectItem>
+                {challengeLanguages.split(",").map((language) => (
+                  <SelectItem key="language" value={language}>
+                    {language === "python"
+                      ? "Python"
+                      : language === "cpp"
+                        ? "C++"
+                        : "Javascript"}
+                  </SelectItem>
+                ))}
               </SelectGroup>
             </SelectContent>
           </Select>

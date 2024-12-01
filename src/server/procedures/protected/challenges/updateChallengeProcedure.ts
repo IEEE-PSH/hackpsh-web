@@ -28,6 +28,7 @@ export default protectedProcedure
       input.difficulty,
       input.points,
       input.description,
+      input.languages,
       input.function_header,
       newInputs,
       newOutputs,
