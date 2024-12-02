@@ -12,8 +12,12 @@ import {
   languagePreset,
 } from "./runCodeProcedure";
 import { TRPCError } from "@trpc/server";
-import { getParamTypes } from "@/app/_lib/zod-schemas/forms/challenges";
+import {
+  getParamTypes,
+  TFunctionTypes,
+} from "@/app/_lib/zod-schemas/forms/challenges";
 import { isChallengesEnabled } from "@/server/dao/event";
+import { formatLiteral } from "./createChallengeProcedure";
 
 export default protectedProcedure
   .input(submitCodeSchema)
@@ -93,15 +97,8 @@ export default protectedProcedure
           expectedOutputs.push(out);
         }
 
-        //RECONSIDER THIS LINE
         // reformat output because piston api prints arrays with extra spacing
-        const stdOutputs = data.run.stdout
-          .replace("\n\n", "\n")
-          .replace("\n\n", "\n")
-          .replace("[ ", "[")
-          .replace(" ]", "]")
-          .split("\n");
-        //tomfoolery goin on ere; not actually
+        const stdOutputs = data.run.stdout.split("\n");
         const outputLengths: number[] = [];
         for (const testCase of testCases) {
           const outputs = testCase.test_case_output.split("\n");
@@ -112,23 +109,38 @@ export default protectedProcedure
         for (const n of outputLengths) {
           const temp: string[] = [];
           for (let i = 0; i < n; i++) {
-            temp.push(stdOutputs.shift()!);
+            temp.push(formatLiteral(stdOutputs.shift()!));
           }
-          stdOuts.push(
-            temp.join("\n").replace(/\[\s+/g, "[").replace(/\s+\]/g, "]"), //remove piston spacing
-          );
+          stdOuts.push(temp.join("\n"));
         }
 
-        //convert cpp brace arrays to bracket arrays
-        if (
-          (input.language === "cpp" && headerType === "intArr") ||
-          headerType === "stringArr" ||
-          headerType === "doubleArr"
-        ) {
-          stdOuts = stdOuts.map((stdOut) => {
-            return `[${stdOut.slice(1, -1).replace(/,/g, ",")}]`;
-          });
+        //convert language stdouts to match test case inputs/outputs
+        if (input.language === "cpp") {
+          if (headerType === "intArr" || headerType === "doubleArr")
+            stdOuts = stdOuts.map((stdOut) => {
+              return `[${stdOut.slice(1, -1).replace(/,/g, ",")}]`;
+            });
+          else if (headerType === "stringArr") {
+            stdOuts = stdOuts.map((stdOut) => {
+              return `[${stdOut
+                .slice(1, -1)
+                .split(",")
+                .map((item) => `'${item}'`)
+                .join(",")}]`;
+            });
+          } else if (headerType === "boolean")
+            stdOuts = stdOuts.map((stdOut) => {
+              return String(stdOut === "1");
+            });
+        } else if (input.language === "python") {
+          if (headerType === "boolean") {
+            stdOuts = stdOuts.map((stdOut) => {
+              return stdOut.toLowerCase();
+            });
+          }
         }
+        console.log(stdOuts);
+        console.log(expectedOutputs);
 
         const maxOutputs = Math.max(expectedOutputs.length, stdOuts.length);
         let passCount = 0;
@@ -151,12 +163,12 @@ export default protectedProcedure
 
           return {
             type: "success",
-            output: `Passed ${passCount}/${expectedOutputs.length} testcase${testCases.length !== 1 ? "s" : ""}. ✔️`,
+            output: `Passed ${passCount}/${expectedOutputs.length} testcases. ✔️`,
           };
         } else {
           return {
             type: "error",
-            output: `Passed ${passCount}/${expectedOutputs.length} testcase${testCases.length !== 1 ? "s" : ""}. ❌`,
+            output: `Passed ${passCount}/${expectedOutputs.length} testcases. ❌`,
           };
         }
       } else {

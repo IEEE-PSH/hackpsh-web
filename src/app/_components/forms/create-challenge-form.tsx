@@ -16,12 +16,12 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { toast } from "../ui/use-toast";
-import { ControllerRenderProps, useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { Icons } from "../ui/icons";
 import { cn } from "@/app/_lib/client-utils";
 import { useRouter } from "next/navigation";
 import { Separator } from "../ui/separator";
-import { Check, ChevronsUpDown, CirclePlus, Info, Trash } from "lucide-react";
+import { CirclePlus, Info, Trash } from "lucide-react";
 import {
   HoverCard,
   HoverCardContent,
@@ -291,12 +291,12 @@ export function CreateChallengeForm({
                       <p className="underline">Function types:</p>
                       <p>
                         void, boolean, int, intArr, double, doubleArr, string,
-                        stringArr, char, charArr, auto
+                        stringArr, boolean, void, any, anyArr, dict
                       </p>
                       <p className="underline">Param types:</p>
                       <p>
-                        int, intArr, double, doubleArr, string, stringArr, char,
-                        charArr
+                        int, intArr, double, doubleArr, string, stringArr,
+                        boolean, any, anyArr, dict
                       </p>
                     </HoverCardContent>
                   </HoverCard>

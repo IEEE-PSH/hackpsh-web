@@ -314,12 +314,12 @@ export function EditChallengeForm({
                       <p className="underline">Function types:</p>
                       <p>
                         void, boolean, int, intArr, double, doubleArr, string,
-                        stringArr, char, charArr, auto
+                        stringArr, boolean, void, any, anyArr, dict
                       </p>
                       <p className="underline">Param types:</p>
                       <p>
-                        int, intArr, double, doubleArr, string, stringArr, char,
-                        charArr
+                        int, intArr, double, doubleArr, string, stringArr,
+                        boolean, any, anyArr, dict
                       </p>
                     </HoverCardContent>
                   </HoverCard>

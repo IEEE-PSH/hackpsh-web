@@ -1,4 +1,7 @@
-import { getParamTypes } from "@/app/_lib/zod-schemas/forms/challenges";
+import {
+  getParamTypes,
+  TFunctionTypes,
+} from "@/app/_lib/zod-schemas/forms/challenges";
 import { getChallenge } from "@/server/dao/challenges";
 import { protectedProcedure } from "@/server/trpc";
 import {
@@ -6,6 +9,7 @@ import {
   type TLanguages,
 } from "@/server/zod-schemas/challenges";
 import { TRPCError } from "@trpc/server";
+import { formatLiteral } from "./createChallengeProcedure";
 
 export const languagePreset: Record<
   string,
@@ -38,22 +42,24 @@ export function fillFunctionCall(
   exampleInputs: string,
   paramTypes: string[],
 ) {
+  const regex =
+    /^\[\s*(?:(?:"[^"]*"|\d+\.\d*|\d+|'[^']*'|true|false|null)(\s*,\s*(?:"[^"]*"|\d+\.\d*|\d+|'[^']*'|true|false|null))*)?\s*\]$/;
   const inputs = exampleInputs.split("\n");
+
   for (let i = 0; i < inputs.length; i++) {
     const input = inputs[i]!;
-    if (language == "cpp") {
-      let newInput = input;
-
-      //change python/javascript array to cpp array
-      const regex = /^\[\s*(-?\d+(\s*,\s*-?\d+)*)?\s*\]$/;
-      if (regex.test(input)) {
-        const temp = input.slice(1, -1).split(",");
-        newInput = `{${temp.join(", ")}}`;
-      }
+    // convert test case bracket arrays to braces for C++
+    if (language === "cpp" && regex.test(input)) {
+      const temp = input.slice(1, -1).split(",");
+      const newInput = `{${temp.join(",").replaceAll(`'`, `"`)}}`;
       header = header.replace(".", newInput);
-    } else {
-      header = header.replace(".", formatInput(input, paramTypes[i]!));
-    }
+      // convert test case booleans to capitalized for Python
+    } else if (language === "python" && paramTypes[i] === "boolean")
+      header = header.replace(
+        ".",
+        input.charAt(0).toUpperCase() + input.slice(1),
+      );
+    else header = header.replace(".", formatInput(input, paramTypes[i]!));
   }
   return header;
 }
@@ -86,20 +92,20 @@ export default protectedProcedure
     //get proper boilerplate
     let boilerPlate = "";
     if (headerType === "void") {
-      if (input.language === "cpp") {
+      if (input.language === "cpp")
         boilerPlate = `int main(){${funcToExecute};}`;
-      } else boilerPlate = `\n${funcToExecute}`;
+      else boilerPlate = `\n${funcToExecute}`;
     } else {
-      if (input.language === "python") {
+      if (input.language === "python")
         boilerPlate = `\nprint(${funcToExecute})`;
-      } else if (input.language === "cpp") {
+      else if (input.language === "cpp") {
         if (
           headerType === "intArr" ||
           headerType === "stringArr" ||
           headerType === "doubleArr"
-        ) {
+        )
           boilerPlate = `template<typename T>ostream& operator<<(ostream& os, const vector<T>& vec) {os << "{";for (size_t i = 0;i < vec.size(); ++i) {os << vec[i]; if (i != vec.size() - 1) os << ", ";}os << "}";return os;}int main() {cout <<${funcToExecute}<< endl;return 0;}`;
-        } else boilerPlate = `int main(){cout<<${funcToExecute};}`;
+        else boilerPlate = `int main(){cout<<${funcToExecute};}`;
       } else {
         boilerPlate = `console.log(${funcToExecute})`;
       }
@@ -122,14 +128,17 @@ export default protectedProcedure
         }),
       });
       const data = (await response.json()) as ExecutionResponse;
+
+      //format stdout accordingly for users to see
+      let formattedLiteral = formatLiteral(data.run.stdout);
+      if (input.language === "cpp" && headerType === "stringArr") {
+        formattedLiteral = formattedLiteral.replace(/([a-zA-Z0-9_]+)/g, '"$1"');
+      }
+
       if (data.run.code == 0) {
-        // reformat output because piston api prints arrays with extra spacing
-        const formattedOutput = data.run.stdout
-          .replaceAll("[ ", "[")
-          .replaceAll(" ]", "]");
         return {
           type: "valid",
-          output: formattedOutput,
+          output: formattedLiteral,
         };
       } else
         return {
