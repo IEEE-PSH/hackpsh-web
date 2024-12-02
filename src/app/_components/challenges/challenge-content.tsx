@@ -135,16 +135,27 @@ export default function ChallengeContentPage({
           direction={windowWidth > 768 ? "horizontal" : "vertical"}
           className="h-full grow"
         >
-          <ResizablePanel defaultSize={50} minSize={30}>
-            <ChallengeContentInfo
-              challengeData={challengeData}
-              isSuccess={true}
-            />
+          <ResizablePanel
+            defaultSize={50}
+            minSize={windowWidth > 768 ? 30 : 10}
+          >
+            <ScrollArea className="h-full">
+              <ChallengeContentInfo
+                challengeData={challengeData}
+                isSuccess={true}
+              />
+            </ScrollArea>
           </ResizablePanel>
-          <ResizableHandle />
-          <ResizablePanel defaultSize={50} minSize={30}>
+          <ResizableHandle withHandle={windowWidth <= 768} />
+          <ResizablePanel
+            defaultSize={50}
+            minSize={windowWidth > 768 ? 30 : 10}
+          >
             <ResizablePanelGroup direction="vertical">
-              <ResizablePanel defaultSize={65} minSize={30}>
+              <ResizablePanel
+                defaultSize={65}
+                minSize={windowWidth > 768 ? 30 : 10}
+              >
                 <ChallengeEditorWrapper
                   value={value}
                   setValue={setValue}
@@ -157,8 +168,11 @@ export default function ChallengeContentPage({
                   outputData={outputData!}
                 />
               </ResizablePanel>
-              <ResizableHandle />
-              <ResizablePanel defaultSize={35} minSize={30}>
+              <ResizableHandle withHandle={windowWidth <= 768} />
+              <ResizablePanel
+                defaultSize={35}
+                minSize={windowWidth > 768 ? 30 : 10}
+              >
                 <ScrollArea className="h-full bg-background-variant">
                   <pre
                     className={cn(
