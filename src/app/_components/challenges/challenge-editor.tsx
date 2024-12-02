@@ -10,6 +10,11 @@ import { type TLanguages } from "@/server/zod-schemas/challenges";
 import { cn } from "@/app/_lib/client-utils";
 import { trpc } from "@/app/_trpc/react";
 import { type TSubmitData } from "@/server/procedures/protected/challenges/submitCodeProcedure";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "../ui/resizable";
 
 type ChallengeEditor = {
   value: string;
@@ -55,28 +60,22 @@ export default function ChallengeEditorWrapper({
   }, [header, submission, setLanguage, language, setValue]);
 
   return (
-    <div className="flex flex-col">
-      <div className={cn(solved && "cursor-not-allowed", "h-[320px]")}>
-        <Editor
-          className={cn(solved && "pointer-events-none")}
-          height="100%"
-          theme="vs-dark"
-          language={language}
-          defaultLanguage={language ?? "python"}
-          value={value}
-          loading={""}
-          onChange={(newValue) => setValue(newValue!)}
-          options={{ readOnly: solved }}
-        />
-        <pre
-          className={cn(
-            "w-full whitespace-pre-wrap text-wrap break-words bg-background-variant p-4 font-mono",
-            outputData?.type == "error" ? "text-red-400" : "",
-          )}
-        >
-          {outputData?.output}
-        </pre>
-      </div>
+    <div className={cn(solved && "cursor-not-allowed", "h-full")}>
+      <Editor
+        className={cn(solved && "pointer-events-none")}
+        height="100%"
+        theme="vs-dark"
+        language={language}
+        defaultLanguage={language ?? "python"}
+        value={value}
+        loading={""}
+        onChange={(newValue) => setValue(newValue!)}
+        options={{
+          readOnly: solved,
+          minimap: { enabled: false },
+          automaticLayout: true,
+        }}
+      />
     </div>
   );
 }

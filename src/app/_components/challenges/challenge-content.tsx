@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/app/_components/ui/button";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import ProtectedEditorSiteHeader from "../nav/protected-editor-site-header";
 import { ArrowLeft } from "lucide-react";
@@ -18,6 +18,13 @@ import ChallengeSyncer from "./challenge-syncer";
 import { type TSubmitData } from "@/server/procedures/protected/challenges/submitCodeProcedure";
 import Link from "next/link";
 import { type TChallengeData } from "@/server/dao/challenges";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "../ui/resizable";
+import { cn } from "@/app/_lib/client-utils";
+import { ScrollArea } from "../ui/scroll-area";
 
 export default function ChallengeContentPage({
   userDisplayName,
@@ -43,6 +50,8 @@ export default function ChallengeContentPage({
   const [presetHeader, setPresetHeader] = useState("");
   const [solved, setSolved] = useState(isSolved);
 
+  const router = useRouter();
+
   useEffect(() => {
     const storedLanguage = localStorage.getItem(
       "hackpsh-stored-language",
@@ -61,7 +70,22 @@ export default function ChallengeContentPage({
     }
   }, [challengeData, language]);
 
-  const router = useRouter();
+  const [windowWidth, setWindowWidth] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    if (window) {
+      setWindowWidth(window.innerWidth);
+      setLoaded(true);
+    }
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       <ChallengeSyncer
@@ -72,6 +96,11 @@ export default function ChallengeContentPage({
         setSolved={setSolved}
         setValue={setValue}
         setLanguage={setLanguage}
+      />
+      <ChallengeUsersStatus
+        userDisplayName={userDisplayName}
+        challengeId={challengeData!.challenge_id}
+        teamName={teamName ?? null}
       />
 
       <ProtectedEditorSiteHeader
@@ -101,26 +130,50 @@ export default function ChallengeContentPage({
         />
       </ProtectedEditorSiteHeader>
 
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        <ChallengeContentInfo challengeData={challengeData} isSuccess={true} />
-        <ChallengeEditorWrapper
-          value={value}
-          setValue={setValue}
-          language={language}
-          setLanguage={setLanguage}
-          header={presetHeader}
-          solved={solved}
-          userUUID={userUUID}
-          challengeId={challengeData!.challenge_id}
-          outputData={outputData!}
-        />
-      </div>
-
-      <ChallengeUsersStatus
-        userDisplayName={userDisplayName}
-        challengeId={challengeData!.challenge_id}
-        teamName={teamName ?? null}
-      />
+      {loaded && (
+        <ResizablePanelGroup
+          direction={windowWidth > 768 ? "horizontal" : "vertical"}
+          className="h-full grow"
+        >
+          <ResizablePanel defaultSize={50} minSize={30}>
+            <ChallengeContentInfo
+              challengeData={challengeData}
+              isSuccess={true}
+            />
+          </ResizablePanel>
+          <ResizableHandle />
+          <ResizablePanel defaultSize={50} minSize={30}>
+            <ResizablePanelGroup direction="vertical">
+              <ResizablePanel defaultSize={65} minSize={30}>
+                <ChallengeEditorWrapper
+                  value={value}
+                  setValue={setValue}
+                  language={language}
+                  setLanguage={setLanguage}
+                  header={presetHeader}
+                  solved={solved}
+                  userUUID={userUUID}
+                  challengeId={challengeData!.challenge_id}
+                  outputData={outputData!}
+                />
+              </ResizablePanel>
+              <ResizableHandle />
+              <ResizablePanel defaultSize={35} minSize={30}>
+                <ScrollArea className="h-full bg-background-variant">
+                  <pre
+                    className={cn(
+                      "whitespace-pre-wrap text-wrap break-words p-4 font-mono",
+                      outputData?.type == "error" ? "text-red-400" : "",
+                    )}
+                  >
+                    {outputData?.output}
+                  </pre>
+                </ScrollArea>
+              </ResizablePanel>
+            </ResizablePanelGroup>
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      )}
     </>
   );
 }

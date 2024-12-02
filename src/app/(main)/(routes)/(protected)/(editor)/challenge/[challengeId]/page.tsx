@@ -45,7 +45,7 @@ export default async function ChallengePage({
     <>
       <EventUpdateNotifer />
 
-      <div className="min-h-screen bg-background">
+      <div className="flex min-h-screen flex-grow flex-col bg-background">
         <ChallengeContentPage
           userDisplayName={user_display_name!}
           userEmailAddress={user_email_address}
