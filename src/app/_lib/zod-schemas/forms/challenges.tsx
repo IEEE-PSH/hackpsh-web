@@ -229,6 +229,7 @@ function isValidHeader(data: TCreateChallengeFormSchema, ctx: RefinementCtx) {
   // check param types
   for (const type of types) {
     if (!paramTypes.includes(type as TParamTypes)) return false;
+
     if (
       data.languages.includes("cpp") &&
       (type === "dict" || type === "any" || type === "anyArr")
@@ -238,8 +239,12 @@ function isValidHeader(data: TCreateChallengeFormSchema, ctx: RefinementCtx) {
         path: ["languages"],
         message: "C++ cannot be used with dict, any, or anyArr.",
       });
-      return false;
-    }
+    } else if (data.languages.includes("javascript") && functionType === "dict")
+      ctx.addIssue({
+        code: "custom",
+        path: ["languages"],
+        message: "Javascript cannot be used with dict.",
+      });
   }
 
   return true;
