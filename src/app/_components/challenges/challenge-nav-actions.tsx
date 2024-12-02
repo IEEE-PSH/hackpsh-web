@@ -73,6 +73,18 @@ export default function ChallengeNavActions({
       user_uuid: userUUID,
     });
 
+  //runs code
+  async function attemptRunCode() {
+    await checkUserOnTeam();
+    if (onTeam?.is_on_team) await runCode();
+    else {
+      toast({
+        variant: "destructive",
+        description: "You must be on a team to participate in challenges.",
+        duration: 4000,
+      });
+    }
+  }
   //submits code
   async function attemptSubmitCode() {
     await checkUserOnTeam();
@@ -80,7 +92,7 @@ export default function ChallengeNavActions({
     else {
       toast({
         variant: "destructive",
-        description: "You must be on a team to submit challenges.",
+        description: "You must be on a team to participate in challenges.",
         duration: 4000,
       });
     }
@@ -161,7 +173,7 @@ export default function ChallengeNavActions({
             className="p-2 md:p-4"
             variant="secondary"
             disabled={isRunning}
-            onClick={() => runCode()}
+            onClick={() => attemptRunCode()}
           >
             <Play />
             <span className="ml-4 hidden md:block">Run</span>

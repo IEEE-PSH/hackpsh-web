@@ -304,7 +304,7 @@ export function EditChallengeForm({
               <FormItem>
                 <FormLabel className="flex">
                   <span>Function Header</span>
-                  <HoverCard>
+                  <HoverCard openDelay={0} closeDelay={0}>
                     <HoverCardTrigger asChild>
                       <Info className="ml-2 h-4 w-4" />
                     </HoverCardTrigger>
@@ -398,7 +398,7 @@ export function EditChallengeForm({
 
           <div className="mb-6 flex flex-row items-center">
             <h1 className=" text-lg font-semibold">Test cases</h1>
-            <HoverCard>
+            <HoverCard openDelay={0} closeDelay={0}>
               <HoverCardTrigger asChild>
                 <Info className="ml-2 h-4 w-4" />
               </HoverCardTrigger>

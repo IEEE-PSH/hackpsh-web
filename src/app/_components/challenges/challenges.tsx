@@ -80,7 +80,7 @@ export function Challenges({
         </p>
         {unsolvedChallenges.length > 0 ? (
           <TooltipProvider>
-            <Tooltip>
+            <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
                 <Card className="relative mt-2">
                   {!challengesEnabled && (
@@ -120,7 +120,7 @@ export function Challenges({
           </span>
         </p>
         {solvedChallenges.length > 0 ? (
-          <TooltipProvider>
+          <TooltipProvider delayDuration={0}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Card className="relative mt-2">

@@ -63,7 +63,7 @@ export default function ChallengeUsersStatus({
     return (
       <div className="fixed bottom-4 right-4 z-[50] flex">
         {currentUsers.map((user, i) => (
-          <HoverCard key={`user-${i}`}>
+          <HoverCard key={`user-${i}`} openDelay={0} closeDelay={0}>
             <HoverCardTrigger asChild>
               <Avatar>
                 <AvatarFallback>{user[0]}</AvatarFallback>

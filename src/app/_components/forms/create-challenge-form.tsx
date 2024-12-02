@@ -281,11 +281,11 @@ export function CreateChallengeForm({
               <FormItem>
                 <FormLabel className="flex">
                   <span>Function Header</span>
-                  <HoverCard>
+                  <HoverCard openDelay={0} closeDelay={0}>
                     <HoverCardTrigger asChild>
                       <Info className="ml-2 h-4 w-4" />
                     </HoverCardTrigger>
-                    <HoverCardContent className="flex flex-col space-y-2 font-normal">
+                    <HoverCardContent className="flex flex-col space-y-2 text-sm font-normal">
                       <p className="underline">Format:</p>
                       <p>type functionName(type param1, type param2)</p>
                       <p className="underline">Function types:</p>
@@ -375,7 +375,7 @@ export function CreateChallengeForm({
 
           <div className="mb-6 flex flex-row items-center">
             <h1 className=" text-lg font-semibold">Test cases</h1>
-            <HoverCard>
+            <HoverCard openDelay={0} closeDelay={0}>
               <HoverCardTrigger asChild>
                 <Info className="ml-2 h-4 w-4" />
               </HoverCardTrigger>

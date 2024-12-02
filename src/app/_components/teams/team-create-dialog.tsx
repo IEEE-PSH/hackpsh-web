@@ -61,7 +61,7 @@ export default function TeamCreateDialog({
           </DialogContent>
         </Dialog>
         <TooltipProvider>
-          <Tooltip>
+          <Tooltip delayDuration={0}>
             <TooltipTrigger asChild>
               <div>
                 <Button

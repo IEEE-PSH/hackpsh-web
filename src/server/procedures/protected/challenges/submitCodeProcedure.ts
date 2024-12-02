@@ -12,10 +12,7 @@ import {
   languagePreset,
 } from "./runCodeProcedure";
 import { TRPCError } from "@trpc/server";
-import {
-  getParamTypes,
-  TFunctionTypes,
-} from "@/app/_lib/zod-schemas/forms/challenges";
+import { getParamTypes } from "@/app/_lib/zod-schemas/forms/challenges";
 import { isChallengesEnabled } from "@/server/dao/event";
 import { formatLiteral } from "./createChallengeProcedure";
 
@@ -139,8 +136,6 @@ export default protectedProcedure
             });
           }
         }
-        console.log(stdOuts);
-        console.log(expectedOutputs);
 
         const maxOutputs = Math.max(expectedOutputs.length, stdOuts.length);
         let passCount = 0;
