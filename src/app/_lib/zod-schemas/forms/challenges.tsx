@@ -131,7 +131,8 @@ function isValidLiteral(literal: string, type: string): boolean {
     if (!isNaN(Number(literal))) return true;
   } else if (type === "boolean") {
     if (literal === "true" || literal === "false") return true;
-  } else if (type === "string") return true;
+  } else if (type === "string" || type === "any" || type === "anyArr")
+    return true;
   return false;
 }
 
