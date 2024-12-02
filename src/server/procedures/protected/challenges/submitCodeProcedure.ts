@@ -87,6 +87,8 @@ export default protectedProcedure
       });
 
       const data = (await response.json()) as ExecutionResponse;
+      console.log(data.run.code);
+      console.log(data.run.output);
       if (data.run.code == 0) {
         const expectedOutputs = [];
         for (const testCase of testCases) {
@@ -142,10 +144,9 @@ export default protectedProcedure
         for (let i = 0; i < maxOutputs; i++)
           if (expectedOutputs[i] === stdOuts[i]) passCount++;
 
-        if (data.run.code === 0 && passCount === expectedOutputs.length) {
-          //only solveChallenge if challenges are disabled; officers and admins can still check test cases
+        if (passCount === expectedOutputs.length) {
+          //only solveChallenge if challenges are enabled; officers and admins can still check test cases
           const is_challenges_enabled = await isChallengesEnabled(ctx.db);
-
           if (is_challenges_enabled) {
             await solveChallenge(
               ctx.db,
