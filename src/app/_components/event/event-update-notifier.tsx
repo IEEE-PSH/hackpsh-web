@@ -35,6 +35,16 @@ export default function EventUpdateNotifer() {
   >(null);
 
   useEffect(() => {
+    setOldChallengeStatus(is_challenges_enabled ?? null);
+    setOldTeamCreationStatus(is_team_creation_enabled ?? null);
+  }, [
+    is_team_creation_enabled,
+    is_challenges_enabled,
+    oldChallengeStatus,
+    oldTeamCreationStatus,
+  ]);
+
+  useEffect(() => {
     const channel = supabase.channel("event").on(
       "postgres_changes",
       {
@@ -60,6 +70,7 @@ export default function EventUpdateNotifer() {
 
               if (pathname.startsWith(siteConfig.paths.challenge)) {
                 router.push(siteConfig.paths.dashboard);
+                router.refresh();
               }
             } else {
               const enabledToast = toast({
@@ -127,13 +138,13 @@ export default function EventUpdateNotifer() {
       void supabase.removeChannel(channel);
     };
   }, [
-    is_challenges_enabled,
-    is_team_creation_enabled,
     refetchTeamCreationStatus,
     refetchChallengeStatus,
     router,
     supabase,
     pathname,
+    oldChallengeStatus,
+    oldTeamCreationStatus,
   ]);
 
   return <></>;

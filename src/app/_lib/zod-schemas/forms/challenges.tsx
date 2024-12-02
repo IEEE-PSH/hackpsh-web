@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { RefinementCtx, z } from "zod";
 
 export const difficulty = ["easy", "medium", "hard"] as const;
 export type TDifficulty = (typeof difficulty)[number];
@@ -6,26 +6,29 @@ export type TDifficulty = (typeof difficulty)[number];
 export const functionTypes = [
   "int",
   "intArr",
-  "string",
-  "stringArr",
   "double",
   "doubleArr",
-  "char",
-  "charArr",
+  "string",
+  "stringArr",
   "boolean",
   "void",
+  "any",
+  "anyArr",
+  "dict",
 ] as const;
 export type TFunctionTypes = (typeof functionTypes)[number];
 
 export const paramTypes = [
   "int",
   "intArr",
-  "string",
-  "stringArr",
   "double",
   "doubleArr",
-  "char",
-  "charArr",
+  "string",
+  "stringArr",
+  "boolean",
+  "any",
+  "anyArr",
+  "dict",
 ] as const;
 export type TParamTypes = (typeof paramTypes)[number];
 
@@ -35,14 +38,15 @@ export const functionTypeMapping: Record<
 > = {
   int: "int",
   intArr: "vector<int>",
-  string: "string",
-  stringArr: "vector<string>",
   double: "double",
   doubleArr: "vector<double>",
-  char: "char",
-  charArr: "vector<char>",
+  string: "string",
+  stringArr: "vector<string>",
   boolean: "bool",
   void: "void",
+  any: "UNUSABLE",
+  anyArr: "UNUSABLE",
+  dict: "UNUSABLE",
 } as const;
 export type TFunctionTypeMapping = typeof functionTypeMapping;
 
@@ -54,11 +58,10 @@ export const CreateChallengeFormSchema = z
   .object({
     title: z.string().min(1, "Cannot leave field empty."),
     difficulty: z.enum(difficulty),
-    points: z.coerce.number().min(1, "Cannot leave field empty."),
+    points: z.coerce.number().default(0),
     description: z.string().min(1, "Cannot leave field empty."),
-    function_header: z.string().refine((value) => isValidHeader(value), {
-      message: "Function header not valid.",
-    }),
+    languages: z.string().min(1, "At least one language is required."),
+    function_header: z.string(),
     example_input: z.string().default(""),
     example_output: z.string().min(1, "Cannot leave field empty."),
     explanation: z.string().min(1, "Cannot leave field empty."),
@@ -70,6 +73,15 @@ export const CreateChallengeFormSchema = z
     ),
   })
   .superRefine((data, ctx) => {
+    // check valid header
+    if (!isValidHeader(data, ctx)) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["function_header"],
+        message: "Function header is not valid.",
+      });
+    }
+
     // check valid test case inputs and outputs
     if (!isValidInput(data, data.example_input)) {
       ctx.addIssue({
@@ -103,37 +115,40 @@ export const CreateChallengeFormSchema = z
     }
   });
 
+function isValidLiteral(literal: string, type: string): boolean {
+  if (type === "void" || type === "any") {
+    return true;
+  } else if (
+    type === "stringArr" ||
+    type === "intArr" ||
+    type === "doubleArr" ||
+    type === "anyArr"
+  ) {
+    if (literal.startsWith("[") && literal.endsWith("]")) return true;
+  } else if (type === "dict") {
+    if (literal.startsWith("{") && literal.endsWith("}")) return true;
+  } else if (type === "int" || type === "double") {
+    if (!isNaN(Number(literal))) return true;
+  } else if (type === "boolean") {
+    if (literal === "true" || literal === "false") return true;
+  } else if (type === "string" || type === "any" || type === "anyArr")
+    return true;
+  return false;
+}
+
 // check if output matches function header return type
 function isValidOutput(data: TCreateChallengeFormSchema, output: string) {
   const regex = /^\s*(\w+|\w+\[\])\s+\w+\s*\(/;
   const match = data.function_header.match(regex);
 
   if (!match) return false;
-
-  // this is return type
   const type = match[1]!.trim();
 
-  if (type === "void") return true;
+  if (type === "void" || type === "any") return true;
   if (output.split("\n").length > 1) return false;
 
   output = output.trim();
-  // check arrays
-  if (
-    type === "stringArr" ||
-    type === "intArr" ||
-    type === "charArr" ||
-    type === "doubleArr"
-  ) {
-    if (!output.startsWith("[") || !output.endsWith("]")) {
-      return false;
-    }
-    // check numbers
-  } else if (type === "int" || type === "double") {
-    if (isNaN(Number(output))) return false;
-    // check strings
-  } else if (type === "boolean" && !(output === "true" || output === "false"))
-    return false;
-  return true;
+  return isValidLiteral(output, type);
 }
 
 //check is input matches param types
@@ -148,21 +163,7 @@ function isValidInput(data: TCreateChallengeFormSchema, input: string) {
   for (let i = 0; i < paramTypes.length; i++) {
     const type = paramTypes[i];
     const input = inputs[i]?.trim();
-    //check arrays
-    if (
-      type === "stringArr" ||
-      type === "intArr" ||
-      type === "charArr" ||
-      type === "doubleArr"
-    ) {
-      if (!input!.startsWith("[") || !input!.endsWith("]")) {
-        return false;
-      }
-      // check numbers
-    } else if (type === "int" || type === "double") {
-      if (isNaN(Number(input))) return false;
-      // check strings
-    } else return true;
+    if (isValidLiteral(input!, type!) === false) return false;
   }
 
   return true;
@@ -178,13 +179,32 @@ export function getParamTypes(header: string) {
 }
 
 // check valid header
-function isValidHeader(header: string) {
-  const match = header.match(/(\w+)\s+(\w+)\((.*)\)/);
+function isValidHeader(data: TCreateChallengeFormSchema, ctx: RefinementCtx) {
+  const match = data.function_header.match(/(\w+)\s+(\w+)\((.*)\)/);
   if (!match) return false;
 
   const functionType = match[1] as TFunctionTypes;
   const functionTitle = match[2];
   const params = match[3];
+
+  if (
+    data.languages.includes("cpp") &&
+    (functionType === "dict" ||
+      functionType === "any" ||
+      functionType === "anyArr")
+  ) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["languages"],
+      message: "C++ cannot be used with dict, any, or anyArr.",
+    });
+  } else if (data.languages.includes("javascript") && functionType === "dict") {
+    ctx.addIssue({
+      code: "custom",
+      path: ["languages"],
+      message: "Javascript cannot be used with dict.",
+    });
+  }
 
   if (!functionTypes.includes(functionType)) return false;
 
@@ -207,8 +227,25 @@ function isValidHeader(header: string) {
   for (const name of names) if (!isValidName(name)) return false;
 
   // check param types
-  for (const type of types)
+  for (const type of types) {
     if (!paramTypes.includes(type as TParamTypes)) return false;
+
+    if (
+      data.languages.includes("cpp") &&
+      (type === "dict" || type === "any" || type === "anyArr")
+    ) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["languages"],
+        message: "C++ cannot be used with dict, any, or anyArr.",
+      });
+    } else if (data.languages.includes("javascript") && functionType === "dict")
+      ctx.addIssue({
+        code: "custom",
+        path: ["languages"],
+        message: "Javascript cannot be used with dict.",
+      });
+  }
 
   return true;
 }

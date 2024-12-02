@@ -1,6 +1,5 @@
-import ChallengeBooter from "@/app/_components/challenges/challenge-booter";
 import ChallengeContentPage from "@/app/_components/challenges/challenge-content";
-import ChallengeSyncer from "@/app/_components/challenges/challenge-syncer";
+import EventUpdateNotifer from "@/app/_components/event/event-update-notifier";
 import { serverTRPC } from "@/app/_trpc/server";
 import { composeServerComponentClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
@@ -44,7 +43,7 @@ export default async function ChallengePage({
 
   return (
     <>
-      <ChallengeBooter />
+      <EventUpdateNotifer />
 
       <div className="min-h-screen bg-background">
         <ChallengeContentPage

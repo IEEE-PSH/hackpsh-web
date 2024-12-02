@@ -5,6 +5,12 @@ import { Label } from "@radix-ui/react-label";
 import React from "react";
 import { Skeleton } from "../ui/skeleton";
 import { type TChallengeData } from "@/server/dao/challenges";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../ui/hover-card";
+import { Info } from "lucide-react";
 
 type ChallengeContentInfo = {
   challengeData: TChallengeData;
@@ -41,7 +47,20 @@ export default function ChallengeContentInfo({
         <p className="whitespace-pre-line text-sm font-light">
           {challengeData?.challenge_description}
         </p>
-        <Label>Input</Label>
+        <Label className="flex items-center">
+          <span>Input </span>
+          <HoverCard openDelay={0} closeDelay={0}>
+            <HoverCardTrigger asChild>
+              <Info className="ml-2 h-4 w-4" />
+            </HoverCardTrigger>
+            <HoverCardContent className="text-sm font-normal">
+              <span>
+                Input and output syntax is standardized in Python. This does not
+                represent exact inputs for other languages.
+              </span>
+            </HoverCardContent>
+          </HoverCard>
+        </Label>
         <pre className="text-wrap bg-background-variant font-mono">
           {challengeData?.challenge_example_input}
         </pre>

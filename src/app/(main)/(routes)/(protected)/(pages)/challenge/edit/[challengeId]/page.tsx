@@ -1,7 +1,5 @@
 import { EditChallengeForm } from "@/app/_components/forms/edit-challenge-form";
 import { serverTRPC } from "@/app/_trpc/server";
-import { composeServerComponentClient } from "@/server/lib/supabase/server";
-import { getUser } from "@/shared/supabase/auth";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -14,9 +12,6 @@ export default async function EditChallengePage({
 }: {
   params: { challengeId: number };
 }) {
-  const supabase = composeServerComponentClient();
-  const user = await getUser(supabase);
-
   const challengeData =
     await serverTRPC.challenges.get_edit_challenge_info.query({
       challenge_id: params.challengeId,

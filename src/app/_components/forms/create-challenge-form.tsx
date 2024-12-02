@@ -42,9 +42,10 @@ import {
   CreateChallengeFormSchema,
   type TCreateChallengeFormSchema,
 } from "@/app/_lib/zod-schemas/forms/challenges";
-import { siteConfig } from "@/app/_config/site";
 import { Card } from "../ui/card";
 import Link from "next/link";
+import { Checkbox } from "../ui/checkbox";
+import { languages, type TLanguages } from "@/server/zod-schemas/challenges";
 
 type CreateChallengeFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -81,6 +82,7 @@ export function CreateChallengeForm({
   });
 
   async function onSubmit(values: TCreateChallengeFormSchema) {
+    console.log("Attempted");
     try {
       const supabase = createClientComponentClient();
       const user = await getUser(supabase);
@@ -91,6 +93,7 @@ export function CreateChallengeForm({
         difficulty: values.difficulty,
         points: values.points,
         description: values.description,
+        languages: values.languages,
         function_header: values.function_header,
         example_input: values.example_input,
         example_output: values.example_output,
@@ -129,6 +132,21 @@ export function CreateChallengeForm({
 
   function removeTestcase(i: number) {
     remove(i);
+  }
+
+  function updateLanguages(language: TLanguages) {
+    let languagesArray: string[] = [];
+    const supportedLanguages = form.getValues("languages") ?? "";
+    if (supportedLanguages.length > 0)
+      languagesArray = supportedLanguages.split(",");
+
+    if (languagesArray.includes(language))
+      languagesArray = languagesArray.filter((lang) => lang !== language);
+    else languagesArray.push(language);
+
+    const tempString = languagesArray.sort().join(",");
+
+    form.setValue("languages", tempString);
   }
 
   return (
@@ -225,6 +243,37 @@ export function CreateChallengeForm({
               </FormItem>
             )}
           />
+
+          <FormField
+            control={form.control}
+            name="languages"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Supported Languages</FormLabel>
+                <div className="flex space-x-4">
+                  {languages.map((language) => (
+                    <div key={language} className="flex space-x-2 align-middle">
+                      <Checkbox
+                        id={language}
+                        className="border-input"
+                        checked={field.value?.includes(language)}
+                        onCheckedChange={() => updateLanguages(language)}
+                      />
+                      <Label htmlFor={language}>
+                        {language === "python"
+                          ? "Python"
+                          : language === "cpp"
+                            ? "C++"
+                            : "Javascript"}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="function_header"
@@ -232,22 +281,22 @@ export function CreateChallengeForm({
               <FormItem>
                 <FormLabel className="flex">
                   <span>Function Header</span>
-                  <HoverCard>
+                  <HoverCard openDelay={0} closeDelay={0}>
                     <HoverCardTrigger asChild>
                       <Info className="ml-2 h-4 w-4" />
                     </HoverCardTrigger>
-                    <HoverCardContent className="flex flex-col space-y-2 font-normal">
+                    <HoverCardContent className="flex flex-col space-y-2 text-sm font-normal">
                       <p className="underline">Format:</p>
                       <p>type functionName(type param1, type param2)</p>
                       <p className="underline">Function types:</p>
                       <p>
                         void, boolean, int, intArr, double, doubleArr, string,
-                        stringArr, char, charArr
+                        stringArr, boolean, void, any, anyArr, dict
                       </p>
                       <p className="underline">Param types:</p>
                       <p>
-                        int, intArr, double, doubleArr, string, stringArr, char,
-                        charArr
+                        int, intArr, double, doubleArr, string, stringArr,
+                        boolean, any, anyArr, dict
                       </p>
                     </HoverCardContent>
                   </HoverCard>
@@ -326,7 +375,7 @@ export function CreateChallengeForm({
 
           <div className="mb-6 flex flex-row items-center">
             <h1 className=" text-lg font-semibold">Test cases</h1>
-            <HoverCard>
+            <HoverCard openDelay={0} closeDelay={0}>
               <HoverCardTrigger asChild>
                 <Info className="ml-2 h-4 w-4" />
               </HoverCardTrigger>

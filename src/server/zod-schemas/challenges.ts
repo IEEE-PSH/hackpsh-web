@@ -6,6 +6,7 @@ export const createChallengeSchema = z.object({
   title: z.string().min(1, "A title is required."),
   points: z.number().min(1, "Cannot leave field empty."),
   difficulty: z.enum(difficulty),
+  languages: z.string().min(1, "At least one language is requried."),
   description: z.string().min(1, "Cannot leave field empty."),
   function_header: z.string().min(1, "Cannot leave field empty."),
   example_input: z.string().default(""),
@@ -25,6 +26,7 @@ export const updateChallengeSchema = z.object({
   points: z.number().min(1, "Cannot leave field empty."),
   difficulty: z.enum(difficulty),
   description: z.string().min(1, "Cannot leave field empty."),
+  languages: z.string().min(1, "At least one language is required."),
   function_header: z.string().min(1, "Cannot leave field empty."),
   example_input: z.string().default(""),
   example_output: z.string().min(1, "Cannot leave field empty."),
@@ -51,7 +53,7 @@ export const isSolvedChallengeSchema = z.object({
   user_uuid: z.string().uuid("Please provide a valid UUID."),
 });
 
-export const languages = ["python", "cpp", "javascript"] as const;
+export const languages = ["cpp", "javascript", "python"] as const;
 export type TLanguages = (typeof languages)[number];
 
 export const runCodeSchema = z.object({
