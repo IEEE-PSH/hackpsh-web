@@ -87,8 +87,6 @@ export default protectedProcedure
       });
 
       const data = (await response.json()) as ExecutionResponse;
-      console.log(data.run.code);
-      console.log(data.run.output);
       if (data.run.code == 0) {
         const expectedOutputs = [];
         for (const testCase of testCases) {
