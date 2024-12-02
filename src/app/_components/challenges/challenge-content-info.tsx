@@ -54,7 +54,10 @@ export default function ChallengeContentInfo({
               <Info className="ml-2 h-4 w-4" />
             </HoverCardTrigger>
             <HoverCardContent className="text-sm font-normal">
-              <span>Inputs are standardized in Python syntax.</span>
+              <span>
+                Input and output syntax is standardized in Python. This does not
+                represent exact inputs for other languages.
+              </span>
             </HoverCardContent>
           </HoverCard>
         </Label>
