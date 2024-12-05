@@ -56,7 +56,7 @@ export default function ChallengeContentInfo({
             <HoverCardContent className="text-sm font-normal">
               <span>
                 Input and output syntax is standardized in Python. This does not
-                represent exact inputs for other languages.
+                represent exact inputs and outputs for other languages.
               </span>
             </HoverCardContent>
           </HoverCard>
