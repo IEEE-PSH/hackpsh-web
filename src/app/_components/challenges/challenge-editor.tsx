@@ -9,12 +9,6 @@ import { Editor } from "@monaco-editor/react";
 import { type TLanguages } from "@/server/zod-schemas/challenges";
 import { cn } from "@/app/_lib/client-utils";
 import { trpc } from "@/app/_trpc/react";
-import { type TSubmitData } from "@/server/procedures/protected/challenges/submitCodeProcedure";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "../ui/resizable";
 
 type ChallengeEditor = {
   value: string;
@@ -25,7 +19,6 @@ type ChallengeEditor = {
   solved: boolean;
   userUUID: string;
   challengeId: number;
-  outputData: TSubmitData;
 };
 
 export default function ChallengeEditorWrapper({
@@ -37,7 +30,6 @@ export default function ChallengeEditorWrapper({
   solved,
   userUUID,
   challengeId,
-  outputData,
 }: ChallengeEditor) {
   //update code submission only on initial render
   const [isFetched, setIsFetched] = useState<boolean>(false);
@@ -48,6 +40,7 @@ export default function ChallengeEditorWrapper({
     },
     { enabled: !isFetched },
   );
+  //initial editor value
   useEffect(() => {
     if (submission) {
       const submissionCode = submission?.solved_challenge_code_submission;
@@ -56,11 +49,17 @@ export default function ChallengeEditorWrapper({
       setValue(submissionCode!);
       setLanguage(submissionLanguage);
       setIsFetched(true);
-    } else setValue(header);
-  }, [header, submission, setLanguage, language, setValue]);
+    } else {
+      setValue(header);
+    }
+  }, [header, submission, setLanguage, language]);
+
+  useEffect(() => {
+    setValue(value);
+  }, []);
 
   return (
-    <div className={cn(solved && "cursor-not-allowed", "h-full")}>
+    <div className={cn(solved && "cursor-not-allowed", "h-full min-h-[400px]")}>
       <Editor
         className={cn(solved && "pointer-events-none")}
         height="100%"

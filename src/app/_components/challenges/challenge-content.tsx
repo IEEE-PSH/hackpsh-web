@@ -41,7 +41,7 @@ export default function ChallengeContentPage({
   teamName: string | null;
   isSolved: boolean;
 }) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string>("");
   const [outputData, setOutputData] = useState<TSubmitData | null>(null);
   const [language, setLanguage] = useState<TLanguages>(
     challengeData!.challenge_languages.split(",")[0] as TLanguages,
@@ -130,61 +130,76 @@ export default function ChallengeContentPage({
         />
       </ProtectedEditorSiteHeader>
 
-      {loaded && (
-        <ResizablePanelGroup
-          direction={windowWidth > 768 ? "horizontal" : "vertical"}
-          className="h-full grow"
-        >
-          <ResizablePanel
-            defaultSize={50}
-            minSize={windowWidth > 768 ? 20 : 10}
-          >
-            <ScrollArea className="h-full">
-              <ChallengeContentInfo
-                challengeData={challengeData}
-                isSuccess={true}
-              />
-            </ScrollArea>
-          </ResizablePanel>
-          <ResizableHandle withHandle={windowWidth <= 768} />
-          <ResizablePanel
-            defaultSize={50}
-            minSize={windowWidth > 768 ? 20 : 10}
-          >
-            <ResizablePanelGroup direction="vertical">
-              <ResizablePanel
-                defaultSize={65}
-                minSize={windowWidth > 768 ? 10 : 10}
-              >
-                <ChallengeEditorWrapper
-                  value={value}
-                  setValue={setValue}
-                  language={language}
-                  setLanguage={setLanguage}
-                  header={presetHeader}
-                  solved={solved}
-                  userUUID={userUUID}
-                  challengeId={challengeData!.challenge_id}
-                  outputData={outputData!}
+      {loaded &&
+        (windowWidth > 768 ? (
+          <ResizablePanelGroup direction="horizontal" className="h-full grow">
+            <ResizablePanel defaultSize={50} minSize={20}>
+              <ScrollArea className="h-full">
+                <ChallengeContentInfo
+                  challengeData={challengeData}
+                  isSuccess={true}
                 />
-              </ResizablePanel>
-              <ResizableHandle withHandle={windowWidth <= 768} />
-              <ResizablePanel defaultSize={35} minSize={10}>
-                <ScrollArea className="h-full bg-background-variant">
-                  <pre
-                    className={cn(
-                      "whitespace-pre-wrap text-wrap break-words p-4 font-mono",
-                      outputData?.type == "error" ? "text-red-400" : "",
-                    )}
-                  >
-                    {outputData?.output}
-                  </pre>
-                </ScrollArea>
-              </ResizablePanel>
-            </ResizablePanelGroup>
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      )}
+              </ScrollArea>
+            </ResizablePanel>
+            <ResizableHandle withHandle={windowWidth <= 768} />
+            <ResizablePanel defaultSize={50} minSize={20}>
+              <ResizablePanelGroup direction="vertical">
+                <ResizablePanel defaultSize={65} minSize={10}>
+                  <ChallengeEditorWrapper
+                    value={value}
+                    setValue={setValue}
+                    language={language}
+                    setLanguage={setLanguage}
+                    header={presetHeader}
+                    solved={solved}
+                    userUUID={userUUID}
+                    challengeId={challengeData!.challenge_id}
+                  />
+                </ResizablePanel>
+                <ResizableHandle />
+                <ResizablePanel defaultSize={35} minSize={10}>
+                  <ScrollArea className="h-full bg-background-variant">
+                    <pre
+                      className={cn(
+                        "whitespace-pre-wrap text-wrap break-words p-4 font-mono",
+                        outputData?.type == "error" ? "text-red-400" : "",
+                      )}
+                    >
+                      {outputData?.output}
+                    </pre>
+                  </ScrollArea>
+                </ResizablePanel>
+              </ResizablePanelGroup>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <ChallengeContentInfo
+              challengeData={challengeData}
+              isSuccess={true}
+            />
+            <ChallengeEditorWrapper
+              value={value}
+              setValue={setValue}
+              language={language}
+              setLanguage={setLanguage}
+              header={presetHeader}
+              solved={solved}
+              userUUID={userUUID}
+              challengeId={challengeData!.challenge_id}
+            />
+            <ScrollArea className="h-full min-h-[300px] bg-background-variant">
+              <pre
+                className={cn(
+                  "whitespace-pre-wrap text-wrap break-words p-4 font-mono",
+                  outputData?.type == "error" ? "text-red-400" : "",
+                )}
+              >
+                {outputData?.output}
+              </pre>
+            </ScrollArea>
+          </div>
+        ))}
     </>
   );
 }
