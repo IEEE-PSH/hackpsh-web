@@ -55,7 +55,7 @@ export default function ChallengeEditorWrapper({
   }, [header, submission, setLanguage, language]);
 
   useEffect(() => {
-    setValue(value);
+    if (value.length > 0) setValue(value);
   }, []);
 
   return (

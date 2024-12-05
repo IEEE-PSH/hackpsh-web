@@ -61,11 +61,11 @@ export default function ChallengeContentInfo({
             </HoverCardContent>
           </HoverCard>
         </Label>
-        <pre className="text-wrap bg-background-variant font-mono">
+        <pre className="word-break whitespace-pre-line break-words bg-background-variant font-mono">
           {challengeData?.challenge_example_input}
         </pre>
         <Label>Output</Label>
-        <pre className="text-wrap bg-background-variant font-mono">
+        <pre className="word-break whitespace-pre-line break-words bg-background-variant font-mono">
           {challengeData?.challenge_example_output}
         </pre>
         <Label>Explanation</Label>

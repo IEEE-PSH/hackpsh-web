@@ -141,7 +141,7 @@ export default function ChallengeContentPage({
                 />
               </ScrollArea>
             </ResizablePanel>
-            <ResizableHandle withHandle={windowWidth <= 768} />
+            <ResizableHandle />
             <ResizablePanel defaultSize={50} minSize={20}>
               <ResizablePanelGroup direction="vertical">
                 <ResizablePanel defaultSize={65} minSize={10}>
