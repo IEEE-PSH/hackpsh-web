@@ -111,20 +111,9 @@ function HomeInfo() {
               {` `}HackPSH is a dynamic hackathon focused on solving challenges
               dedicated towards subjects within the Computer Science and
               Electrical Engineering disciplines. Participants will be provided
-              with Raspbery Pi Pico W kits to build various circuits and engage
-              in coding challenges via{" "}
-              <Button
-                variant="inline_link"
-                size="navigation"
-                className="text-md"
-                asChild
-              >
-                <Link href="https://www.hackerrank.com/" target="_blank">
-                  HackerRank
-                </Link>
-              </Button>
-              . We aim to explore learning in areas such as cryptography,
-              circuitry, algorithms, and much more!
+              with tools to build various circuits and engage in coding
+              challenges through the platform. We aim to explore learning in
+              areas such as cryptography, circuitry, algorithms, and much more!
             </p>
           </CardContent>
         </Card>
