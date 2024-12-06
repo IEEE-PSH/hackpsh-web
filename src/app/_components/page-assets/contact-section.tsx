@@ -8,11 +8,15 @@ import { type ComponentProps } from "react";
 type ContactSectionProps = {
   title: string;
   cta: string;
-} & ComponentProps<"section">
+} & ComponentProps<"section">;
 
-export default function ContactSection({ title, cta, className }: ContactSectionProps) {
+export default function ContactSection({
+  title,
+  cta,
+  className,
+}: ContactSectionProps) {
   return (
-    <Section className={cn(className, "border-y bg-background")}>
+    <Section className={cn(className, "border-t bg-background")}>
       <div className="flex flex-col items-center space-y-8">
         <h2 className="text-4xl font-bold text-foreground">{title}</h2>
         <Button variant="default" className="text-md w-48" asChild>
