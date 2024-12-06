@@ -240,8 +240,8 @@ export async function joinTeam(
 
     if (!team_from_team_name?.team_uuid) {
       throw new BaseError({
-        error_title: "Invalid team name.",
-        error_desc: "The provided team name is invalid.",
+        error_title: "Invalid team.",
+        error_desc: "Team does not exist.",
       });
     }
 

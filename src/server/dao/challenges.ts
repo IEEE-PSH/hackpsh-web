@@ -464,7 +464,7 @@ export async function solveChallenge(
 
     const isSolvedAlready = await db.query.app_solved_challenges.findFirst({
       columns: {
-        solved_challenge_uuid: true,
+        solved_challenge_foreign_uuid: true,
         solved_challenge_team_uuid: true,
       },
       where: and(

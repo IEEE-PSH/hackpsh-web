@@ -76,6 +76,7 @@ export default function ChallengeEditorWrapper({
           readOnly: solved,
           minimap: { enabled: false },
           automaticLayout: true,
+          contextmenu: false,
         }}
       />
     </div>
