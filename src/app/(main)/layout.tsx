@@ -35,7 +35,7 @@ export default function RootLayout({
             <NextTopLoader
               color="hsl(var(--primary))"
               showSpinner={false}
-              height={3}
+              height={2}
             />
             {children}
           </ReactQueryProvider>
