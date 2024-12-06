@@ -242,7 +242,7 @@ function HomePrizes() {
         </Card>
         <div className="hidden md:flex">
           {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-          <Image alt="Graphical Element" src={HomePrizeSvg} />
+          <Image alt="prizes graphic" src={HomePrizeSvg} />
         </div>
       </div>
     </Section>
