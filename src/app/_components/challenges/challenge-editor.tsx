@@ -9,6 +9,7 @@ import { Editor } from "@monaco-editor/react";
 import { type TLanguages } from "@/server/zod-schemas/challenges";
 import { cn } from "@/app/_lib/client-utils";
 import { trpc } from "@/app/_trpc/react";
+import { useTheme } from "next-themes";
 
 type ChallengeEditor = {
   value: string;
@@ -58,12 +59,14 @@ export default function ChallengeEditorWrapper({
     if (value.length > 0) setValue(value);
   }, []);
 
+  const { theme } = useTheme();
+
   return (
     <div className={cn(solved && "cursor-not-allowed", "h-full min-h-[400px]")}>
       <Editor
         className={cn(solved && "pointer-events-none")}
         height="100%"
-        theme="vs-dark"
+        theme={theme === "dark" ? "vs-dark" : "light"}
         language={language}
         defaultLanguage={language ?? "python"}
         value={value}

@@ -207,7 +207,7 @@ function AboutTeam() {
 
   return (
     <Section className="bg-background-variant">
-      <p className="text-center text-4xl font-bold text-foreground">
+      <p className="text-center text-3xl font-semibold tracking-tight text-foreground">
         Connect with our Team
       </p>
       <p className="ml-4 mt-8 text-lg font-semibold">CURRENT MEMBERS</p>
@@ -215,7 +215,7 @@ function AboutTeam() {
         {createTeamMemberCards(currentMembers)}
       </div>
       <hr />
-      <p className="ml-4 mt-8 text-lg font-semibold">ALUMNI</p>
+      <p className="ml-4 mt-8 text-lg font-semibold">PAST MEMBERS & ALUMNI</p>
       <div className="my-8 grid grid-cols-1 gap-6 md:grid-cols-2">
         {createTeamMemberCards(pastMembers)}
       </div>

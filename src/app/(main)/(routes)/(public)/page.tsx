@@ -15,6 +15,7 @@ import Section from "@/app/_components/page-assets/section";
 import ContactSection from "@/app/_components/page-assets/contact-section";
 import { EventCountdownSection } from "@/app/_components/countdown/event-countdown-section";
 import HackPSH2023Fall from "@/../public/2023-fall-event.jpg";
+import HackPSH2024Spring from "@/../public/2024-spring-event.jpg";
 import HackPSH2023Spring from "@/../public/2023-spring-event.jpg";
 import Image from "next/image";
 import Link from "next/link";
@@ -55,14 +56,14 @@ function Hero() {
                 <span>Educational Activities Building | EAB 103</span>
               </Link>
             </Button>
-            <p>November 30, 2024 | 10:00 AM - 10:00 PM EST</p>
+            <p>December 7, 2024 | 10:00 AM - 10:00 PM EST</p>
           </div>
 
-          <Button variant="default" className="text-md w-48" asChild>
+          {/* <Button variant="default" className="text-md w-48" asChild>
             <Link href={siteConfig.registration_form} target="_blank">
               <span>Register</span>
             </Link>
-          </Button>
+          </Button> */}
         </div>
 
         <Image
@@ -110,20 +111,9 @@ function HomeInfo() {
               {` `}HackPSH is a dynamic hackathon focused on solving challenges
               dedicated towards subjects within the Computer Science and
               Electrical Engineering disciplines. Participants will be provided
-              with Raspbery Pi Pico W kits to build various circuits and engage
-              in coding challenges via{" "}
-              <Button
-                variant="inline_link"
-                size="navigation"
-                className="text-md"
-                asChild
-              >
-                <Link href="https://www.hackerrank.com/" target="_blank">
-                  HackerRank
-                </Link>
-              </Button>
-              . We aim to explore learning in areas such as cryptography,
-              circuitry, algorithms, and much more!
+              with tools to build various circuits and engage in coding
+              challenges through the platform. We aim to explore learning in
+              areas such as cryptography, circuitry, algorithms, and much more!
             </p>
           </CardContent>
         </Card>
@@ -232,39 +222,67 @@ function HomePrizes() {
               Attend HackPSH to earn prizes, participate in raffles, and much
               more!
             </CardDescription>
-            <CardContent className="mx-auto p-0">
-              <div className="my-14 flex scale-[0.75] flex-row space-x-4 sm:scale-[1]">
-                <div className="h-42 flex w-28 rotate-[2deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
-                  <Medal className="h-8 w-8" />
-                  <p className="font-bold">2nd Place</p>
-                  <p className="text-xl">$50</p>
-                </div>
-                <div className="h-42 z-[2] box-border flex w-28 rotate-[-7deg] scale-[1.3] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
-                  <Trophy className="h-8 w-8" />
-                  <p className="font-bold">1st Place</p>
-                  <p className="text-xl">$100</p>
-                </div>
-                <div className="h-42 flex w-28 rotate-[5deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
-                  <Medal className="h-8 w-8" />
-                  <p className="font-bold">3rd Place</p>
-                  <p className="text-xl">$25</p>
-                </div>
-              </div>
+            <CardContent className="flex p-0">
+              <p className="text-background">
+                Prizes are being determined for the current event.
+              </p>
             </CardContent>
-            <CardFooter className="text-md p-0 text-foreground dark:text-background/80">
-              Everyone will receive a Certificate of Participation and an entry
-              in the Resume Book.
-            </CardFooter>
           </CardHeader>
         </Card>
         <div className="hidden md:flex">
           {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
-          <Image alt="Graphical Element" src={HomePrizeSvg} />
+          <Image alt="prizes graphic" src={HomePrizeSvg} />
         </div>
       </div>
     </Section>
   );
 }
+// function HomePrizes() {
+//   return (
+//     <Section className="border-y bg-primary/90">
+//       <div className="flex flex-row justify-center space-x-12">
+//         <Card className="max-w-[32rem] border-black bg-background-banana">
+//           <CardHeader>
+//             <CardTitle className="text-3xl dark:text-background">
+//               PRIZES
+//             </CardTitle>
+//             <CardDescription className="text-md text-foreground dark:text-background/80">
+//               Attend HackPSH to earn prizes, participate in raffles, and much
+//               more!
+//             </CardDescription>
+//             <CardContent className="mx-auto p-0">
+//               <div className="my-14 flex scale-[0.75] flex-row space-x-4 sm:scale-[1]">
+//                 <div className="h-42 flex w-28 rotate-[2deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
+//                   <Medal className="h-8 w-8" />
+//                   <p className="font-bold">2nd Place</p>
+//                   <p className="text-xl">$50</p>
+//                 </div>
+//                 <div className="h-42 z-[2] box-border flex w-28 rotate-[-7deg] scale-[1.3] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
+//                   <Trophy className="h-8 w-8" />
+//                   <p className="font-bold">1st Place</p>
+//                   <p className="text-xl">$100</p>
+//                 </div>
+//                 <div className="h-42 flex w-28 rotate-[5deg] flex-col items-center space-y-4 rounded-xl bg-white p-4 text-foreground shadow-lg dark:text-background">
+//                   <Medal className="h-8 w-8" />
+//                   <p className="font-bold">3rd Place</p>
+//                   <p className="text-xl">$25</p>
+//                 </div>
+//               </div>
+//             </CardContent>
+//             <CardFooter className="text-md p-0 text-foreground dark:text-background/80">
+//               Everyone will receive a Certificate of Participation and an entry
+//               in the Resume Book.
+//             </CardFooter>
+//           </CardHeader>
+//         </Card>
+//         <div className="hidden md:flex">
+//           {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
+//           <Image alt="Graphical Element" src={HomePrizeSvg} />
+//         </div>
+//       </div>
+//     </Section>
+//   );
+// }
 
 function HomePastEvents() {
   return (
@@ -273,6 +291,35 @@ function HomePastEvents() {
         <p className="text-center text-4xl font-bold text-foreground">
           PAST EVENTS
         </p>
+        <Card>
+          <div className="grid grid-cols-1 gap-8 rounded-xl p-6 md:grid-cols-2">
+            <Image
+              alt="fall-2023-event"
+              className="rounded-md"
+              src={HackPSH2024Spring}
+            />
+            <div className="flex flex-col justify-between">
+              <p className="text-3xl font-bold">HackPSH Spring 2024</p>
+              <p className="my-4">
+                The Spring 2024 Hackathon, our largest hackathon event yet, was
+                made possible with the help of sponsors including Advanced
+                Conversion Technology. All participants received their own
+                Rasberry Pi Pico W kit to create their very own project. This
+                hackathon featured a variety of challenges in Software and
+                Electrical Engineering. Students also had the opportunity to
+                demonstrate their soldering skills to earn points.
+              </p>
+              <Button className="text-md ml-auto mt-auto w-32" asChild>
+                <Link
+                  href="https://www.linkedin.com/posts/ieee-penn-state-harrisburg_hackathon-codingcompetition-innovation-activity-7184158244141965313-inIH/"
+                  target="_blank"
+                >
+                  Read More
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </Card>
         <Card>
           <div className="grid grid-cols-1 gap-8 rounded-xl p-6 md:grid-cols-2">
             <Image
@@ -294,7 +341,7 @@ function HomePastEvents() {
               </p>
               <Button className="text-md ml-auto mt-auto w-32" asChild>
                 <Link
-                  href="https://edu.ieee.org/us-psu/event/hackpsh/"
+                  href="https://www.linkedin.com/posts/ieee-penn-state-harrisburg_networking-competition-engineering-activity-7151196079609303041-Bgg5"
                   target="_blank"
                 >
                   Read More
@@ -326,7 +373,7 @@ function HomePastEvents() {
               </p>
               <Button className="text-md ml-auto mt-auto w-32" asChild>
                 <Link
-                  href="https://edu.ieee.org/us-psu/event/ieee-acm-hackathon/"
+                  href="https://edu.ieee.org/us-psu/2024/01/20/hackathon-hackpsh/"
                   target="_blank"
                 >
                   Read More

@@ -48,7 +48,7 @@ export default function ChallengeCard({
               </Badge>
               <Badge
                 className={cn(
-                  "w-16 justify-center bg-foreground capitalize text-background ",
+                  "w-16 justify-center bg-foreground capitalize text-foreground dark:text-background",
                   challenge_difficulty == "easy"
                     ? "bg-green-500 hover:bg-green-500/90"
                     : challenge_difficulty == "medium"
