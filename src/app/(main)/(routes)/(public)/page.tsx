@@ -224,7 +224,7 @@ function HomePrizes() {
             </CardDescription>
             <CardContent className="flex p-0">
               <p className="text-background">
-                Prizes are still being determined for the current event.
+                Prizes are being determined for the current event.
               </p>
             </CardContent>
           </CardHeader>
