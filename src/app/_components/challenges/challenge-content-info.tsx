@@ -26,7 +26,7 @@ export default function ChallengeContentInfo({
         <div className="space-x-2">
           <Badge
             className={cn(
-              "w-16 justify-center capitalize",
+              "w-16 justify-center capitalize text-foreground dark:text-background",
               challengeData?.challenge_difficulty == "easy"
                 ? "bg-green-500 hover:bg-green-500/90"
                 : challengeData?.challenge_difficulty == "medium"
