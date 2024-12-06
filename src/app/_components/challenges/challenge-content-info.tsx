@@ -22,7 +22,7 @@ export default function ChallengeContentInfo({
 }: ChallengeContentInfo) {
   if (isSuccess) {
     return (
-      <div className="flex flex-col space-y-4 p-4">
+      <div className="mb-6 flex flex-col space-y-4 p-4 md:mb-0">
         <div className="space-x-2">
           <Badge
             className={cn(
