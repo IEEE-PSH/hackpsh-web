@@ -6,7 +6,6 @@ import { Toaster } from "@/app/_components/ui/toaster";
 import ReactQueryProvider from "@/app/_trpc/react";
 import { headers } from "next/headers";
 import NextTopLoader from "nextjs-toploader";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const font = GeistSans;
 
@@ -26,7 +25,6 @@ export default function RootLayout({
         <link rel="icon" type="image/svg+xml" href="/brand.svg" />
       </head>
       <body className={font.className}>
-        <SpeedInsights />
         <NextThemesProvider
           attribute="class"
           defaultTheme="dark"
