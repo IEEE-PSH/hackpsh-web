@@ -55,6 +55,10 @@ export default function ChallengeEditorWrapper({
     }
   }, [header, submission, setLanguage, language]);
 
+  useEffect(() => {
+    if (value.length > 0) setValue(value);
+  }, []);
+
   const { theme } = useTheme();
 
   return (

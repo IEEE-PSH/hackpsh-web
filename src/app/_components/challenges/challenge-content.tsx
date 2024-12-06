@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/app/_components/ui/button";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import ProtectedEditorSiteHeader from "../nav/protected-editor-site-header";
 import { ArrowLeft } from "lucide-react";
