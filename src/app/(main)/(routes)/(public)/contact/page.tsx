@@ -145,7 +145,7 @@ function ContactForm({ className, ...props }: CreateContactFormProps) {
               />
               <Button
                 type="submit"
-                className="w-full"
+                className="ml-auto flex"
                 disabled={form.formState.isSubmitting}
               >
                 {form.formState.isSubmitting && (
