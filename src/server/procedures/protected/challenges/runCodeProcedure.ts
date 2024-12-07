@@ -43,7 +43,7 @@ export function fillFunctionCall(
   paramTypes: string[],
 ) {
   const regex =
-    /^\[\s*(?:(?:"[^"]*"|\d+\.\d*|\d+|'[^']*'|true|false|null)(\s*,\s*(?:"[^"]*"|\d+\.\d*|\d+|'[^']*'|true|false|null))*)?\s*\]$/;
+    /^\[\s*(?:(?:"[^"]*"|-?\d+\.\d*|-?\d+|'[^']*'|true|false|null)(\s*,\s*(?:"[^"]*"|-?\d+\.\d*|-?\d+|'[^']*'|true|false|null))*)?\s*\]$/;
   const inputs = exampleInputs.split("\n");
 
   for (let i = 0; i < inputs.length; i++) {
@@ -52,6 +52,7 @@ export function fillFunctionCall(
     if (language === "cpp" && regex.test(input)) {
       const temp = input.slice(1, -1).split(",");
       const newInput = `{${temp.join(",").replaceAll(`'`, `"`)}}`;
+      console.log(newInput);
       header = header.replace(".", newInput);
       // convert test case booleans to capitalized for Python
     } else if (language === "python" && paramTypes[i] === "boolean")

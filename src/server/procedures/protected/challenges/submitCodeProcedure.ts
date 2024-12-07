@@ -65,7 +65,7 @@ export default protectedProcedure
         headerType === "stringArr" ||
         headerType === "doubleArr"
       ) {
-        boilerPlate = `template<typename T>ostream& operator<<(ostream& os, const vector<T>& vec) {os << "{";for (size_t i = 0;i < vec.size(); ++i) {os << vec[i]; if (i != vec.size() - 1) os << ", ";}os << "}";return os;}int main() {${funcsToExecuteString};return 0;}`;
+        boilerPlate = `template<typename T>ostream& operator<<(ostream& os, const vector<T>& vec) {os << "{";for (size_t i = 0;i < vec.size(); ++i) {os << vec[i]; if (i != vec.size() - 1) os << ", ";}os << "}";return os;}int main() {${funcsToExecuteString}return 0;}`;
       } else boilerPlate = `int main(){${funcsToExecuteString}}`;
     }
 
@@ -152,7 +152,6 @@ export default protectedProcedure
             });
           }
         }
-
         const maxOutputs = Math.max(expectedOutputs.length, stdOuts.length);
         let passCount = 0;
         for (let i = 0; i < maxOutputs; i++)
