@@ -52,7 +52,6 @@ export function fillFunctionCall(
     if (language === "cpp" && regex.test(input)) {
       const temp = input.slice(1, -1).split(",");
       const newInput = `{${temp.join(",").replaceAll(`'`, `"`)}}`;
-      console.log(newInput);
       header = header.replace(".", newInput);
       // convert test case booleans to capitalized for Python
     } else if (language === "python" && paramTypes[i] === "boolean")
