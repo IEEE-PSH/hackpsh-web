@@ -95,7 +95,20 @@ export default protectedProcedure
         }
 
         // reformat output because piston api prints arrays with extra spacing
-        const stdOutputs = data.run.stdout.split("\n");
+        // const stdOutputs = data.run.stdout.split("\n");
+
+        //QUICK FIX: piston api returns arrays with new lines if too long; consider refactoring this
+        const stdOutputs: string[] = data.run.stdout
+          .replace(/[\[\{]\s*([\s\S]*?)\s*[\]\}]/g, (match, content) => {
+            return (
+              match[0]! +
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+              content.replace(/\n/g, " ").trim() +
+              match[match.length - 1]
+            );
+          })
+          .split("\n");
+
         const outputLengths: number[] = [];
         for (const testCase of testCases) {
           const outputs = testCase.test_case_output.split("\n");
