@@ -10,6 +10,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+export const difficultyOrder: Record<string, number> = {
+  easy: 1,
+  medium: 2,
+  hard: 3,
+};
+
 export function Challenges({
   challenges,
   challengesEnabled,
@@ -22,11 +28,6 @@ export function Challenges({
   let { unsolvedChallenges, solvedChallenges } = challenges;
 
   //sort challenges
-  const difficultyOrder: Record<string, number> = {
-    easy: 1,
-    medium: 2,
-    hard: 3,
-  };
   unsolvedChallenges = unsolvedChallenges.sort((a, b) => {
     const comparison =
       difficultyOrder[a.challenge_difficulty]! -
