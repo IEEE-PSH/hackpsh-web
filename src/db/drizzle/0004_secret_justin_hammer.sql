@@ -1,0 +1,2 @@
+ALTER TABLE "app_schema"."app_challenges" ADD COLUMN "challenge_live" boolean DEFAULT true;--> statement-breakpoint
+ALTER TABLE "app_schema"."app_solved_challenges" ADD COLUMN "solved_challenge_live" boolean DEFAULT true;

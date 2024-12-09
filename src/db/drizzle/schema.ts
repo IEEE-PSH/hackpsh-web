@@ -144,6 +144,7 @@ export const app_challenges = app_schema.table("app_challenges", {
   challenge_example_input: text("challenge_example_input").notNull(),
   challenge_example_output: text("challenge_example_output").notNull(),
   challenge_explanation: text("challenge_explanation").notNull(),
+  challenge_is_live: boolean("challenge_live").default(true)
 });
 
 export const app_difficulty = app_schema.table("app_difficulty", {
@@ -174,4 +175,5 @@ export const app_solved_challenges = app_schema.table("app_solved_challenges", {
     .notNull(),
   solved_challenge_code_submission: text("solved_challenge_code_submission"),
   solved_challenge_language: text("solved_challenge_language").notNull(),
+  solved_challenge_live: boolean("solved_challenge_live").default(true)
 });
