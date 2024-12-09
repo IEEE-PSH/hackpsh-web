@@ -39,6 +39,7 @@ export const siteConfig = {
     team: "/settings/team",
     challenge: "/challenge",
     join_team: "/teams",
+    challenge_archive: "/challenge-archive"
   },
 };
 

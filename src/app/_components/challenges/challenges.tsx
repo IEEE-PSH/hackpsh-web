@@ -1,6 +1,6 @@
 import ChallengeCard from "@/app/_components/challenges/challenge-card";
 import { type Challenges as TChallenges } from "@/server/dao/challenges";
-import { Card } from "../ui/card";
+import { Card, CardContent } from "../ui/card";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
 import { cn } from "@/app/_lib/client-utils";
 import {
@@ -9,6 +9,15 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Button } from "../ui/button";
+import { siteConfig } from "@/app/_config/site";
+import Link from "next/link";
+
+export const difficultyOrder: Record<string, number> = {
+  easy: 1,
+  medium: 2,
+  hard: 3,
+};
 
 export function Challenges({
   challenges,
@@ -22,11 +31,6 @@ export function Challenges({
   let { unsolvedChallenges, solvedChallenges } = challenges;
 
   //sort challenges
-  const difficultyOrder: Record<string, number> = {
-    easy: 1,
-    medium: 2,
-    hard: 3,
-  };
   unsolvedChallenges = unsolvedChallenges.sort((a, b) => {
     const comparison =
       difficultyOrder[a.challenge_difficulty]! -
@@ -68,6 +72,22 @@ export function Challenges({
   });
 
   const totalChallenges = solvedChallenges.length + unsolvedChallenges.length;
+
+  if (totalChallenges===0){
+    return(
+      <Card className="w-full mt-0 self-start">
+        <CardContent className="p-4 text-center">
+          <h1 className="font-semibold tracking-tight text-xl">No challenges yet</h1>
+          <p className="text-sm">You can visit the Challenge Archive to view past challenges.</p>
+          <Button className="mt-4 ml-auto" asChild>
+            <Link href={siteConfig.paths.challenge_archive}>
+              Visit Challenge Archive
+            </Link>
+          </Button>
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
     <div className="flex w-full flex-col gap-8">
