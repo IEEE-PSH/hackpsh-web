@@ -15,7 +15,7 @@ export default async function ChallengesPage() {
   return (
     <div className="container grid max-w-6xl grid-cols-1 gap-y-8">
       <Card>
-        <CardContent className="p-4">
+        <CardContent className="p-6">
           <h1 className="font-semibold tracking-tight text-xl">Welcome to the Challenge Archive</h1>
           <p className="text-sm">These are challenges that have been used in past events and are currently not being used. 
             You can still run and test them, but they will not give you any points. It is possible for some of these challenges to appear 
