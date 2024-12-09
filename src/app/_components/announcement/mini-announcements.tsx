@@ -23,7 +23,7 @@ export async function MiniAnnouncements({}: React.HTMLAttributes<HTMLDivElement>
   });
 
   return (
-    <div className="mt-8 hidden lg:block">
+    <div className="hidden lg:block">
       <Card className="w-80">
         <CardContent className="flex flex-col space-y-4 p-6">
           <div className="flex justify-between">

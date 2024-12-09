@@ -75,7 +75,7 @@ export function Challenges({
 
   if (totalChallenges===0){
     return(
-      <Card className="w-full mt-8 self-start">
+      <Card className="w-full mt-0 self-start">
         <CardContent className="p-4 text-center">
           <h1 className="font-semibold tracking-tight text-xl">No challenges yet</h1>
           <p className="text-sm">You can visit the Challenge Archive to view past challenges.</p>
