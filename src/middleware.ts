@@ -14,91 +14,62 @@ export async function middleware(req: NextRequest) {
     const supabase = composeMiddlewareClient(req, res);
     const session = await getSession(supabase);
 
-    // If the user has not completed onboarding, then
-    // redirect the user to the onboarding forms.
-
     // Forced to use serverTRPC in middleware due to
     // Next.js Middleware forced on Edge Runtime,
     // which doesn't support the net module
     // (dep of node-postgres / drizzle) when
     // using server-side callers (like /api/auth/callback)
-    const { is_onboarding_complete } =
-      await serverTRPC.user.is_onboarding_complete.query({
-        user_uuid: session.user.id,
-      });
-
-    const { get_user_role } = await serverTRPC.user.get_user_role.query({
-      user_uuid: session.user.id,
-    });
-
-    const { get_user_onboarding_phase } =
-      await serverTRPC.user.get_user_onboarding_phase.query({
-        user_uuid: session.user.id,
-      });
+    
+    const { user_onboarding_complete, user_onboarding_phase, user_role, is_challenges_enabled } =
+      await serverTRPC.user.get_middleware_info.query({user_uuid:session.user.id})
 
     //handle onboarding phases individually
-    if (
-      get_user_onboarding_phase === "personal-details" &&
-      !req.nextUrl.pathname.startsWith(
-        siteConfig.paths.onboarding_personal_details,
-      )
-    ) {
-      return redirectToPath(req, siteConfig.paths.onboarding_personal_details);
-    } else if (
-      get_user_onboarding_phase === "school-details" &&
-      !req.nextUrl.pathname.startsWith(
-        siteConfig.paths.onboarding_school_details,
-      )
-    ) {
-      return redirectToPath(req, siteConfig.paths.onboarding_school_details);
-    } else if (
-      get_user_onboarding_phase === "support-us" &&
-      !req.nextUrl.pathname.startsWith(siteConfig.paths.onboarding_support_us)
-    ) {
-      return redirectToPath(req, siteConfig.paths.onboarding_support_us);
+    const onboardingPaths = {
+      "personal-details" : siteConfig.paths.onboarding_personal_details,
+      "school-details" : siteConfig.paths.onboarding_school_details,
+      "support-us" : siteConfig.paths.onboarding_support_us
     }
+    const pathnameKey = user_onboarding_phase as keyof typeof onboardingPaths
+
+    if(onboardingPaths[pathnameKey] && !req.nextUrl.pathname.startsWith(onboardingPaths[pathnameKey]))
+      return redirectToPath(req, onboardingPaths[pathnameKey])
+    
 
     //prevent users who completed onboarding from revisiting onboarding forms
     if (
-      is_onboarding_complete &&
+      user_onboarding_complete &&
       req.nextUrl.pathname.startsWith(siteConfig.paths.onboarding)
-    ) {
+    ) 
       return redirectToPath(req, siteConfig.paths.dashboard);
-    }
-
+    
     if (
-      !is_onboarding_complete &&
+      !user_onboarding_complete &&
       !req.nextUrl.pathname.startsWith(siteConfig.paths.onboarding)
-    ) {
+    ) 
       return redirectToPath(req, siteConfig.paths.onboarding);
-    }
+    
 
     //prevent participants from accessing admin/officer-only pages
-    if (
-      get_user_role === "participant" &&
-      (req.nextUrl.pathname.startsWith(siteConfig.paths.users) ||
-        req.nextUrl.pathname.startsWith(siteConfig.paths.event))
-    ) {
-      return redirectToPath(req, siteConfig.paths.account);
-    }
-
-    if (
-      get_user_role === "participant" &&
-      (req.nextUrl.pathname.startsWith(siteConfig.paths.create_post) ||
-        req.nextUrl.pathname.startsWith(siteConfig.paths.edit_post))
-    ) {
-      return redirectToPath(req, siteConfig.paths.announcements);
-    }
-
-    //prevent participants from viewing challenges while challenges disabled
-    const is_challenges_enabled =
-      await serverTRPC.event.is_challenges_enabled.query();
-    if (
-      get_user_role === "participant" &&
-      req.nextUrl.pathname.startsWith(siteConfig.paths.challenge) &&
-      !is_challenges_enabled
-    ) {
-      return redirectToPath(req, siteConfig.paths.dashboard);
+    if (user_role==="participant"){
+      if (
+        req.nextUrl.pathname.startsWith(siteConfig.paths.users) ||
+          req.nextUrl.pathname.startsWith(siteConfig.paths.event)
+      ) 
+        return redirectToPath(req, siteConfig.paths.account);
+      
+  
+      if (
+        req.nextUrl.pathname.startsWith(siteConfig.paths.create_post) ||
+          req.nextUrl.pathname.startsWith(siteConfig.paths.edit_post)
+      ) 
+        return redirectToPath(req, siteConfig.paths.announcements);
+      
+      //prevent participants from viewing challenges while challenges disabled
+      if (
+        req.nextUrl.pathname.startsWith(siteConfig.paths.challenge) &&
+        !is_challenges_enabled
+      )
+        return redirectToPath(req, siteConfig.paths.dashboard);
     }
 
     return res;

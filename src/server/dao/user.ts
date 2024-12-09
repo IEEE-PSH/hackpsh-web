@@ -4,12 +4,34 @@ import {
   type TUserOnboardingPhase,
   type TUserMajor,
   type TUserSchoolYear,
-  type TUserRole,
 } from "@/db/drizzle/startup_seed";
 import { BaseError } from "@/shared/error";
 import { TRPCError } from "@trpc/server";
 import { eq, desc } from "drizzle-orm";
 import { deleteTeam } from "./team";
+import { isChallengesEnabled } from "./event";
+
+export async function getMiddlewareInfo(db: Database, user_uuid: string) {
+  try {
+    const result = await db.query.app_user_profile.findFirst({
+      columns: {
+        user_onboarding_complete: true,
+        user_role: true,
+        user_onboarding_phase: true,
+      },
+      where: (user_data, { eq }) => eq(user_data.user_uuid, user_uuid),
+    });
+
+    const is_challenges_enabled = await isChallengesEnabled(db)
+    return {...result, is_challenges_enabled: is_challenges_enabled};
+
+  } catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
 
 export async function getUserOnboardingStatus(db: Database, user_uuid: string) {
   try {

@@ -22,8 +22,10 @@ import updateSchoolDetailsProcedure from "../procedures/protected/user/updateSch
 import isUserOnTeamProcedure from "../procedures/protected/user/isUserOnTeamProcedure";
 import isTeamLeaderProcedure from "../procedures/protected/user/isTeamLeaderProcedure";
 import deleteTeamSelfProcedure from "../procedures/protected/user/deleteTeamSelfProcedure";
+import getMiddlewareInfoProcedure from "../procedures/protected/user/getMiddlewareInfoProcedure";
 
 export const userRouter = createTRPCRouter({
+  get_middleware_info: getMiddlewareInfoProcedure,
   is_onboarding_complete: isOnboardingCompeleteProcedure,
   create_user: createUserProcedure,
   does_user_exist: doesUserExistProcedure,
