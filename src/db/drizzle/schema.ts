@@ -175,5 +175,4 @@ export const app_solved_challenges = app_schema.table("app_solved_challenges", {
     .notNull(),
   solved_challenge_code_submission: text("solved_challenge_code_submission"),
   solved_challenge_language: text("solved_challenge_language").notNull(),
-  solved_challenge_live: boolean("solved_challenge_live").default(true)
 });

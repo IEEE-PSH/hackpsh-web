@@ -45,12 +45,19 @@ export default function ArchivedChallenges({
     )
   }
 
-  return(
-    <Card className="w-full">
-      <div>
-        {challengeElements}
-      </div>
-    </Card>
-
-  )
+  if (challengeElements.length>0){
+    return(
+      <Card className="w-full">
+        <div>
+          {challengeElements}
+        </div>
+      </Card> 
+    )
+  }else{
+    return(
+      <p className="mx-auto text-center text-muted-foreground">
+        No archived challenges yet.
+      </p>      
+    )
+  }
 }

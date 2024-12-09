@@ -132,6 +132,7 @@ export async function getChallenge(db: Database, challengeID: number) {
         challenge_example_output: true,
         challenge_explanation: true,
         challenge_points: true,
+        challenge_is_live: true
       },
       where: (challenge_data, { eq }) =>
         eq(challenge_data.challenge_id, challengeID),

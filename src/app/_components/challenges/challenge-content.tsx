@@ -114,7 +114,7 @@ export default function ChallengeContentPage({
         >
           <Link href="#" onClick={() => router.back()}>
             <ArrowLeft />
-            <span className="ml-4 hidden lg:block">Challenges</span>
+            <span className="ml-4 hidden lg:block">Back</span>
           </Link>
         </Button>
         <ChallengeNavActions
