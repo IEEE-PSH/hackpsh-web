@@ -62,9 +62,9 @@ export default function ChallengeEditorWrapper({
   const { theme } = useTheme();
 
   return (
-    <div className={cn(solved && "cursor-not-allowed", "h-full min-h-[400px]")}>
+    <div className="h-full min-h-[400px]">
       <Editor
-        className={cn(solved && "pointer-events-none")}
+        className="cursor-wait"
         height="100%"
         theme={theme === "dark" ? "vs-dark" : "light"}
         language={language}
