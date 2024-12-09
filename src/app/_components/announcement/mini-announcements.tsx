@@ -41,7 +41,7 @@ export async function MiniAnnouncements({}: React.HTMLAttributes<HTMLDivElement>
           {postElements.length > 0 ? (
             postElements
           ) : (
-            <p className="text-muted-foreground">No announcements</p>
+            <p className="text-muted-foreground text-sm">No announcements</p>
           )}
         </CardContent>
       </Card>
