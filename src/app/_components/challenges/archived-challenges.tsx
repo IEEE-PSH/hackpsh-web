@@ -5,12 +5,22 @@ import { type TArchivedChallenges} from "@/server/dao/challenges";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
 import { Card } from "../ui/card";
+import { difficultyOrder } from "./challenges";
 
 export default function ArchivedChallenges({
   challenges
 }: {challenges:TArchivedChallenges}) {
   const router = useRouter();
   const challengeElements = []
+
+  challenges.sort((a, b) => {
+    const comparison =
+      difficultyOrder[a.challenge_difficulty]! -
+      difficultyOrder[b.challenge_difficulty]!;
+    if (comparison != 0) return comparison;
+    return a.challenge_points - b.challenge_points;
+  });
+  
   for (const challenge of challenges){
     challengeElements.push(
       <div
