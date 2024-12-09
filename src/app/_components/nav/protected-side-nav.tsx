@@ -25,7 +25,7 @@ export function ProtectedSideNav() {
         </SideNavOption>
       </div>
       <div className="flex flex-col">
-        <SideNavOption title="Challenge Archive" path={siteConfig.paths.join_team}>
+        <SideNavOption title="Challenge Archive" path={siteConfig.paths.challenge_archive}>
           <Archive/>
         </SideNavOption>
       </div>
@@ -48,11 +48,10 @@ function SideNavOption({children, title, path}:{children:React.ReactNode, title:
       asChild
   >
     <Link href={path} scroll={true}>
-    <div className="flex gap-4 items-center">
-      {children}
-      <span className="hidden xl:block">{title}</span>
-    </div>
-
+      <div className="flex gap-4 items-center">
+        {children}
+        <span className="hidden xl:block">{title}</span>
+      </div>
     </Link>
   </Button>
 )

@@ -9,12 +9,14 @@ import getEditChallengeInfoProcedure from "../procedures/protected/challenges/ge
 import updateChallengeProcedure from "../procedures/protected/challenges/updateChallengeProcedure";
 import getChallengesProcedure from "../procedures/protected/challenges/getChallengesProcedure";
 import deleteChallengeProcedure from "../procedures/protected/challenges/deleteChallengeProcedure";
+import getArchivedChallengesProcedure from "../procedures/protected/challenges/getArchivedChallengesProcedure";
 
 export const challengesRouter = createTRPCRouter({
   run_code: runCodeProcedure,
   submit_code: submitCodeProcedure,
   create_challenge: createChallengeProcedure,
   get_challenges: getChallengesProcedure,
+  get_archived_challenges:getArchivedChallengesProcedure,
   get_challenge: getChallengeProcedure,
   is_solved_challenge: isSolvedChallengeProcedure,
   get_code_submission: getCodeSubmissionProcedure,

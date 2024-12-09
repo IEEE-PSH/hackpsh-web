@@ -11,6 +11,30 @@ import { eq, and, sql, notExists } from "drizzle-orm";
 import { getUserRole } from "./user";
 import { type TDifficulties } from "@/db/drizzle/startup_seed";
 
+export async function getArchivedChallenges(db: Database){
+  try{
+    const archivedChallenges = await db
+    .select({
+      challenge_uuid: app_challenges.challenge_uuid,
+      challenge_id: app_challenges.challenge_id,
+      challenge_title: app_challenges.challenge_title,
+      challenge_difficulty: app_challenges.challenge_difficulty,
+      challenge_points: app_challenges.challenge_points,
+    })
+    .from(app_challenges)
+    .where(eq(app_challenges.challenge_is_live, false));  
+
+    return archivedChallenges
+  }catch (error) {
+    throw new TRPCError({
+      message: "The database has encountered some issues.",
+      code: "INTERNAL_SERVER_ERROR",
+    });
+  }
+}
+
+export type TArchivedChallenges = Awaited<ReturnType<typeof getArchivedChallenges>>
+
 export async function getChallenges(db: Database, user_uuid: string) {
   try {
     const teamUUID = await db.query.app_user_profile.findFirst({
@@ -30,6 +54,8 @@ export async function getChallenges(db: Database, user_uuid: string) {
       })
       .from(app_challenges)
       .where(
+        and(
+          eq(app_challenges.challenge_is_live, true),
         notExists(
           db
             .select()
@@ -46,7 +72,8 @@ export async function getChallenges(db: Database, user_uuid: string) {
                 ),
               ),
             ),
-        ),
+          ),
+        )
       );
 
     const solvedChallenges = await db
@@ -66,10 +93,13 @@ export async function getChallenges(db: Database, user_uuid: string) {
         ),
       )
       .where(
-        eq(
-          app_solved_challenges.solved_challenge_team_uuid,
-          teamUUID!.user_team_uuid!,
-        ),
+        and(
+          eq(
+            app_solved_challenges.solved_challenge_team_uuid,
+            teamUUID!.user_team_uuid!,
+          ),
+          eq(app_challenges.challenge_is_live, true)
+        )
       );
 
     return {
@@ -85,7 +115,7 @@ export async function getChallenges(db: Database, user_uuid: string) {
 }
 
 export type Challenges = Awaited<ReturnType<typeof getChallenges>>;
-export type Challenge = Challenges["unsolvedChallenges"][number];
+export type Challenge = Challenges["unsolvedChallenges"][number]
 
 export async function getChallenge(db: Database, challengeID: number) {
   try {
