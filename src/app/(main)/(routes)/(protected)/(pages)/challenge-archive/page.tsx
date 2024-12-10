@@ -1,5 +1,6 @@
 import ArchivedChallenges from "@/app/_components/challenges/archived-challenges";
 import { Card, CardContent } from "@/app/_components/ui/card";
+import { cn } from "@/app/_lib/client-utils";
 import { serverTRPC } from "@/app/_trpc/server";
 import { type Metadata } from "next";
 import React from "react";
@@ -13,7 +14,7 @@ export default async function ChallengesPage() {
   const challenges = await serverTRPC.challenges.get_archived_challenges.query();
 
   return (
-    <div className="container grid max-w-6xl grid-cols-1 gap-y-8">
+    <div className="container grid max-w-6xl grid-cols-1 gap-y-4">
       <Card>
         <CardContent className="p-6">
           <h1 className="font-semibold tracking-tight text-xl">Challenge Archive</h1>

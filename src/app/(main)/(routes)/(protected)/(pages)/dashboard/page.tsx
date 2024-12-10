@@ -31,7 +31,7 @@ export default async function ChallengesPage() {
   const challengeCount = challenges.solvedChallenges.length + challenges.unsolvedChallenges.length
 
   return (
-    <div className="container grid max-w-6xl grid-cols-1 gap-y-4 lg:gap-y-8">
+    <div className={cn(challengeCount > 0 ? "gap-y-8" : "gap-y-4","container grid max-w-6xl grid-cols-1")}>
       <div className="grid gap-4 lg:grid-cols-2">
         <DashboardTeamInfo />
         <ChallengesProgress challenges={challenges} />
