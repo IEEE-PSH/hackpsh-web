@@ -70,7 +70,7 @@ export default async function DashboardTeamInfo() {
     <Card>
       <CardContent className="flex h-full items-center justify-between gap-4 p-6 text-sm">
         <p className="text-md text-muted-foreground">
-          You must be on a team to participate in challenges.
+          You must be on a team to participate in live challenges.
         </p>
         <Link href={siteConfig.paths.join_team}>
           <Button variant="outline" className="w-32">

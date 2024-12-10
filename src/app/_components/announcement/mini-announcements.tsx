@@ -3,8 +3,9 @@ import { MiniAnnouncementPost } from "./mini-announcement-post";
 import { Card, CardContent } from "../ui/card";
 import Link from "next/link";
 import { siteConfig } from "@/app/_config/site";
+import { cn } from "@/app/_lib/client-utils";
 
-export async function MiniAnnouncements({}: React.HTMLAttributes<HTMLDivElement>) {
+export async function MiniAnnouncements({className}: React.HTMLAttributes<HTMLDivElement>) {
   const serverAnnouncementPosts =
     await serverTRPC.announcements.get_announcement_posts.query();
 
@@ -23,7 +24,7 @@ export async function MiniAnnouncements({}: React.HTMLAttributes<HTMLDivElement>
   });
 
   return (
-    <div className="hidden lg:block">
+    <div className={cn(className, "hidden lg:block")}>
       <Card className="w-80">
         <CardContent className="flex flex-col space-y-4 p-6">
           <div className="flex justify-between">

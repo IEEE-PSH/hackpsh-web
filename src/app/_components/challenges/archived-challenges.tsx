@@ -20,10 +20,13 @@ export default function ArchivedChallenges({
     return a.challenge_points - b.challenge_points;
   });
   
-  for (const challenge of challenges){
+  for (let i=0; i<challenges.length; i++){
+    const challenge = challenges[i]!
     challengeElements.push(
-      <Link href={siteConfig.paths.challenge + "/" + challenge.challenge_id}>
-        <Card className="cursor-pointer transition-colors hover:bg-accent/50">
+      <Link href={siteConfig.paths.challenge + "/" + challenge.challenge_id} key={`challenge-${challenge.challenge_id}`} 
+        className={cn(i===challenges.length-2 && i%2==0 ? "border-b lg:border-b-0" : "border-b last:border-b-0",
+         "border-r-0 lg:border-r")}>
+        <div className="transition-colors hover:bg-accent/50">
         <div className="flex flex-row items-center px-6 py-3">
           <h1 className="mr-4">{challenge.challenge_title}</h1>
           <div className="ml-auto flex items-center justify-center space-x-2">
@@ -46,16 +49,16 @@ export default function ArchivedChallenges({
             </Badge>
           </div>
         </div>
-      </Card>
+      </div>
     </Link>
     )
   }
 
   if (challengeElements.length>0){
     return(
-        <div className="grid md:grid-cols-2 gap-4">
+        <Card className="grid lg:grid-cols-2">
           {challengeElements}
-        </div>
+        </Card>
     )
   }else{
     return(

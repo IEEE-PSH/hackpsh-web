@@ -2,6 +2,7 @@ import { MiniAnnouncements } from "@/app/_components/announcement/mini-announcem
 import { Challenges } from "@/app/_components/challenges/challenges";
 import ChallengesProgress from "@/app/_components/challenges/challenges-progress";
 import DashboardTeamInfo from "@/app/_components/dashboard/dashboard-team-info";
+import { cn } from "@/app/_lib/client-utils";
 import { serverTRPC } from "@/app/_trpc/server";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
 import { composeServerComponentClient } from "@/server/lib/supabase/server";
@@ -27,20 +28,21 @@ export default async function ChallengesPage() {
     user_uuid: user.id,
   });
 
+  const challengeCount = challenges.solvedChallenges.length + challenges.unsolvedChallenges.length
+
   return (
-    <div className="container grid max-w-6xl grid-cols-1 gap-y-8">
+    <div className={cn(challengeCount > 0 ? "gap-y-8" : "gap-y-4","container grid max-w-6xl grid-cols-1")}>
       <div className="grid gap-4 lg:grid-cols-2">
         <DashboardTeamInfo />
         <ChallengesProgress challenges={challenges} />
       </div>
-
       <div className="flex gap-4">
         <Challenges
           challenges={challenges}
           challengesEnabled={is_challenges_enabled}
           userRole={get_user_role as TUserRole}
         />
-        <MiniAnnouncements />
+        <MiniAnnouncements className={challengeCount > 0 ? "mt-8":""}/>
       </div>
     </div>
   );

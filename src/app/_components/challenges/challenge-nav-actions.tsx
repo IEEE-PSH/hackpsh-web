@@ -28,6 +28,7 @@ type ChallengeNavActionsProps = {
   solved: boolean;
   setLanguage: Dispatch<SetStateAction<TLanguages>>;
   setOutputData: Dispatch<SetStateAction<TSubmitData | null>>;
+  challengeLive: boolean
 };
 
 export default function ChallengeNavActions({
@@ -40,6 +41,7 @@ export default function ChallengeNavActions({
   solved,
   setLanguage,
   setOutputData,
+  challengeLive
 }: ChallengeNavActionsProps) {
   //runs code
   const { refetch: runCode, isFetching: isRunning } =
@@ -76,11 +78,11 @@ export default function ChallengeNavActions({
   //runs code
   async function attemptRunCode() {
     await checkUserOnTeam();
-    if (onTeam?.is_on_team) await runCode();
+    if (!challengeLive || (onTeam?.is_on_team && challengeLive)) await runCode();
     else {
       toast({
         variant: "destructive",
-        description: "You must be on a team to participate in challenges.",
+        description: "You must be on a team to participate in live challenges.",
         duration: 4000,
       });
     }
@@ -88,11 +90,11 @@ export default function ChallengeNavActions({
   //submits code
   async function attemptSubmitCode() {
     await checkUserOnTeam();
-    if (onTeam?.is_on_team) await submitCode();
+    if (!challengeLive || (onTeam?.is_on_team && challengeLive)) await submitCode();
     else {
       toast({
         variant: "destructive",
-        description: "You must be on a team to participate in challenges.",
+        description: "You must be on a team to participate in live challenges.",
         duration: 4000,
       });
     }

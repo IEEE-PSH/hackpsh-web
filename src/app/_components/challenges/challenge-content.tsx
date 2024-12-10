@@ -127,6 +127,7 @@ export default function ChallengeContentPage({
           solved={solved}
           setLanguage={setLanguage}
           setOutputData={setOutputData}
+          challengeLive={challengeData!.challenge_is_live!}
         />
       </ProtectedEditorSiteHeader>
 
