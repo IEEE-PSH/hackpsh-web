@@ -77,7 +77,7 @@ export function Challenges({
     return(
       <Card className="w-full mt-0 self-start">
         <CardContent className="p-6 text-center">
-          <h1 className="font-semibold tracking-tight text-lg">No challenges yet</h1>
+          <h1 className="font-semibold tracking-tight text-lg">No live challenges yet</h1>
           <p className="text-sm">You can visit the Challenge Archive to view past challenges.</p>
           <Button className="mt-4 ml-auto" asChild>
             <Link href={siteConfig.paths.challenge_archive}>
