@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/app/_lib/client-utils";
 import { siteConfig } from "@/app/_config/site";
 import { Button } from "../ui/button";
-import { Archive, BarChart2, Bell, LayoutDashboard, Users } from "lucide-react";
+import { BarChart2, Bell, History, LayoutDashboard, Users } from "lucide-react";
 
 export function ProtectedSideNav() {
   return (
@@ -26,7 +26,7 @@ export function ProtectedSideNav() {
       </div>
       <div className="flex flex-col">
         <SideNavOption title="Challenge Archive" path={siteConfig.paths.challenge_archive}>
-          <Archive/>
+          <History />
         </SideNavOption>
       </div>
     </nav>
