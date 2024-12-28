@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
 import { siteConfig } from "@/app/_config/site";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button } from "../ui/button";
+import { createClient } from "@/app/_lib/supabase/client";
 
 /*
 this notifies users when challenges are enabled/disabled
@@ -17,7 +17,7 @@ the same supabase channel
 */
 export default function EventUpdateNotifer() {
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   //queries to get status of team creation and challenges
   const { data: is_team_creation_enabled, refetch: refetchTeamCreationStatus } =
@@ -68,7 +68,7 @@ export default function EventUpdateNotifer() {
                 duration: 6000,
               });
 
-              if (pathname.startsWith(siteConfig.paths.challenge)) {
+              if (pathname === siteConfig.paths.challenge) {
                 router.push(siteConfig.paths.dashboard);
                 router.refresh();
               }
@@ -77,19 +77,20 @@ export default function EventUpdateNotifer() {
                 variant: "default",
                 title: "Challenges are now enabled.",
                 duration: 6000,
-                action: pathname.startsWith(siteConfig.paths.dashboard) ? (
-                  <></>
-                ) : (
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      router.push(siteConfig.paths.dashboard);
-                      enabledToast.dismiss();
-                    }}
-                  >
-                    View
-                  </Button>
-                ),
+                action:
+                  pathname === siteConfig.paths.dashboard ? (
+                    <></>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        router.push(siteConfig.paths.dashboard);
+                        enabledToast.dismiss();
+                      }}
+                    >
+                      View
+                    </Button>
+                  ),
               });
             }
           }
@@ -112,19 +113,20 @@ export default function EventUpdateNotifer() {
                 variant: "default",
                 title: "Team creation is now enabled.",
                 duration: 6000,
-                action: pathname.startsWith(siteConfig.paths.join_team) ? (
-                  <></>
-                ) : (
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      router.push(siteConfig.paths.join_team);
-                      enabledToast.dismiss();
-                    }}
-                  >
-                    View
-                  </Button>
-                ),
+                action:
+                  pathname === siteConfig.paths.join_team ? (
+                    <></>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        router.push(siteConfig.paths.join_team);
+                        enabledToast.dismiss();
+                      }}
+                    >
+                      View
+                    </Button>
+                  ),
               });
             }
           }

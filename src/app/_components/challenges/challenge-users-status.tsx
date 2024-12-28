@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "../ui/hover-card";
+import { createClient } from "@/app/_lib/supabase/client";
 
 export type TUserTracker = string[];
 export type TPresenceState = Record<
@@ -28,7 +28,7 @@ export default function ChallengeUsersStatus({
 
   useEffect(() => {
     if (!teamName) return;
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
     const room = supabase.channel(`${teamName}-room-${challengeId}`);
     room
       .on("presence", { event: "sync" }, () => {

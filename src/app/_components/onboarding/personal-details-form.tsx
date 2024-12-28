@@ -22,9 +22,9 @@ import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
 import { trpc } from "@/app/_trpc/react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { toast } from "../ui/use-toast";
+import { createClient } from "@/app/_lib/supabase/client";
 
 type OnboardingPersonalDetailsFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -33,7 +33,7 @@ export default function OnboardingPersonalDetailsForm({
   ...props
 }: OnboardingPersonalDetailsFormProps) {
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   // Form Definition
   const form = useForm<TPersonalDetailsForm>({

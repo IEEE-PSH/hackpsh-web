@@ -17,10 +17,10 @@ import {
 import { Button } from "@/app/_components/ui/button";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { toast } from "@/app/_components/ui/use-toast";
 import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
+import { createClient } from "@/app/_lib/supabase/client";
 
 type ProfileDropdownProps = {
   userDisplayName: string | null;
@@ -32,7 +32,7 @@ export default function ProfileDropdown({
   userEmailAddress,
 }: ProfileDropdownProps) {
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
   const { setTheme } = useTheme();
 
   async function handleSignOut() {

@@ -2,16 +2,16 @@
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button } from "../ui/button";
 import { siteConfig } from "@/app/_config/site";
+import { createClient } from "@/app/_lib/supabase/client";
 
 /*
 this notifies users if a new announcement is posted
 */
 export default function AnnouncementNotifer() {
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
   const pathname = usePathname();
 
   useEffect(() => {

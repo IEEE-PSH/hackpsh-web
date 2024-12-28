@@ -1,24 +1,52 @@
-import { type NextRequest, NextResponse } from "next/server";
-import { redirectToPath } from "@/server/lib/server-utils";
-import { siteConfig } from "@/app/_config/site";
-import { serverTRPC } from "@/app/_trpc/server";
-import handleError from "@/server/lib/server/handleError";
-import {
-  composeMiddlewareClient,
-  getSession,
-} from "@/server/lib/supabase/server";
+import { createServerClient } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
+import { serverTRPC } from "./app/_trpc/server";
+import { siteConfig } from "./app/_config/site";
+import { redirectToPath } from "./server/lib/server-utils";
+import handleError from "./server/lib/server/handleError";
 
-export async function middleware(req: NextRequest) {
+export const onboardingPaths = {
+  "personal-details": siteConfig.paths.onboarding_personal_details,
+  "school-details": siteConfig.paths.onboarding_school_details,
+  "support-us": siteConfig.paths.onboarding_support_us,
+};
+
+export async function middleware(request: NextRequest) {
   try {
-    const res = NextResponse.next();
-    const supabase = composeMiddlewareClient(req, res);
-    const session = await getSession(supabase);
+    let supabaseResponse = NextResponse.next({
+      request,
+    });
 
-    // Forced to use serverTRPC in middleware due to
-    // Next.js Middleware forced on Edge Runtime,
-    // which doesn't support the net module
-    // (dep of node-postgres / drizzle) when
-    // using server-side callers (like /api/auth/callback)
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll();
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value, options }) =>
+              request.cookies.set(name, value),
+            );
+            supabaseResponse = NextResponse.next({
+              request,
+            });
+            cookiesToSet.forEach(({ name, value, options }) =>
+              supabaseResponse.cookies.set(name, value, options),
+            );
+          },
+        },
+      },
+    );
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    // if (!user && request.nextUrl.pathname !== siteConfig.paths.sign_up) {
+    //   return redirectToPath(request, siteConfig.paths.sign_up);
+    // }
 
     const {
       user_onboarding_complete,
@@ -26,61 +54,57 @@ export async function middleware(req: NextRequest) {
       user_role,
       is_challenges_enabled,
     } = await serverTRPC.user.get_middleware_info.query({
-      user_uuid: session.user.id,
+      user_uuid: user!.id,
     });
 
     //handle onboarding phases individually
-    const onboardingPaths = {
-      "personal-details": siteConfig.paths.onboarding_personal_details,
-      "school-details": siteConfig.paths.onboarding_school_details,
-      "support-us": siteConfig.paths.onboarding_support_us,
-    };
+
     const pathnameKey = user_onboarding_phase as keyof typeof onboardingPaths;
 
     if (
       onboardingPaths[pathnameKey] &&
-      !req.nextUrl.pathname.startsWith(onboardingPaths[pathnameKey])
+      request.nextUrl.pathname !== onboardingPaths[pathnameKey]
     )
-      return redirectToPath(req, onboardingPaths[pathnameKey]);
+      return redirectToPath(request, onboardingPaths[pathnameKey]);
 
     //prevent users who completed onboarding from revisiting onboarding forms
     if (
       user_onboarding_complete &&
-      req.nextUrl.pathname.startsWith(siteConfig.paths.onboarding)
+      request.nextUrl.pathname.startsWith(siteConfig.paths.onboarding)
     )
-      return redirectToPath(req, siteConfig.paths.dashboard);
+      return redirectToPath(request, siteConfig.paths.dashboard);
 
     if (
       !user_onboarding_complete &&
-      !req.nextUrl.pathname.startsWith(siteConfig.paths.onboarding)
+      !request.nextUrl.pathname.startsWith(siteConfig.paths.onboarding)
     )
-      return redirectToPath(req, siteConfig.paths.onboarding);
+      return redirectToPath(request, siteConfig.paths.onboarding);
 
     //prevent participants from accessing admin/officer-only pages
     if (user_role === "participant") {
       if (
-        req.nextUrl.pathname === siteConfig.paths.users ||
-        req.nextUrl.pathname === siteConfig.paths.event
+        request.nextUrl.pathname === siteConfig.paths.users ||
+        request.nextUrl.pathname === siteConfig.paths.event
       )
-        return redirectToPath(req, siteConfig.paths.account);
+        return redirectToPath(request, siteConfig.paths.account);
 
       if (
-        req.nextUrl.pathname === siteConfig.paths.create_post ||
-        req.nextUrl.pathname === siteConfig.paths.edit_post
+        request.nextUrl.pathname === siteConfig.paths.create_post ||
+        request.nextUrl.pathname === siteConfig.paths.edit_post
       )
-        return redirectToPath(req, siteConfig.paths.announcements);
+        return redirectToPath(request, siteConfig.paths.announcements);
 
       //prevent participants from viewing challenges while challenges disabled
       if (
-        req.nextUrl.pathname === siteConfig.paths.challenge &&
+        request.nextUrl.pathname === siteConfig.paths.challenge &&
         !is_challenges_enabled
       )
-        return redirectToPath(req, siteConfig.paths.dashboard);
+        return redirectToPath(request, siteConfig.paths.dashboard);
     }
 
-    return res;
-  } catch (cause) {
-    return handleError(req, cause);
+    return supabaseResponse;
+  } catch (error) {
+    return handleError(request, error);
   }
 }
 

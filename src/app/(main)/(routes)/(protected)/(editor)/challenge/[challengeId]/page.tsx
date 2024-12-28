@@ -1,7 +1,7 @@
 import ChallengeContentPage from "@/app/_components/challenges/challenge-content";
 import EventUpdateNotifer from "@/app/_components/event/event-update-notifier";
 import { serverTRPC } from "@/app/_trpc/server";
-import { composeServerComponentClient } from "@/server/lib/supabase/server";
+import { createClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import { type Metadata } from "next";
 
@@ -17,7 +17,7 @@ export default async function ChallengePage({
     challengeId: number;
   };
 }) {
-  const supabase = composeServerComponentClient();
+  const supabase = createClient();
   const user = await getUser(supabase);
 
   const { user_display_name, user_email_address, user_team_uuid, user_uuid } =

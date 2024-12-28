@@ -1,6 +1,6 @@
 import { UserAuthFormSchema } from "@/app/_lib/zod-schemas/forms/user-auth";
 import { publicProcedure, createTRPCRouter } from "../trpc";
-import { type SupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { type SupabaseClient } from "@supabase/supabase-js";
 
 async function handleEmailLogin(
   supabase: SupabaseClient,

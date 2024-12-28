@@ -1,5 +1,5 @@
 import { serverTRPC } from "@/app/_trpc/server";
-import { composeServerComponentClient } from "@/server/lib/supabase/server";
+import { createClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import AdminCreatePostButton from "./admin-create-post-button";
 
@@ -8,7 +8,7 @@ type AdminCreatePostLinkProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 export default async function AdminCreatePostLink({
   className,
 }: AdminCreatePostLinkProps) {
-  const supabase = composeServerComponentClient();
+  const supabase = createClient();
   try {
     const user = await getUser(supabase);
     const { get_user_role } = await serverTRPC.user.get_user_role.query({

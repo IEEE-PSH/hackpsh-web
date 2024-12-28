@@ -22,7 +22,6 @@ import {
 import { CalendarIcon } from "lucide-react";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import { trpc } from "@/app/_trpc/react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { toast } from "@/app/_components/ui/use-toast";
 import { Calendar } from "../ui/calendar";
@@ -39,6 +38,7 @@ import {
   type TEventDetailsFormSchema,
 } from "@/app/_lib/zod-schemas/event-details";
 import { Switch } from "../ui/switch";
+import { createClient } from "@/app/_lib/supabase/client";
 
 type EventDetailsFormProps = {
   eventDate: string;
@@ -55,7 +55,7 @@ export default function EventDetailsForm({
   eventChallengesEnabled,
   eventTeamCreationEnabled,
 }: EventDetailsFormProps) {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   // Form Definition
   const form = useForm<TEventDetailsFormSchema>({

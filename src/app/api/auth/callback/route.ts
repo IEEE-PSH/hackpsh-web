@@ -9,11 +9,12 @@ import {
 } from "@/server/lib/auth/server";
 import handleError from "@/server/lib/server/handleError";
 import {
-  composeRouteHandlerClient,
+  createClient,
   exchangeCallbackTokenForSession,
 } from "@/server/lib/supabase/server";
 
 /**
+ * THIS IS DEPRECATED. CHANGE NOTES
  * This route handles users who use magic link sign-in (email),
  * who have to exchange their callback token, in order to receive
  * a valid session.
@@ -25,7 +26,7 @@ import {
  * @returns New User Session through Cookies
  */
 export async function GET(req: NextRequest) {
-  const supabase = composeRouteHandlerClient();
+  const supabase = createClient();
 
   try {
     const requestURL = new URL(req.url);

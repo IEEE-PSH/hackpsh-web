@@ -20,9 +20,9 @@ import { Button } from "@/app/_components/ui/button";
 import { Icons } from "@/app/_components/ui/icons";
 import { trpc } from "@/app/_trpc/react";
 import { toast } from "../ui/use-toast";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { type Dispatch, type SetStateAction } from "react";
+import { createClient } from "@/app/_lib/supabase/client";
 
 export default function CreateTeamForm({
   setDialogOpen,
@@ -31,7 +31,7 @@ export default function CreateTeamForm({
   setDialogOpen: Dispatch<SetStateAction<boolean>>;
   getTeams: () => void;
 }) {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   const form = useForm<TCreateTeamForm>({
     resolver: zodResolver(CreateTeamFormSchema),

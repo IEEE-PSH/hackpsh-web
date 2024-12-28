@@ -6,7 +6,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ChevronRight } from "lucide-react";
-import { composeServerComponentClient } from "@/server/lib/supabase/server";
+import { createClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import { serverTRPC } from "@/app/_trpc/server";
 import { Button } from "../ui/button";
@@ -14,7 +14,7 @@ import Link from "next/link";
 import { siteConfig } from "@/app/_config/site";
 
 export default async function DashboardTeamInfo() {
-  const supabase = composeServerComponentClient();
+  const supabase = createClient();
   const user = await getUser(supabase);
 
   const { is_on_team } = await serverTRPC.user.is_on_team.query({

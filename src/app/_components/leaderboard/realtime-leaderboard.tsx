@@ -2,10 +2,10 @@
 
 import { type LeaderboardStandings } from "@/server/dao/leaderboard";
 import DataTable from "./data-table";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { type TUserInfo } from "@/server/dao/user";
+import { createClient } from "@/app/_lib/supabase/client";
 
 export default function RealtimeLeaderboard({
   serverData,
@@ -14,7 +14,7 @@ export default function RealtimeLeaderboard({
   serverData: LeaderboardStandings;
   userData: TUserInfo;
 }) {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
   const router = useRouter();
 
   //refresh route on app_team changes to update leaderboard ui

@@ -3,7 +3,6 @@
 import { getUser } from "@/shared/supabase/auth";
 import { trpc } from "@/app/_trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button } from "../ui/button";
 import {
   Form,
@@ -49,6 +48,7 @@ import ChallengeDeleteDialog from "../challenges/challenge-delete-dialog";
 import Link from "next/link";
 import { languages, type TLanguages } from "@/server/zod-schemas/challenges";
 import { Checkbox } from "../ui/checkbox";
+import { createClient } from "@/app/_lib/supabase/client";
 
 type CreateChallengeFormProps = React.HTMLAttributes<HTMLDivElement>;
 type EditChallengeFormProps = {
@@ -103,7 +103,7 @@ export function EditChallengeForm({
 
   async function onSubmit(values: TCreateChallengeFormSchema) {
     try {
-      const supabase = createClientComponentClient();
+      const supabase = createClient();
       const user = await getUser(supabase);
 
       await challengeMutation.mutateAsync({
