@@ -7,7 +7,6 @@ import {
   SupportUsFormSchema,
   type TSupportUsForm,
 } from "@/app/_lib/zod-schemas/forms/onboarding/support-us";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { trpc } from "@/app/_trpc/react";
 import { siteConfig } from "@/app/_config/site";
 import { toast } from "../ui/use-toast";
@@ -24,6 +23,7 @@ import { cn } from "@/app/_lib/client-utils";
 import { Switch } from "../ui/switch";
 import { Button } from "../ui/button";
 import { Icons } from "../ui/icons";
+import { createClient } from "@/app/_lib/supabase/client";
 
 type SupportUsFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -32,7 +32,7 @@ export default function SupportUsForm({
   ...props
 }: SupportUsFormProps) {
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   const form = useForm<TSupportUsForm>({
     resolver: zodResolver(SupportUsFormSchema),

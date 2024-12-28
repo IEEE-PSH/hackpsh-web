@@ -20,7 +20,7 @@ import {
   UserAuthFormSchema,
 } from "@/app/_lib/zod-schemas/forms/user-auth";
 import { trpc } from "@/app/_trpc/react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/app/_lib/supabase/client";
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -28,7 +28,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   async function handleSignInWithGoogle() {
     const baseURL = typeof window !== "undefined" ? window.location.origin : "";
 
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {

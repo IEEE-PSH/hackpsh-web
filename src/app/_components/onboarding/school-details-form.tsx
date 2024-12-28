@@ -32,13 +32,13 @@ import { ScrollArea } from "../ui/scroll-area";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
 import { trpc } from "@/app/_trpc/react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { toast } from "../ui/use-toast";
 import {
   SchoolDetailsFormSchema,
   type TSchoolDetailsForm,
 } from "@/app/_lib/zod-schemas/forms/onboarding/school-details";
+import { createClient } from "@/app/_lib/supabase/client";
 
 type OnboardingSchoolDetailsFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -47,7 +47,7 @@ export default function OnboardingSchoolDetailsForm({
   ...props
 }: OnboardingSchoolDetailsFormProps) {
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   // Form Definition
   const form = useForm<TSchoolDetailsForm>({

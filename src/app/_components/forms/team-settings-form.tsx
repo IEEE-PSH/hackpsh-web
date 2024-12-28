@@ -13,7 +13,6 @@ import {
 } from "@/app/_components/ui/form";
 import { Input } from "@/app/_components/ui/input";
 import { trpc } from "@/app/_trpc/react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { toast } from "@/app/_components/ui/use-toast";
 import { Separator } from "../ui/separator";
@@ -25,6 +24,7 @@ import {
 } from "@/app/_lib/zod-schemas/forms/team";
 import { Button } from "../ui/button";
 import { Icons } from "../ui/icons";
+import { createClient } from "@/app/_lib/supabase/client";
 
 type TeamSettingsFormProps = {
   teamData: TUserTeamInfo;
@@ -35,7 +35,7 @@ export default function TeamSettingsForm({
   teamData,
   isTeamLeader,
 }: TeamSettingsFormProps) {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   // Form Definition
   const form = useForm<TCreateTeamForm>({

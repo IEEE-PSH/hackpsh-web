@@ -6,7 +6,7 @@ import { BaseError } from "@/shared/error";
 
 export default function handleError(req: NextRequest, cause: unknown) {
   // Ignore Errors Coming From Sign-In to prevent Infinite Redirect
-  if (req.nextUrl.pathname.startsWith(siteConfig.paths.sign_in)) return;
+  if (req.nextUrl.pathname === siteConfig.paths.sign_in) return;
 
   // If a user does not have a valid session or encounters
   // an error when retrieving a valid session, redirect to sign in.

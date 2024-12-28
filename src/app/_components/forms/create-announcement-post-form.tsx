@@ -7,7 +7,6 @@ import {
 } from "@/app/_lib/zod-schemas/forms/announcements";
 import { trpc } from "@/app/_trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button } from "../ui/button";
 import {
   Form,
@@ -23,7 +22,7 @@ import { useForm } from "react-hook-form";
 import { Icons } from "../ui/icons";
 import { cn } from "@/app/_lib/client-utils";
 import { useRouter } from "next/navigation";
-import { siteConfig } from "@/app/_config/site";
+import { createClient } from "@/app/_lib/supabase/client";
 
 type CreateAnouncementFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -60,7 +59,7 @@ export function CreateAnnouncementPostForm({
 
   async function onSubmit(values: TCreateAnnouncementForm) {
     try {
-      const supabase = createClientComponentClient();
+      const supabase = createClient();
       const user = await getUser(supabase);
 
       await announcementMutation.mutateAsync({

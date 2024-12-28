@@ -10,10 +10,10 @@ import {
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { trpc } from "@/app/_trpc/react";
 import { type Dispatch, type SetStateAction } from "react";
+import { createClient } from "@/app/_lib/supabase/client";
 
 export default function AnnouncementPostDeleteDialog({
   postID,
@@ -51,7 +51,7 @@ export default function AnnouncementPostDeleteDialog({
 
   async function deletePost(postID: number) {
     try {
-      const supabase = createClientComponentClient();
+      const supabase = createClient();
       const user = await getUser(supabase);
 
       await announcementMutation.mutateAsync({

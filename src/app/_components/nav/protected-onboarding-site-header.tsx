@@ -1,7 +1,6 @@
-import { ProtectedMobileNav } from "@/app/_components/nav/protected-mobile-nav";
 import { SiteHeaderActions } from "@/app/_components/nav/site-header-actions";
 import ProfileButton from "@/app/_components/nav/profile-button";
-import { composeServerComponentClient } from "@/server/lib/supabase/server";
+import { createClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import { serverTRPC } from "@/app/_trpc/server";
 import AdminCreatePost from "../announcement/admin-create-post";
@@ -12,7 +11,7 @@ import { siteConfig } from "@/app/_config/site";
 import Link from "next/link";
 
 export default async function ProtectedOnboardingSiteHeader() {
-  const supabase = composeServerComponentClient();
+  const supabase = createClient();
   const user = await getUser(supabase);
   const { user_display_name, user_email_address } =
     await serverTRPC.user.get_user_dropdown_info.query({

@@ -26,7 +26,7 @@ import { Icons } from "../ui/icons";
 import {
   type TUpdateUserRoleFormSchema,
   UpdateUserRoleFormSchema,
-} from "@/app/_lib/settings";
+} from "@/app/_lib/zod-schemas/settings";
 import { type TUserRole } from "@/db/drizzle/startup_seed";
 import { useEffect, type Dispatch, type SetStateAction } from "react";
 import { useRouter } from "next/navigation";

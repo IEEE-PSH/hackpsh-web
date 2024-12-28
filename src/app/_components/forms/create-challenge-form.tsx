@@ -3,7 +3,6 @@
 import { getUser } from "@/shared/supabase/auth";
 import { trpc } from "@/app/_trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Button } from "../ui/button";
 import {
   Form,
@@ -46,6 +45,7 @@ import { Card } from "../ui/card";
 import Link from "next/link";
 import { Checkbox } from "../ui/checkbox";
 import { languages, type TLanguages } from "@/server/zod-schemas/challenges";
+import { createClient } from "@/app/_lib/supabase/client";
 
 type CreateChallengeFormProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -84,7 +84,7 @@ export function CreateChallengeForm({
   async function onSubmit(values: TCreateChallengeFormSchema) {
     console.log("Attempted");
     try {
-      const supabase = createClientComponentClient();
+      const supabase = createClient();
       const user = await getUser(supabase);
 
       await challengeMutation.mutateAsync({

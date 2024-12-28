@@ -3,8 +3,8 @@ import { trpc } from "@/app/_trpc/react";
 import { type Dispatch, type SetStateAction, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { type TLanguages } from "@/server/zod-schemas/challenges";
+import { createClient } from "@/app/_lib/supabase/client";
 
 export default function ChallengeSyncer({
   challengeId,
@@ -24,7 +24,7 @@ export default function ChallengeSyncer({
   setLanguage: Dispatch<SetStateAction<TLanguages>>;
 }) {
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   //manually check if solved; notify all clients
   const { refetch: checkSolved } = trpc.challenges.is_solved_challenge.useQuery(

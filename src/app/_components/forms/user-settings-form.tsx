@@ -37,20 +37,20 @@ import {
 import { Check, ChevronsUpDown } from "lucide-react";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import { trpc } from "@/app/_trpc/react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { toast } from "@/app/_components/ui/use-toast";
 import { Switch } from "../ui/switch";
 import {
   AccountSettingsFormSchema,
   type TAccountSettingsForm,
-} from "@/app/_lib/settings";
+} from "@/app/_lib/zod-schemas/settings";
 import { Separator } from "../ui/separator";
 import { useRouter } from "next/navigation";
 import {
   type TUserSettingsInfo,
   type TUserSupportInfo,
 } from "@/server/dao/user";
+import { createClient } from "@/app/_lib/supabase/client";
 
 type UserSettingsFormProps = {
   userPersonalDetails: TUserSettingsInfo;
@@ -61,7 +61,7 @@ export default function UserSettingsForm({
   userPersonalDetails,
   userSupportDetails,
 }: UserSettingsFormProps) {
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   // Form Definition
   const form = useForm<TAccountSettingsForm>({

@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 import { serverTRPC } from "@/app/_trpc/server";
-import { composeServerComponentClient } from "@/server/lib/supabase/server";
+import { createClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import TeamsTable from "@/app/_components/teams/teams-table";
 
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default async function TeamsPage() {
   const data = await serverTRPC.team.get_teams.query();
 
-  const supabase = composeServerComponentClient();
+  const supabase = createClient();
   const user = await getUser(supabase);
   const userData = await serverTRPC.user.get_user_info.query({
     user_uuid: user.id,

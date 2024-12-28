@@ -9,17 +9,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { trpc } from "@/app/_trpc/react";
 import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { siteConfig } from "@/app/_config/site";
+import { createClient } from "@/app/_lib/supabase/client";
 
 export default function DeleteSelfAccountDialog() {
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   const deleteSelfAccountMutation = trpc.user.delete_user.useMutation({
     onSuccess: async () => {

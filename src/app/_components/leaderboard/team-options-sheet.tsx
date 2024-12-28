@@ -20,7 +20,7 @@ import { Input } from "../ui/input";
 import {
   UpdateTeamFormSchema,
   type TUpdateTeamFormSchema,
-} from "@/app/_lib/team";
+} from "@/app/_lib/zod-schemas/team";
 import { trpc } from "@/app/_trpc/react";
 import { type TUserInfo } from "@/server/dao/user";
 import { Skeleton } from "../ui/skeleton";

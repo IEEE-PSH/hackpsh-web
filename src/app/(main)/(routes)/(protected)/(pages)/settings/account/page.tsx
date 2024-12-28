@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { serverTRPC } from "@/app/_trpc/server";
-import { composeServerComponentClient } from "@/server/lib/supabase/server";
+import { createClient } from "@/server/lib/supabase/server";
 import { getUser } from "@/shared/supabase/auth";
 import UserSettingsForm from "@/app/_components/forms/user-settings-form";
 import { Separator } from "@/app/_components/ui/separator";
@@ -8,7 +8,7 @@ import { Label } from "@/app/_components/ui/label";
 import DeleteSelfAccountDialog from "@/app/_components/settings/delete-self-account-dialog";
 
 export default async function Page() {
-  const supabase = composeServerComponentClient();
+  const supabase = createClient();
   const user = await getUser(supabase);
 
   const userPersonalDetails =

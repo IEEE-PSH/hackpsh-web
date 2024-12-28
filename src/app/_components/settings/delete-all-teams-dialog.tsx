@@ -9,12 +9,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getUser } from "@/shared/supabase/auth";
 import { trpc } from "@/app/_trpc/react";
 import { toast } from "../ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/app/_lib/supabase/client";
 
 export default function DeleteAllTeamsDialog() {
   const router = useRouter();
@@ -42,7 +42,7 @@ export default function DeleteAllTeamsDialog() {
 
   async function deleteAllTeams() {
     try {
-      const supabase = createClientComponentClient();
+      const supabase = createClient();
       const user = await getUser(supabase);
 
       await deleteAllTeamsMutation.mutateAsync({
