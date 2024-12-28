@@ -48,6 +48,7 @@ export async function GET(req: NextRequest) {
       return redirectToPath(req, siteConfig.paths.dashboard);
     }
   } catch (cause) {
+    redirectToPath(req, siteConfig.paths.sign_up);
     handleError(req, cause);
   }
 }
