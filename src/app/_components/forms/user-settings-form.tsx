@@ -44,7 +44,7 @@ import { Switch } from "../ui/switch";
 import {
   AccountSettingsFormSchema,
   type TAccountSettingsForm,
-} from "@/app/_lib/settings";
+} from "@/app/_lib/zod-schemas/settings";
 import { Separator } from "../ui/separator";
 import { useRouter } from "next/navigation";
 import {

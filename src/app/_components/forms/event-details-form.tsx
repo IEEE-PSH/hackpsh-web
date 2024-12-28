@@ -37,7 +37,7 @@ import {
 import {
   EventDetailsFormSchema,
   type TEventDetailsFormSchema,
-} from "@/app/_lib/event-details";
+} from "@/app/_lib/zod-schemas/event-details";
 import { Switch } from "../ui/switch";
 
 type EventDetailsFormProps = {
