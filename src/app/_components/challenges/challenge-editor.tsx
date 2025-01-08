@@ -3,6 +3,7 @@ import React, {
   type Dispatch,
   type SetStateAction,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import { Editor } from "@monaco-editor/react";
@@ -10,6 +11,7 @@ import { type TLanguages } from "@/server/zod-schemas/challenges";
 import { trpc } from "@/app/_trpc/react";
 import { useTheme } from "next-themes";
 import { useChallenge } from "./challenge-context-provider";
+import { io } from "socket.io-client";
 
 type ChallengeEditor = {
   value: string;
@@ -28,6 +30,7 @@ export default function ChallengeEditorWrapper({
   header,
   solved,
 }: ChallengeEditor) {
+  const { theme } = useTheme();
   const { userData, challengeData } = useChallenge();
   //update code submission only on initial render
   const [isFetched, setIsFetched] = useState<boolean>(false);
@@ -56,7 +59,47 @@ export default function ChallengeEditorWrapper({
     if (value.length > 0) setValue(value);
   }, []);
 
-  const { theme } = useTheme();
+  // SOCKET IO INTEGRATION
+  const [socket, setSocket] = useState<any>(null);
+  const roomName = `${userData?.user_team_name}-socket-${challengeData?.challenge_id}`;
+
+  // Initialize socket connection
+  useEffect(() => {
+    const s = io("wss://sly-living-goose.glitch.me", {
+      transports: ["websocket"],
+      withCredentials: true,
+    });
+    setSocket(s);
+
+    s.on("connect", () => {
+      s.emit("joinRoom", roomName); // Join the room after connection
+    });
+
+    return () => {
+      if (s) {
+        s.off("message");
+        s.disconnect();
+      }
+    };
+  }, []);
+
+  // Listening to socket messages
+  useEffect(() => {
+    if (socket) {
+      socket.on("message", (data: { content: string; new_content: string }) => {
+        if (data.content !== value) {
+          setValue(data.new_content);
+        }
+      });
+    }
+  }, [socket]);
+
+  // Handle content change in editor
+  const handleOnChange = (newValue: string) => {
+    if (socket) {
+      socket.emit("message", { room_name: roomName, content: newValue }); // Emit message to server
+    }
+  };
 
   return (
     <div className="h-full min-h-[400px]">
@@ -67,7 +110,9 @@ export default function ChallengeEditorWrapper({
         defaultLanguage={language ?? "python"}
         value={value}
         loading={""}
-        onChange={(newValue) => setValue(newValue!)}
+        onChange={(newValue) => {
+          handleOnChange(newValue!);
+        }}
         options={{
           readOnly: solved,
           minimap: { enabled: false },
