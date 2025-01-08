@@ -84,8 +84,8 @@ export default function ChallengeContentPage() {
       <ChallengeUsersStatus />
 
       <ProtectedEditorSiteHeader
-        userDisplayName={userData?.user_display_name}
-        userEmailAddress={userData?.user_email_address}
+        userDisplayName={userData?.user_display_name as unknown as string}
+        userEmailAddress={userData?.user_email_address as unknown as string}
       >
         <Button
           variant="secondary"

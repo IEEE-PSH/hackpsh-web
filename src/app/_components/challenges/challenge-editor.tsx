@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import { Editor } from "@monaco-editor/react";
 import { type TLanguages } from "@/server/zod-schemas/challenges";
-import { cn } from "@/app/_lib/client-utils";
 import { trpc } from "@/app/_trpc/react";
 import { useTheme } from "next-themes";
 import { useChallenge } from "./challenge-context-provider";
@@ -34,8 +33,8 @@ export default function ChallengeEditorWrapper({
   const [isFetched, setIsFetched] = useState<boolean>(false);
   const { data: submission } = trpc.challenges.get_code_submission.useQuery(
     {
-      challenge_id: challengeData?.challenge_id,
-      user_uuid: userData?.user_uuid,
+      challenge_id: challengeData?.challenge_id as unknown as number,
+      user_uuid: userData?.user_uuid as unknown as string,
     },
     { enabled: !isFetched },
   );

@@ -6,7 +6,7 @@ export type TUserData = {
   user_display_name: string | null;
   user_email_address: string | null;
   user_team_uuid: string | null;
-  user_uuid: string | null;
+  user_uuid: string;
   user_team_name: string | null;
 } | null;
 

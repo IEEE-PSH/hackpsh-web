@@ -42,7 +42,7 @@ export default function ChallengeNavActions({
     trpc.challenges.run_code.useQuery(
       {
         code_string: value,
-        challenge_id: challengeData?.challenge_id,
+        challenge_id: challengeData?.challenge_id as unknown as number,
         challenge_header: header,
         language: language,
       },
@@ -66,7 +66,7 @@ export default function ChallengeNavActions({
 
   const { data: onTeam, refetch: checkUserOnTeam } =
     trpc.user.is_on_team.useQuery({
-      user_uuid: userData?.user_uuid,
+      user_uuid: userData?.user_uuid as unknown as string,
     });
 
   //runs code
@@ -105,10 +105,10 @@ export default function ChallengeNavActions({
     trpc.challenges.submit_code.useQuery(
       {
         code_string: value,
-        challenge_id: challengeData?.challenge_id,
+        challenge_id: challengeData?.challenge_id as unknown as number,
         challenge_header: header,
         language: language,
-        user_uuid: userData?.user_uuid,
+        user_uuid: userData?.user_uuid as unknown as string,
       },
       {
         enabled: false,
@@ -128,7 +128,7 @@ export default function ChallengeNavActions({
     );
 
   const { data: role } = trpc.user.get_user_role.useQuery({
-    user_uuid: userData?.user_uuid,
+    user_uuid: userData?.user_uuid as unknown as string,
   });
 
   return (

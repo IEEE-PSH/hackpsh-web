@@ -16,15 +16,15 @@ export default function ChallengeSyncer({
   setValue: Dispatch<SetStateAction<string>>;
   setLanguage: Dispatch<SetStateAction<TLanguages>>;
 }) {
-  const { userData, challengeData, isSolved } = useChallenge();
+  const { userData, challengeData } = useChallenge();
   const router = useRouter();
   const supabase = createClient();
 
   //manually check if solved; notify all clients
   const { refetch: checkSolved } = trpc.challenges.is_solved_challenge.useQuery(
     {
-      challenge_id: challengeData?.challenge_id,
-      user_uuid: userData?.user_uuid,
+      challenge_id: challengeData?.challenge_id as unknown as number,
+      user_uuid: userData?.user_uuid as unknown as string,
     },
     { enabled: false },
   );
@@ -33,8 +33,8 @@ export default function ChallengeSyncer({
   const { refetch: getSubmission } =
     trpc.challenges.get_code_submission.useQuery(
       {
-        challenge_id: challengeData?.challenge_id,
-        user_uuid: userData?.user_uuid,
+        challenge_id: challengeData?.challenge_id as unknown as number,
+        user_uuid: userData?.user_uuid as unknown as string,
       },
       { enabled: false },
     );

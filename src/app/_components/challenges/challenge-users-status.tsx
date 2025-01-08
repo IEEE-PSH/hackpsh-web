@@ -17,7 +17,7 @@ export type TPresenceState = Record<
 >;
 
 export default function ChallengeUsersStatus() {
-  const { userData, challengeData, isSolved } = useChallenge();
+  const { userData, challengeData } = useChallenge();
   const [currentUsers, setCurrentUsers] = useState<TUserTracker>([]);
 
   useEffect(() => {
