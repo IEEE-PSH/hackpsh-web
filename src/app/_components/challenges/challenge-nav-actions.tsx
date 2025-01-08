@@ -17,38 +17,32 @@ import { type TLanguages } from "@/server/zod-schemas/challenges";
 import { siteConfig } from "@/app/_config/site";
 import { type TSubmitData } from "@/server/procedures/protected/challenges/submitCodeProcedure";
 import Link from "next/link";
+import { useChallenge } from "./challenge-context-provider";
 
 type ChallengeNavActionsProps = {
   value: string;
-  challengeId: number;
-  challengeLanguages: string;
   header: string;
   language: "python" | "cpp" | "javascript";
-  userUUID: string;
   solved: boolean;
   setLanguage: Dispatch<SetStateAction<TLanguages>>;
   setOutputData: Dispatch<SetStateAction<TSubmitData | null>>;
-  challengeLive: boolean
 };
 
 export default function ChallengeNavActions({
   value,
-  challengeId,
-  challengeLanguages,
   header,
   language,
-  userUUID,
   solved,
   setLanguage,
   setOutputData,
-  challengeLive
 }: ChallengeNavActionsProps) {
+  const { userData, challengeData } = useChallenge();
   //runs code
   const { refetch: runCode, isFetching: isRunning } =
     trpc.challenges.run_code.useQuery(
       {
         code_string: value,
-        challenge_id: challengeId,
+        challenge_id: challengeData?.challenge_id,
         challenge_header: header,
         language: language,
       },
@@ -72,13 +66,17 @@ export default function ChallengeNavActions({
 
   const { data: onTeam, refetch: checkUserOnTeam } =
     trpc.user.is_on_team.useQuery({
-      user_uuid: userUUID,
+      user_uuid: userData?.user_uuid,
     });
 
   //runs code
   async function attemptRunCode() {
     await checkUserOnTeam();
-    if (!challengeLive || (onTeam?.is_on_team && challengeLive)) await runCode();
+    if (
+      !challengeData?.challenge_is_live ||
+      (onTeam?.is_on_team && challengeData?.challenge_is_live)
+    )
+      await runCode();
     else {
       toast({
         variant: "destructive",
@@ -90,7 +88,11 @@ export default function ChallengeNavActions({
   //submits code
   async function attemptSubmitCode() {
     await checkUserOnTeam();
-    if (!challengeLive || (onTeam?.is_on_team && challengeLive)) await submitCode();
+    if (
+      !challengeData?.challenge_is_live ||
+      (onTeam?.is_on_team && challengeData?.challenge_is_live)
+    )
+      await submitCode();
     else {
       toast({
         variant: "destructive",
@@ -103,10 +105,10 @@ export default function ChallengeNavActions({
     trpc.challenges.submit_code.useQuery(
       {
         code_string: value,
-        challenge_id: challengeId,
+        challenge_id: challengeData?.challenge_id,
         challenge_header: header,
         language: language,
-        user_uuid: userUUID,
+        user_uuid: userData?.user_uuid,
       },
       {
         enabled: false,
@@ -126,14 +128,20 @@ export default function ChallengeNavActions({
     );
 
   const { data: role } = trpc.user.get_user_role.useQuery({
-    user_uuid: userUUID,
+    user_uuid: userData?.user_uuid,
   });
 
   return (
     <div className="ml-auto flex space-x-4">
       {role?.get_user_role !== "participant" && (
         <Button className="p-2 md:p-4" variant="secondary" asChild>
-          <Link href={siteConfig.paths.edit_challenge + "/" + challengeId}>
+          <Link
+            href={
+              siteConfig.paths.edit_challenge +
+              "/" +
+              challengeData?.challenge_id
+            }
+          >
             <Edit />
             <span className="ml-4 hidden md:block">Edit</span>
           </Link>
@@ -159,15 +167,17 @@ export default function ChallengeNavActions({
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                {challengeLanguages.split(",").map((language) => (
-                  <SelectItem key={language} value={language}>
-                    {language === "python"
-                      ? "Python"
-                      : language === "cpp"
-                        ? "C++"
-                        : "Javascript"}
-                  </SelectItem>
-                ))}
+                {challengeData?.challenge_languages
+                  .split(",")
+                  .map((language) => (
+                    <SelectItem key={language} value={language}>
+                      {language === "python"
+                        ? "Python"
+                        : language === "cpp"
+                          ? "C++"
+                          : "Javascript"}
+                    </SelectItem>
+                  ))}
               </SelectGroup>
             </SelectContent>
           </Select>

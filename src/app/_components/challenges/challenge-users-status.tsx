@@ -8,6 +8,7 @@ import {
   HoverCardTrigger,
 } from "../ui/hover-card";
 import { createClient } from "@/app/_lib/supabase/client";
+import { useChallenge } from "./challenge-context-provider";
 
 export type TUserTracker = string[];
 export type TPresenceState = Record<
@@ -15,21 +16,16 @@ export type TPresenceState = Record<
   { user_name: string; presence_ref: string }[]
 >;
 
-export default function ChallengeUsersStatus({
-  userDisplayName,
-  challengeId,
-  teamName,
-}: {
-  userDisplayName: string;
-  challengeId: number;
-  teamName: string | null;
-}) {
+export default function ChallengeUsersStatus() {
+  const { userData, challengeData, isSolved } = useChallenge();
   const [currentUsers, setCurrentUsers] = useState<TUserTracker>([]);
 
   useEffect(() => {
-    if (!teamName) return;
+    if (!userData?.user_team_name) return;
     const supabase = createClient();
-    const room = supabase.channel(`${teamName}-room-${challengeId}`);
+    const room = supabase.channel(
+      `${userData?.user_team_name}-room-${challengeData?.challenge_id}`,
+    );
     room
       .on("presence", { event: "sync" }, () => {
         const presenceState: TPresenceState = room.presenceState();
@@ -38,7 +34,7 @@ export default function ChallengeUsersStatus({
         for (const key in presenceState) {
           const userPresences = presenceState[key];
           userPresences?.forEach((presence) => {
-            if (presence.user_name !== userDisplayName)
+            if (presence.user_name !== userData?.user_display_name)
               users.push(presence.user_name);
           });
         }
@@ -48,7 +44,7 @@ export default function ChallengeUsersStatus({
         if (status === "SUBSCRIBED") {
           void (async () => {
             await room.track({
-              user_name: userDisplayName,
+              user_name: userData?.user_display_name,
             });
           })();
         }
@@ -59,7 +55,7 @@ export default function ChallengeUsersStatus({
     };
   }, []);
 
-  if (teamName) {
+  if (userData?.user_team_name) {
     return (
       <div className="fixed bottom-4 right-4 z-[50] flex">
         {currentUsers.map((user, i) => (

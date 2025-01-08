@@ -10,6 +10,7 @@ import { type TLanguages } from "@/server/zod-schemas/challenges";
 import { cn } from "@/app/_lib/client-utils";
 import { trpc } from "@/app/_trpc/react";
 import { useTheme } from "next-themes";
+import { useChallenge } from "./challenge-context-provider";
 
 type ChallengeEditor = {
   value: string;
@@ -18,8 +19,6 @@ type ChallengeEditor = {
   language: TLanguages;
   header: string;
   solved: boolean;
-  userUUID: string;
-  challengeId: number;
 };
 
 export default function ChallengeEditorWrapper({
@@ -29,15 +28,14 @@ export default function ChallengeEditorWrapper({
   setLanguage,
   header,
   solved,
-  userUUID,
-  challengeId,
 }: ChallengeEditor) {
+  const { userData, challengeData } = useChallenge();
   //update code submission only on initial render
   const [isFetched, setIsFetched] = useState<boolean>(false);
   const { data: submission } = trpc.challenges.get_code_submission.useQuery(
     {
-      challenge_id: challengeId,
-      user_uuid: userUUID,
+      challenge_id: challengeData?.challenge_id,
+      user_uuid: userData?.user_uuid,
     },
     { enabled: !isFetched },
   );

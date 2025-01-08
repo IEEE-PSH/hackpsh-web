@@ -17,7 +17,6 @@ import ChallengeUsersStatus from "./challenge-users-status";
 import ChallengeSyncer from "./challenge-syncer";
 import { type TSubmitData } from "@/server/procedures/protected/challenges/submitCodeProcedure";
 import Link from "next/link";
-import { type TChallengeData } from "@/server/dao/challenges";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -25,22 +24,11 @@ import {
 } from "../ui/resizable";
 import { cn } from "@/app/_lib/client-utils";
 import { ScrollArea } from "../ui/scroll-area";
+import { useChallenge } from "./challenge-context-provider";
 
-export default function ChallengeContentPage({
-  userDisplayName,
-  userEmailAddress,
-  challengeData,
-  userUUID,
-  teamName,
-  isSolved,
-}: {
-  userDisplayName: string;
-  userEmailAddress: string;
-  challengeData: TChallengeData;
-  userUUID: string;
-  teamName: string | null;
-  isSolved: boolean;
-}) {
+export default function ChallengeContentPage() {
+  const { userData, challengeData, isSolved } = useChallenge();
+
   const [value, setValue] = useState<string>("");
   const [outputData, setOutputData] = useState<TSubmitData | null>(null);
   const [language, setLanguage] = useState<TLanguages>(
@@ -89,23 +77,15 @@ export default function ChallengeContentPage({
   return (
     <>
       <ChallengeSyncer
-        challengeId={challengeData!.challenge_id}
-        challengePoints={challengeData!.challenge_points}
-        teamName={teamName ?? null}
-        userUUID={userUUID}
         setSolved={setSolved}
         setValue={setValue}
         setLanguage={setLanguage}
       />
-      <ChallengeUsersStatus
-        userDisplayName={userDisplayName}
-        challengeId={challengeData!.challenge_id}
-        teamName={teamName ?? null}
-      />
+      <ChallengeUsersStatus />
 
       <ProtectedEditorSiteHeader
-        userDisplayName={userDisplayName}
-        userEmailAddress={userEmailAddress}
+        userDisplayName={userData?.user_display_name}
+        userEmailAddress={userData?.user_email_address}
       >
         <Button
           variant="secondary"
@@ -119,15 +99,11 @@ export default function ChallengeContentPage({
         </Button>
         <ChallengeNavActions
           value={value}
-          challengeId={challengeData!.challenge_id}
-          challengeLanguages={challengeData!.challenge_languages}
           header={header}
           language={language}
-          userUUID={userUUID}
           solved={solved}
           setLanguage={setLanguage}
           setOutputData={setOutputData}
-          challengeLive={challengeData!.challenge_is_live!}
         />
       </ProtectedEditorSiteHeader>
 
@@ -153,8 +129,6 @@ export default function ChallengeContentPage({
                     setLanguage={setLanguage}
                     header={presetHeader}
                     solved={solved}
-                    userUUID={userUUID}
-                    challengeId={challengeData!.challenge_id}
                   />
                 </ResizablePanel>
                 <ResizableHandle />
@@ -186,8 +160,6 @@ export default function ChallengeContentPage({
               setLanguage={setLanguage}
               header={presetHeader}
               solved={solved}
-              userUUID={userUUID}
-              challengeId={challengeData!.challenge_id}
             />
             <ScrollArea className="h-full min-h-[300px] bg-background-variant">
               <pre
