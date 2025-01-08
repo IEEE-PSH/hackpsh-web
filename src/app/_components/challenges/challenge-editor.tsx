@@ -7,12 +7,14 @@ import React, {
 } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
-import { vscodeDark } from "@uiw/codemirror-theme-vscode";
+import { vscodeDark, vscodeLight } from "@uiw/codemirror-theme-vscode";
 import { type TLanguages } from "@/server/zod-schemas/challenges";
 import { trpc } from "@/app/_trpc/react";
 import { useTheme } from "next-themes";
 import { useChallenge } from "./challenge-context-provider";
 import { io, Socket } from "socket.io-client";
+import { cpp } from "@codemirror/lang-cpp";
+import { python } from "@codemirror/lang-python";
 
 type ChallengeEditor = {
   value: string;
@@ -123,13 +125,20 @@ export default function ChallengeEditorWrapper({
   }, 50);
 
   return (
-    <div className="h-full min-h-[400px]">
+    <div className="h-full min-h-[400px]" style={{ height: "100%" }}>
       <CodeMirror
         value={value}
         height="100%"
-        theme={theme === "dark" ? "dark" : "light"} // Adjust theme based on the app's theme
-        extensions={[javascript()]} // Set the language mode here
+        theme={theme === "dark" ? vscodeDark : vscodeLight}
+        extensions={[
+          language === "javascript"
+            ? javascript()
+            : language === "cpp"
+              ? cpp()
+              : python(),
+        ]}
         onChange={handleOnChange}
+        style={{ height: "100%", fontSize: 14 }}
       />
     </div>
   );

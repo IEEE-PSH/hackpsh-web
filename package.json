@@ -14,7 +14,9 @@
     "setup": "dotenvx run --env-file=.env.local -- supabase start && pnpm migrate && pnpm run dev"
   },
   "dependencies": {
+    "@codemirror/lang-cpp": "^6.0.2",
     "@codemirror/lang-javascript": "^6.2.2",
+    "@codemirror/lang-python": "^6.1.6",
     "@hookform/resolvers": "^3.3.1",
     "@monaco-editor/react": "^4.6.0",
     "@radix-ui/react-avatar": "^1.1.1",
