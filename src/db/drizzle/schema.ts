@@ -8,6 +8,7 @@ import {
   uuid,
   serial,
   timestamp,
+  json,
 } from "drizzle-orm/pg-core";
 
 export const app_schema = pgSchema("app_schema");
@@ -144,7 +145,7 @@ export const app_challenges = app_schema.table("app_challenges", {
   challenge_example_input: text("challenge_example_input").notNull(),
   challenge_example_output: text("challenge_example_output").notNull(),
   challenge_explanation: text("challenge_explanation").notNull(),
-  challenge_is_live: boolean("challenge_live").default(true)
+  challenge_is_live: boolean("challenge_live").default(true),
 });
 
 export const app_difficulty = app_schema.table("app_difficulty", {
@@ -175,4 +176,19 @@ export const app_solved_challenges = app_schema.table("app_solved_challenges", {
     .notNull(),
   solved_challenge_code_submission: text("solved_challenge_code_submission"),
   solved_challenge_language: text("solved_challenge_language").notNull(),
+});
+
+export const app_documents = app_schema.table("app_documents", {
+  document_uuid: uuid("document_uuid")
+    .primaryKey()
+    .default(sql`uuid_generate_v4()`),
+  document_team_uuid: uuid("document_team_uuid").references(
+    () => app_team.team_uuid,
+    { onDelete: "cascade" },
+  ),
+  document_challenge_uuid: uuid("document_challenge_uuid").references(
+    () => app_challenges.challenge_uuid,
+    { onDelete: "cascade" },
+  ),
+  document_object: json("document_object").notNull(),
 });

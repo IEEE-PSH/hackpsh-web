@@ -36,6 +36,20 @@
       "when": 1733763413726,
       "tag": "0004_secret_justin_hammer",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1736339190816,
+      "tag": "0005_brainy_captain_marvel",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1736339489580,
+      "tag": "0006_fast_tarantula",
+      "breakpoints": true
     }
   ]
 }

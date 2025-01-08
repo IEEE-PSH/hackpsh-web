@@ -82,7 +82,7 @@ export default function ChallengeEditorWrapper({
   const roomName = `${userData?.user_team_name}-socket-${challengeData?.challenge_id}`;
 
   useEffect(() => {
-    const s = io("wss://sly-living-goose.glitch.me", {
+    const s = io(process.env.NEXT_PUBLIC_GLITCH_WSS, {
       transports: ["websocket"],
       withCredentials: true,
     });
@@ -90,7 +90,7 @@ export default function ChallengeEditorWrapper({
     setSocket(s);
 
     s.on("connect", () => {
-      s.emit("joinRoom", roomName); // Join the room after connection
+      s.emit("joinRoom", roomName);
     });
 
     return () => {
@@ -122,7 +122,7 @@ export default function ChallengeEditorWrapper({
     if (socket) {
       socket.emit("message", { room_name: roomName, content: newValue });
     }
-  }, 120);
+  }, 100);
 
   return (
     <div className="h-full min-h-[400px]" style={{ height: "100%" }}>
