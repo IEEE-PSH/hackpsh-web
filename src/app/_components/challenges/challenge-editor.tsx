@@ -122,7 +122,7 @@ export default function ChallengeEditorWrapper({
     if (socket) {
       socket.emit("message", { room_name: roomName, content: newValue });
     }
-  }, 50);
+  }, 120);
 
   return (
     <div className="h-full min-h-[400px]" style={{ height: "100%" }}>
@@ -139,6 +139,7 @@ export default function ChallengeEditorWrapper({
         ]}
         onChange={handleOnChange}
         style={{ height: "100%", fontSize: 14 }}
+        readOnly={solved}
       />
     </div>
   );
