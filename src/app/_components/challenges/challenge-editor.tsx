@@ -3,15 +3,16 @@ import React, {
   type Dispatch,
   type SetStateAction,
   useEffect,
-  useRef,
   useState,
 } from "react";
-import { Editor } from "@monaco-editor/react";
+import CodeMirror from "@uiw/react-codemirror";
+import { javascript } from "@codemirror/lang-javascript";
+import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { type TLanguages } from "@/server/zod-schemas/challenges";
 import { trpc } from "@/app/_trpc/react";
 import { useTheme } from "next-themes";
 import { useChallenge } from "./challenge-context-provider";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 
 type ChallengeEditor = {
   value: string;
@@ -21,6 +22,22 @@ type ChallengeEditor = {
   header: string;
   solved: boolean;
 };
+
+function debounce<T extends unknown[]>(
+  func: (...args: T) => void,
+  delay: number,
+): (...args: T) => void {
+  let debounceTimer: NodeJS.Timeout | null = null;
+
+  return (...args: T) => {
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+    debounceTimer = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+}
 
 export default function ChallengeEditorWrapper({
   value,
@@ -32,7 +49,7 @@ export default function ChallengeEditorWrapper({
 }: ChallengeEditor) {
   const { theme } = useTheme();
   const { userData, challengeData } = useChallenge();
-  //update code submission only on initial render
+
   const [isFetched, setIsFetched] = useState<boolean>(false);
   const { data: submission } = trpc.challenges.get_code_submission.useQuery(
     {
@@ -41,7 +58,7 @@ export default function ChallengeEditorWrapper({
     },
     { enabled: !isFetched },
   );
-  //initial editor value
+
   useEffect(() => {
     if (submission) {
       const submissionCode = submission?.solved_challenge_code_submission;
@@ -53,22 +70,21 @@ export default function ChallengeEditorWrapper({
     } else {
       setValue(header);
     }
-  }, [header, submission, setLanguage, language]);
+  }, [header, submission, setLanguage, setValue]);
 
   useEffect(() => {
     if (value.length > 0) setValue(value);
   }, []);
 
-  // SOCKET IO INTEGRATION
-  const [socket, setSocket] = useState<any>(null);
+  const [socket, setSocket] = useState<Socket | null>(null);
   const roomName = `${userData?.user_team_name}-socket-${challengeData?.challenge_id}`;
 
-  // Initialize socket connection
   useEffect(() => {
     const s = io("wss://sly-living-goose.glitch.me", {
       transports: ["websocket"],
       withCredentials: true,
     });
+
     setSocket(s);
 
     s.on("connect", () => {
@@ -81,44 +97,39 @@ export default function ChallengeEditorWrapper({
         s.disconnect();
       }
     };
-  }, []);
+  }, [roomName]);
 
-  // Listening to socket messages
   useEffect(() => {
     if (socket) {
-      socket.on("message", (data: { content: string; new_content: string }) => {
-        if (data.content !== value) {
+      socket.on("message", (data: { new_content: string }) => {
+        if (data.new_content !== value) {
           setValue(data.new_content);
         }
       });
     }
-  }, [socket]);
 
-  // Handle content change in editor
-  const handleOnChange = (newValue: string) => {
+    return () => {
+      if (socket) {
+        socket.off("message");
+      }
+    };
+  }, [socket, value]);
+
+  const handleOnChange = debounce((newValue: string) => {
+    setValue(newValue);
     if (socket) {
-      socket.emit("message", { room_name: roomName, content: newValue }); // Emit message to server
+      socket.emit("message", { room_name: roomName, content: newValue });
     }
-  };
+  }, 50);
 
   return (
     <div className="h-full min-h-[400px]">
-      <Editor
-        height="100%"
-        theme={theme === "dark" ? "vs-dark" : "light"}
-        language={language}
-        defaultLanguage={language ?? "python"}
+      <CodeMirror
         value={value}
-        loading={""}
-        onChange={(newValue) => {
-          handleOnChange(newValue!);
-        }}
-        options={{
-          readOnly: solved,
-          minimap: { enabled: false },
-          automaticLayout: true,
-          contextmenu: false,
-        }}
+        height="100%"
+        theme={theme === "dark" ? "dark" : "light"} // Adjust theme based on the app's theme
+        extensions={[javascript()]} // Set the language mode here
+        onChange={handleOnChange}
       />
     </div>
   );
