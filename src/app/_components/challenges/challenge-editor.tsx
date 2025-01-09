@@ -3,16 +3,18 @@ import React, {
   type Dispatch,
   type SetStateAction,
   useEffect,
+  useRef,
   useState,
 } from "react";
-import CodeMirror from "@uiw/react-codemirror";
+import { Controlled as CodeMirror2 } from "react-codemirror2";
+import CodeMirror, { EditorView, ViewUpdate } from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { vscodeDark, vscodeLight } from "@uiw/codemirror-theme-vscode";
 import { type TLanguages } from "@/server/zod-schemas/challenges";
 import { trpc } from "@/app/_trpc/react";
 import { useTheme } from "next-themes";
 import { useChallenge } from "./challenge-context-provider";
-import { io, Socket } from "socket.io-client";
+import { io, type Socket } from "socket.io-client";
 import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
 
@@ -51,8 +53,8 @@ export default function ChallengeEditorWrapper({
 }: ChallengeEditor) {
   const { theme } = useTheme();
   const { userData, challengeData } = useChallenge();
-
   const [isFetched, setIsFetched] = useState<boolean>(false);
+  const [existingData, setExistingData] = useState<boolean>(true);
   const { data: submission } = trpc.challenges.get_code_submission.useQuery(
     {
       challenge_id: challengeData?.challenge_id as unknown as number,
@@ -70,7 +72,8 @@ export default function ChallengeEditorWrapper({
       setLanguage(submissionLanguage);
       setIsFetched(true);
     } else {
-      setValue(header);
+      // this can be commented out if the socket server sets the header
+      // setValue(header);
     }
   }, [header, submission, setLanguage, setValue]);
 
@@ -78,55 +81,62 @@ export default function ChallengeEditorWrapper({
     if (value.length > 0) setValue(value);
   }, []);
 
+  // SOCKET LOGIC BELOW
   const [socket, setSocket] = useState<Socket | null>(null);
-  const roomName = `${userData?.user_team_name}-socket-${challengeData?.challenge_id}`;
+  const roomName = `${userData?.user_team_name}s${challengeData?.challenge_id}`;
 
   useEffect(() => {
     const s = io(process.env.NEXT_PUBLIC_GLITCH_WSS, {
       transports: ["websocket"],
       withCredentials: true,
     });
-
     setSocket(s);
 
     s.on("connect", () => {
-      s.emit("joinRoom", roomName);
+      s.emit("joinRoom", { room_name: roomName, header: header });
     });
 
+    if (!existingData) setValue(header);
     return () => {
-      if (s) {
-        s.off("message");
-        s.disconnect();
-      }
+      s.off("update");
+      s.disconnect();
     };
   }, [roomName]);
 
+  const editorRef = useRef<EditorView>(null);
   useEffect(() => {
-    if (socket) {
-      socket.on("message", (data: { new_content: string }) => {
-        if (data.new_content !== value) {
-          setValue(data.new_content);
-        }
-      });
-    }
-
-    return () => {
-      if (socket) {
-        socket.off("message");
+    if (!socket) return;
+    socket.on("update", (newContent: string) => {
+      if (newContent !== value) {
+        // const view = editorRef.current.view;
+        // const currentPosition = view.state.selection.main.head;
+        setValue(newContent);
+        // requestAnimationFrame(() => {
+        //   const transaction = view.state.update({
+        //     selection: { anchor: currentPosition },
+        //   });
+        //   view.dispatch(transaction);
+        // });
       }
-    };
+    });
+
+    socket.on("existingData", (content: string) => {
+      setExistingData(true);
+      setValue(content);
+    });
   }, [socket, value]);
 
-  const handleOnChange = debounce((newValue: string) => {
-    setValue(newValue);
+  const handleOnChange = debounce((newValue: string, view: ViewUpdate) => {
     if (socket) {
-      socket.emit("message", { room_name: roomName, content: newValue });
+      setValue(newValue);
+      socket.emit("update", { room_name: roomName, content: newValue });
     }
-  }, 100);
+  }, 120);
 
   return (
     <div className="h-full min-h-[400px]" style={{ height: "100%" }}>
       <CodeMirror
+        ref={editorRef}
         value={value}
         height="100%"
         theme={theme === "dark" ? vscodeDark : vscodeLight}
@@ -137,7 +147,9 @@ export default function ChallengeEditorWrapper({
               ? cpp()
               : python(),
         ]}
-        onChange={handleOnChange}
+        onChange={(newValue, viewUpdate) =>
+          handleOnChange(newValue, viewUpdate)
+        }
         style={{ height: "100%", fontSize: 14 }}
         readOnly={solved}
       />

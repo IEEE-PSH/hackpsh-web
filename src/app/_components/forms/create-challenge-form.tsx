@@ -82,7 +82,6 @@ export function CreateChallengeForm({
   });
 
   async function onSubmit(values: TCreateChallengeFormSchema) {
-    console.log("Attempted");
     try {
       const supabase = createClient();
       const user = await getUser(supabase);
