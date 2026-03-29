@@ -1,0 +1,1 @@
+* text eol=lf    # Git decides what is a text file and converts line endings appropriately
