@@ -11,7 +11,7 @@
     }
   },
   "features": {
-    "ghcr.io/devcontainers-contrib/features/supabase-cli:1": {}
+    "ghcr.io/devcontainers-extra/features/supabase-cli:1": {}
   },
   //install dependencies after container creation
   "postCreateCommand": "pnpm i"
